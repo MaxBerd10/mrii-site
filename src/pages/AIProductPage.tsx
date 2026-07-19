@@ -1,0 +1,307 @@
+import { useEffect, useState, type FormEvent } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
+import { useLanguage } from '../i18n/LanguageContext'
+import { media } from '../data/media'
+import { aiPageLabels, aiProducts, getAIProductBySlug } from '../data/aiDetails'
+import { blurUp, rise3d, staggerContainer } from '../lib/animations'
+import SectionBackLink from '../components/ui/SectionBackLink'
+
+const PRODUCT_IMAGES = Object.values(media.ai)
+
+export default function AIProductPage({ slug }: { slug: string }) {
+  const { lang, t } = useLanguage()
+  const match = getAIProductBySlug(slug)
+  const labels = aiPageLabels[lang]
+  const [form, setForm] = useState({ name: '', phone: '', email: '', clinic: '', message: '' })
+  const [submitting, setSubmitting] = useState(false)
+  const [confirmation, setConfirmation] = useState<null | { requestId: string; phone: string }>(null)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    if (match) document.title = `${t.ai.products[match.index].name} — MRII`
+  }, [match, t])
+
+  useEffect(() => {
+    if (!confirmation) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setConfirmation(null)
+    }
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [confirmation])
+
+  if (!match) {
+    return (
+      <section className="specialty-not-found">
+        <h1>404</h1>
+        <SectionBackLink href="/#ai">{labels.back}</SectionBackLink>
+      </section>
+    )
+  }
+
+  const { detail, index } = match
+  const product = t.ai.products[index]
+  const content = detail.content[lang]
+  const image = PRODUCT_IMAGES[index]
+  const related = aiProducts
+    .map((item, itemIndex) => ({ ...item, index: itemIndex }))
+    .filter((item) => item.index !== index)
+
+  const submitDemo = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (submitting) return
+    setSubmitting(true)
+    window.setTimeout(() => {
+      setConfirmation({
+        requestId: `AI-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`,
+        phone: form.phone,
+      })
+      setForm({ name: '', phone: '', email: '', clinic: '', message: '' })
+      setSubmitting(false)
+    }, 750)
+  }
+
+  return (
+    <main className="ai-page">
+      <section className="ai-product-hero">
+        <div className="container-main ai-product-hero__grid">
+          <motion.div
+            className="ai-product-hero__visual"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: .55, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <img src={image} alt={product.name} />
+            <div className="ai-product-hero__metric" style={{ color: product.tagColor }}>
+              <strong>{product.metric}</strong>
+              <span>{product.metricLabel}</span>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="ai-product-hero__copy"
+            variants={staggerContainer(.08, .04)}
+            initial="hidden"
+            animate="show"
+          >
+            <motion.div variants={blurUp}>
+              <SectionBackLink href="/#ai" className="ai-product__back">
+                ← {labels.back}
+              </SectionBackLink>
+            </motion.div>
+            <motion.div variants={blurUp} className="ai-product__tag-wrap">
+              <span
+                className="ai-product__tag"
+                style={{ color: product.tagColor, background: `${product.tagColor}15` }}
+              >
+                {product.tag}
+              </span>
+            </motion.div>
+            <motion.h1 variants={blurUp}>{product.name}</motion.h1>
+            <motion.p className="ai-product-hero__lead" variants={blurUp}>{content.overview}</motion.p>
+            <motion.p className="ai-product-hero__audience" variants={blurUp}>{content.audience}</motion.p>
+            <motion.div className="ai-product-hero__actions" variants={blurUp}>
+              <a href="#ai-demo" className="btn-accent" style={{ background: product.tagColor }}>
+                {labels.demoTitle}
+              </a>
+              <a href="#ai-cases" className="btn-outline btn-sm">{labels.cases}</a>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="section section--white">
+        <div className="container-main">
+          <motion.div
+            className="ai-product-grid"
+            variants={staggerContainer(.1)}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: .15 }}
+          >
+            <motion.article className="ai-product-card" variants={rise3d}>
+              <span>01</span>
+              <h2>{labels.outcomes}</h2>
+              <ul>
+                {content.outcomes.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+            </motion.article>
+            <motion.article className="ai-product-card" variants={rise3d}>
+              <span>02</span>
+              <h2>{labels.workflow}</h2>
+              <ul>
+                {content.workflow.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+            </motion.article>
+            <motion.article className="ai-product-card" variants={rise3d}>
+              <span>03</span>
+              <h2>{labels.overview}</h2>
+              <ul>
+                {product.features.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+            </motion.article>
+          </motion.div>
+
+          <div id="ai-cases" className="ai-product-cases">
+            <div className="ai-product-cases__head">
+              <span className="specialty-page__eyebrow">{labels.cases}</span>
+              <h2>{labels.cases}</h2>
+            </div>
+            <div className="ai-product-cases__grid">
+              {content.cases.map((item) => (
+                <article key={item.title} className="ai-product-case">
+                  <h3>{item.title}</h3>
+                  <p>{item.result}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div id="ai-demo" className="ai-demo">
+            <div className="ai-demo__copy">
+              <h2>{labels.demoTitle}</h2>
+              <p>{labels.demoDesc}</p>
+            </div>
+            <form className="ai-demo__form" onSubmit={submitDemo}>
+              <div className="ai-demo__row">
+                <input
+                  required
+                  type="text"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  placeholder={labels.nameField}
+                  aria-label={labels.nameField}
+                />
+                <input
+                  required
+                  type="tel"
+                  minLength={7}
+                  value={form.phone}
+                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  placeholder={labels.phoneField}
+                  aria-label={labels.phoneField}
+                />
+              </div>
+              <div className="ai-demo__row">
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  placeholder={labels.emailField}
+                  aria-label={labels.emailField}
+                />
+                <input
+                  required
+                  type="text"
+                  value={form.clinic}
+                  onChange={(e) => setForm({ ...form, clinic: e.target.value })}
+                  placeholder={labels.clinicField}
+                  aria-label={labels.clinicField}
+                />
+              </div>
+              <textarea
+                rows={3}
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                placeholder={labels.messageField}
+                aria-label={labels.messageField}
+              />
+              <button
+                type="submit"
+                className="btn-accent"
+                style={{ background: product.tagColor }}
+                disabled={submitting}
+              >
+                {submitting ? labels.submitting : labels.demoTitle}
+              </button>
+            </form>
+          </div>
+
+          <div className="ai-product-related">
+            <div className="ai-product-related__head">
+              <span className="specialty-page__eyebrow">{labels.moreProducts}</span>
+              <h2>{labels.related}</h2>
+            </div>
+            <div className="ai-product-related__grid">
+              {related.map((item) => {
+                const relatedProduct = t.ai.products[item.index]
+                return (
+                  <a key={item.slug} href={`/ai/${item.slug}`} className="ai-product-related__card">
+                    <img src={PRODUCT_IMAGES[item.index]} alt="" />
+                    <span style={{ color: relatedProduct.tagColor }}>{relatedProduct.tag}</span>
+                    <strong>{relatedProduct.name}</strong>
+                  </a>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <AnimatePresence>
+        {confirmation && (
+          <motion.div
+            className="booking-success"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onMouseDown={(event) => {
+              if (event.target === event.currentTarget) setConfirmation(null)
+            }}
+          >
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="ai-demo-success-title"
+              className="booking-success__dialog"
+              initial={{ opacity: 0, y: 35, scale: .9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: .94 }}
+              transition={{ type: 'spring', stiffness: 230, damping: 24 }}
+            >
+              <button
+                autoFocus
+                type="button"
+                className="booking-success__close"
+                aria-label={labels.close}
+                onClick={() => setConfirmation(null)}
+              >
+                ×
+              </button>
+              <div className="booking-success__visual" aria-hidden>
+                <span className="booking-success__ring" />
+                <motion.span
+                  className="booking-success__check"
+                  initial={{ scale: .4, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ type: 'spring', stiffness: 280, damping: 16, delay: .08 }}
+                >
+                  ✓
+                </motion.span>
+              </div>
+              <span className="booking-success__eyebrow">
+                {labels.requestNumber}: {confirmation.requestId}
+              </span>
+              <h2 id="ai-demo-success-title">{labels.successTitle}</h2>
+              <p>{labels.successDesc}</p>
+              <dl className="booking-success__details">
+                <div><dt>{labels.productLabel}</dt><dd>{product.name}</dd></div>
+                <div><dt>{labels.phoneField}</dt><dd>{confirmation.phone}</dd></div>
+              </dl>
+              <div className="booking-success__actions">
+                <button type="button" className="hp-btn hp-btn--primary" onClick={() => setConfirmation(null)}>
+                  {labels.close}
+                </button>
+                <a href="/#ai" className="hp-btn hp-btn--ghost">{labels.moreProducts}</a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </main>
+  )
+}
