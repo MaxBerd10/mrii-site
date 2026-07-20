@@ -16,7 +16,46 @@ ALLOWED_HOSTS = [
     if h.strip()
 ]
 if DEBUG and '*' not in ALLOWED_HOSTS:
-    ALLOWED_HOSTS = list({*ALLOWED_HOSTS, 'localhost', '127.0.0.1', 'testserver', '0.0.0.0'})
+    # Local + temporary public tunnels (cloudflared / localtunnel)
+    ALLOWED_HOSTS = list({
+        *ALLOWED_HOSTS,
+        'localhost',
+        '127.0.0.1',
+        'testserver',
+        '0.0.0.0',
+        '*',
+    })
+
+CSRF_TRUSTED_ORIGINS = [
+    o.strip()
+    for o in os.getenv(
+        'CSRF_TRUSTED_ORIGINS',
+        'http://127.0.0.1:8000,http://localhost:8000,https://mrii-site.vercel.app',
+    ).split(',')
+    if o.strip()
+]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+
+
+class _TrustTunnelOriginsMiddleware:
+    """DEBUG only: allow Cloudflare quick-tunnel hosts for admin CSRF."""
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if DEBUG:
+            origin = request.META.get('HTTP_ORIGIN') or ''
+            host = request.get_host().split(':')[0]
+            if host.endswith('.trycloudflare.com'):
+                https_origin = f'https://{host}'
+                if https_origin not in CSRF_TRUSTED_ORIGINS:
+                    CSRF_TRUSTED_ORIGINS.append(https_origin)
+            if origin.endswith('.trycloudflare.com') and origin not in CSRF_TRUSTED_ORIGINS:
+                CSRF_TRUSTED_ORIGINS.append(origin)
+        return self.get_response(request)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -34,6 +73,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'config.settings._TrustTunnelOriginsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -117,7 +157,8 @@ STORAGES = {
         'BACKEND': 'django.core.files.storage.FileSystemStorage',
     },
     'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+        # Manifest breaks easily in fresh containers if a referenced file is missing
+        'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
     },
 }
 
