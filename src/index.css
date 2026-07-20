@@ -5066,15 +5066,129 @@ body::before { display: none !important; }
 }
 
 /* Doctors — clean readable cards */
+.doctors-section__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 .doctors-section__all {
   font-weight: 700 !important;
   color: #5B4CDB !important;
+  background: #fff !important;
+  border: 1px solid #E8EAF0 !important;
+  border-radius: 999px !important;
+  padding: 10px 16px !important;
+  cursor: pointer;
+  font: inherit;
+  box-shadow: 0 6px 16px rgba(28, 32, 56, 0.05);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
 }
+.doctors-section__all:hover {
+  border-color: #D4CFF5 !important;
+  color: #4A3CC4 !important;
+  box-shadow: 0 8px 20px rgba(91, 76, 219, 0.12);
+}
+
+/* Auto-scrolling carousel */
+.doctor-carousel {
+  position: relative;
+  margin-inline: -4px;
+  padding-inline: 4px;
+}
+.doctor-carousel__viewport {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+}
+.doctor-carousel__track {
+  display: flex !important;
+  width: max-content;
+  gap: 18px;
+  animation-name: doctor-marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+.doctor-carousel--reverse .doctor-carousel__track {
+  animation-direction: reverse;
+}
+.doctor-carousel:hover .doctor-carousel__track {
+  animation-play-state: paused;
+}
+.doctor-carousel__track .doctor-card {
+  flex: 0 0 280px;
+  width: 280px;
+}
+@keyframes doctor-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.doctor-carousel__side {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  display: grid !important;
+  place-items: center;
+  width: 48px !important;
+  height: 48px !important;
+  margin: 0;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  color: #fff !important;
+  background: linear-gradient(145deg, #6B5CE7, #5B4CDB) !important;
+  box-shadow:
+    0 12px 28px rgba(91, 76, 219, 0.35),
+    0 0 0 4px rgba(255, 255, 255, 0.85) !important;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.doctor-carousel__side:hover {
+  filter: brightness(1.05);
+  box-shadow:
+    0 16px 36px rgba(91, 76, 219, 0.42),
+    0 0 0 4px rgba(255, 255, 255, 0.95) !important;
+  transform: translateY(-50%) scale(1.04);
+}
+.doctor-carousel__side--prev { left: -6px; }
+.doctor-carousel__side--next { right: -6px; }
+
+@media (max-width: 720px) {
+  .doctor-carousel__side {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .doctor-carousel__side--prev { left: 4px; }
+  .doctor-carousel__side--next { right: 4px; }
+  .doctor-carousel__track .doctor-card {
+    flex-basis: 260px;
+    width: 260px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doctor-carousel__track {
+    animation: none !important;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    max-width: 100%;
+    scrollbar-width: none;
+  }
+  .doctor-carousel__track::-webkit-scrollbar { display: none; }
+}
+
 .doctor-grid {
   display: grid !important;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px !important;
   align-items: stretch;
+}
+.doctor-grid--all {
+  margin-top: 4px;
 }
 .doctor-card {
   display: flex !important;

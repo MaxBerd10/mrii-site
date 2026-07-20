@@ -1,0 +1,38 @@
+{% extends "admin/base.html" %}
+{% load static i18n %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | MRII CMS{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'cms/admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+  <a class="mrii-brand" href="{% url 'admin:index' %}">
+    <span class="mrii-brand__mark" aria-hidden="true">M</span>
+    <span class="mrii-brand__text">
+      <strong>MRII</strong>
+      <small>Kontent boshqaruvi</small>
+    </span>
+  </a>
+{% endblock %}
+
+{% block welcome-msg %}
+  <span class="mrii-userchip">{{ user.get_short_name|default:user.get_username }}</span>
+{% endblock %}
+
+{% block userlinks %}
+  {% if site_url %}
+    <a class="mrii-header-link" href="{{ site_url }}" target="_blank" rel="noopener noreferrer" title="Ochiq saytni ko‘rish">Sayt</a>
+  {% endif %}
+  {% if user.has_usable_password %}
+    <a class="mrii-header-link" href="{% url 'admin:password_change' %}">Parol</a>
+  {% endif %}
+  <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
+    {% csrf_token %}
+    <button type="submit" class="mrii-logout">Chiqish</button>
+  </form>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

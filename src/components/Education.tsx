@@ -1,12 +1,23 @@
 import type { CSSProperties } from 'react'
 import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { useCms } from '../cms/CmsContext'
 import SectionHeader from './ui/SectionHeader'
 import Reveal from './ui/Reveal'
 import { staggerContainer, rise3d, fadeUpSmall, blurUp } from '../lib/animations'
 
 export default function Education() {
   const { t } = useLanguage()
+  const { home } = useCms()
+  const tracks = home?.education?.length
+    ? home.education.map((track, i) => ({
+        audience: track.audience,
+        color: track.color || t.education.tracks[i]?.color || '#059669',
+        icon: track.icon || t.education.tracks[i]?.icon || '🎓',
+        cta: t.education.tracks[i]?.cta ?? '→',
+        programs: track.programs,
+      }))
+    : t.education.tracks
 
   return (
     <section id="education" className="section section--white">
@@ -42,7 +53,7 @@ export default function Education() {
           whileInView="show"
           viewport={{ once: true, amount: 0.05, margin: '120px 0px' }}
         >
-          {t.education.tracks.map((track, i) => (
+          {tracks.map((track, i) => (
             <motion.div
               key={i}
               variants={rise3d}

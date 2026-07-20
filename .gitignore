@@ -4,7 +4,19 @@ dist
 .env
 .env.*
 !.env.example
+!**/.env.example
 .idea
 *.local
 .vercel
 pnpm-lock.yaml
+
+# Django CMS
+backend/.venv/
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.pyc
+backend/db.sqlite3
+backend/media/
+backend/staticfiles/
+backend/.env

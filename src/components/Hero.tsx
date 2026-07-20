@@ -1,9 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { useCms } from '../cms/CmsContext'
 import { useCountUp } from '../hooks/useCountUp'
 import { staggerContainer, fadeUp, fadeUpSmall } from '../lib/animations'
 import { media } from '../data/media'
+
+function telHref(phone: string) {
+  const digits = phone.replace(/[^\d+]/g, '')
+  return digits ? `tel:${digits}` : 'tel:+998712345678'
+}
 
 const THUMBS = Object.values(media.hero.thumbs)
 const ACTION_HREFS = ['#contacts', '#research', '#education', '#ai']
@@ -21,6 +27,7 @@ function HeroStat({ value, label, active }: { value: string; label: string; acti
 
 export default function Hero() {
   const { t } = useLanguage()
+  const { home } = useCms()
   const reduce = useReducedMotion()
   const [statsActive, setStatsActive] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
@@ -31,7 +38,14 @@ export default function Hero() {
   const copyY = useTransform(scrollYProgress, [0, 1], [0, -16])
   const heroOpacity = useTransform(scrollYProgress, [0, 0.82, 1], [1, 1, .88])
   const cameraScale = useTransform(scrollYProgress, [0, .45, 1], [1, 1.12, 1.32])
-  const instituteName = t.hero.instituteName.replace(' (MRII)', '')
+  const settings = home?.settings
+  const hero = home?.hero
+  const instituteName = (settings?.institute_name || t.hero.instituteName).replace(' (MRII)', '')
+  const slogan = settings?.slogan || t.hero.instituteSlogan
+  const certs = hero?.certs || t.hero.certs
+  const phone = settings?.phone || t.topBar.phone
+  const badge = settings?.badge || t.topBar.badge
+  const heroImage = hero?.image || CLINIC_CORRIDOR
 
   useEffect(() => {
     setStatsActive(true)
@@ -45,7 +59,7 @@ export default function Hero() {
         style={reduce ? undefined : { scale: cameraScale }}
         aria-hidden
       >
-        <img src={CLINIC_CORRIDOR} alt="" />
+        <img src={heroImage} alt="" />
       </motion.div>
       <div className="hp-hero__background-shade" aria-hidden />
       <div className="container-main">
@@ -58,7 +72,7 @@ export default function Hero() {
             animate="show"
           >
             <motion.p className="hp-hero__eyebrow" variants={fadeUpSmall}>
-              {t.hero.since} · {t.hero.certs}
+              {t.hero.since} · {certs}
             </motion.p>
 
             <motion.h1 className="hp-hero__title hp-hero__title--brand" variants={fadeUp}>
@@ -68,22 +82,22 @@ export default function Hero() {
             </motion.h1>
 
             <motion.p className="hp-hero__desc hp-hero__slogan" variants={fadeUp}>
-              «{t.hero.instituteSlogan}»
+              «{slogan}»
             </motion.p>
 
             <motion.div className="hp-hero__cta-row" variants={fadeUp}>
               <a href="#contacts" className="hp-btn hp-btn--primary">
                 {t.hero.buttons[0]}
               </a>
-              <a href="tel:+998712345678" className="hp-emergency">
+              <a href={telHref(phone)} className="hp-emergency">
                 <span className="hp-emergency__icon" aria-hidden>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1.4 1.4 0 011.5-.3c1.6.5 3.4.8 5.2.8a1.4 1.4 0 011.4 1.4V21a1.4 1.4 0 01-1.4 1.4C11.2 22.4 1.6 12.8 1.6 1.4A1.4 1.4 0 013 0h3.9A1.4 1.4 0 018.3 1.4c0 1.8.3 3.6.8 5.2a1.4 1.4 0 01-.3 1.5L6.6 10.8z" fill="currentColor"/>
                   </svg>
                 </span>
                 <span>
-                  <small>{t.topBar.badge}</small>
-                  <strong>{t.topBar.phone}</strong>
+                  <small>{badge}</small>
+                  <strong>{phone}</strong>
                 </span>
               </a>
             </motion.div>

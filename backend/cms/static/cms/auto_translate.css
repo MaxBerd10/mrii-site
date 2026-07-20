@@ -1,0 +1,72 @@
+.mrii-translate-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 0 0 18px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(15, 118, 110, 0.22);
+  background: linear-gradient(135deg, #e6f5f3, #eef7fb);
+  box-shadow: 0 8px 20px rgba(18, 32, 51, 0.05);
+}
+
+.mrii-translate-bar__copy {
+  display: grid;
+  gap: 4px;
+  min-width: 220px;
+}
+
+.mrii-translate-bar__copy strong {
+  font-size: 0.98rem;
+  color: #122033;
+}
+
+.mrii-translate-bar__copy span {
+  font-size: 0.88rem;
+  color: #5f6f81;
+  line-height: 1.4;
+}
+
+.mrii-translate-bar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.mrii-translate-btn {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 11px 18px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #fff;
+  background: linear-gradient(135deg, #0f766e, #0369a1);
+  box-shadow: 0 10px 20px rgba(15, 118, 110, 0.25);
+}
+
+.mrii-translate-btn:hover {
+  filter: brightness(1.05);
+}
+
+.mrii-translate-btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.mrii-translate-bar__status {
+  font-size: 0.88rem;
+  font-weight: 600;
+  max-width: 360px;
+  line-height: 1.35;
+}
+
+.mrii-translated-flash {
+  outline: 2px solid #0d9488 !important;
+  background: #e6f5f3 !important;
+  transition: background .8s ease, outline .8s ease;
+}

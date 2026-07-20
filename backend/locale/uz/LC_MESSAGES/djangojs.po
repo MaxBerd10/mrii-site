@@ -1,0 +1,28 @@
+msgid ""
+msgstr ""
+"Language: uz\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Choose a Date"
+msgstr "Sanani tanlang"
+
+msgid "Choose a Time"
+msgstr "Vaqtni tanlang"
+
+msgid "Today"
+msgstr "Bugun"
+
+msgid "Now"
+msgstr "Hozir"
+
+msgid "Cancel"
+msgstr "Bekor qilish"
+
+msgid "Choose all"
+msgstr "Hammasini tanlash"
+
+msgid "Clear all"
+msgstr "Hammasini tozalash"
+
+msgid "Remove"
+msgstr "Olib tashlash"

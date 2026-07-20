@@ -304,6 +304,15 @@
 
 /* Doctors */
 .doctor-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
+.doctor-carousel__viewport { overflow: hidden; }
+.doctor-carousel__track {
+  display: flex;
+  width: max-content;
+  gap: 18px;
+  animation: doctor-marquee 40s linear infinite;
+}
+.doctor-carousel__track .doctor-card { flex: 0 0 280px; }
+@keyframes doctor-marquee { to { transform: translateX(-50%); } }
 .doctor-card {
   display: flex;
   flex-direction: column;

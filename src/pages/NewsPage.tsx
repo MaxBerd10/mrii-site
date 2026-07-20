@@ -1,6 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { useCms } from '../cms/CmsContext'
+import { fetchNewsArticle, isCmsEnabled, type CmsNewsDetail } from '../api/client'
 import { media } from '../data/media'
 import { getNewsBySlug, newsArticles, newsPageLabels } from '../data/newsDetails'
 import { blurUp, rise3d, staggerContainer } from '../lib/animations'
@@ -8,17 +10,104 @@ import SectionBackLink from '../components/ui/SectionBackLink'
 
 const NEWS_IMAGES = Object.values(media.news)
 
+type ViewModel = {
+  slug: string
+  title: string
+  date: string
+  category: string
+  categoryColor: string
+  excerpt: string
+  cover: string
+  lead: string
+  body: string[]
+  index: number
+}
+
+function formatDate(value: string | null | undefined) {
+  if (!value) return ''
+  return value
+}
+
 export default function NewsPage({ slug }: { slug: string }) {
   const { lang, t } = useLanguage()
-  const match = getNewsBySlug(slug)
+  const { home } = useCms()
   const labels = newsPageLabels[lang]
+  const staticMatch = getNewsBySlug(slug)
+  const [cmsDetail, setCmsDetail] = useState<CmsNewsDetail | null>(null)
+  const [triedCms, setTriedCms] = useState(!isCmsEnabled())
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    if (match) document.title = `${t.news.items[match.index].title} — MRII`
-  }, [match, t])
+  }, [slug])
 
-  if (!match) {
+  useEffect(() => {
+    if (!isCmsEnabled()) {
+      setCmsDetail(null)
+      setTriedCms(true)
+      return
+    }
+    let cancelled = false
+    setTriedCms(false)
+    fetchNewsArticle(slug, lang).then((data) => {
+      if (!cancelled) {
+        setCmsDetail(data)
+        setTriedCms(true)
+      }
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [slug, lang])
+
+  const view: ViewModel | null = (() => {
+    if (cmsDetail) {
+      const staticIndex = newsArticles.findIndex((item) => item.slug === slug)
+      const index = staticIndex >= 0 ? staticIndex : 0
+      return {
+        slug: cmsDetail.slug,
+        title: cmsDetail.title,
+        date: formatDate(cmsDetail.date) || t.news.items[index]?.date || '',
+        category: cmsDetail.category,
+        categoryColor: cmsDetail.category_color,
+        excerpt: cmsDetail.excerpt,
+        cover: cmsDetail.cover || NEWS_IMAGES[index] || NEWS_IMAGES[0],
+        lead: cmsDetail.lead,
+        body: cmsDetail.body,
+        index,
+      }
+    }
+    if (!triedCms && isCmsEnabled()) return null
+    if (!staticMatch) return null
+    const { article, index } = staticMatch
+    const item = t.news.items[index]
+    const content = article.content[lang]
+    return {
+      slug: article.slug,
+      title: item.title,
+      date: item.date,
+      category: item.category,
+      categoryColor: item.categoryColor,
+      excerpt: item.excerpt,
+      cover: NEWS_IMAGES[index],
+      lead: content.lead,
+      body: content.body,
+      index,
+    }
+  })()
+
+  useEffect(() => {
+    if (view) document.title = `${view.title} — MRII`
+  }, [view?.title])
+
+  if (!triedCms && isCmsEnabled() && !view) {
+    return (
+      <section className="specialty-not-found">
+        <p>{labels.back}…</p>
+      </section>
+    )
+  }
+
+  if (!view) {
     return (
       <section className="specialty-not-found">
         <h1>404</h1>
@@ -27,13 +116,32 @@ export default function NewsPage({ slug }: { slug: string }) {
     )
   }
 
-  const { article, index } = match
-  const item = t.news.items[index]
-  const content = article.content[lang]
-  const image = NEWS_IMAGES[index]
-  const related = newsArticles
-    .map((entry, entryIndex) => ({ ...entry, index: entryIndex }))
-    .filter((entry) => entry.index !== index)
+  const relatedFromCms = home?.news?.filter((item) => item.slug !== slug)
+  const related = relatedFromCms?.length
+    ? relatedFromCms.map((item, i) => ({
+        slug: item.slug,
+        title: item.title,
+        date: formatDate(item.date),
+        category: item.category,
+        categoryColor: item.category_color,
+        excerpt: item.excerpt,
+        cover: item.cover || NEWS_IMAGES[i] || NEWS_IMAGES[0],
+      }))
+    : newsArticles
+        .map((entry, entryIndex) => ({ ...entry, index: entryIndex }))
+        .filter((entry) => entry.slug !== slug)
+        .map((entry) => {
+          const relatedItem = t.news.items[entry.index]
+          return {
+            slug: entry.slug,
+            title: relatedItem.title,
+            date: relatedItem.date,
+            category: relatedItem.category,
+            categoryColor: relatedItem.categoryColor,
+            excerpt: relatedItem.excerpt,
+            cover: NEWS_IMAGES[entry.index],
+          }
+        })
 
   return (
     <main className="news-page">
@@ -54,12 +162,12 @@ export default function NewsPage({ slug }: { slug: string }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: .55, ease: [0.22, 1, 0.36, 1] }}
           >
-            <img src={image} alt={item.title} />
+            <img src={view.cover} alt={view.title} />
             <span
               className="news-card__badge"
-              style={{ color: item.categoryColor, background: `${item.categoryColor}18` }}
+              style={{ color: view.categoryColor, background: `${view.categoryColor}18` }}
             >
-              {item.category}
+              {view.category}
             </span>
           </motion.div>
 
@@ -69,10 +177,10 @@ export default function NewsPage({ slug }: { slug: string }) {
             initial="hidden"
             animate="show"
           >
-            <motion.time className="news-card__date" variants={blurUp}>{item.date}</motion.time>
-            <motion.h1 variants={blurUp}>{item.title}</motion.h1>
-            <motion.p className="news-article__lead" variants={blurUp}>{content.lead}</motion.p>
-            {content.body.map((paragraph) => (
+            <motion.time className="news-card__date" variants={blurUp}>{view.date}</motion.time>
+            <motion.h1 variants={blurUp}>{view.title}</motion.h1>
+            <motion.p className="news-article__lead" variants={blurUp}>{view.lead}</motion.p>
+            {view.body.map((paragraph) => (
               <motion.p key={paragraph} className="news-article__text" variants={blurUp}>
                 {paragraph}
               </motion.p>
@@ -94,32 +202,29 @@ export default function NewsPage({ slug }: { slug: string }) {
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
           >
-            {related.map((entry) => {
-              const relatedItem = t.news.items[entry.index]
-              return (
-                <motion.a
-                  key={entry.slug}
-                  href={`/news/${entry.slug}`}
-                  className="news-card news-card--link"
-                  variants={rise3d}
-                >
-                  <div className="news-card__media">
-                    <img src={NEWS_IMAGES[entry.index]} alt="" loading="lazy" className="news-card-img" />
-                    <span
-                      className="news-card__badge"
-                      style={{ color: relatedItem.categoryColor, background: `${relatedItem.categoryColor}18` }}
-                    >
-                      {relatedItem.category}
-                    </span>
-                  </div>
-                  <div className="news-card__body">
-                    <time className="news-card__date">{relatedItem.date}</time>
-                    <h3 className="news-card__title">{relatedItem.title}</h3>
-                    <p className="news-card__excerpt">{relatedItem.excerpt}</p>
-                  </div>
-                </motion.a>
-              )
-            })}
+            {related.map((entry) => (
+              <motion.a
+                key={entry.slug}
+                href={`/news/${entry.slug}`}
+                className="news-card news-card--link"
+                variants={rise3d}
+              >
+                <div className="news-card__media">
+                  <img src={entry.cover} alt="" loading="lazy" className="news-card-img" />
+                  <span
+                    className="news-card__badge"
+                    style={{ color: entry.categoryColor, background: `${entry.categoryColor}18` }}
+                  >
+                    {entry.category}
+                  </span>
+                </div>
+                <div className="news-card__body">
+                  <time className="news-card__date">{entry.date}</time>
+                  <h3 className="news-card__title">{entry.title}</h3>
+                  <p className="news-card__excerpt">{entry.excerpt}</p>
+                </div>
+              </motion.a>
+            ))}
           </motion.div>
         </div>
       </section>

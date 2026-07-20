@@ -1,0 +1,73 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  {{ form.media }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+
+{% block usertools %}{% endblock %}
+{% block nav-global %}{% endblock %}
+{% block nav-sidebar %}{% endblock %}
+{% block content_title %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+<div class="mrii-login">
+  <aside class="mrii-login__brand">
+    <div class="mrii-dna-scene" aria-hidden="true">
+      <div class="mrii-dna-scene__glow"></div>
+      <div class="mrii-dna-scene__particles"></div>
+      <div class="mrii-dna-scene__visual">
+        <img
+          class="mrii-dna-scene__img"
+          src="{% static 'cms/dna-login-hero.png' %}"
+          alt=""
+          width="768"
+          height="1024"
+          decoding="async"
+        >
+      </div>
+    </div>
+
+    <div class="mrii-login__brand-copy">
+      <span class="mrii-login__badge">MRII CMS</span>
+      <h1>Sayt matni va<br>rasmlarini boshqaring</h1>
+      <p>Yangilik, shifokor yoki rasmni shu yerdan o‘zgartiring. Saqlagach, ochiq sayt avtomatik yangilanadi.</p>
+    </div>
+  </aside>
+
+  <div class="mrii-login__panel">
+    <h2>Kirish</h2>
+    <p class="mrii-login__hint">Login va parolingizni kiriting</p>
+
+    {% if form.errors and not form.non_field_errors %}
+      <p class="errornote">Iltimos, quyidagi xatolarni tuzating.</p>
+    {% endif %}
+    {% if form.non_field_errors %}
+      {% for error in form.non_field_errors %}
+        <p class="errornote">{{ error }}</p>
+      {% endfor %}
+    {% endif %}
+
+    <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+      <div class="form-row">
+        {{ form.username.errors }}
+        <label for="{{ form.username.id_for_label }}">Login:</label>
+        {{ form.username }}
+      </div>
+      <div class="form-row">
+        {{ form.password.errors }}
+        <label for="{{ form.password.id_for_label }}">Parol:</label>
+        {{ form.password }}
+        <input type="hidden" name="next" value="{{ next }}">
+      </div>
+      <div class="submit-row">
+        <input type="submit" value="Kirish">
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

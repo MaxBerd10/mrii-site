@@ -1,6 +1,8 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { useCms } from '../cms/CmsContext'
+import { fetchAIProduct, isCmsEnabled, type CmsAIDetail } from '../api/client'
 import { media } from '../data/media'
 import { aiPageLabels, aiProducts, getAIProductBySlug } from '../data/aiDetails'
 import { blurUp, rise3d, staggerContainer } from '../lib/animations'
@@ -8,18 +10,56 @@ import SectionBackLink from '../components/ui/SectionBackLink'
 
 const PRODUCT_IMAGES = Object.values(media.ai)
 
+type ViewModel = {
+  slug: string
+  name: string
+  tag: string
+  tagColor: string
+  features: string[]
+  metric: string
+  metricLabel: string
+  image: string
+  overview: string
+  audience: string
+  outcomes: string[]
+  workflow: string[]
+  cases: { title: string; result: string }[]
+  index: number
+}
+
 export default function AIProductPage({ slug }: { slug: string }) {
   const { lang, t } = useLanguage()
-  const match = getAIProductBySlug(slug)
+  const { home } = useCms()
   const labels = aiPageLabels[lang]
+  const staticMatch = getAIProductBySlug(slug)
+  const [cmsDetail, setCmsDetail] = useState<CmsAIDetail | null>(null)
+  const [triedCms, setTriedCms] = useState(!isCmsEnabled())
   const [form, setForm] = useState({ name: '', phone: '', email: '', clinic: '', message: '' })
   const [submitting, setSubmitting] = useState(false)
   const [confirmation, setConfirmation] = useState<null | { requestId: string; phone: string }>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    if (match) document.title = `${t.ai.products[match.index].name} — MRII`
-  }, [match, t])
+  }, [slug])
+
+  useEffect(() => {
+    if (!isCmsEnabled()) {
+      setCmsDetail(null)
+      setTriedCms(true)
+      return
+    }
+    let cancelled = false
+    setTriedCms(false)
+    fetchAIProduct(slug, lang).then((data) => {
+      if (!cancelled) {
+        setCmsDetail(data)
+        setTriedCms(true)
+      }
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [slug, lang])
 
   useEffect(() => {
     if (!confirmation) return
@@ -34,7 +74,65 @@ export default function AIProductPage({ slug }: { slug: string }) {
     }
   }, [confirmation])
 
-  if (!match) {
+  const view: ViewModel | null = (() => {
+    const staticCases = staticMatch?.detail.content[lang].cases ?? []
+    if (cmsDetail) {
+      const staticIndex = aiProducts.findIndex((item) => item.slug === slug)
+      const index = staticIndex >= 0 ? staticIndex : 0
+      const fallbackProduct = t.ai.products[index]
+      return {
+        slug: cmsDetail.slug,
+        name: cmsDetail.name,
+        tag: cmsDetail.tag,
+        tagColor: cmsDetail.tag_color || fallbackProduct?.tagColor || '#5B4CDB',
+        features: cmsDetail.features,
+        metric: cmsDetail.metric,
+        metricLabel: cmsDetail.metric_label,
+        image: cmsDetail.image || PRODUCT_IMAGES[index] || PRODUCT_IMAGES[0],
+        overview: cmsDetail.overview,
+        audience: cmsDetail.audience,
+        outcomes: cmsDetail.outcomes,
+        workflow: cmsDetail.workflow,
+        cases: staticCases,
+        index,
+      }
+    }
+    if (!triedCms && isCmsEnabled()) return null
+    if (!staticMatch) return null
+    const { detail, index } = staticMatch
+    const product = t.ai.products[index]
+    const content = detail.content[lang]
+    return {
+      slug: detail.slug,
+      name: product.name,
+      tag: product.tag,
+      tagColor: product.tagColor,
+      features: product.features,
+      metric: product.metric,
+      metricLabel: product.metricLabel,
+      image: PRODUCT_IMAGES[index],
+      overview: content.overview,
+      audience: content.audience,
+      outcomes: content.outcomes,
+      workflow: content.workflow,
+      cases: content.cases,
+      index,
+    }
+  })()
+
+  useEffect(() => {
+    if (view) document.title = `${view.name} — MRII`
+  }, [view?.name])
+
+  if (!triedCms && isCmsEnabled() && !view) {
+    return (
+      <section className="specialty-not-found">
+        <p>{labels.back}…</p>
+      </section>
+    )
+  }
+
+  if (!view) {
     return (
       <section className="specialty-not-found">
         <h1>404</h1>
@@ -43,13 +141,28 @@ export default function AIProductPage({ slug }: { slug: string }) {
     )
   }
 
-  const { detail, index } = match
-  const product = t.ai.products[index]
-  const content = detail.content[lang]
-  const image = PRODUCT_IMAGES[index]
-  const related = aiProducts
-    .map((item, itemIndex) => ({ ...item, index: itemIndex }))
-    .filter((item) => item.index !== index)
+  const relatedFromCms = home?.aiProducts?.filter((item) => item.slug !== slug)
+  const related = relatedFromCms?.length
+    ? relatedFromCms.map((item, i) => ({
+        slug: item.slug,
+        name: item.name,
+        tag: item.tag,
+        tagColor: item.tag_color,
+        image: item.image || PRODUCT_IMAGES[i] || PRODUCT_IMAGES[0],
+      }))
+    : aiProducts
+        .map((item, itemIndex) => ({ ...item, index: itemIndex }))
+        .filter((item) => item.slug !== slug)
+        .map((item) => {
+          const relatedProduct = t.ai.products[item.index]
+          return {
+            slug: item.slug,
+            name: relatedProduct.name,
+            tag: relatedProduct.tag,
+            tagColor: relatedProduct.tagColor,
+            image: PRODUCT_IMAGES[item.index],
+          }
+        })
 
   const submitDemo = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -75,10 +188,10 @@ export default function AIProductPage({ slug }: { slug: string }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: .55, ease: [0.22, 1, 0.36, 1] }}
           >
-            <img src={image} alt={product.name} />
-            <div className="ai-product-hero__metric" style={{ color: product.tagColor }}>
-              <strong>{product.metric}</strong>
-              <span>{product.metricLabel}</span>
+            <img src={view.image} alt={view.name} />
+            <div className="ai-product-hero__metric" style={{ color: view.tagColor }}>
+              <strong>{view.metric}</strong>
+              <span>{view.metricLabel}</span>
             </div>
           </motion.div>
 
@@ -96,16 +209,16 @@ export default function AIProductPage({ slug }: { slug: string }) {
             <motion.div variants={blurUp} className="ai-product__tag-wrap">
               <span
                 className="ai-product__tag"
-                style={{ color: product.tagColor, background: `${product.tagColor}15` }}
+                style={{ color: view.tagColor, background: `${view.tagColor}15` }}
               >
-                {product.tag}
+                {view.tag}
               </span>
             </motion.div>
-            <motion.h1 variants={blurUp}>{product.name}</motion.h1>
-            <motion.p className="ai-product-hero__lead" variants={blurUp}>{content.overview}</motion.p>
-            <motion.p className="ai-product-hero__audience" variants={blurUp}>{content.audience}</motion.p>
+            <motion.h1 variants={blurUp}>{view.name}</motion.h1>
+            <motion.p className="ai-product-hero__lead" variants={blurUp}>{view.overview}</motion.p>
+            <motion.p className="ai-product-hero__audience" variants={blurUp}>{view.audience}</motion.p>
             <motion.div className="ai-product-hero__actions" variants={blurUp}>
-              <a href="#ai-demo" className="btn-accent" style={{ background: product.tagColor }}>
+              <a href="#ai-demo" className="btn-accent" style={{ background: view.tagColor }}>
                 {labels.demoTitle}
               </a>
               <a href="#ai-cases" className="btn-outline btn-sm">{labels.cases}</a>
@@ -127,39 +240,41 @@ export default function AIProductPage({ slug }: { slug: string }) {
               <span>01</span>
               <h2>{labels.outcomes}</h2>
               <ul>
-                {content.outcomes.map((item) => <li key={item}>{item}</li>)}
+                {view.outcomes.map((item) => <li key={item}>{item}</li>)}
               </ul>
             </motion.article>
             <motion.article className="ai-product-card" variants={rise3d}>
               <span>02</span>
               <h2>{labels.workflow}</h2>
               <ul>
-                {content.workflow.map((item) => <li key={item}>{item}</li>)}
+                {view.workflow.map((item) => <li key={item}>{item}</li>)}
               </ul>
             </motion.article>
             <motion.article className="ai-product-card" variants={rise3d}>
               <span>03</span>
               <h2>{labels.overview}</h2>
               <ul>
-                {product.features.map((item) => <li key={item}>{item}</li>)}
+                {view.features.map((item) => <li key={item}>{item}</li>)}
               </ul>
             </motion.article>
           </motion.div>
 
-          <div id="ai-cases" className="ai-product-cases">
-            <div className="ai-product-cases__head">
-              <span className="specialty-page__eyebrow">{labels.cases}</span>
-              <h2>{labels.cases}</h2>
+          {view.cases.length > 0 && (
+            <div id="ai-cases" className="ai-product-cases">
+              <div className="ai-product-cases__head">
+                <span className="specialty-page__eyebrow">{labels.cases}</span>
+                <h2>{labels.cases}</h2>
+              </div>
+              <div className="ai-product-cases__grid">
+                {view.cases.map((item) => (
+                  <article key={item.title} className="ai-product-case">
+                    <h3>{item.title}</h3>
+                    <p>{item.result}</p>
+                  </article>
+                ))}
+              </div>
             </div>
-            <div className="ai-product-cases__grid">
-              {content.cases.map((item) => (
-                <article key={item.title} className="ai-product-case">
-                  <h3>{item.title}</h3>
-                  <p>{item.result}</p>
-                </article>
-              ))}
-            </div>
-          </div>
+          )}
 
           <div id="ai-demo" className="ai-demo">
             <div className="ai-demo__copy">
@@ -213,7 +328,7 @@ export default function AIProductPage({ slug }: { slug: string }) {
               <button
                 type="submit"
                 className="btn-accent"
-                style={{ background: product.tagColor }}
+                style={{ background: view.tagColor }}
                 disabled={submitting}
               >
                 {submitting ? labels.submitting : labels.demoTitle}
@@ -227,16 +342,13 @@ export default function AIProductPage({ slug }: { slug: string }) {
               <h2>{labels.related}</h2>
             </div>
             <div className="ai-product-related__grid">
-              {related.map((item) => {
-                const relatedProduct = t.ai.products[item.index]
-                return (
-                  <a key={item.slug} href={`/ai/${item.slug}`} className="ai-product-related__card">
-                    <img src={PRODUCT_IMAGES[item.index]} alt="" />
-                    <span style={{ color: relatedProduct.tagColor }}>{relatedProduct.tag}</span>
-                    <strong>{relatedProduct.name}</strong>
-                  </a>
-                )
-              })}
+              {related.map((item) => (
+                <a key={item.slug} href={`/ai/${item.slug}`} className="ai-product-related__card">
+                  <img src={item.image} alt="" />
+                  <span style={{ color: item.tagColor }}>{item.tag}</span>
+                  <strong>{item.name}</strong>
+                </a>
+              ))}
             </div>
           </div>
         </div>
@@ -289,7 +401,7 @@ export default function AIProductPage({ slug }: { slug: string }) {
               <h2 id="ai-demo-success-title">{labels.successTitle}</h2>
               <p>{labels.successDesc}</p>
               <dl className="booking-success__details">
-                <div><dt>{labels.productLabel}</dt><dd>{product.name}</dd></div>
+                <div><dt>{labels.productLabel}</dt><dd>{view.name}</dd></div>
                 <div><dt>{labels.phoneField}</dt><dd>{confirmation.phone}</dd></div>
               </dl>
               <div className="booking-success__actions">

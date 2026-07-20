@@ -1,5 +1,6 @@
 import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { useCms } from '../cms/CmsContext'
 import Reveal from './ui/Reveal'
 import SoftSurface from './ui/SoftSurface'
 import { staggerContainer, blurUp } from '../lib/animations'
@@ -14,6 +15,22 @@ function specialtyTone(index: number) {
 
 export default function Clinic() {
   const { t } = useLanguage()
+  const { home } = useCms()
+  const specialties = home?.specialties?.length
+    ? home.specialties.map((sp) => ({
+        slug: sp.slug,
+        name: sp.name,
+        desc: sp.desc,
+        count: sp.count,
+        image: sp.image || SPECIALTY_IMAGES[0],
+      }))
+    : t.clinic.specialties.map((sp, i) => ({
+        slug: specialtyDetails[i]?.slug ?? `specialty-${i}`,
+        name: sp.name,
+        desc: sp.desc,
+        count: sp.count,
+        image: SPECIALTY_IMAGES[i] ?? SPECIALTY_IMAGES[0],
+      }))
 
   return (
     <section id="clinic" className="clinic-section" style={{ perspective: 1200 }}>
@@ -45,23 +62,23 @@ export default function Clinic() {
           whileInView="show"
           viewport={{ once: true, amount: .1 }}
         >
-          {t.clinic.specialties.map((sp, i) => (
+          {specialties.map((sp, i) => (
             <SoftSurface
-              key={sp.name}
+              key={sp.slug}
               as="article"
               className={`clinic-tile${i === 0 ? ' clinic-tile--featured' : ''}${i === 1 ? ' clinic-tile--tall' : ''}${specialtyTone(i)}`}
               maxTilt={5}
             >
               <a
-                href={`/clinic/${specialtyDetails[i].slug}`}
+                href={`/clinic/${sp.slug}`}
                 className="clinic-tile__trigger"
                 aria-label={`${sp.name}: ${sp.desc}`}
               >
                 <img
-                  src={SPECIALTY_IMAGES[i] ?? SPECIALTY_IMAGES[0]}
+                  src={sp.image}
                   alt=""
                   loading="lazy"
-                  className={`clinic-tile__img${SPECIALTY_IMAGES[i]?.startsWith('/') ? ' clinic-tile__img--3d' : ''}${i === 0 ? ' clinic-tile__img--heart' : ''}${[1, 2, 3, 4, 5, 7, 8, 9, 10, 11].includes(i) ? ' clinic-tile__img--organ' : ''}${i === 1 ? ' clinic-tile__img--brain' : ''}`}
+                  className={`clinic-tile__img${sp.image.startsWith('/') ? ' clinic-tile__img--3d' : ''}${i === 0 ? ' clinic-tile__img--heart' : ''}${[1, 2, 3, 4, 5, 7, 8, 9, 10, 11].includes(i) ? ' clinic-tile__img--organ' : ''}${i === 1 ? ' clinic-tile__img--brain' : ''}`}
                 />
                 <span className="clinic-tile__shade" aria-hidden />
                 <span className="clinic-tile__content">

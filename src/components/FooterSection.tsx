@@ -1,10 +1,14 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { useCms } from '../cms/CmsContext'
 import { rise3d } from '../lib/animations'
 
 export default function FooterSection() {
   const { t } = useLanguage()
+  const { home } = useCms()
+  const copyright = home?.settings?.copyright || t.footer.copyright
+  const license = home?.settings?.license || t.footer.license
   const [form, setForm] = useState({ name: '', phone: '', email: '', service: '', message: '' })
   const [submitting, setSubmitting] = useState(false)
   const [confirmation, setConfirmation] = useState<null | {
@@ -131,7 +135,7 @@ export default function FooterSection() {
         </div>
 
         <div className="hp-footer__bottom">
-          <span>{t.footer.copyright} · {t.footer.license}</span>
+          <span>{copyright} · {license}</span>
           <div className="hp-footer__legal">
             {[t.footer.privacy, t.footer.terms, t.footer.contactsLink].map((l) => (
               <a key={l} href="#">{l}</a>

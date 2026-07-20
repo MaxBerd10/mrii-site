@@ -1,5 +1,6 @@
 import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { useCms } from '../cms/CmsContext'
 import SectionHeader from './ui/SectionHeader'
 import Reveal from './ui/Reveal'
 import { staggerContainer, rise3d, blurUp } from '../lib/animations'
@@ -10,6 +11,26 @@ const NEWS_IMAGES = Object.values(media.news)
 
 export default function NewsSection() {
   const { t } = useLanguage()
+  const { home } = useCms()
+  const items = home?.news?.length
+    ? home.news.map((item) => ({
+        slug: item.slug,
+        date: item.date ?? '',
+        category: item.category,
+        categoryColor: item.category_color,
+        title: item.title,
+        excerpt: item.excerpt,
+        cover: item.cover,
+      }))
+    : t.news.items.map((item, i) => ({
+        slug: newsArticles[i]?.slug ?? `news-${i}`,
+        date: item.date,
+        category: item.category,
+        categoryColor: item.categoryColor,
+        title: item.title,
+        excerpt: item.excerpt,
+        cover: NEWS_IMAGES[i],
+      }))
 
   return (
     <section id="news" className="section section--white news-section">
@@ -29,10 +50,10 @@ export default function NewsSection() {
           whileInView="show"
           viewport={{ once: true, amount: 0.15 }}
         >
-          {t.news.items.map((item, i) => (
+          {items.map((item) => (
             <motion.a
-              key={item.title}
-              href={`/news/${newsArticles[i].slug}`}
+              key={item.slug}
+              href={`/news/${item.slug}`}
               className="news-card news-card--link"
               variants={rise3d}
               whileHover={{ y: -4 }}
@@ -40,7 +61,7 @@ export default function NewsSection() {
             >
               <div className="news-card__media">
                 <img
-                  src={NEWS_IMAGES[i]}
+                  src={item.cover}
                   alt=""
                   loading="lazy"
                   className="news-card-img"

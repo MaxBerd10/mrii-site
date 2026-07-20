@@ -1,7 +1,10 @@
 import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { useCms } from '../cms/CmsContext'
 import Reveal from './ui/Reveal'
 import { staggerContainer, rise3d, blurUp } from '../lib/animations'
+
+const FALLBACK_COLORS = ['#0EA5E9', '#10B981', '#6366F1', '#F59E0B']
 
 function initials(name: string) {
   return name
@@ -14,6 +17,18 @@ function initials(name: string) {
 
 export default function Partners() {
   const { t } = useLanguage()
+  const { home } = useCms()
+  const partnerNames = home?.partners?.length
+    ? home.partners.map((p) => p.name)
+    : t.partners.partnerNames
+  const testimonials = home?.testimonials?.length
+    ? home.testimonials.map((item, i) => ({
+        quote: item.quote,
+        author: item.author,
+        role: item.role,
+        color: FALLBACK_COLORS[i % FALLBACK_COLORS.length],
+      }))
+    : t.partners.testimonials
 
   return (
     <section className="section section--muted partners-section">
@@ -24,7 +39,7 @@ export default function Partners() {
 
         <div className="partners-track-wrap">
           <div className="partners-track">
-            {[...t.partners.partnerNames, ...t.partners.partnerNames].map((name, i) => (
+            {[...partnerNames, ...partnerNames].map((name, i) => (
               <span key={`${name}-${i}`} className="partners-track__name">{name}</span>
             ))}
           </div>
@@ -41,7 +56,7 @@ export default function Partners() {
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
         >
-          {t.partners.testimonials.map((item) => (
+          {testimonials.map((item) => (
             <motion.blockquote
               key={item.author}
               className="testimonial-card"

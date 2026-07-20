@@ -1,0 +1,434 @@
+# MRII CMS — to‘liq o‘zbekcha Django Admin tarjimalari
+msgid ""
+msgstr ""
+"Project-Id-Version: mrii-cms\n"
+"Language: uz\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Home"
+msgstr "Bosh sahifa"
+
+msgid "Save"
+msgstr "Saqlash"
+
+msgid "Save and add another"
+msgstr "Saqlash va yana qo‘shish"
+
+msgid "Save and continue editing"
+msgstr "Saqlash va tahrirlashni davom ettirish"
+
+msgid "Save as new"
+msgstr "Yangi sifatida saqlash"
+
+msgid "Delete"
+msgstr "O‘chirish"
+
+msgid "Delete?"
+msgstr "O‘chirasizmi?"
+
+msgid "Add"
+msgstr "Qo‘shish"
+
+msgid "Change"
+msgstr "O‘zgartirish"
+
+msgid "View"
+msgstr "Ko‘rish"
+
+msgid "History"
+msgstr "Tarix"
+
+msgid "View on site"
+msgstr "Saytda ko‘rish"
+
+msgid "View site"
+msgstr "Saytni ko‘rish"
+
+msgid "Log in"
+msgstr "Kirish"
+
+msgid "Log out"
+msgstr "Chiqish"
+
+msgid "Logged out"
+msgstr "Tizimdan chiqdingiz"
+
+msgid "Change password"
+msgstr "Parolni o‘zgartirish"
+
+msgid "Password change"
+msgstr "Parolni o‘zgartirish"
+
+msgid "Password change successful"
+msgstr "Parol muvaffaqiyatli o‘zgartirildi"
+
+msgid "Welcome,"
+msgstr "Xush kelibsiz,"
+
+msgid "Documentation"
+msgstr "Hujjatlar"
+
+msgid "Filter"
+msgstr "Filtr"
+
+msgid "Clear all filters"
+msgstr "Barcha filtrlarni tozalash"
+
+msgid "Show counts"
+msgstr "Sonlarni ko‘rsatish"
+
+msgid "Hide counts"
+msgstr "Sonlarni yashirish"
+
+msgid "Search"
+msgstr "Qidirish"
+
+msgid "Go"
+msgstr "O‘tish"
+
+msgid "Actions"
+msgstr "Amallar"
+
+msgid "Run the selected action"
+msgstr "Tanlangan amalni bajarish"
+
+msgid "Delete selected %(verbose_name_plural)s"
+msgstr "Tanlangan %(verbose_name_plural)s ni o‘chirish"
+
+msgid "Are you sure?"
+msgstr "Ishonchingiz komilmi?"
+
+msgid "Yes"
+msgstr "Ha"
+
+msgid "No"
+msgstr "Yo‘q"
+
+msgid "All"
+msgstr "Barchasi"
+
+msgid "Remove"
+msgstr "Olib tashlash"
+
+msgid "Choose all"
+msgstr "Hammasini tanlash"
+
+msgid "Clear all"
+msgstr "Hammasini tozalash"
+
+msgid "Choose a Date"
+msgstr "Sanani tanlang"
+
+msgid "Choose a Time"
+msgstr "Vaqtni tanlang"
+
+msgid "Choose a date"
+msgstr "Sanani tanlang"
+
+msgid "Choose a time"
+msgstr "Vaqtni tanlang"
+
+msgid "Today"
+msgstr "Bugun"
+
+msgid "Now"
+msgstr "Hozir"
+
+msgid "Cancel"
+msgstr "Bekor qilish"
+
+msgid "Close"
+msgstr "Yopish"
+
+msgid "Back to list"
+msgstr "Ro‘yxatga qaytish"
+
+msgid "Add %(name)s"
+msgstr "%(name)s qo‘shish"
+
+msgid "Change %(name)s"
+msgstr "%(name)s ni o‘zgartirish"
+
+msgid "Select %(name)s to change"
+msgstr "%(name)s ni tanlang"
+
+msgid "Select %s to change"
+msgstr "%s ni tanlang"
+
+msgid "Select %s to view"
+msgstr "%s ni ko‘rish"
+
+msgid "Add %s"
+msgstr "%s qo‘shish"
+
+msgid "The %(name)s \"%(obj)s\" was added successfully."
+msgstr "%(name)s \"%(obj)s\" muvaffaqiyatli qo‘shildi."
+
+msgid "The %(name)s \"%(obj)s\" was changed successfully."
+msgstr "%(name)s \"%(obj)s\" muvaffaqiyatli o‘zgartirildi."
+
+msgid "The %(name)s \"%(obj)s\" was deleted successfully."
+msgstr "%(name)s \"%(obj)s\" muvaffaqiyatli o‘chirildi."
+
+msgid "You may edit it again below."
+msgstr "Pastda yana tahrirlashingiz mumkin."
+
+msgid "You may add another %(name)s below."
+msgstr "Pastda yana %(name)s qo‘shishingiz mumkin."
+
+msgid "Please correct the error below."
+msgstr "Iltimos, quyidagi xatoni tuzating."
+
+msgid "Please correct the errors below."
+msgstr "Iltimos, quyidagi xatolarni tuzating."
+
+msgid "Error:"
+msgstr "Xato:"
+
+msgid "Delete multiple objects"
+msgstr "Bir nechta obyektni o‘chirish"
+
+msgid "Objects"
+msgstr "Obyektlar"
+
+msgid "Summary"
+msgstr "Qisqacha"
+
+msgid "By"
+msgstr "Kimdan"
+
+msgid "Date/time"
+msgstr "Sana/vaqt"
+
+msgid "Action"
+msgstr "Amal"
+
+msgid "Type"
+msgstr "Tur"
+
+msgid "This object doesn't have a change history."
+msgstr "Bu obyektning o‘zgarishlar tarixi yo‘q."
+
+msgid "No date"
+msgstr "Sana yo‘q"
+
+msgid "Added:"
+msgstr "Qo‘shildi:"
+
+msgid "Changed:"
+msgstr "O‘zgartirildi:"
+
+msgid "Deleted:"
+msgstr "O‘chirildi:"
+
+msgid "entry"
+msgstr "yozuv"
+
+msgid "entries"
+msgstr "yozuvlar"
+
+msgid "Recent actions"
+msgstr "So‘nggi amallar"
+
+msgid "My actions"
+msgstr "Mening amallarim"
+
+msgid "None available"
+msgstr "Mavjud emas"
+
+msgid "Unknown content"
+msgstr "Noma’lum kontent"
+
+msgid "Authentication and Authorization"
+msgstr "Autentifikatsiya va ruxsatlar"
+
+msgid "Groups"
+msgstr "Guruhlar"
+
+msgid "Users"
+msgstr "Foydalanuvchilar"
+
+msgid "Group"
+msgstr "Guruh"
+
+msgid "User"
+msgstr "Foydalanuvchi"
+
+msgid "Username"
+msgstr "Login"
+
+msgid "Password"
+msgstr "Parol"
+
+msgid "Password confirmation"
+msgstr "Parolni tasdiqlash"
+
+msgid "Personal info"
+msgstr "Shaxsiy ma’lumot"
+
+msgid "Permissions"
+msgstr "Ruxsatlar"
+
+msgid "Important dates"
+msgstr "Muhim sanalar"
+
+msgid "Active"
+msgstr "Faol"
+
+msgid "Staff status"
+msgstr "Xodim holati"
+
+msgid "Superuser status"
+msgstr "Superuser holati"
+
+msgid "First name"
+msgstr "Ism"
+
+msgid "Last name"
+msgstr "Familiya"
+
+msgid "Email address"
+msgstr "Email"
+
+msgid "Last login"
+msgstr "Oxirgi kirish"
+
+msgid "Date joined"
+msgstr "Ro‘yxatdan o‘tgan sana"
+
+msgid "Enter the same password as before, for verification."
+msgstr "Tasdiqlash uchun xuddi shu parolni qayta kiriting."
+
+msgid "Your password was changed."
+msgstr "Parolingiz o‘zgartirildi."
+
+msgid "Please enter your old password, for security’s sake, and then enter your new password twice so we can verify you typed it in correctly."
+msgstr "Xavfsizlik uchun eski parolingizni, keyin yangi parolni ikki marta kiriting."
+
+msgid "Old password"
+msgstr "Eski parol"
+
+msgid "New password"
+msgstr "Yangi parol"
+
+msgid "New password confirmation"
+msgstr "Yangi parolni tasdiqlash"
+
+msgid "Change my password"
+msgstr "Parolimni o‘zgartirish"
+
+msgid "Hold down “Control”, or “Command” on a Mac, to select more than one."
+msgstr "Bir nechtasini tanlash uchun Control (Mac’da Command) tugmasini bosib turing."
+
+msgid "You don't have permission to view or edit anything."
+msgstr "Hech narsani ko‘rish yoki tahrirlashga ruxsatingiz yo‘q."
+
+msgid "Models in the %(name)s application"
+msgstr "%(name)s ilovasidagi modellar"
+
+msgid "Add link"
+msgstr "Qo‘shish havolasi"
+
+msgid "Change link"
+msgstr "O‘zgartirish havolasi"
+
+msgid "You are authenticated as %(username)s, but are not authorized to access this page. Would you like to login to a different account?"
+msgstr "Siz %(username)s sifatida kirdingiz, lekin bu sahifaga ruxsat yo‘q. Boshqa akkaunt bilan kirasizmi?"
+
+msgid "Forgotten your password or username?"
+msgstr "Parol yoki loginni unutdingizmi?"
+
+msgid "Skip to main content"
+msgstr "Asosiy kontentga o‘tish"
+
+msgid "Toggle theme (current theme: auto)"
+msgstr "Mavzuni almashtirish (joriy: avto)"
+
+msgid "Toggle theme (current theme: light)"
+msgstr "Mavzuni almashtirish (joriy: yorug‘)"
+
+msgid "Toggle theme (current theme: dark)"
+msgstr "Mavzuni almashtirish (joriy: qorong‘u)"
+
+msgid "Toggle navigation"
+msgstr "Navigatsiyani ochish/yopish"
+
+msgid "Start typing to filter…"
+msgstr "Filtrlash uchun yozing…"
+
+msgid "Filter navigation items"
+msgstr "Navigatsiya elementlarini filtrlang"
+
+msgid "Ascending order"
+msgstr "O‘sish tartibi"
+
+msgid "Descending order"
+msgstr "Kamayish tartibi"
+
+msgid "Sort by"
+msgstr "Saralash"
+
+msgid "0 of %(cnt)s selected"
+msgstr "%(cnt)s tadan 0 tasi tanlandi"
+
+msgid "%(total_count)s selected"
+msgid_plural "All %(total_count)s selected"
+msgstr[0] "Jami %(total_count)s ta tanlandi"
+
+msgid "%(sel)s of %(cnt)s selected"
+msgid_plural "%(sel)s of %(cnt)s selected"
+msgstr[0] "%(cnt)s tadan %(sel)s tasi tanlandi"
+
+msgid "Delete selected objects"
+msgstr "Tanlangan obyektlarni o‘chirish"
+
+msgid "Can add %(name)s"
+msgstr "%(name)s qo‘sha oladi"
+
+msgid "Can change %(name)s"
+msgstr "%(name)s ni o‘zgartira oladi"
+
+msgid "Can delete %(name)s"
+msgstr "%(name)s ni o‘chira oladi"
+
+msgid "Can view %(name)s"
+msgstr "%(name)s ni ko‘ra oladi"
+
+msgid "This action will permanently delete the selected items."
+msgstr "Bu amal tanlangan elementlarni butunlay o‘chiradi."
+
+msgid "Yes, I’m sure"
+msgstr "Ha, ishonchim komil"
+
+msgid "No, take me back"
+msgstr "Yo‘q, orqaga qaytish"
+
+msgid "user"
+msgstr "foydalanuvchi"
+
+msgid "users"
+msgstr "Foydalanuvchilar"
+
+msgid "group"
+msgstr "guruh"
+
+msgid "groups"
+msgstr "Guruhlar"
+
+msgid "password"
+msgstr "parol"
+
+msgid "Passwords"
+msgstr "Parollar"
+
+msgid "Log in again"
+msgstr "Qayta kirish"
+
+msgid "Thanks for spending some quality time with the web site today."
+msgstr "MRII CMS dan foydalanganingiz uchun rahmat."
+
+msgid "username"
+msgstr "Login"

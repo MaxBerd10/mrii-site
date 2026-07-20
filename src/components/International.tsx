@@ -1,11 +1,14 @@
 import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { useCms } from '../cms/CmsContext'
 import SectionHeader from './ui/SectionHeader'
 import Reveal from './ui/Reveal'
 import { rise3d, staggerContainer, blurUp } from '../lib/animations'
 
 export default function International() {
   const { t } = useLanguage()
+  const { home } = useCms()
+  const services = home?.international?.length ? home.international : t.international.services
 
   return (
     <section id="international" className="section section--white">
@@ -38,7 +41,7 @@ export default function International() {
           whileInView="show"
           viewport={{ once: true, amount: 0.15 }}
         >
-          {t.international.services.map((s, i) => (
+          {services.map((s, i) => (
             <motion.div
               key={i}
               className="card card--pad international-card"

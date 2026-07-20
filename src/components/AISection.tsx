@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { useCms } from '../cms/CmsContext'
 import SectionHeader from './ui/SectionHeader'
 import Reveal from './ui/Reveal'
 import { blurUp, rise3d } from '../lib/animations'
@@ -11,9 +12,29 @@ const PRODUCT_IMAGES = Object.values(media.ai)
 
 export default function AISection() {
   const { t } = useLanguage()
+  const { home } = useCms()
   const [active, setActive] = useState(0)
-  const p = t.ai.products[active]
-  const productHref = `/ai/${AI_PRODUCT_SLUGS[active]}`
+  const products = home?.aiProducts?.length
+    ? home.aiProducts.map((prod, i) => ({
+        id: prod.id || prod.slug,
+        name: prod.name,
+        tag: prod.tag,
+        tagColor: prod.tag_color,
+        desc: prod.desc,
+        features: prod.features,
+        metric: prod.metric,
+        metricLabel: prod.metric_label,
+        image: prod.image || PRODUCT_IMAGES[i],
+        slug: prod.slug,
+      }))
+    : t.ai.products.map((prod, i) => ({
+        ...prod,
+        image: PRODUCT_IMAGES[i],
+        slug: AI_PRODUCT_SLUGS[i],
+      }))
+  const safeActive = Math.min(active, Math.max(products.length - 1, 0))
+  const p = products[safeActive] ?? products[0]
+  const productHref = `/ai/${p?.slug ?? AI_PRODUCT_SLUGS[0]}`
 
   return (
     <section id="ai" className="section section--muted">
@@ -28,20 +49,20 @@ export default function AISection() {
         </Reveal>
 
         <div className="product-tabs" role="tablist">
-          {t.ai.products.map((prod, i) => (
+          {products.map((prod, i) => (
             <motion.button
               key={prod.id}
               type="button"
               role="tab"
-              aria-selected={active === i}
+              aria-selected={safeActive === i}
               aria-controls={`ai-panel-${i}`}
               id={`ai-tab-${i}`}
-              className={`product-tab ${active === i ? 'product-tab--active' : ''}`}
-              style={active === i ? { borderColor: prod.tagColor } : undefined}
+              className={`product-tab ${safeActive === i ? 'product-tab--active' : ''}`}
+              style={safeActive === i ? { borderColor: prod.tagColor } : undefined}
               onClick={() => setActive(i)}
               whileTap={{ scale: 0.97 }}
             >
-              {active === i && (
+              {safeActive === i && (
                 <motion.span
                   layoutId="product-tab-active"
                   className="product-tab__glow"
@@ -50,12 +71,12 @@ export default function AISection() {
                 />
               )}
               <span className="product-tab__thumb">
-                <img src={PRODUCT_IMAGES[i]} alt="" loading="lazy" />
+                <img src={prod.image} alt="" loading="lazy" />
               </span>
               <span className="product-tab__copy">
                 <span
                   className="product-tab__tag"
-                  style={{ color: active === i ? prod.tagColor : '#6B7280' }}
+                  style={{ color: safeActive === i ? prod.tagColor : '#6B7280' }}
                 >
                   {prod.tag}
                 </span>
@@ -66,9 +87,9 @@ export default function AISection() {
         </div>
 
         <motion.div
-          id={`ai-panel-${active}`}
+          id={`ai-panel-${safeActive}`}
           role="tabpanel"
-          aria-labelledby={`ai-tab-${active}`}
+          aria-labelledby={`ai-tab-${safeActive}`}
           className="ai-console"
           variants={rise3d}
           initial="hidden"
@@ -78,8 +99,8 @@ export default function AISection() {
           <div className="ai-console__visual" style={{ position: 'relative', minHeight: 280, overflow: 'hidden' }}>
             <AnimatePresence mode="wait">
               <motion.img
-                key={`img-${active}`}
-                src={PRODUCT_IMAGES[active]}
+                key={`img-${safeActive}`}
+                src={p.image}
                 alt={p.name}
                 className="ai-console__photo"
                 initial={{ opacity: 0, scale: 1.04 }}
@@ -90,7 +111,7 @@ export default function AISection() {
             </AnimatePresence>
             <div className="ai-console__shade" aria-hidden />
             <motion.div
-              key={`metric-${active}`}
+              key={`metric-${safeActive}`}
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.08 }}
@@ -103,7 +124,7 @@ export default function AISection() {
 
           <AnimatePresence mode="wait">
             <motion.div
-              key={`body-${active}`}
+              key={`body-${safeActive}`}
               className="ai-console__body card--pad"
               initial={{ opacity: 0, x: 16 }}
               animate={{ opacity: 1, x: 0 }}

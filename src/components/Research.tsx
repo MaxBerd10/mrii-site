@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { useCms } from '../cms/CmsContext'
 import SectionHeader from './ui/SectionHeader'
 import Reveal from './ui/Reveal'
 import { blurUp, fadeUp, staggerContainer, fadeUpSmall } from '../lib/animations'
@@ -11,13 +12,16 @@ const CAPABILITY_LIMIT = 8
 
 export default function Research() {
   const { t } = useLanguage()
+  const { home } = useCms()
   const [tab, setTab] = useState(0)
-  const whyItems = t.research.whyItems.slice(0, WHY_LIMIT)
-  const capabilities = t.research.capabilities.slice(0, CAPABILITY_LIMIT)
+  const cms = home?.research
+  const whyItems = (cms?.whyItems?.length ? cms.whyItems : t.research.whyItems).slice(0, WHY_LIMIT)
+  const capabilities = (cms?.capabilities?.length ? cms.capabilities : t.research.capabilities).slice(0, CAPABILITY_LIMIT)
+  const studies = cms?.studies?.length ? cms.studies : t.research.studies
   const stats = [
-    [t.research.capabilities[1]?.value ?? '18+', t.research.capabilities[1]?.label ?? ''],
-    [t.research.capabilities[2]?.value ?? '50 000+', t.research.capabilities[2]?.label ?? ''],
-    [t.research.capabilities[3]?.value ?? '35', t.research.capabilities[3]?.label ?? ''],
+    [capabilities[1]?.value ?? '18+', capabilities[1]?.label ?? ''],
+    [capabilities[2]?.value ?? '50 000+', capabilities[2]?.label ?? ''],
+    [capabilities[3]?.value ?? '35', capabilities[3]?.label ?? ''],
   ] as const
 
   return (
@@ -25,9 +29,9 @@ export default function Research() {
       <div className="container-main">
         <Reveal variants={blurUp}>
           <SectionHeader
-            label={t.research.label}
-            title={<>{t.research.title1} <em>{t.research.titleEm}</em></>}
-            description={t.research.description}
+            label={cms?.label || t.research.label}
+            title={<>{cms?.title1 || t.research.title1} <em>{cms?.titleEm || t.research.titleEm}</em></>}
+            description={cms?.description || t.research.description}
             accent="#5B4CDB"
           />
         </Reveal>
@@ -74,8 +78,8 @@ export default function Research() {
 
             {tab === 0 && (
               <div id="research-panel-0" role="tabpanel" aria-labelledby="research-tab-0">
-                <h3 className="research-console__title">{t.research.whyTitle}</h3>
-                <div className="research-why-grid">
+                <h3 className="research-console__title">{cms?.whyTitle || t.research.whyTitle}</h3>
+                  <div className="research-why-grid">
                   {whyItems.map((item, i) => (
                     <div key={i} className="card research-console__item research-why-item">
                       <div className="research-why-item__dot" aria-hidden />
@@ -83,13 +87,13 @@ export default function Research() {
                     </div>
                   ))}
                 </div>
-                <a href="#contacts" className="btn-outline btn-sm">{t.research.sponsorBtn}</a>
+                <a href="#contacts" className="btn-outline btn-sm">{cms?.sponsorBtn || t.research.sponsorBtn}</a>
               </div>
-            )}
+              )}
 
-            {tab === 1 && (
+              {tab === 1 && (
               <div id="research-panel-1" role="tabpanel" aria-labelledby="research-tab-1" className="research-studies">
-                {t.research.studies.slice(0, 3).map(s => (
+                {studies.slice(0, 3).map(s => (
                   <div key={s.id} className="card research-study">
                     <div className="flex-row--between" style={{ alignItems: 'flex-start', gap: 12 }}>
                       <div style={{ minWidth: 0, flex: 1 }}>

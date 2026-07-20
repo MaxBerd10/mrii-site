@@ -1,0 +1,16 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+{% block nav-sidebar %}{% endblock %}
+{% block usertools %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block content_title %}{% endblock %}
+
+{% block content %}
+<div class="mrii-logged-out">
+  <h2 style="margin:0 0 8px;font-family:DM Sans,system-ui,sans-serif;">Tizimdan chiqdingiz</h2>
+  <p>MRII CMS dan muvaffaqiyatli chiqdingiz.</p>
+  <p><a href="{% url 'admin:login' %}">Qayta kirish</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block bodyclass %}{{ block.super }} dashboard mrii-index{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block content %}
+{% include "admin/includes/mrii_icons.html" %}
+
+<div id="content-main">
+  <div class="mrii-dash">
+    <header class="mrii-hero">
+      <div class="mrii-hero__copy">
+        <p class="mrii-kicker">MRII CMS</p>
+        <h2>Sayt kontentini shu yerdan boshqarasiz</h2>
+        <p class="mrii-hero__lead">
+          Kerakli bo‘limni oching, matn yoki rasmni o‘zgartiring va <strong>Saqlash</strong> tugmasini bosing.
+          Sayt (API ulangan bo‘lsa) yangilanadi — dasturchi kerak emas.
+        </p>
+        <ol class="mrii-steps" aria-label="Ish tartibi">
+          <li><span>1</span> Bo‘lim tanlang</li>
+          <li><span>2</span> Matn / rasmni o‘zgartiring</li>
+          <li><span>3</span> Saqlash</li>
+        </ol>
+      </div>
+      <div class="mrii-hero__aside">
+        <div class="mrii-hero__aside-visual" aria-hidden="true">
+          <img src="{% static 'cms/dna-login-hero.png' %}" alt="" width="400" height="520" decoding="async">
+        </div>
+        <div class="mrii-hero__aside-body">
+          <p class="mrii-hero__aside-label">3 tilda ishlaydi</p>
+          <div class="mrii-hero__langs" aria-hidden="true">
+            <span>UZ</span>
+            <span>RU</span>
+            <span>EN</span>
+          </div>
+          <ul class="mrii-hero__tips">
+            <li>Har til — alohida maydon</li>
+            <li>Rasm — «Rasm» bo‘limidan</li>
+            <li>Saqlashdan keyin sayt yangilanadi</li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <div class="mrii-dash__stats">
+      {% for s in mrii_stats %}
+        <div class="mrii-stat mrii-stat--{{ s.tone }}">
+          <span class="mrii-stat__label">{{ s.label }}</span>
+          <span class="mrii-stat__value">{{ s.value }}</span>
+        </div>
+      {% endfor %}
+    </div>
+
+    <section class="mrii-section">
+      <div class="mrii-section__head">
+        <h3>Asosiy bo‘limlar</h3>
+        <p>Kunlik ishlar uchun — shu yerdan boshlang</p>
+      </div>
+      <div class="mrii-cards">
+        {% for card in mrii_primary %}
+          <a class="mrii-card mrii-card--{{ card.tone }}" href="{{ card.url }}">
+            <span class="mrii-card__icon" aria-hidden="true">
+              <svg><use href="#mrii-i-{{ card.icon }}"></use></svg>
+            </span>
+            <span class="mrii-card__body">
+              <span class="mrii-card__meta">{{ card.meta }}</span>
+              <span class="mrii-card__title">{{ card.title }}</span>
+              <span class="mrii-card__desc">{{ card.desc }}</span>
+            </span>
+            <span class="mrii-card__go" aria-hidden="true">→</span>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="mrii-section">
+      <div class="mrii-section__head">
+        <h3>Qo‘shimcha</h3>
+        <p>Kamroq o‘zgaradigan bo‘limlar</p>
+      </div>
+      <div class="mrii-list">
+        {% for card in mrii_secondary %}
+          <a class="mrii-list__item" href="{{ card.url }}">
+            <span class="mrii-list__icon" aria-hidden="true">
+              <svg><use href="#mrii-i-{{ card.icon }}"></use></svg>
+            </span>
+            <span class="mrii-list__text">
+              <strong>{{ card.title }}</strong>
+              <small>{{ card.desc }}</small>
+            </span>
+            <span class="mrii-list__go" aria-hidden="true">→</span>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}
