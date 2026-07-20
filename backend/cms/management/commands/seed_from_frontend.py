@@ -69,7 +69,7 @@ class Command(BaseCommand):
             defaults={
                 'phone': '+998 (71) 234-56-78',
                 'hours': 'Du–Sha 08:00–20:00',
-                'institute_name': 'MRII',
+                'institute_name': 'Medical Research & Innovation Institute (MRII)',
                 'badge_uz': 'TIBBIY INSTITUT',
                 'badge_ru': 'МЕДИЦИНСКИЙ ИНСТИТУТ',
                 'badge_en': 'MEDICAL INSTITUTE',

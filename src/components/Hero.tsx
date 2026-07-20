@@ -40,7 +40,8 @@ export default function Hero() {
   const cameraScale = useTransform(scrollYProgress, [0, .45, 1], [1, 1.12, 1.32])
   const settings = home?.settings
   const hero = home?.hero
-  const instituteName = (settings?.institute_name || t.hero.instituteName).replace(' (MRII)', '')
+  // Brand title stays on designed copy; CMS supplies phone / slogan / media.
+  const instituteName = t.hero.instituteName.replace(' (MRII)', '')
   const slogan = settings?.slogan || t.hero.instituteSlogan
   const certs = hero?.certs || t.hero.certs
   const phone = settings?.phone || t.topBar.phone
