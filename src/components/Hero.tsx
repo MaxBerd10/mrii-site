@@ -28,6 +28,7 @@ export default function Hero() {
   const { t } = useLanguage()
   const { home } = useCms()
   const reduce = useReducedMotion()
+  const [statsActive, setStatsActive] = useState(false)
   const [ready, setReady] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({
