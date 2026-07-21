@@ -23,6 +23,18 @@ def pick(obj, base: str, lang: str, default: str = '') -> str:
     return default
 
 
+def absolute_frontend_url(path: str) -> str:
+    """Turn /images/... into https://frontend/images/... for admin/API consumers."""
+    if not path:
+        return ''
+    if path.startswith('http://') or path.startswith('https://'):
+        return path
+    if path.startswith('/'):
+        base = getattr(settings, 'FRONTEND_URL', '').rstrip('/')
+        return f'{base}{path}' if base else path
+    return path
+
+
 def media_url(request, file_field, url_field: str = '') -> str:
     f = file_field
     if f:
@@ -31,12 +43,8 @@ def media_url(request, file_field, url_field: str = '') -> str:
         except ValueError:
             pass
     if url_field:
-        if url_field.startswith('http://') or url_field.startswith('https://'):
-            return url_field
-        if url_field.startswith('/'):
-            # Frontend public path — return as-is for Vite to serve
-            return url_field
-    return url_field or ''
+        return absolute_frontend_url(url_field)
+    return ''
 
 
 def split_pipe(text: str) -> list[str]:

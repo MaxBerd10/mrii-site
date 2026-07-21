@@ -1,23 +1,22 @@
-# figma-make-app
+# MRII site (agent notes)
 
-React + Vite + Tailwind CSS project running inside Figma Make.
+React + Vite + Tailwind CSS frontend + Django CMS in `backend/`.
 
-## Development Server
+## Key paths
 
-A Vite development server is **always running** on `$PORT` (default 8443). You don't need to start it manually.
+- `src/App.tsx` — routing / homepage sections
+- `src/main.tsx` — entry (`./styles/index.css`)
+- `src/styles/` — tokens, base, scenes, sections
+- `backend/` — Django admin + `/api/`
+- `docker-compose.yml` — Postgres + web (port **8001**)
+- `README.md` — setup for humans
 
-- Preview URL: The user can access the running app through the preview panel
-- Hot reload: Changes to source files are reflected immediately
+## Dev
 
-## Key Files
-
-- `src/App.tsx` - Main application component
-- `src/main.tsx` - React entry point
-- `src/index.css` - Global styles and Tailwind CSS import
-- `package.json` - Dependencies and scripts
-- `vite.config.ts` - Vite configuration
-- `.mise.toml` - Toolchain versions (Node.js, pnpm)
+- Vite default port: `$PORT` or **8443**
+- API often on **8001** via Compose
+- Set `VITE_API_URL` to the Django origin; empty = static fallback
 
 ## Styling
 
-This project uses **Tailwind CSS v4** for styling. Use Tailwind utility classes directly in JSX. Tailwind is loaded via the Vite plugin — no PostCSS config needed.
+Tailwind CSS v4 via Vite plugin. Prefer utilities + existing CSS modules in `src/styles/`. Do not resurrect legacy `src/index.css`.

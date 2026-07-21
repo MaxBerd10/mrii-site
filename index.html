@@ -1,28 +1,28 @@
 <!doctype html>
-<html lang="<!-- figma:lang -->">
+<html lang="uz">
   <head>
-    <!-- figma:head-start -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><!-- figma:title --></title>
+    <meta
+      name="description"
+      content="Davolash, fan, ta'lim va AI-texnologiyalar — Medical Research & Innovation Institute (MRII)"
+    />
+    <title>MRII — Innovatsion tibbiyot instituti</title>
     <script>
       // Prevent native hash scroll on load (it fights our custom jump → bounce).
       (function () {
-        if (!location.hash || location.hash === '#') return;
-        document.documentElement.classList.add('no-smooth-scroll');
-        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        if (!location.hash || location.hash === '#') return
+        document.documentElement.classList.add('no-smooth-scroll')
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
         try {
-          sessionStorage.setItem('mrii-hash', location.hash);
+          sessionStorage.setItem('mrii-hash', location.hash)
         } catch (_) {}
-        history.replaceState(null, '', location.pathname + location.search);
-      })();
+        history.replaceState(null, '', location.pathname + location.search)
+      })()
     </script>
-    <!-- figma:head-end -->
   </head>
   <body>
-    <!-- figma:body-start -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- figma:body-end -->
   </body>
 </html>

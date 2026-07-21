@@ -6,6 +6,7 @@ from django.utils.html import format_html
 from . import models
 from .admin_site import mrii_admin_site
 from .i18n_fill import autofill_from_uz
+from .utils import absolute_frontend_url
 
 
 mrii_admin_site.register(User, UserAdmin)
@@ -25,12 +26,12 @@ def thumb(url_field, file_field):
             except ValueError:
                 url = ''
         if not url:
-            url = getattr(obj, url_field, '') or ''
+            url = absolute_frontend_url(getattr(obj, url_field, '') or '')
         if not url:
             return '—'
         return format_html(
             '<img src="{}" style="height:44px;width:44px;object-fit:cover;border-radius:10px;'
-            'box-shadow:0 4px 10px rgba(12,27,42,.12);" />',
+            'box-shadow:0 4px 10px rgba(12,27,42,.12);" alt="" />',
             url,
         )
 
@@ -230,14 +231,21 @@ class SpecialtyAdmin(AutoTranslateAdmin):
 
 @admin.register(models.Doctor, site=mrii_admin_site)
 class DoctorAdmin(AutoTranslateAdmin):
-    list_display = ('name', 'specialty_uz', 'experience', 'order', 'is_active', 'preview')
+    list_display = ('name', 'specialty_uz', 'experience', 'order', 'is_active', 'preview', 'quick_delete')
     list_editable = ('order', 'is_active')
+    list_display_links = ('name',)
     search_fields = ('name', 'specialty_uz', 'specialty_ru', 'specialty_en')
+    list_filter = ('is_active',)
     list_per_page = 25
+    actions = ('delete_selected', 'make_inactive', 'make_active')
     preview = thumb('photo_url', 'photo')
     fieldsets = (
         ('Asosiy', {
-            'description': 'Shifokor ismi, tajriba va foto. Ism barcha tillarda bir xil ko‘rinadi.',
+            'description': (
+                'Yangi shifokor: «Shifokor qo‘shish». '
+                'O‘chirish: pastdagi qizil «O‘chirish» yoki ro‘yxatdagi belgilab «Tanlanganlarni o‘chirish». '
+                'Vaqtincha yashirish uchun «Faol» ni o‘chiring.'
+            ),
             'fields': ('name', 'experience', 'papers', 'studies', 'is_active'),
         }),
         ('O‘zbekcha', {
@@ -268,6 +276,26 @@ class DoctorAdmin(AutoTranslateAdmin):
             'fields': ('color', 'order'),
         }),
     )
+
+    @admin.display(description='O‘chirish')
+    def quick_delete(self, obj):
+        from django.urls import reverse
+
+        url = reverse('admin:cms_doctor_delete', args=[obj.pk])
+        return format_html(
+            '<a class="mrii-row-delete" href="{}">O‘chirish</a>',
+            url,
+        )
+
+    @admin.action(description='Tanlanganlarni faolsiz qilish (saytdan yashirish)')
+    def make_inactive(self, request, queryset):
+        updated = queryset.update(is_active=False)
+        self.message_user(request, f'{updated} ta shifokor saytdan yashirildi.', messages.SUCCESS)
+
+    @admin.action(description='Tanlanganlarni faol qilish')
+    def make_active(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, f'{updated} ta shifokor faollashtirildi.', messages.SUCCESS)
 
     def formfield_for_dbfield(self, db_field, request, **kwargs):
         from django import forms

@@ -178,7 +178,7 @@ class Command(BaseCommand):
             models.Specialty.objects.update_or_create(
                 slug=slug,
                 defaults={
-                    'order': i,
+                    'order': i + 1,
                     'icon': icon,
                     'doctor_count': count,
                     'name_uz': nu, 'name_ru': nr, 'name_en': ne,
@@ -218,7 +218,7 @@ class Command(BaseCommand):
             models.Doctor.objects.update_or_create(
                 name=name,
                 defaults={
-                    'order': i,
+                    'order': i + 1,
                     'role_uz': ru_uz, 'role_ru': ru_ru, 'role_en': ru_en,
                     'specialty_uz': su, 'specialty_ru': sr, 'specialty_en': se,
                     'experience': exp, 'papers': papers, 'studies': studies,
@@ -289,13 +289,13 @@ class Command(BaseCommand):
         for i, item in enumerate(items):
             models.NewsArticle.objects.update_or_create(
                 slug=item['slug'],
-                defaults={**item, 'order': i, 'is_published': True},
+                defaults={**item, 'order': i + 1, 'is_published': True},
             )
 
     def seed_ai(self):
         products = [
             {
-                'slug': 'doctor-assistant', 'product_key': 'doctor', 'order': 0,
+                'slug': 'doctor-assistant', 'product_key': 'doctor', 'order': 1,
                 'name_uz': 'AI Doctor Assistant', 'name_ru': 'AI Doctor Assistant', 'name_en': 'AI Doctor Assistant',
                 'tag_uz': 'Klinik yechim', 'tag_ru': 'Клиническое решение', 'tag_en': 'Clinical tool',
                 'tag_color': '#0EA5E9',
@@ -323,7 +323,7 @@ class Command(BaseCommand):
                 'image_url': '/images/medical/therapy-ai-3d.png',
             },
             {
-                'slug': 'radiology', 'product_key': 'radiology', 'order': 1,
+                'slug': 'radiology', 'product_key': 'radiology', 'order': 2,
                 'name_uz': 'AI Radiology', 'name_ru': 'AI Radiology', 'name_en': 'AI Radiology',
                 'tag_uz': 'Radiologik AI', 'tag_ru': 'Радиологический AI', 'tag_en': 'Radiology AI',
                 'tag_color': '#6366F1',
@@ -351,7 +351,7 @@ class Command(BaseCommand):
                 'image_url': '/images/medical/diagnostics-3d.png',
             },
             {
-                'slug': 'ultrasound', 'product_key': 'ultrasound', 'order': 2,
+                'slug': 'ultrasound', 'product_key': 'ultrasound', 'order': 3,
                 'name_uz': 'AI Ultrasound', 'name_ru': 'AI Ultrasound', 'name_en': 'AI Ultrasound',
                 'tag_uz': 'UTT yordamchisi', 'tag_ru': 'Помощник УЗИ', 'tag_en': 'Ultrasound aid',
                 'tag_color': '#10B981',
@@ -379,7 +379,7 @@ class Command(BaseCommand):
                 'image_url': '/images/medical/gynecology-3d.png',
             },
             {
-                'slug': 'clinical-research', 'product_key': 'clinical-research', 'order': 3,
+                'slug': 'clinical-research', 'product_key': 'clinical-research', 'order': 4,
                 'name_uz': 'AI Clinical Research', 'name_ru': 'AI Clinical Research', 'name_en': 'AI Clinical Research',
                 'tag_uz': 'KT uchun', 'tag_ru': 'Для КИ', 'tag_en': 'For trials',
                 'tag_color': '#F59E0B',
@@ -470,7 +470,7 @@ class Command(BaseCommand):
             models.ResearchStudy.objects.update_or_create(
                 study_id=s[0],
                 defaults={
-                    'order': i,
+                    'order': i + 1,
                     'title_uz': s[1], 'title_ru': s[2], 'title_en': s[3],
                     'phase': s[4], 'status': s[5],
                     'area_uz': s[6], 'area_ru': s[7], 'area_en': s[8],
@@ -490,7 +490,7 @@ class Command(BaseCommand):
         models.ResearchCapability.objects.all().delete()
         for i, (lu, lr, le, value, hl) in enumerate(caps):
             models.ResearchCapability.objects.create(
-                order=i, label_uz=lu, label_ru=lr, label_en=le, value=value, highlight=hl,
+                order=i + 1, label_uz=lu, label_ru=lr, label_en=le, value=value, highlight=hl,
             )
 
     def seed_education(self):
@@ -515,12 +515,12 @@ class Command(BaseCommand):
         models.EducationTrack.objects.all().delete()
         for i, (au, ar, ae, color, icon, programs) in enumerate(tracks):
             track = models.EducationTrack.objects.create(
-                order=i, audience_uz=au, audience_ru=ar, audience_en=ae,
+                order=i + 1, audience_uz=au, audience_ru=ar, audience_en=ae,
                 color=color, icon=icon, is_active=True,
             )
             for j, p in enumerate(programs):
                 models.EducationProgram.objects.create(
-                    track=track, order=j,
+                    track=track, order=j + 1,
                     name_uz=p[0], name_ru=p[1], name_en=p[2],
                     duration_uz=p[3], duration_ru=p[4], duration_en=p[5],
                     spots=p[6],
@@ -529,7 +529,7 @@ class Command(BaseCommand):
     def seed_partners(self):
         models.Partner.objects.all().delete()
         for i, name in enumerate(['Roche', 'Novartis', 'Pfizer', 'AstraZeneca', 'Sanofi', 'Bayer', 'Merck', 'GSK']):
-            models.Partner.objects.create(name=name, order=i, is_active=True)
+            models.Partner.objects.create(name=name, order=i + 1, is_active=True)
 
         models.Testimonial.objects.all().delete()
         testimonials = [
@@ -554,7 +554,7 @@ class Command(BaseCommand):
         ]
         for i, (qu, qr, qe, author, role) in enumerate(testimonials):
             models.Testimonial.objects.create(
-                order=i, quote_uz=qu, quote_ru=qr, quote_en=qe,
+                order=i + 1, quote_uz=qu, quote_ru=qr, quote_en=qe,
                 author_uz=author, author_ru=author, author_en=author,
                 role_uz=role, role_ru=role, role_en=role, is_active=True,
             )
@@ -581,7 +581,7 @@ class Command(BaseCommand):
         ]
         for i, s in enumerate(services):
             models.InternationalService.objects.create(
-                order=i,
+                order=i + 1,
                 title_uz=s[0], title_ru=s[1], title_en=s[2],
                 desc_uz=s[3], desc_ru=s[4], desc_en=s[5],
                 is_active=True,

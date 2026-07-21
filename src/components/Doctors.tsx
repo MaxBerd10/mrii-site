@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
@@ -8,15 +8,16 @@ import { staggerContainer, rise3d, blurUp } from '../lib/animations'
 import { media } from '../data/media'
 
 const DOCTOR_IMAGES = Object.values(media.doctors)
+const GAP_PX = 18
+const AUTO_SPEED = 42 // px per second
 
 export default function Doctors() {
   const { t } = useLanguage()
   const { home } = useCms()
   const [showAll, setShowAll] = useState(false)
-  const [reverse, setReverse] = useState(false)
 
-  const doctors = home?.doctors?.length
-    ? [...home.doctors]
+  const doctors = home
+    ? [...(home.doctors ?? [])]
         .sort((a, b) => a.order - b.order)
         .map((d) => ({
           id: String(d.id),
@@ -34,9 +35,6 @@ export default function Doctors() {
         ...d,
         photo: DOCTOR_IMAGES[i] || DOCTOR_IMAGES[0],
       }))
-
-  const loop = doctors.length > 1 ? [...doctors, ...doctors] : doctors
-  const durationSec = Math.max(28, doctors.length * 7)
 
   return (
     <section id="doctors" className="section section--muted doctors-section">
@@ -59,65 +57,35 @@ export default function Doctors() {
         </Reveal>
 
         {showAll ? (
-          <motion.div
-            className="doctor-grid doctor-grid--all"
-            variants={staggerContainer(0.08)}
-            initial="hidden"
-            animate="show"
-          >
-            {doctors.map((doc) => (
-              <DoctorCard
-                key={doc.id}
-                doc={doc}
-                bookLabel={t.doctors.bookBtn}
-                papersLabel={t.doctors.papers}
-                studiesLabel={t.doctors.studies}
-              />
-            ))}
-          </motion.div>
+          doctors.length ? (
+            <motion.div
+              className="doctor-grid doctor-grid--all"
+              variants={staggerContainer(0.08)}
+              initial="hidden"
+              animate="show"
+            >
+              {doctors.map((doc) => (
+                <DoctorCard
+                  key={doc.id}
+                  doc={doc}
+                  bookLabel={t.doctors.bookBtn}
+                  papersLabel={t.doctors.papers}
+                  studiesLabel={t.doctors.studies}
+                />
+              ))}
+            </motion.div>
+          ) : (
+            <p className="doctors-section__empty">Hozircha shifokorlar qo‘shilmagan.</p>
+          )
+        ) : doctors.length ? (
+          <DoctorCarousel
+            doctors={doctors}
+            bookLabel={t.doctors.bookBtn}
+            papersLabel={t.doctors.papers}
+            studiesLabel={t.doctors.studies}
+          />
         ) : (
-          <div
-            className={`doctor-carousel${reverse ? ' doctor-carousel--reverse' : ''}`}
-          >
-            {doctors.length > 1 && (
-              <>
-                <button
-                  type="button"
-                  className="doctor-carousel__side doctor-carousel__side--prev"
-                  onClick={() => setReverse(true)}
-                  aria-label="Orqaga"
-                >
-                  <Chevron dir="left" />
-                </button>
-                <button
-                  type="button"
-                  className="doctor-carousel__side doctor-carousel__side--next"
-                  onClick={() => setReverse(false)}
-                  aria-label="Oldinga"
-                >
-                  <Chevron dir="right" />
-                </button>
-              </>
-            )}
-
-            <div className="doctor-carousel__viewport">
-              <div
-                className="doctor-carousel__track"
-                style={{ animationDuration: `${durationSec}s` }}
-              >
-                {loop.map((doc, i) => (
-                  <DoctorCard
-                    key={`${doc.id}-${i}`}
-                    doc={doc}
-                    bookLabel={t.doctors.bookBtn}
-                    papersLabel={t.doctors.papers}
-                    studiesLabel={t.doctors.studies}
-                    animated={false}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
+          <p className="doctors-section__empty">Hozircha shifokorlar qo‘shilmagan.</p>
         )}
       </div>
     </section>
@@ -134,6 +102,136 @@ type Doc = {
   studies: number | string
   color: string
   photo: string
+}
+
+function DoctorCarousel({
+  doctors,
+  bookLabel,
+  papersLabel,
+  studiesLabel,
+}: {
+  doctors: Doc[]
+  bookLabel: string
+  papersLabel: string
+  studiesLabel: string
+}) {
+  const viewportRef = useRef<HTMLDivElement>(null)
+  const dirRef = useRef(1)
+  const pauseUntilRef = useRef(0)
+  const reduceMotion = usePrefersReducedMotion()
+  const loop = doctors.length > 1 ? [...doctors, ...doctors] : doctors
+
+  useEffect(() => {
+    if (reduceMotion || doctors.length < 2) return
+    const viewport = viewportRef.current
+    if (!viewport) return
+
+    let raf = 0
+    let last = performance.now()
+
+    const tick = (now: number) => {
+      const dt = Math.min(0.048, (now - last) / 1000)
+      last = now
+      const half = viewport.scrollWidth / 2
+
+      if (half > 0) {
+        if (viewport.scrollLeft >= half) viewport.scrollLeft -= half
+        if (viewport.scrollLeft < 0) viewport.scrollLeft += half
+      }
+
+      if (now >= pauseUntilRef.current && half > 0) {
+        viewport.scrollLeft += AUTO_SPEED * dirRef.current * dt
+      }
+
+      raf = requestAnimationFrame(tick)
+    }
+
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [doctors.length, reduceMotion])
+
+  const cardStep = () => {
+    const viewport = viewportRef.current
+    const card = viewport?.querySelector('.doctor-card')
+    if (!card) return 280 + GAP_PX
+    return card.getBoundingClientRect().width + GAP_PX
+  }
+
+  const nudge = (dir: 1 | -1) => {
+    const viewport = viewportRef.current
+    if (!viewport) return
+    dirRef.current = dir
+    pauseUntilRef.current = performance.now() + 900
+    const step = cardStep()
+    const half = viewport.scrollWidth / 2
+    let next = viewport.scrollLeft + dir * step
+    if (half > 0) {
+      if (next >= half) next -= half
+      if (next < 0) next += half
+    }
+    viewport.scrollTo({ left: next, behavior: 'smooth' })
+  }
+
+  return (
+    <div className="doctor-carousel">
+      {doctors.length > 1 && (
+        <>
+          <button
+            type="button"
+            className="doctor-carousel__side doctor-carousel__side--prev"
+            onClick={() => nudge(-1)}
+            aria-label="Orqaga"
+          >
+            <Chevron dir="left" />
+          </button>
+          <button
+            type="button"
+            className="doctor-carousel__side doctor-carousel__side--next"
+            onClick={() => nudge(1)}
+            aria-label="Oldinga"
+          >
+            <Chevron dir="right" />
+          </button>
+        </>
+      )}
+
+      <div
+        ref={viewportRef}
+        className="doctor-carousel__viewport"
+        onPointerDown={() => {
+          pauseUntilRef.current = performance.now() + 1600
+        }}
+        onWheel={() => {
+          pauseUntilRef.current = performance.now() + 1600
+        }}
+      >
+        <div className="doctor-carousel__track">
+          {loop.map((doc, i) => (
+            <DoctorCard
+              key={`${doc.id}-${i}`}
+              doc={doc}
+              bookLabel={bookLabel}
+              papersLabel={papersLabel}
+              studiesLabel={studiesLabel}
+              animated={false}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const update = () => setReduced(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+  return reduced
 }
 
 function Chevron({ dir }: { dir: 'left' | 'right' }) {
