@@ -73,14 +73,13 @@ sudo apt install -y nginx certbot python3-certbot-nginx
 sudo cp /home/mrii-site/deploy/nginx-fermiclinic.uz.conf /etc/nginx/sites-available/fermiclinic.uz
 sudo ln -sf /etc/nginx/sites-available/fermiclinic.uz /etc/nginx/sites-enabled/
 sudo rm -f /etc/nginx/sites-enabled/default
-
 sudo nginx -t
 sudo systemctl reload nginx
 
 sudo certbot --nginx -d fermiclinic.uz -d www.fermiclinic.uz
 ```
 
-Certbot HTTPS bloklarini o‘zi qo‘shadi.
+**Muhim:** Admin CSS uchun conf ichida `location ^~ /static/` bo‘lishi shart (Django WhiteNoise).
 
 ## 5. Xavfsizlik
 
