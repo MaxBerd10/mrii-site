@@ -187,13 +187,39 @@
   transform-origin: 50% 52%;
   will-change: transform;
 }
-.hp-hero__background img {
+.hp-hero__background img,
+.hp-hero__background .hp-hero__video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: saturate(1.04) contrast(1.025);
+  filter: saturate(1.06) contrast(1.04);
   backface-visibility: hidden;
+}
+.hp-hero__video {
+  display: block;
+  transform: scale(1.04);
+}
+.hp-hero__scan {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(14, 165, 233, 0.08) 48%,
+    transparent 52%,
+    transparent 100%
+  );
+  background-size: 100% 220%;
+  animation: hero-scan 7s ease-in-out infinite;
+  mix-blend-mode: screen;
+  opacity: 0.55;
+}
+@keyframes hero-scan {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 0% 100%; }
 }
 .hp-hero__background-shade {
   position: absolute;

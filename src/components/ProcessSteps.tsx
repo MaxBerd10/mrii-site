@@ -23,7 +23,7 @@ function ProcessVisual({ index }: { index: number }) {
         src={STEP_MEDIA[index]}
         alt=""
         loading="lazy"
-        className="process-story__object"
+        className="process-story__object media-alive"
         animate={reduce ? undefined : {
           y: [0, -4, 0],
           rotateY: [-2, 2, -2],

@@ -42,7 +42,7 @@ export default function Pillars() {
               style={{ transformStyle: 'preserve-3d' }}
             >
               <div className="hp-service-card__media" aria-hidden>
-                <img src={PILLAR_IMAGES[idx]} alt="" loading="lazy" />
+                <img src={PILLAR_IMAGES[idx]} alt="" loading="lazy" className="media-alive media-alive--slow" />
                 <div className="hp-service-card__shade" />
               </div>
 

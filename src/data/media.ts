@@ -1,6 +1,8 @@
 export const media = {
   hero: {
     doctor: '/images/medical/anatomical-heart-transparent.png',
+    /** Local clinic video — replace with your own MP4 anytime */
+    video: '/videos/clinic-hero.mp4',
     thumbs: {
       clinic: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=240&h=240&fit=crop&auto=format',
       research: 'https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=240&h=240&fit=crop&auto=format',

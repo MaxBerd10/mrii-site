@@ -97,14 +97,18 @@ export default function AISection() {
           viewport={{ once: true, amount: 0.05, margin: '120px 0px' }}
         >
           <div className="ai-console__visual" style={{ position: 'relative', minHeight: 280, overflow: 'hidden' }}>
+            <div className="ai-console__robot" aria-hidden>
+              <span className="ai-console__robot-dot" />
+              {t.ai.liveBadge}
+            </div>
             <AnimatePresence mode="wait">
               <motion.img
                 key={`img-${safeActive}`}
                 src={p.image}
                 alt={p.name}
-                className="ai-console__photo"
-                initial={{ opacity: 0, scale: 1.04 }}
-                animate={{ opacity: 1, scale: 1 }}
+                className="ai-console__photo media-alive media-alive--ai"
+                initial={{ opacity: 0, scale: 1.04, rotateY: -6 }}
+                animate={{ opacity: 1, scale: 1, rotateY: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.45 }}
               />

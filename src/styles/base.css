@@ -304,6 +304,95 @@ button { color: inherit; }
   cursor: pointer;
 }
 
+/* Alive media — gentle continuous motion (client: “tirik sayt”) */
+@keyframes media-float {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(0, -7px, 0) scale(1.035); }
+}
+@keyframes media-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.02); }
+  50% { transform: translate3d(-1.5%, -1%, 0) scale(1.07); }
+}
+@keyframes media-breathe {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); filter: brightness(1); }
+  50% { transform: translate3d(0, -5px, 0) scale(1.04); filter: brightness(1.04); }
+}
+
+.media-alive {
+  animation: media-float 5.5s ease-in-out infinite;
+  will-change: transform;
+  transform-origin: center center;
+}
+.media-alive--slow {
+  animation-name: media-drift;
+  animation-duration: 14s;
+}
+.media-alive--doctor {
+  animation-name: media-breathe;
+  animation-duration: 4.8s;
+}
+.media-alive--ai {
+  animation-name: media-float;
+  animation-duration: 4.2s;
+}
+
+.doctor-card__media::after {
+  content: '';
+  position: absolute;
+  inset: auto 12px 12px auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55);
+  animation: doctor-live-pulse 2s ease-out infinite;
+  z-index: 2;
+}
+@keyframes doctor-live-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55); }
+  70% { box-shadow: 0 0 0 12px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+.ai-console__visual {
+  isolation: isolate;
+}
+.ai-console__photo.media-alive--ai {
+  object-fit: contain;
+  padding: 8%;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(91, 76, 219, 0.22), transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(14, 165, 233, 0.18), transparent 40%),
+    #0b1220;
+}
+.ai-console__robot {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(8, 15, 28, 0.72);
+  color: #e8f7ff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.ai-console__robot-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 12px #38bdf8;
+  animation: doctor-live-pulse 1.6s ease-out infinite;
+}
+
 @media (max-width: 760px) {
   .section-head { grid-template-columns: 1fr; align-items: start; }
   .section-head__action { align-self: start; }
@@ -312,6 +401,15 @@ button { color: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .media-alive,
+  .media-alive--slow,
+  .media-alive--doctor,
+  .media-alive--ai,
+  .hp-hero__scan,
+  .doctor-card__media::after,
+  .ai-console__robot-dot {
+    animation: none !important;
+  }
   *, *::before, *::after {
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;

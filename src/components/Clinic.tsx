@@ -78,7 +78,7 @@ export default function Clinic() {
                   src={sp.image}
                   alt=""
                   loading="lazy"
-                  className={`clinic-tile__img${sp.image.startsWith('/') ? ' clinic-tile__img--3d' : ''}${i === 0 ? ' clinic-tile__img--heart' : ''}${[1, 2, 3, 4, 5, 7, 8, 9, 10, 11].includes(i) ? ' clinic-tile__img--organ' : ''}${i === 1 ? ' clinic-tile__img--brain' : ''}`}
+                  className={`clinic-tile__img media-alive${sp.image.startsWith('/') ? ' clinic-tile__img--3d' : ''}${i === 0 ? ' clinic-tile__img--heart' : ''}${[1, 2, 3, 4, 5, 7, 8, 9, 10, 11].includes(i) ? ' clinic-tile__img--organ' : ''}${i === 1 ? ' clinic-tile__img--brain' : ''}`}
                 />
                 <span className="clinic-tile__shade" aria-hidden />
                 <span className="clinic-tile__content">

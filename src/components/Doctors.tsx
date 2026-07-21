@@ -264,7 +264,7 @@ function DoctorCard({
   const body = (
     <>
       <div className="doctor-card__media">
-        <img src={doc.photo} alt={doc.name} loading="lazy" />
+        <img src={doc.photo} alt={doc.name} loading="lazy" className="media-alive media-alive--doctor" />
         <span className="doctor-card__badge">{doc.specialty}</span>
       </div>
 

@@ -13,6 +13,7 @@ function telHref(phone: string) {
 const THUMBS = Object.values(media.hero.thumbs)
 const ACTION_HREFS = ['#contacts', '#research', '#education', '#ai']
 const CLINIC_CORRIDOR = '/images/clinic/mrii-clinic-hero-centered-sharp.webp'
+const HERO_VIDEO = media.hero.video
 
 function HeroStat({ value, label, active }: { value: string; label: string; active: boolean }) {
   const display = useCountUp(value, active)
@@ -30,6 +31,8 @@ export default function Hero() {
   const reduce = useReducedMotion()
   const [statsActive, setStatsActive] = useState(false)
   const [ready, setReady] = useState(false)
+  const [videoOk, setVideoOk] = useState(!reduce)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -37,10 +40,9 @@ export default function Hero() {
   })
   const copyY = useTransform(scrollYProgress, [0, 1], [0, -16])
   const heroOpacity = useTransform(scrollYProgress, [0, 0.82, 1], [1, 1, .88])
-  const cameraScale = useTransform(scrollYProgress, [0, .45, 1], [1, 1.12, 1.32])
+  const cameraScale = useTransform(scrollYProgress, [0, .45, 1], [1, 1.08, 1.18])
   const settings = home?.settings
   const hero = home?.hero
-  // Brand title stays on designed copy; CMS supplies phone / slogan / media.
   const instituteName = t.hero.instituteName.replace(' (MRII)', '')
   const slogan = settings?.slogan || t.hero.instituteSlogan
   const certs = hero?.certs || t.hero.certs
@@ -50,10 +52,19 @@ export default function Hero() {
 
   useEffect(() => {
     setStatsActive(true)
-    // Avoid first-frame scroll transform jump (looks like bounce on refresh)
     const id = requestAnimationFrame(() => setReady(true))
     return () => cancelAnimationFrame(id)
   }, [])
+
+  useEffect(() => {
+    if (reduce) {
+      setVideoOk(false)
+      return
+    }
+    const el = videoRef.current
+    if (!el) return
+    el.play().catch(() => setVideoOk(false))
+  }, [reduce, videoOk])
 
   return (
     <section ref={sectionRef} className="hp-hero">
@@ -63,14 +74,32 @@ export default function Hero() {
         style={reduce || !ready ? undefined : { scale: cameraScale }}
         aria-hidden
       >
-        <img
-          src={heroImage}
-          alt=""
-          fetchPriority="high"
-          decoding="async"
-        />
+        {videoOk ? (
+          <video
+            ref={videoRef}
+            className="hp-hero__video"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={heroImage}
+            onError={() => setVideoOk(false)}
+          >
+            <source src={HERO_VIDEO} type="video/mp4" />
+          </video>
+        ) : (
+          <img
+            src={heroImage}
+            alt=""
+            fetchPriority="high"
+            decoding="async"
+            className="media-alive media-alive--slow"
+          />
+        )}
       </motion.div>
       <div className="hp-hero__background-shade" aria-hidden />
+      <div className="hp-hero__scan" aria-hidden />
       <div className="container-main">
         <div className="hp-hero__grid">
           <motion.div
@@ -92,8 +121,8 @@ export default function Hero() {
             </p>
 
             <div className="hp-hero__cta-row">
-              <a href="#contacts" className="hp-btn hp-btn--primary">
-                {t.hero.buttons[0]}
+              <a href="#ai" className="hp-btn hp-btn--primary">
+                {t.ai.sellBtn}
               </a>
               <a href={telHref(phone)} className="hp-emergency">
                 <span className="hp-emergency__icon" aria-hidden>
@@ -111,7 +140,7 @@ export default function Hero() {
             <div className="hp-hero__thumbs">
               {THUMBS.map((src, i) => (
                 <a key={i} href={ACTION_HREFS[i]} className="hp-hero__thumb" title={t.hero.slides[i].caption}>
-                  <img src={src} alt={t.hero.slides[i].alt} loading="lazy" />
+                  <img src={src} alt={t.hero.slides[i].alt} loading="lazy" className="media-alive" />
                 </a>
               ))}
             </div>
