@@ -60,7 +60,12 @@ export default function Hero() {
         style={reduce ? undefined : { scale: cameraScale }}
         aria-hidden
       >
-        <img src={heroImage} alt="" />
+        <img
+          src={heroImage}
+          alt=""
+          fetchPriority="high"
+          decoding="async"
+        />
       </motion.div>
       <div className="hp-hero__background-shade" aria-hidden />
       <div className="container-main">
