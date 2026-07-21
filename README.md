@@ -68,9 +68,11 @@ Bo‘sh qoldirilsa — sayt static fallback matndan ishlaydi.
 
 ## Production
 
-1. **API** — Docker Compose yoki Railway/VPS (`gunicorn`)
-2. **Sayt** — `npm run build` → `dist/` (Nginx / Vercel)
-3. Vercel’da SPA uchun `vercel.json` rewrite bor (`/(.*) → /index.html`)
+VPS + domen (`fermiclinic.uz`): qadamlar → [deploy/README.md](deploy/README.md)
+
+1. **API** — Docker Compose (`gunicorn` + Postgres)
+2. **Sayt** — `npm run build` → `dist/` (Nginx)
+3. Nginx `/api`, `/admin`, `/media` → `127.0.0.1:8001`
 
 ## Asosiy buyruqlar
 
