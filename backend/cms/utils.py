@@ -43,6 +43,10 @@ def media_url(request, file_field, url_field: str = '') -> str:
         except ValueError:
             pass
     if url_field:
+        # Keep site static paths relative so React doesn't reload the same image
+        # as https://domain/images/... after CMS hydrates (refresh blink).
+        if url_field.startswith('/images/') or url_field.startswith('/assets/'):
+            return url_field
         return absolute_frontend_url(url_field)
     return ''
 

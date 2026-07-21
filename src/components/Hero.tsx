@@ -3,7 +3,6 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
 import { useCountUp } from '../hooks/useCountUp'
-import { staggerContainer, fadeUp, fadeUpSmall } from '../lib/animations'
 import { media } from '../data/media'
 
 function telHref(phone: string) {
@@ -18,10 +17,10 @@ const CLINIC_CORRIDOR = '/images/clinic/mrii-clinic-hero-centered-sharp.webp'
 function HeroStat({ value, label, active }: { value: string; label: string; active: boolean }) {
   const display = useCountUp(value, active)
   return (
-    <motion.div className="hp-stat" variants={fadeUpSmall}>
+    <div className="hp-stat">
       <div className="hp-stat__value">{display}</div>
       <div className="hp-stat__label">{label}</div>
-    </motion.div>
+    </div>
   )
 }
 
@@ -29,7 +28,7 @@ export default function Hero() {
   const { t } = useLanguage()
   const { home } = useCms()
   const reduce = useReducedMotion()
-  const [statsActive, setStatsActive] = useState(false)
+  const [ready, setReady] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -50,6 +49,9 @@ export default function Hero() {
 
   useEffect(() => {
     setStatsActive(true)
+    // Avoid first-frame scroll transform jump (looks like bounce on refresh)
+    const id = requestAnimationFrame(() => setReady(true))
+    return () => cancelAnimationFrame(id)
   }, [])
 
   return (
@@ -57,7 +59,7 @@ export default function Hero() {
       <div className="hp-hero__sticky">
       <motion.div
         className="hp-hero__background"
-        style={reduce ? undefined : { scale: cameraScale }}
+        style={reduce || !ready ? undefined : { scale: cameraScale }}
         aria-hidden
       >
         <img
@@ -72,26 +74,23 @@ export default function Hero() {
         <div className="hp-hero__grid">
           <motion.div
             className="hp-hero__copy"
-            style={reduce ? undefined : { y: copyY, opacity: heroOpacity }}
-            variants={staggerContainer(0.1, 0.05)}
-            initial="hidden"
-            animate="show"
+            style={reduce || !ready ? undefined : { y: copyY, opacity: heroOpacity }}
           >
-            <motion.p className="hp-hero__eyebrow" variants={fadeUpSmall}>
+            <p className="hp-hero__eyebrow">
               {t.hero.since} · {certs}
-            </motion.p>
+            </p>
 
-            <motion.h1 className="hp-hero__title hp-hero__title--brand" variants={fadeUp}>
+            <h1 className="hp-hero__title hp-hero__title--brand">
               {instituteName}
               <br />
               <span>(MRII)</span>
-            </motion.h1>
+            </h1>
 
-            <motion.p className="hp-hero__desc hp-hero__slogan" variants={fadeUp}>
+            <p className="hp-hero__desc hp-hero__slogan">
               «{slogan}»
-            </motion.p>
+            </p>
 
-            <motion.div className="hp-hero__cta-row" variants={fadeUp}>
+            <div className="hp-hero__cta-row">
               <a href="#contacts" className="hp-btn hp-btn--primary">
                 {t.hero.buttons[0]}
               </a>
@@ -106,29 +105,27 @@ export default function Hero() {
                   <strong>{phone}</strong>
                 </span>
               </a>
-            </motion.div>
+            </div>
 
-            <motion.div className="hp-hero__thumbs" variants={fadeUpSmall}>
+            <div className="hp-hero__thumbs">
               {THUMBS.map((src, i) => (
                 <a key={i} href={ACTION_HREFS[i]} className="hp-hero__thumb" title={t.hero.slides[i].caption}>
                   <img src={src} alt={t.hero.slides[i].alt} loading="lazy" />
                 </a>
               ))}
-            </motion.div>
+            </div>
 
-            <motion.div className="hp-hero__links" variants={staggerContainer(0.06, 0.15)}>
+            <div className="hp-hero__links">
               {t.hero.buttons.slice(1).map((item, i) => (
-                <motion.a
+                <a
                   key={item}
                   href={ACTION_HREFS[i + 1]}
                   className="hp-hero__link"
-                  variants={fadeUpSmall}
-                  whileHover={reduce ? undefined : { x: 4 }}
                 >
                   {item} →
-                </motion.a>
+                </a>
               ))}
-            </motion.div>
+            </div>
           </motion.div>
 
         </div>
@@ -138,17 +135,11 @@ export default function Hero() {
           <small>{t.hero.scrollDown}</small>
         </div>
 
-        <motion.div
-          className="hp-hero__stats"
-          variants={staggerContainer(0.07)}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.35 }}
-        >
+        <div className="hp-hero__stats">
           {t.stats.items.map((s, i) => (
             <HeroStat key={i} value={s.value} label={s.label} active={statsActive} />
           ))}
-        </motion.div>
+        </div>
       </div>
       </div>
     </section>

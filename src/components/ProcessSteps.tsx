@@ -25,11 +25,11 @@ function ProcessVisual({ index }: { index: number }) {
         loading="lazy"
         className="process-story__object"
         animate={reduce ? undefined : {
-          y: [0, -10, 0],
-          rotateY: [-4, 4, -4],
-          scale: [1, 1.045, 1],
+          y: [0, -4, 0],
+          rotateY: [-2, 2, -2],
+          scale: [1, 1.02, 1],
         }}
-        transition={{ duration: 6 + index, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 7 + index, repeat: Infinity, ease: 'easeInOut' }}
       />
       <span className="process-story__orbit" aria-hidden><i /></span>
       <span className="process-story__watermark" aria-hidden>0{index + 1}</span>
