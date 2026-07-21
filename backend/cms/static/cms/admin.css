@@ -775,7 +775,6 @@ body.mrii-index #content,
 
 /* ── Modules / forms ────────────────────────────────── */
 .module,
-#changelist-filter,
 #toolbar,
 #content-related {
   border-radius: 16px !important;
@@ -787,13 +786,161 @@ body.mrii-index #content,
 
 .module h2,
 .module caption,
-.inline-group h2,
-#changelist-filter h2 {
+.inline-group h2 {
   background: #f6f9fb !important;
   color: var(--ink) !important;
   font-family: var(--font-display) !important;
   font-weight: 700 !important;
   border-bottom: 1px solid var(--line) !important;
+}
+
+/* Filter sidebar — o‘chirilgan */
+#changelist-filter {
+  display: none !important;
+}
+#changelist.filtered {
+  display: block !important;
+}
+#changelist.filtered .changelist-form-container {
+  margin-right: 0 !important;
+  width: 100% !important;
+}
+
+/* Changelist: toza qidiruv + to‘liq kenglik jadval */
+body.change-list #content {
+  max-width: 1180px;
+}
+
+body.change-list #content h1 {
+  font-family: var(--font-display) !important;
+  font-size: 1.55rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em;
+  margin: 0 0 18px !important;
+}
+
+body.change-list .object-tools {
+  margin: 0 0 16px !important;
+  float: none !important;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 0 !important;
+}
+
+body.change-list #changelist {
+  border: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  overflow: visible !important;
+}
+
+body.change-list #toolbar {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px !important;
+  padding: 12px 14px !important;
+  border-radius: 14px !important;
+  border: 1px solid var(--line) !important;
+  background: #fff !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+body.change-list #toolbar form {
+  display: flex !important;
+  flex: 1;
+  align-items: center;
+  gap: 10px;
+  margin: 0 !important;
+}
+
+body.change-list #toolbar label {
+  display: none !important;
+}
+
+body.change-list #searchbar,
+body.change-list #toolbar #searchbar {
+  flex: 1 !important;
+  min-height: 42px !important;
+  margin: 0 !important;
+  padding: 10px 14px !important;
+  border-radius: 11px !important;
+  border: 1px solid var(--line-strong) !important;
+  background: #f7fafb !important;
+  font-size: 0.95rem !important;
+  box-shadow: none !important;
+}
+
+body.change-list #toolbar input[type='submit'] {
+  min-height: 42px !important;
+  padding: 0 16px !important;
+  border-radius: 11px !important;
+  background: var(--teal) !important;
+  box-shadow: 0 8px 16px rgba(15, 118, 110, 0.18) !important;
+}
+
+body.change-list .actions {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px !important;
+  padding: 12px 14px !important;
+  border-radius: 14px !important;
+  border: 1px solid var(--line) !important;
+  background: #fff !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+body.change-list .actions label {
+  margin: 0 !important;
+  font-size: 0.88rem !important;
+  color: var(--muted) !important;
+}
+
+body.change-list .actions select {
+  min-height: 38px !important;
+  border-radius: 10px !important;
+}
+
+body.change-list .paginator {
+  margin-top: 14px !important;
+  padding: 12px 4px !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--muted) !important;
+  font-weight: 600 !important;
+}
+
+body.change-list #result_list {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  background: #fff !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+body.change-list #result_list thead th {
+  padding: 12px 14px !important;
+  font-size: 0.82rem !important;
+  text-transform: none !important;
+  letter-spacing: 0.01em !important;
+  color: var(--muted) !important;
+  border-bottom: 1px solid var(--line) !important;
+}
+
+body.change-list #result_list tbody td {
+  padding: 12px 14px !important;
+  vertical-align: middle !important;
+  border-top: 1px solid var(--line) !important;
+}
+
+body.change-list #result_list tbody tr:first-child td {
+  border-top: 0 !important;
 }
 
 fieldset .description {

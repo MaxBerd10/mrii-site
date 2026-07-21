@@ -17,6 +17,7 @@ import BackToTop from './components/BackToTop'
 import SpecialtyPage from './pages/SpecialtyPage'
 import NewsPage from './pages/NewsPage'
 import AIProductPage from './pages/AIProductPage'
+import NotFoundPage from './pages/NotFoundPage'
 
 /** Ideal breathing room under nav / above viewport bottom — same for every section. */
 const FRAME_TOP = 36
@@ -125,13 +126,16 @@ function restorePendingHash() {
 }
 
 export default function App() {
-  const specialtyMatch = window.location.pathname.match(/^\/clinic\/([^/]+)\/?$/)
+  const pathname = window.location.pathname.replace(/\/+$/, '') || '/'
+  const specialtyMatch = pathname.match(/^\/clinic\/([^/]+)$/)
   const specialtySlug = specialtyMatch?.[1] ?? null
-  const newsMatch = window.location.pathname.match(/^\/news\/([^/]+)\/?$/)
+  const newsMatch = pathname.match(/^\/news\/([^/]+)$/)
   const newsSlug = newsMatch?.[1] ?? null
-  const aiMatch = window.location.pathname.match(/^\/ai\/([^/]+)\/?$/)
+  const aiMatch = pathname.match(/^\/ai\/([^/]+)$/)
   const aiSlug = aiMatch?.[1] ?? null
-  const isHome = !specialtySlug && !newsSlug && !aiSlug
+  const isHome = pathname === '/'
+  const isKnownInner = Boolean(specialtySlug || newsSlug || aiSlug)
+  const isNotFound = !isHome && !isKnownInner
 
   useLayoutEffect(() => {
     if (!isHome) {
@@ -209,7 +213,9 @@ export default function App() {
     <div className="site-shell min-h-screen" style={{ backgroundColor: 'var(--background)', color: 'var(--foreground)' }}>
       <ScrollProgress />
       <Nav />
-      {specialtySlug ? (
+      {isNotFound ? (
+        <NotFoundPage />
+      ) : specialtySlug ? (
         <SpecialtyPage slug={specialtySlug} />
       ) : newsSlug ? (
         <NewsPage slug={newsSlug} />

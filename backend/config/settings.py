@@ -190,3 +190,26 @@ REST_FRAMEWORK = {
 }
 
 CMS_LANGS = ('uz', 'ru', 'en')
+
+# —— Auth / session security ——
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_HTTPONLY = True
+# Sliding session: 8 soat (prod’da SESSION_COOKIE_AGE bilan o‘zgartirish mumkin)
+SESSION_COOKIE_AGE = int(os.getenv('SESSION_COOKIE_AGE', str(60 * 60 * 8)))
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = os.getenv(
+    'SESSION_EXPIRE_AT_BROWSER_CLOSE', 'False'
+).lower() in ('1', 'true', 'yes')
+
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = int(os.getenv('SECURE_HSTS_SECONDS', '31536000'))
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    # HTTPS orqasida (Nginx/Caddy) odatda True; lokal HTTP test uchun False qoldiring
+    SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT', 'True').lower() in (
+        '1', 'true', 'yes',
+    )
+

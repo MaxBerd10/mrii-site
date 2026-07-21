@@ -7,6 +7,7 @@ import { media } from '../data/media'
 import { getSpecialtyBySlug, specialtyDetails, specialtyPageLabels } from '../data/specialtyDetails'
 import { blurUp, rise3d, staggerContainer } from '../lib/animations'
 import SectionBackLink from '../components/ui/SectionBackLink'
+import NotFoundPage from './NotFoundPage'
 
 const SPECIALTY_IMAGES = Object.values(media.clinic)
 const OBJECT_SPECIALTIES = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11]
@@ -100,12 +101,7 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
   }
 
   if (!view) {
-    return (
-      <section className="specialty-not-found">
-        <h1>404</h1>
-        <SectionBackLink href="/#clinic">{labels.back}</SectionBackLink>
-      </section>
-    )
+    return <NotFoundPage />
   }
 
   const relatedFromCms = home?.specialties?.filter((item) => item.slug !== slug).slice(0, 3)

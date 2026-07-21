@@ -74,6 +74,12 @@ class MriiAdminSite(AdminSite):
             'errors': errors[:6],
         })
 
+    def app_index(self, request, app_label, extra_context=None):
+        """«MRII Kontent» breadcrumb /admin/cms/ — bo‘sh sahifa o‘rniga bosh dashboard."""
+        from django.shortcuts import redirect
+
+        return redirect('admin:index')
+
     def index(self, request, extra_context=None):
         from . import models
 

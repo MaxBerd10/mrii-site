@@ -142,11 +142,17 @@
     bar.className = 'mrii-translate-bar';
     bar.innerHTML =
       '<div class="mrii-translate-bar__copy">' +
-      '<strong>Avtomatik tarjima</strong>' +
-      '<span>1) O‘zbekcha yozing  2) Tugmani bosing  3) Rus/English ochilib to‘ldiriladi  4) Saqlash</span>' +
+      '<div class="mrii-translate-bar__label">Avtomatik tarjima</div>' +
+      '<p class="mrii-translate-bar__hint">O‘zbekcha yozing — tugma rus va inglizcha maydonlarni o‘zi to‘ldiradi. Keyin tekshirib Saqlashni bosing.</p>' +
+      '<ol class="mrii-translate-bar__steps">' +
+      '<li><span>1</span> O‘zbekcha</li>' +
+      '<li><span>2</span> Tarjima</li>' +
+      '<li><span>3</span> Tekshirish</li>' +
+      '<li><span>4</span> Saqlash</li>' +
+      '</ol>' +
       '</div>' +
       '<div class="mrii-translate-bar__actions">' +
-      '<button type="button" class="mrii-translate-btn" id="mrii-translate-btn">Rus va inglizchani to‘ldirish</button>' +
+      '<button type="button" class="mrii-translate-btn" id="mrii-translate-btn">Rus / English to‘ldirish</button>' +
       '</div>';
 
     const content = document.getElementById('content-main');

@@ -7,6 +7,7 @@ import { media } from '../data/media'
 import { aiPageLabels, aiProducts, getAIProductBySlug } from '../data/aiDetails'
 import { blurUp, rise3d, staggerContainer } from '../lib/animations'
 import SectionBackLink from '../components/ui/SectionBackLink'
+import NotFoundPage from './NotFoundPage'
 
 const PRODUCT_IMAGES = Object.values(media.ai)
 
@@ -133,12 +134,7 @@ export default function AIProductPage({ slug }: { slug: string }) {
   }
 
   if (!view) {
-    return (
-      <section className="specialty-not-found">
-        <h1>404</h1>
-        <SectionBackLink href="/#ai">{labels.back}</SectionBackLink>
-      </section>
-    )
+    return <NotFoundPage />
   }
 
   const relatedFromCms = home?.aiProducts?.filter((item) => item.slug !== slug)

@@ -7,6 +7,7 @@ import { media } from '../data/media'
 import { getNewsBySlug, newsArticles, newsPageLabels } from '../data/newsDetails'
 import { blurUp, rise3d, staggerContainer } from '../lib/animations'
 import SectionBackLink from '../components/ui/SectionBackLink'
+import NotFoundPage from './NotFoundPage'
 
 const NEWS_IMAGES = Object.values(media.news)
 
@@ -108,12 +109,7 @@ export default function NewsPage({ slug }: { slug: string }) {
   }
 
   if (!view) {
-    return (
-      <section className="specialty-not-found">
-        <h1>404</h1>
-        <SectionBackLink href="/#news">{labels.back}</SectionBackLink>
-      </section>
-    )
+    return <NotFoundPage />
   }
 
   const relatedFromCms = home?.news?.filter((item) => item.slug !== slug)

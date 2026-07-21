@@ -189,7 +189,6 @@ class HeroAdmin(AutoTranslateAdmin):
 class SpecialtyAdmin(AutoTranslateAdmin):
     list_display = ('name_uz', 'slug', 'doctor_count', 'order', 'is_active', 'preview')
     list_editable = ('order', 'is_active')
-    list_filter = ('is_active',)
     search_fields = ('name_uz', 'name_ru', 'name_en', 'slug')
     prepopulated_fields = {'slug': ('name_uz',)}
     list_per_page = 25
@@ -235,7 +234,6 @@ class DoctorAdmin(AutoTranslateAdmin):
     list_editable = ('order', 'is_active')
     list_display_links = ('name',)
     search_fields = ('name', 'specialty_uz', 'specialty_ru', 'specialty_en')
-    list_filter = ('is_active',)
     list_per_page = 25
     actions = ('delete_selected', 'make_inactive', 'make_active')
     preview = thumb('photo_url', 'photo')
@@ -319,10 +317,8 @@ class DoctorAdmin(AutoTranslateAdmin):
 class NewsArticleAdmin(AutoTranslateAdmin):
     list_display = ('title_uz', 'slug', 'published_at', 'order', 'is_published', 'preview')
     list_editable = ('order', 'is_published')
-    list_filter = ('is_published',)
     search_fields = ('title_uz', 'title_ru', 'title_en', 'slug')
     prepopulated_fields = {'slug': ('title_uz',)}
-    date_hierarchy = 'published_at'
     list_per_page = 20
     preview = thumb('cover_url', 'cover')
     fieldsets = (
@@ -429,7 +425,6 @@ class ResearchStudyAdmin(AutoTranslateAdmin):
     list_display = ('study_id', 'title_uz', 'phase', 'status', 'order', 'is_active')
     list_editable = ('order', 'is_active')
     search_fields = ('study_id', 'title_uz')
-    list_filter = ('status', 'is_active')
     fieldsets = (
         ('Asosiy', {
             'description': 'Status: open / closed. Phase: I–IV.',
