@@ -1,172 +1,208 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
-import SectionHeader from './ui/SectionHeader'
 import Reveal from './ui/Reveal'
-import { blurUp, fadeUp, staggerContainer, fadeUpSmall } from '../lib/animations'
+import { staggerContainer, rise3d, blurUp } from '../lib/animations'
+import '../styles/research-page.css'
 
+const PREVIEW_COUNT = 4
+const TAB_COLORS = ['#6366F1', '#0EA5E9', '#059669'] as const
 const PHASE_COLORS = ['#6366F1', '#0891B2', '#0B3D6B', '#059669']
-const WHY_LIMIT = 6
-const CAPABILITY_LIMIT = 8
 
 export default function Research() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const { home } = useCms()
   const [tab, setTab] = useState(0)
+  const [expanded, setExpanded] = useState(false)
   const cms = home?.research
-  const whyItems = (cms?.whyItems?.length ? cms.whyItems : t.research.whyItems).slice(0, WHY_LIMIT)
-  const capabilities = (cms?.capabilities?.length ? cms.capabilities : t.research.capabilities).slice(0, CAPABILITY_LIMIT)
+
+  const whyItems = cms?.whyItems?.length ? cms.whyItems : t.research.whyItems
   const studies = cms?.studies?.length ? cms.studies : t.research.studies
-  const stats = [
-    [capabilities[1]?.value ?? '18+', capabilities[1]?.label ?? ''],
-    [capabilities[2]?.value ?? '50 000+', capabilities[2]?.label ?? ''],
-    [capabilities[3]?.value ?? '35', capabilities[3]?.label ?? ''],
-  ] as const
+  const croFeatures = t.research.croFeatures
+  const panelTitle =
+    tab === 0
+      ? cms?.whyTitle || t.research.whyTitle
+      : tab === 1
+        ? t.research.currentTitle
+        : t.research.croTitle
+
+  const cards = useMemo(() => {
+    if (tab === 0) {
+      return whyItems.map((item, i) => ({
+        id: `why-${i}`,
+        eyebrow: String(i + 1).padStart(2, '0'),
+        title: item,
+        meta: null as string | null,
+        status: null as 'open' | 'closed' | null,
+      }))
+    }
+    if (tab === 1) {
+      return studies.map((s) => ({
+        id: s.id,
+        eyebrow: s.area,
+        title: s.title,
+        meta: `${t.research.phase} ${s.phase} · ${s.id}`,
+        status: s.status as 'open' | 'closed',
+      }))
+    }
+    return croFeatures.map((f, i) => ({
+      id: `cro-${i}`,
+      eyebrow: String(i + 1).padStart(2, '0'),
+      title: f,
+      meta: null as string | null,
+      status: null as 'open' | 'closed' | null,
+    }))
+  }, [tab, whyItems, studies, croFeatures, t.research])
+
+  const hasMore = cards.length > PREVIEW_COUNT
+  const visible = expanded || !hasMore ? cards : cards.slice(0, PREVIEW_COUNT)
+  const hiddenCount = Math.max(0, cards.length - PREVIEW_COUNT)
+
+  useEffect(() => {
+    setExpanded(false)
+  }, [tab])
+
+  const ctaLabel = (cms?.sponsorBtn || t.research.sponsorBtn).replace(/→\s*$/, '').trim()
 
   return (
-    <section id="research" className="section section--white">
-      <div className="container-main">
+    <section id="research" className="research-section research-section--page">
+      <div className="container-main research-page">
         <Reveal variants={blurUp}>
-          <SectionHeader
-            label={cms?.label || t.research.label}
-            title={<>{cms?.title1 || t.research.title1} <em>{cms?.titleEm || t.research.titleEm}</em></>}
-            description={cms?.description || t.research.description}
-            accent="#5B4CDB"
-          />
+          <header className="research-hero">
+            <div className="research-hero__copy">
+              <span className="research-hero__label">
+                <span className="research-hero__dot" aria-hidden />
+                {t.research.pageLabel}
+              </span>
+              <h1 className="research-hero__title">
+                {cms?.title1 || t.research.title1}{' '}
+                <em>{cms?.titleEm || t.research.titleEm}</em>
+              </h1>
+              <p className="research-hero__desc">{cms?.description || t.research.description}</p>
+            </div>
+            <div className="research-hero__aside">
+              <a href="/contacts" className="research-hero__cta">
+                {ctaLabel}
+              </a>
+            </div>
+          </header>
         </Reveal>
 
-        <motion.div
-          className="stat-row research-stats"
-          variants={staggerContainer(0.08)}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.05, margin: '120px 0px' }}
-        >
-          {stats.map(([value, label], i) => (
-            <motion.div key={i} className="stat-row__item" variants={fadeUpSmall}>
-              <div className="stat-row__value">{value}</div>
-              <div className="stat-row__label">{label}</div>
-            </motion.div>
+        <div className="research-toolbar" role="tablist" aria-label={t.research.pageLabel}>
+          {t.research.tabs.map((tabLabel, i) => (
+            <button
+              key={tabLabel}
+              type="button"
+              role="tab"
+              aria-selected={tab === i}
+              className={`research-toolbar__btn${tab === i ? ' is-active' : ''}`}
+              onClick={() => setTab(i)}
+            >
+              <span
+                className="research-toolbar__dot"
+                style={{ background: TAB_COLORS[i] }}
+                aria-hidden
+              />
+              <span className="research-toolbar__text">{tabLabel}</span>
+              <span className="research-toolbar__count">
+                {i === 0 ? whyItems.length : i === 1 ? studies.length : croFeatures.length}
+              </span>
+            </button>
           ))}
-        </motion.div>
+        </div>
 
-        <motion.div
-          className="research-console"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2, margin: '80px 0px' }}
-        >
-          <div className="research-console__main">
-            <div className="tab-bar" role="tablist">
-              {t.research.tabs.map((label, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  role="tab"
-                  aria-selected={tab === i}
-                  aria-controls={`research-panel-${i}`}
-                  id={`research-tab-${i}`}
-                  className={`tab-bar__btn ${tab === i ? 'tab-bar__btn--active' : ''}`}
-                  onClick={() => setTab(i)}
-                >
-                  {label}
-                </button>
-              ))}
+        <div className="research-layout">
+          <div className="research-main">
+            <div className="research-panel-head">
+              <h2 className="research-panel-head__title">{panelTitle}</h2>
+              <span className="research-panel-head__count">{cards.length}</span>
             </div>
 
-            {tab === 0 && (
-              <div id="research-panel-0" role="tabpanel" aria-labelledby="research-tab-0">
-                <h3 className="research-console__title">{cms?.whyTitle || t.research.whyTitle}</h3>
-                  <div className="research-why-grid">
-                  {whyItems.map((item, i) => (
-                    <div key={i} className="card research-console__item research-why-item">
-                      <div className="research-why-item__dot" aria-hidden />
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
-                <a href="#contacts" className="btn-outline btn-sm">{cms?.sponsorBtn || t.research.sponsorBtn}</a>
-              </div>
-              )}
-
-              {tab === 1 && (
-              <div id="research-panel-1" role="tabpanel" aria-labelledby="research-tab-1" className="research-studies">
-                {studies.slice(0, 3).map(s => (
-                  <div key={s.id} className="card research-study">
-                    <div className="flex-row--between" style={{ alignItems: 'flex-start', gap: 12 }}>
-                      <div style={{ minWidth: 0, flex: 1 }}>
-                        <div className="flex-row" style={{ gap: 8, marginBottom: 4 }}>
-                          <span className="research-study__id">{s.id}</span>
-                          <span
-                            className="badge"
-                            style={{
-                              fontSize: 10,
-                              padding: '2px 8px',
-                              color: s.status === 'open' ? '#059669' : 'var(--muted-foreground)',
-                              background: s.status === 'open' ? 'rgba(51, 230, 208, 0.12)' : 'var(--muted)',
-                            }}
-                          >
-                            {s.status === 'open' ? t.research.statusOpen : t.research.statusClosed}
-                          </span>
-                        </div>
-                        <div className="research-study__title">{s.title}</div>
-                        <div className="research-study__area">{s.area}</div>
-                      </div>
-                      <span className="research-study__phase">
-                        {t.research.phase} {s.phase}
+            <motion.div
+              key={`${tab}-${lang}-${expanded ? 'all' : 'preview'}`}
+              className="research-catalog"
+              variants={staggerContainer(0.04, 0.02)}
+              initial="hidden"
+              animate="show"
+            >
+              {visible.map((card) => (
+                <motion.article
+                  key={card.id}
+                  className="research-card"
+                  variants={rise3d}
+                  style={{ ['--research-accent' as string]: TAB_COLORS[tab] }}
+                >
+                  <div className="research-card__top">
+                    <span className="research-card__eyebrow">{card.eyebrow}</span>
+                    {card.status ? (
+                      <span className={`research-card__status is-${card.status}`}>
+                        {card.status === 'open' ? t.research.statusOpen : t.research.statusClosed}
                       </span>
-                    </div>
+                    ) : (
+                      <span className="research-card__mark" aria-hidden />
+                    )}
                   </div>
-                ))}
-              </div>
-            )}
+                  <strong className="research-card__title">{card.title}</strong>
+                  {card.meta ? <span className="research-card__meta">{card.meta}</span> : null}
+                  <a href="/contacts" className="research-card__link">
+                    {ctaLabel} <span aria-hidden>→</span>
+                  </a>
+                </motion.article>
+              ))}
+            </motion.div>
 
-            {tab === 2 && (
-              <div id="research-panel-2" role="tabpanel" aria-labelledby="research-tab-2">
-                <h3 className="research-console__title">{t.research.croTitle}</h3>
-                <p className="section-desc research-cro-desc">{t.research.croDesc}</p>
-                <div className="research-why-grid">
-                  {t.research.croFeatures.map((f, i) => (
-                    <div key={i} className="card research-cro-feature">→ {f}</div>
-                  ))}
-                </div>
+            {hasMore ? (
+              <div className="research-more">
+                <button
+                  type="button"
+                  className="research-more__btn"
+                  aria-expanded={expanded}
+                  onClick={() => setExpanded((v) => !v)}
+                >
+                  {expanded
+                    ? t.research.showLess
+                    : `${t.research.showMore}${hiddenCount ? ` · ${hiddenCount}` : ''}`}
+                </button>
               </div>
-            )}
+            ) : null}
           </div>
 
-          <aside className="card research-console__metrics">
-            <div className="section-label research-console__metrics-label">{t.research.capabilitiesTitle}</div>
-            {capabilities.map((c, i) => (
-              <div
-                key={i}
-                className={`research-metric-row${i < capabilities.length - 1 ? ' research-metric-row--border' : ''}`}
-              >
-                <span className="research-metric-row__label">{c.label}</span>
-                <span className={`research-metric-row__value${c.highlight ? ' research-metric-row__value--accent' : ''}`}>
-                  {c.value}
-                </span>
-              </div>
-            ))}
+          <aside className="research-side">
+            <div className="research-side__block">
+              <h3 className="research-side__title">{t.research.capabilitiesTitle}</h3>
+              <ul className="research-side__list">
+                {(cms?.capabilities?.length ? cms.capabilities : t.research.capabilities)
+                  .filter((c) => /^(Ha|Да|Yes)$/i.test(c.value))
+                  .slice(0, 4)
+                  .map((c) => (
+                    <li key={c.label}>{c.label}</li>
+                  ))}
+              </ul>
+            </div>
 
-            <div className="research-phases">
-              <div className="research-phases__title">{t.research.phasesTitle}</div>
-              <div className="research-phases__chips">
+            <div className="research-side__block">
+              <h3 className="research-side__title">{t.research.phasesTitle}</h3>
+              <div className="research-phases">
                 {t.research.phases.map((sp, i) => (
                   <div
                     key={sp.phase}
-                    className="research-phase-chip"
+                    className="research-phase"
                     style={{ ['--phase-color' as string]: PHASE_COLORS[i] }}
                   >
-                    <span className="research-phase-chip__name">{sp.phase}</span>
-                    <span className="research-phase-chip__count">{sp.count}</span>
+                    <span className="research-phase__name">{sp.phase}</span>
+                    <strong className="research-phase__count">{sp.count}</strong>
                   </div>
                 ))}
               </div>
             </div>
+
+            {tab === 2 ? (
+              <p className="research-side__note">{t.research.croDesc}</p>
+            ) : null}
           </aside>
-        </motion.div>
+        </div>
+
       </div>
     </section>
   )

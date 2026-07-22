@@ -1,0 +1,92 @@
+/* Shared interaction motion — imported from main.tsx */
+
+.page-enter {
+  will-change: opacity, transform;
+}
+
+.hp-btn,
+.clinic-section__cta,
+.btn-accent,
+.btn-outline,
+.btn-ghost,
+.hp-service-card__link,
+.product-tab {
+  transition:
+    transform 0.16s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.hp-btn:active,
+.clinic-section__cta:active,
+.btn-accent:active,
+.btn-outline:active {
+  transform: scale(0.97);
+}
+
+.hp-nav__link {
+  position: relative;
+  transition: color 0.18s ease;
+}
+
+.hp-nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #5b4cdb, #0ea5e9);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 0.9;
+}
+
+.hp-nav__link:hover::after,
+.hp-nav__link.is-active::after,
+.hp-nav__item:hover > .hp-nav__link::after {
+  transform: scaleX(1);
+}
+
+/* Motion owns transform (x/y); keep CSS centering via left only */
+.hp-nav__dropdown {
+  transform: none;
+}
+
+.hp-service-card--video {
+  transition: box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hp-service-card--video:hover {
+  box-shadow:
+    0 24px 50px rgba(35, 38, 52, 0.14),
+    0 0 0 1px rgba(14, 165, 233, 0.12);
+}
+
+.hp-service-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.scroll-progress {
+  transform-origin: left center;
+  transition: opacity 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-btn:active,
+  .clinic-section__cta:active,
+  .btn-accent:active,
+  .btn-outline:active {
+    transform: none;
+  }
+
+  .hp-nav__link::after {
+    transition: none;
+  }
+}

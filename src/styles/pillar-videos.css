@@ -1,0 +1,13 @@
+/* Pillar card videos — imported from Pillars.tsx */
+
+.hp-service-card__media .hp-service-card__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.hp-service-card:hover .hp-service-card__media .hp-service-card__video {
+  transform: scale(1.06);
+}

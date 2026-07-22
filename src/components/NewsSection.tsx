@@ -39,7 +39,7 @@ export default function NewsSection() {
           <SectionHeader
             label={t.news.label}
             title={<>{t.news.title1} <em>{t.news.titleEm}</em></>}
-            action={<a href="#news" className="btn-ghost news-section__all">{t.news.allBtn}</a>}
+            action={<a href="/news" className="btn-ghost news-section__all">{t.news.allBtn}</a>}
           />
         </Reveal>
 

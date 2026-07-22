@@ -30,13 +30,13 @@ const COPY: Record<
 }
 
 export default function NotFoundPage() {
-  const { lang } = useLanguage()
+  const { lang, t: i18n } = useLanguage()
   const t = COPY[lang] ?? COPY.uz
 
   useEffect(() => {
-    document.title = `${t.code} — ${t.title} | MRII`
+    document.title = `${t.code} — ${t.title} | ${i18n.nav.brand}`
     window.scrollTo(0, 0)
-  }, [t.code, t.title])
+  }, [t.code, t.title, i18n.nav.brand])
 
   return (
     <main className="not-found">
@@ -49,7 +49,7 @@ export default function NotFoundPage() {
           <a href="/" className="hp-btn hp-btn--primary">
             {t.home}
           </a>
-          <a href="/#clinic" className="hp-btn hp-btn--ghost">
+          <a href="/clinic" className="hp-btn hp-btn--ghost">
             {t.clinic}
           </a>
         </div>

@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap');
-
 :root {
+  --font-display: 'Sora', 'Source Sans 3', system-ui, sans-serif;
+  --font-body: 'Source Sans 3', system-ui, sans-serif;
   --bg: #f4f5f7;
   --surface: #ffffff;
   --surface-soft: #f0f1f4;
@@ -27,7 +27,7 @@
   --radius-md: 20px;
   --radius-lg: 28px;
   --radius-xl: 38px;
-  --container: 1240px;
+  --container: 1320px;
   --gutter: clamp(18px, 4vw, 36px);
   --section-space: clamp(88px, 10vw, 144px);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);

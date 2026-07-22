@@ -1,0 +1,168 @@
+/* Spline AI stage — side-by-side layout (do not rely on Tailwind md:) */
+.ai-spline-wrap {
+  margin: 0 0 20px;
+}
+
+.spline-ai-stage {
+  height: 480px !important;
+  border-radius: 28px !important;
+  box-shadow: 0 24px 60px rgba(12, 13, 18, 0.28);
+  background:
+    radial-gradient(ellipse 55% 70% at 78% 42%, rgba(56, 120, 255, 0.2), transparent 60%),
+    rgba(0, 0, 0, 0.96) !important;
+}
+
+.spline-ai-stage__layout {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: 100%;
+  width: 100%;
+}
+
+.spline-ai-stage__copy {
+  flex: 0 0 min(42%, 440px);
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 36px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.spline-ai-stage__title {
+  margin: 0;
+  font-size: clamp(1.75rem, 2.6vw, 2.55rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #fafafa;
+}
+
+.spline-ai-stage__hint {
+  margin: 16px 0 0;
+  max-width: 26rem;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #d4d4d8;
+}
+
+.spline-ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 6px 12px 6px 10px;
+  width: fit-content;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.spline-ai-badge__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #5eead4;
+  box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.25);
+}
+
+.spline-ai-stage__scene {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.spline-ai-stage__scene > div {
+  position: absolute !important;
+  /* Pull robot up into the visual frame */
+  left: -8% !important;
+  right: -8% !important;
+  top: -4% !important;
+  bottom: -28% !important;
+  width: 116% !important;
+  height: 124% !important;
+  transform: translateY(-6%);
+}
+
+.spline-ai-stage__scene canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.spline-loader {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  border-top-color: #5eead4;
+  border-radius: 50%;
+  animation: spline-spin 0.8s linear infinite;
+}
+
+@keyframes spline-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 760px) {
+  .ai-spline-wrap {
+    margin-bottom: 20px;
+  }
+
+  .spline-ai-stage {
+    height: auto !important;
+    min-height: 560px;
+  }
+
+  .spline-ai-stage__layout {
+    flex-direction: column;
+  }
+
+  .spline-ai-stage__copy {
+    flex: none;
+    max-width: none;
+    padding: 28px 24px 12px;
+    pointer-events: auto;
+  }
+
+  .spline-ai-stage__scene {
+    flex: 1 1 auto;
+    min-height: 320px;
+  }
+
+  .spline-ai-stage__scene > div {
+    top: 0 !important;
+    bottom: -24% !important;
+    transform: translateY(-10%);
+  }
+}
+
+
+
+.page-shell--ai {
+  padding-top: 64px;
+}
+
+#ai.section {
+  padding-block: clamp(20px, 3vw, 40px) !important;
+}
+
+#ai .section-head {
+  margin-bottom: 16px !important;
+}
+
+#ai .ai-spline-wrap {
+  margin-bottom: 18px;
+}

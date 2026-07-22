@@ -1,0 +1,140 @@
+/* Doctor cards: photo-forward, compact text; equal card heights */
+
+.doctors-section .doctor-grid {
+  align-items: stretch;
+}
+
+.doctors-section .doctor-card {
+  height: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.doctors-section .doctor-card__media {
+  height: 280px;
+  min-height: 280px;
+  max-height: 280px;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+  /* Top corners match card curve */
+  border-radius: 24px 24px 0 0;
+}
+
+.doctors-section .doctor-card__media--video .doctor-card__photo,
+.doctors-section .doctor-card__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Same head/shoulder framing for every card — no per-doctor scale */
+  object-position: center 20%;
+  pointer-events: none;
+  border-radius: 24px 24px 0 0;
+}
+
+.doctors-section .doctor-card__body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 12px 14px 14px;
+  gap: 0;
+  min-height: 0;
+}
+
+.doctors-section .doctor-card__name {
+  margin: 0 0 2px;
+  font-size: 13px;
+  line-height: 1.25;
+  font-weight: 700;
+  min-height: 1.25em;
+}
+
+.doctors-section .doctor-card__role {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.3;
+  min-height: 1.3em;
+}
+
+.doctors-section .doctor-card__exp {
+  margin: 3px 0 6px;
+  font-size: 10px;
+  min-height: 1.2em;
+}
+
+.doctors-section .doctor-card__rating {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 22px;
+  margin-bottom: 8px;
+}
+
+.doctors-section .doctor-card__stars span {
+  font-size: 11px;
+}
+
+.doctors-section .doctor-card__rating-meta {
+  font-size: 10px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.doctors-section .doctor-card__review-btn {
+  font-size: 10px;
+}
+
+.doctors-section .doctor-card__stats {
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.doctors-section .doctor-card__stat {
+  padding: 7px 8px;
+  border-radius: 12px;
+}
+
+.doctors-section .doctor-card__stat strong {
+  font-size: 14px;
+}
+
+.doctors-section .doctor-card__stat span {
+  font-size: 8px;
+}
+
+.doctors-section .doctor-card__cta {
+  display: grid;
+  place-items: center;
+  min-height: 36px;
+  margin-top: auto;
+  font-size: 11px;
+}
+
+.doctors-section .doctor-card__badge {
+  top: 10px;
+  left: 10px;
+  padding: 5px 8px;
+  font-size: 8px;
+}
+
+.doctors-section__preview {
+  margin-top: 4px;
+}
+
+@media (max-width: 900px) {
+  .doctors-section .doctor-card__media {
+    height: 250px;
+    min-height: 250px;
+    max-height: 250px;
+  }
+}
+
+@media (max-width: 560px) {
+  .doctors-section .doctor-card__media {
+    height: 230px;
+    min-height: 230px;
+    max-height: 230px;
+  }
+}

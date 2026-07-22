@@ -56,7 +56,7 @@ export default function International() {
         </motion.div>
 
         <div className="btn-group">
-          <a href="#contacts" className="btn-accent">{t.international.contactBtn}</a>
+          <a href="/contacts" className="btn-accent">{t.international.contactBtn}</a>
           <a href="#" className="btn-outline">{t.international.telemedBtn}</a>
         </div>
       </div>

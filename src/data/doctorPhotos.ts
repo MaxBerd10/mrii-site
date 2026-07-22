@@ -1,0 +1,23 @@
+/** Local staff photos (order matches translation doctor lists). */
+export const DOCTOR_PHOTOS = [
+  '/images/doctors/doctor-01.png',
+  '/images/doctors/doctor-02.png',
+  '/images/doctors/doctor-03.png',
+  '/images/doctors/doctor-04.png',
+  '/images/doctors/doctor-05.png',
+  '/images/doctors/doctor-06.png',
+  '/images/doctors/doctor-07.png',
+  '/images/doctors/doctor-08.png',
+  '/images/doctors/doctor-09.png',
+  '/images/doctors/doctor-10.png',
+  '/images/doctors/doctor-11.png',
+  '/images/doctors/doctor-12.png',
+  '/images/doctors/doctor-13.png',
+  '/images/doctors/doctor-14.png',
+  '/images/doctors/doctor-15.png',
+  '/images/doctors/doctor-16.png',
+  '/images/doctors/doctor-17.png',
+  '/images/doctors/doctor-18.png',
+  '/images/doctors/doctor-19.png',
+  '/images/doctors/doctor-20.png',
+] as const

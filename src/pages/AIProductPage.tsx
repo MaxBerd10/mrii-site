@@ -9,7 +9,12 @@ import { blurUp, rise3d, staggerContainer } from '../lib/animations'
 import SectionBackLink from '../components/ui/SectionBackLink'
 import NotFoundPage from './NotFoundPage'
 
-const PRODUCT_IMAGES = Object.values(media.ai)
+const PRODUCT_IMAGES = [
+  media.ai.doctor,
+  media.ai.radiology,
+  media.ai.ultrasound,
+  media.ai.clinicalResearch,
+]
 
 type ViewModel = {
   slug: string
@@ -122,7 +127,7 @@ export default function AIProductPage({ slug }: { slug: string }) {
   })()
 
   useEffect(() => {
-    if (view) document.title = `${view.name} — MRII`
+    if (view) document.title = `${view.name} — ${t.nav.brand}`
   }, [view?.name])
 
   if (!triedCms && isCmsEnabled() && !view) {
@@ -198,7 +203,7 @@ export default function AIProductPage({ slug }: { slug: string }) {
             animate="show"
           >
             <motion.div variants={blurUp}>
-              <SectionBackLink href="/#ai" className="ai-product__back">
+              <SectionBackLink href="/ai" className="ai-product__back">
                 ← {labels.back}
               </SectionBackLink>
             </motion.div>
@@ -404,7 +409,7 @@ export default function AIProductPage({ slug }: { slug: string }) {
                 <button type="button" className="hp-btn hp-btn--primary" onClick={() => setConfirmation(null)}>
                   {labels.close}
                 </button>
-                <a href="/#ai" className="hp-btn hp-btn--ghost">{labels.moreProducts}</a>
+                <a href="/ai" className="hp-btn hp-btn--ghost">{labels.moreProducts}</a>
               </div>
             </motion.div>
           </motion.div>

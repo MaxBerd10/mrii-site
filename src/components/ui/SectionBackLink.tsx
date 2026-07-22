@@ -6,7 +6,7 @@ type SectionBackLinkProps = {
   children: ReactNode
 }
 
-/** Always open the section hash so landing is predictable (no history.back jump). */
+/** Open a section/list page (multi-page site, not in-page hash). */
 export default function SectionBackLink({ href, className, children }: SectionBackLinkProps) {
   return (
     <a href={href} className={className}>

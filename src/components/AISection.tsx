@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
@@ -7,10 +7,15 @@ import Reveal from './ui/Reveal'
 import { blurUp, rise3d } from '../lib/animations'
 import { media } from '../data/media'
 import { AI_PRODUCT_SLUGS } from '../data/aiDetails'
+import { SplineSceneBasic } from './ui/spline-scene-basic'
+import '../styles/ai-spline.css'
 
-const RobotStage = lazy(() => import('./robots/RobotStage'))
-
-const PRODUCT_IMAGES = Object.values(media.ai)
+const PRODUCT_IMAGES = [
+  media.ai.doctor,
+  media.ai.radiology,
+  media.ai.ultrasound,
+  media.ai.clinicalResearch,
+]
 
 export default function AISection() {
   const { t } = useLanguage()
@@ -44,22 +49,24 @@ export default function AISection() {
         <Reveal variants={blurUp}>
           <SectionHeader
             label={t.ai.label}
-            title={<>{t.ai.title1} <em>{t.ai.titleEm}</em></>}
+            title={
+              <>
+                {t.ai.title1} <em>{t.ai.titleEm}</em>
+              </>
+            }
             description={t.ai.description}
             accent="#5B4CDB"
           />
         </Reveal>
 
         <Reveal variants={blurUp}>
-          <Suspense
-            fallback={
-              <div className="robot-stage robot-stage--loading">
-                <p>3D yuklanmoqda…</p>
-              </div>
-            }
-          >
-            <RobotStage title={t.ai.robotTitle} hint={t.ai.robotHint} />
-          </Suspense>
+          <div className="ai-spline-wrap">
+            <SplineSceneBasic
+              kicker={t.ai.splineKicker}
+              title={t.ai.splineTitle}
+              description={t.ai.splineHint}
+            />
+          </div>
         </Reveal>
 
         <div className="product-tabs" role="tablist">
@@ -135,7 +142,9 @@ export default function AISection() {
               transition={{ duration: 0.4, delay: 0.08 }}
               className="ai-console__metric"
             >
-              <div className="ai-console__metric-value" style={{ color: p.tagColor }}>{p.metric}</div>
+              <div className="ai-console__metric-value" style={{ color: p.tagColor }}>
+                {p.metric}
+              </div>
               <div className="ai-console__metric-label">{p.metricLabel}</div>
             </motion.div>
           </div>
@@ -162,15 +171,29 @@ export default function AISection() {
                   <li key={f}>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
                       <circle cx="8" cy="8" r="8" fill={`${p.tagColor}20`} />
-                      <path d="M5 8l2 2 4-4" stroke={p.tagColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      <path
+                        d="M5 8l2 2 4-4"
+                        stroke={p.tagColor}
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                     {f}
                   </li>
                 ))}
               </ul>
               <div className="btn-group">
-                <a href={`${productHref}#ai-demo`} className="btn-accent" style={{ background: p.tagColor }}>{t.ai.demoBtn}</a>
-                <a href={productHref} className="btn-outline btn-sm">{t.ai.casesBtn}</a>
+                <a
+                  href={`${productHref}#ai-demo`}
+                  className="btn-accent"
+                  style={{ background: p.tagColor }}
+                >
+                  {t.ai.demoBtn}
+                </a>
+                <a href={productHref} className="btn-outline btn-sm">
+                  {t.ai.casesBtn}
+                </a>
               </div>
             </motion.div>
           </AnimatePresence>

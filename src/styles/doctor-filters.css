@@ -1,0 +1,116 @@
+/* Doctor staff filters — compact, clinic-like */
+.doctor-filters-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0 0 24px;
+  padding: 14px 16px;
+  border: 1px solid rgba(35, 38, 52, 0.06);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.doctor-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+}
+
+.doctor-filters--groups {
+  padding-top: 12px;
+  border-top: 1px solid rgba(35, 38, 52, 0.06);
+}
+
+.doctor-filters__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--text-soft, #6b7280);
+  background: rgba(35, 38, 52, 0.04);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: 0.18s ease;
+}
+
+.doctor-filters__btn:hover {
+  color: var(--text, #16181d);
+  background: rgba(35, 38, 52, 0.07);
+}
+
+.doctor-filters__btn.is-active {
+  color: #fff;
+  background: var(--brand, #5b4cdb);
+  box-shadow: 0 8px 18px rgba(91, 76, 219, 0.22);
+}
+
+.doctor-filters__btn--soft {
+  font-size: 12px;
+  padding: 8px 12px;
+  background: transparent;
+  border-color: rgba(35, 38, 52, 0.08);
+}
+
+.doctor-filters__btn--soft:hover {
+  background: rgba(91, 76, 219, 0.05);
+  border-color: rgba(91, 76, 219, 0.18);
+}
+
+.doctor-filters__btn--soft.is-active {
+  color: var(--brand, #5b4cdb);
+  background: rgba(91, 76, 219, 0.1);
+  border-color: rgba(91, 76, 219, 0.2);
+  box-shadow: none;
+}
+
+.doctor-filters__btn--soft.is-active .doctor-filters__dot {
+  background: currentColor !important;
+}
+
+.doctor-filters__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.doctor-filters__btn.is-active:not(.doctor-filters__btn--soft) .doctor-filters__dot {
+  background: #fff !important;
+}
+
+.doctor-filters__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(35, 38, 52, 0.08);
+  color: inherit;
+}
+
+.doctor-filters__btn.is-active:not(.doctor-filters__btn--soft) .doctor-filters__count {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.doctor-filters__btn--soft.is-active .doctor-filters__count {
+  background: rgba(91, 76, 219, 0.14);
+}
+
+@media (max-width: 640px) {
+  .doctor-filters-panel {
+    padding: 12px;
+  }
+
+  .doctor-filters__btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}

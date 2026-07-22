@@ -12,6 +12,48 @@ html.no-smooth-scroll {
   scroll-behavior: auto !important;
 }
 
+.page-shell {
+  padding-top: 88px;
+  min-height: 60vh;
+  background:
+    radial-gradient(ellipse 50% 35% at 0% 0%, rgba(91, 76, 219, 0.07), transparent 55%),
+    radial-gradient(ellipse 45% 30% at 100% 5%, rgba(14, 165, 233, 0.06), transparent 50%),
+    var(--bg);
+}
+
+.page-shell--contacts {
+  padding-top: 72px;
+}
+
+.site-footer {
+  margin-top: auto;
+  flex-shrink: 0;
+  border-top: 1px solid var(--border);
+  background: #fff;
+  padding: 22px 0 28px;
+}
+
+.site-footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.site-footer__copy {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 13px;
+}
+
+.site-footer__link {
+  color: var(--brand);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
 #clinic,
 #research,
 #ai,
@@ -91,7 +133,7 @@ body {
   margin: 0;
   min-width: 320px;
   overflow-x: hidden;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-body);
   color: var(--text);
   background: var(--bg);
   font-size: 15px;
@@ -114,7 +156,26 @@ button { color: inherit; }
   outline-offset: 4px;
 }
 
-.site-shell { isolation: isolate; }
+.site-shell {
+  isolation: isolate;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-enter {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+}
+
+.page-enter > .page-shell,
+.page-enter > .site-main {
+  flex: 1 1 auto;
+}
+
 .site-main { position: relative; overflow: clip; }
 
 .container-main {
@@ -167,7 +228,7 @@ button { color: inherit; }
 .section-title {
   margin: 0;
   max-width: 18ch;
-  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-family: var(--font-display);
   font-size: clamp(38px, 5.6vw, 72px);
   font-weight: 700;
   line-height: 0.98;

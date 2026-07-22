@@ -1,0 +1,954 @@
+/* Immersive specialty department worlds */
+
+.specialty-world {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 10%, var(--sw-soft), transparent 55%),
+    radial-gradient(ellipse 55% 45% at 90% 20%, color-mix(in srgb, var(--sw-accent) 10%, transparent), transparent 50%),
+    #f5f6f9;
+  color: var(--text);
+}
+
+.specialty-world__veil {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--sw-accent) 18%, #0b1220);
+}
+
+.specialty-world__atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Soft breathing wash across the whole page */
+.specialty-world__breath {
+  position: absolute;
+  left: 50%;
+  top: 18%;
+  width: min(920px, 110vw);
+  height: min(920px, 110vw);
+  translate: -50% -20%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--sw-accent) 22%, transparent) 0%,
+    color-mix(in srgb, var(--sw-accent) 8%, transparent) 38%,
+    transparent 68%
+  );
+  animation: sw-breath 4.2s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Expanding pulse rings */
+.specialty-world__pulse {
+  position: absolute;
+  left: 22%;
+  top: 28%;
+  width: min(420px, 58vw);
+  height: min(420px, 58vw);
+  translate: -50% -50%;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--sw-accent) 45%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--sw-accent) 8%, transparent),
+    inset 0 0 40px color-mix(in srgb, var(--sw-accent) 10%, transparent);
+  opacity: 0;
+  animation: sw-pulse-ring 3.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  will-change: transform, opacity;
+}
+
+.specialty-world__pulse--b {
+  animation-delay: 1.2s;
+  border-color: color-mix(in srgb, var(--sw-accent) 35%, transparent);
+}
+
+.specialty-world__pulse--c {
+  animation-delay: 2.4s;
+  border-color: color-mix(in srgb, var(--sw-accent) 28%, transparent);
+}
+
+/* Cardiology: real heartbeat — lub · dub · rest */
+.specialty-world--pulse .specialty-world__breath {
+  left: 30%;
+  top: 34%;
+  width: min(720px, 95vw);
+  height: min(720px, 95vw);
+  translate: -50% -50%;
+  animation: sw-heartbeat-glow 1.8s ease-in-out infinite;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--sw-accent) 34%, transparent) 0%,
+    color-mix(in srgb, var(--sw-accent) 14%, transparent) 32%,
+    transparent 64%
+  );
+}
+
+.specialty-world--pulse .specialty-world__pulse {
+  left: 30%;
+  top: 34%;
+  width: min(380px, 55vw);
+  height: min(380px, 55vw);
+  border-width: 2px;
+  border-color: color-mix(in srgb, var(--sw-accent) 55%, #fff);
+  box-shadow:
+    0 0 28px color-mix(in srgb, var(--sw-accent) 22%, transparent),
+    inset 0 0 48px color-mix(in srgb, var(--sw-accent) 14%, transparent);
+  animation: sw-heartbeat-ring 1.8s ease-out infinite;
+}
+
+.specialty-world--pulse .specialty-world__pulse--b {
+  animation-delay: 0.18s;
+  border-color: color-mix(in srgb, var(--sw-accent) 40%, transparent);
+}
+
+.specialty-world--pulse .specialty-world__pulse--c {
+  animation-delay: 0.36s;
+  border-color: color-mix(in srgb, var(--sw-accent) 28%, transparent);
+}
+
+.specialty-world--pulse .specialty-world__stage-glow {
+  animation: sw-heartbeat-glow 1.8s ease-in-out infinite;
+}
+
+@keyframes sw-breath {
+  0%,
+  100% {
+    transform: scale(0.92);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.85;
+  }
+}
+
+@keyframes sw-pulse-ring {
+  0% {
+    transform: scale(0.55);
+    opacity: 0.55;
+  }
+  70% {
+    opacity: 0.18;
+  }
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+/* lub (0–12%) · dub (18–30%) · rest (30–100%) */
+@keyframes sw-heartbeat-glow {
+  0% {
+    transform: scale(0.94);
+    opacity: 0.4;
+  }
+  8% {
+    transform: scale(1.12);
+    opacity: 0.95;
+  }
+  14% {
+    transform: scale(0.96);
+    opacity: 0.5;
+  }
+  22% {
+    transform: scale(1.18);
+    opacity: 1;
+  }
+  30% {
+    transform: scale(0.95);
+    opacity: 0.42;
+  }
+  100% {
+    transform: scale(0.94);
+    opacity: 0.38;
+  }
+}
+
+@keyframes sw-heartbeat-ring {
+  0% {
+    transform: scale(0.72);
+    opacity: 0;
+  }
+  8% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+  14% {
+    transform: scale(1.05);
+    opacity: 0.25;
+  }
+  22% {
+    transform: scale(1.22);
+    opacity: 0.65;
+  }
+  38% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+.specialty-world__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(2px);
+}
+
+.specialty-world__orb--a {
+  left: -4%;
+  top: 12%;
+  width: min(280px, 40vw);
+  height: min(280px, 40vw);
+  border: 28px solid color-mix(in srgb, var(--sw-accent) 16%, transparent);
+}
+
+.specialty-world__orb--b {
+  right: -6%;
+  top: 38%;
+  width: min(220px, 32vw);
+  height: min(220px, 32vw);
+  background: radial-gradient(circle, var(--sw-glow), transparent 68%);
+  opacity: 0.55;
+}
+
+.specialty-world__dust {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sw-accent);
+  opacity: 0.35;
+  animation: sw-float 9s ease-in-out infinite;
+}
+
+.specialty-world__dust {
+  left: 18%;
+  top: 28%;
+}
+
+.specialty-world__dust--2 {
+  left: 72%;
+  top: 18%;
+  width: 4px;
+  height: 4px;
+  animation-duration: 11s;
+  animation-delay: -2s;
+}
+
+.specialty-world__dust--3 {
+  left: 58%;
+  top: 62%;
+  width: 5px;
+  height: 5px;
+  animation-duration: 13s;
+  animation-delay: -4s;
+}
+
+@keyframes sw-float {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-28px);
+    opacity: 0.55;
+  }
+}
+
+.specialty-world__hero,
+.specialty-world__team,
+.specialty-world__care {
+  position: relative;
+  z-index: 1;
+}
+
+.specialty-world__hero {
+  padding: 112px 0 48px;
+}
+
+.specialty-world__hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+}
+
+.specialty-world__stage {
+  position: relative;
+  min-height: clamp(360px, 48vw, 520px);
+  display: grid;
+  place-items: center;
+  border-radius: 36px;
+  background:
+    radial-gradient(circle at 50% 45%, var(--sw-soft), transparent 58%),
+    linear-gradient(160deg, #fff, #eef1f6);
+  box-shadow: var(--shadow-raised);
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+.specialty-world__stage-glow {
+  position: absolute;
+  inset: 18%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--sw-glow), transparent 70%);
+  filter: blur(8px);
+  opacity: 0.7;
+  animation: sw-breath 3.4s ease-in-out infinite;
+}
+
+.specialty-world__index {
+  position: absolute;
+  left: 22px;
+  top: 22px;
+  z-index: 2;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--sw-accent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.specialty-world__organ {
+  position: relative;
+  z-index: 1;
+  width: min(78%, 380px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 28px 40px color-mix(in srgb, var(--sw-accent) 28%, transparent));
+}
+
+.specialty-world__organ--pulse {
+  transform-origin: center;
+  will-change: transform;
+}
+
+.specialty-world__hud {
+  position: absolute;
+  inset: 16px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.specialty-world__hud-corner {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-color: color-mix(in srgb, var(--sw-accent) 75%, #fff);
+  border-style: solid;
+  opacity: 0.85;
+}
+
+.specialty-world__hud-corner--tl {
+  left: 0;
+  top: 0;
+  border-width: 2px 0 0 2px;
+}
+
+.specialty-world__hud-corner--tr {
+  right: 0;
+  top: 0;
+  border-width: 2px 2px 0 0;
+}
+
+.specialty-world__hud-corner--bl {
+  left: 0;
+  bottom: 0;
+  border-width: 0 0 2px 2px;
+}
+
+.specialty-world__hud-corner--br {
+  right: 0;
+  bottom: 0;
+  border-width: 0 2px 2px 0;
+}
+
+.specialty-world__scan {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--sw-accent) 80%, #fff),
+    transparent
+  );
+  box-shadow: 0 0 16px var(--sw-glow);
+  animation: sw-scan 3.2s ease-in-out infinite;
+  opacity: 0.75;
+}
+
+@keyframes sw-scan {
+  0% {
+    top: 14%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  85% {
+    opacity: 0.55;
+  }
+  100% {
+    top: 82%;
+    opacity: 0;
+  }
+}
+
+.specialty-world__hud-chip {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(12, 18, 28, 0.72);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+
+.specialty-world__hud-chip--live {
+  right: 8px;
+  top: 8px;
+}
+
+.specialty-world__hud-chip--live i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 10px #34d399;
+  animation: sw-blink 1.4s ease-in-out infinite;
+}
+
+.specialty-world__hud-chip--metric {
+  left: 8px;
+  bottom: 36px;
+  color: color-mix(in srgb, var(--sw-accent) 40%, #fff);
+}
+
+.specialty-world__hud-readout {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes sw-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.specialty-world__badge-ai {
+  background: rgba(12, 18, 28, 0.9) !important;
+  color: #67e8f9 !important;
+}
+
+.specialty-world__ai {
+  margin: 0 0 20px;
+  padding: 16px 18px;
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--sw-accent) 22%, transparent);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--sw-soft) 80%, #0b1220), transparent 70%),
+    rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--sw-accent) 12%, transparent);
+}
+
+.specialty-world__ai-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.specialty-world__ai-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22d3ee;
+  box-shadow: 0 0 12px #22d3ee;
+  animation: sw-blink 1.6s ease-in-out infinite;
+}
+
+.specialty-world__ai-head strong {
+  font-size: 13px;
+  letter-spacing: -0.01em;
+}
+
+.specialty-world__ai-head em {
+  margin-left: auto;
+  color: var(--text-soft);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.specialty-world__ai p {
+  margin: 0 0 12px;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.specialty-world__ai-bar {
+  height: 3px;
+  margin-bottom: 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--sw-accent) 16%, #e5e7eb);
+  overflow: hidden;
+}
+
+.specialty-world__ai-bar span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--sw-accent), #22d3ee);
+}
+
+.specialty-world__ai-link {
+  color: var(--sw-accent);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.specialty-world__copy {
+  max-width: 36rem;
+}
+
+.specialty-world__back {
+  display: inline-flex;
+  margin-bottom: 14px;
+}
+
+.specialty-world__ambient {
+  margin: 0 0 10px;
+  color: var(--sw-accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.specialty-world__eyebrow {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--text-soft);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.specialty-world__copy h1 {
+  margin: 0 0 14px;
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  color: var(--text);
+}
+
+.specialty-world__lead {
+  margin: 0 0 18px;
+  color: var(--text-soft);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.specialty-world__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.specialty-world__badges span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--sw-soft);
+  color: var(--sw-accent);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.specialty-world__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.specialty-world__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: var(--sw-accent);
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 14px 28px color-mix(in srgb, var(--sw-accent) 28%, transparent);
+}
+
+.specialty-world__ghost {
+  color: var(--sw-accent);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.specialty-world__section-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.specialty-world__section-head span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.specialty-world__section-head h2 {
+  margin: 0;
+  font-size: clamp(26px, 3.5vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.specialty-world__empty {
+  margin: 0;
+  color: var(--text-soft);
+}
+
+.specialty-world__doctors {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.specialty-doc {
+  overflow: hidden;
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: var(--shadow-card);
+}
+
+.specialty-doc__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #e8ebf1;
+}
+
+.specialty-doc__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.specialty-doc:hover .specialty-doc__media img {
+  transform: scale(1.05);
+}
+
+.specialty-doc__shade {
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  background: linear-gradient(to top, rgba(15, 16, 22, 0.35), transparent);
+}
+
+.specialty-doc__body {
+  padding: 16px 18px 18px;
+}
+
+.specialty-doc__body h3 {
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.specialty-doc__body p {
+  margin: 0 0 12px;
+  color: var(--text-soft);
+  font-size: 13px;
+}
+
+.specialty-doc__actions {
+  display: flex;
+  gap: 14px;
+}
+
+.specialty-doc__actions a {
+  color: var(--sw-accent);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.specialty-world__care-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 40px;
+}
+
+.specialty-world__card {
+  min-height: 280px;
+  padding: 24px;
+  border-radius: 28px;
+  background: linear-gradient(155deg, #fff, color-mix(in srgb, var(--sw-soft) 55%, #fff));
+  border: 1px solid color-mix(in srgb, var(--sw-accent) 12%, transparent);
+  box-shadow: var(--shadow-raised);
+}
+
+.specialty-world__card > span {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--sw-accent);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.specialty-world__card h2 {
+  margin: 0 0 14px;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+
+.specialty-world__card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.specialty-world__card li {
+  position: relative;
+  padding: 8px 0 8px 16px;
+  color: var(--text-soft);
+  font-size: 14px;
+  line-height: 1.45;
+  border-top: 1px solid color-mix(in srgb, var(--sw-accent) 10%, transparent);
+}
+
+.specialty-world__card li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 15px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sw-accent);
+}
+
+.specialty-world__pathway {
+  padding: 28px;
+  margin-bottom: 48px;
+  border-radius: 30px;
+  background: #fff;
+  box-shadow: var(--shadow-card);
+}
+
+.specialty-world__pathway-head span {
+  color: var(--sw-accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.specialty-world__pathway-head h2 {
+  margin: 8px 0 8px;
+  font-size: clamp(24px, 3vw, 32px);
+}
+
+.specialty-world__pathway-head p {
+  margin: 0 0 22px;
+  max-width: 48rem;
+  color: var(--text-soft);
+}
+
+.specialty-world__pathway-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.specialty-world__step {
+  min-height: 160px;
+  padding: 18px;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--sw-soft) 70%, #fff);
+  border: 1px solid color-mix(in srgb, var(--sw-accent) 12%, transparent);
+}
+
+.specialty-world__step span {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--sw-accent);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.specialty-world__step strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+.specialty-world__step small {
+  color: var(--text-soft);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.specialty-world__related {
+  display: grid;
+  gap: 20px;
+  padding-bottom: 40px;
+}
+
+.specialty-world__related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.specialty-world__related-card {
+  position: relative;
+  min-height: 180px;
+  overflow: hidden;
+  border-radius: 24px;
+  text-decoration: none;
+  color: #fff;
+  background: #111827;
+}
+
+.specialty-world__related-card img {
+  position: absolute;
+  inset: 12%;
+  width: 76%;
+  height: 70%;
+  object-fit: contain;
+  opacity: 0.9;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.specialty-world__related-card:hover img {
+  transform: scale(1.06);
+}
+
+.specialty-world__related-card span,
+.specialty-world__related-card strong {
+  position: relative;
+  z-index: 1;
+  display: block;
+  padding: 0 16px;
+}
+
+.specialty-world__related-card span {
+  margin-top: 14px;
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.specialty-world__related-card strong {
+  margin-top: 4px;
+  font-size: 16px;
+}
+
+@media (max-width: 980px) {
+  .specialty-world__hero-grid,
+  .specialty-world__doctors,
+  .specialty-world__care-grid,
+  .specialty-world__pathway-steps,
+  .specialty-world__related-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .specialty-world__pathway-steps {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .specialty-world__hero {
+    padding-top: 96px;
+  }
+
+  .specialty-world__hero-grid,
+  .specialty-world__doctors,
+  .specialty-world__care-grid,
+  .specialty-world__pathway-steps,
+  .specialty-world__related-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .specialty-world__stage {
+    min-height: 320px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .specialty-world__dust,
+  .specialty-world__organ--pulse,
+  .specialty-world__scan,
+  .specialty-world__hud-chip--live i,
+  .specialty-world__ai-dot,
+  .specialty-world__breath,
+  .specialty-world__pulse,
+  .specialty-world__stage-glow {
+    animation: none;
+  }
+
+  .specialty-world__breath {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+
+  .specialty-world__pulse {
+    opacity: 0.12;
+    transform: scale(1.1);
+  }
+}

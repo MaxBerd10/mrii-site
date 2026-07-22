@@ -4,6 +4,8 @@ import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
 import { useCountUp } from '../hooks/useCountUp'
 import { media } from '../data/media'
+import { heroItem, heroStagger } from '../lib/animations'
+import Magnetic from './ui/Magnetic'
 
 function telHref(phone: string) {
   const digits = phone.replace(/[^\d+]/g, '')
@@ -11,9 +13,10 @@ function telHref(phone: string) {
 }
 
 const THUMBS = Object.values(media.hero.thumbs)
-const ACTION_HREFS = ['#contacts', '#research', '#education', '#ai']
+const ACTION_HREFS = ['/contacts', '/research', '/education', '/ai']
 const CLINIC_CORRIDOR = '/images/clinic/mrii-clinic-hero-centered-sharp.webp'
 const HERO_VIDEO = media.hero.video
+const HERO_POSTER = media.hero.poster || CLINIC_CORRIDOR
 
 function HeroStat({ value, label, active }: { value: string; label: string; active: boolean }) {
   const display = useCountUp(value, active)
@@ -43,12 +46,12 @@ export default function Hero() {
   const cameraScale = useTransform(scrollYProgress, [0, .45, 1], [1, 1.08, 1.18])
   const settings = home?.settings
   const hero = home?.hero
-  const instituteName = t.hero.instituteName.replace(' (MRII)', '')
+  const instituteName = t.hero.instituteName
   const slogan = settings?.slogan || t.hero.instituteSlogan
   const certs = hero?.certs || t.hero.certs
   const phone = settings?.phone || t.topBar.phone
   const badge = settings?.badge || t.topBar.badge
-  const heroImage = hero?.image || CLINIC_CORRIDOR
+  const heroImage = hero?.image || HERO_POSTER
 
   useEffect(() => {
     setStatsActive(true)
@@ -63,6 +66,9 @@ export default function Hero() {
     }
     const el = videoRef.current
     if (!el) return
+    // Calm cinematic pacing — source montage already slower; keep playback gentle
+    el.defaultPlaybackRate = 0.78
+    el.playbackRate = 0.78
     el.play().catch(() => setVideoOk(false))
   }, [reduce, videoOk])
 
@@ -105,25 +111,34 @@ export default function Hero() {
           <motion.div
             className="hp-hero__copy"
             style={reduce || !ready ? undefined : { y: copyY, opacity: heroOpacity }}
+            variants={reduce ? undefined : heroStagger}
+            initial={reduce ? undefined : 'hidden'}
+            animate={reduce ? undefined : 'show'}
           >
-            <p className="hp-hero__eyebrow">
+            <motion.p className="hp-hero__eyebrow" variants={reduce ? undefined : heroItem}>
               {t.hero.since} · {certs}
-            </p>
+            </motion.p>
 
-            <h1 className="hp-hero__title hp-hero__title--brand">
+            <motion.h1 className="hp-hero__title hp-hero__title--brand" variants={reduce ? undefined : heroItem}>
               {instituteName}
-              <br />
-              <span>(MRII)</span>
-            </h1>
+            </motion.h1>
 
-            <p className="hp-hero__desc hp-hero__slogan">
+            <motion.p className="hp-hero__slogan" variants={reduce ? undefined : heroItem}>
               «{slogan}»
-            </p>
+            </motion.p>
 
-            <div className="hp-hero__cta-row">
-              <a href="#ai" className="hp-btn hp-btn--primary">
+            <motion.p className="hp-hero__lead" variants={reduce ? undefined : heroItem}>
+              {t.hero.description}
+            </motion.p>
+
+            <motion.p className="hp-hero__pillars" variants={reduce ? undefined : heroItem}>
+              {t.hero.tagline}
+            </motion.p>
+
+            <motion.div className="hp-hero__cta-row" variants={reduce ? undefined : heroItem}>
+              <Magnetic href="/ai" className="hp-btn hp-btn--primary" strength={0.3}>
                 {t.ai.sellBtn}
-              </a>
+              </Magnetic>
               <a href={telHref(phone)} className="hp-emergency">
                 <span className="hp-emergency__icon" aria-hidden>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -135,17 +150,17 @@ export default function Hero() {
                   <strong>{phone}</strong>
                 </span>
               </a>
-            </div>
+            </motion.div>
 
-            <div className="hp-hero__thumbs">
+            <motion.div className="hp-hero__thumbs" variants={reduce ? undefined : heroItem}>
               {THUMBS.map((src, i) => (
                 <a key={i} href={ACTION_HREFS[i]} className="hp-hero__thumb" title={t.hero.slides[i].caption}>
                   <img src={src} alt={t.hero.slides[i].alt} loading="lazy" className="media-alive" />
                 </a>
               ))}
-            </div>
+            </motion.div>
 
-            <div className="hp-hero__links">
+            <motion.div className="hp-hero__links" variants={reduce ? undefined : heroItem}>
               {t.hero.buttons.slice(1).map((item, i) => (
                 <a
                   key={item}
@@ -155,14 +170,9 @@ export default function Hero() {
                   {item} →
                 </a>
               ))}
-            </div>
+            </motion.div>
           </motion.div>
 
-        </div>
-
-        <div className="hp-hero__film-progress" aria-hidden>
-          <motion.span style={reduce ? { scaleX: 1 } : { scaleX: scrollYProgress }} />
-          <small>{t.hero.scrollDown}</small>
         </div>
 
         <div className="hp-hero__stats">

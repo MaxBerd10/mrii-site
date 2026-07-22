@@ -97,7 +97,7 @@ export default function NewsPage({ slug }: { slug: string }) {
   })()
 
   useEffect(() => {
-    if (view) document.title = `${view.title} — MRII`
+    if (view) document.title = `${view.title} — ${t.nav.brand}`
   }, [view?.title])
 
   if (!triedCms && isCmsEnabled() && !view) {
@@ -147,7 +147,7 @@ export default function NewsPage({ slug }: { slug: string }) {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <SectionBackLink href="/#news" className="news-article__back">
+            <SectionBackLink href="/news" className="news-article__back">
               ← {labels.back}
             </SectionBackLink>
           </motion.div>

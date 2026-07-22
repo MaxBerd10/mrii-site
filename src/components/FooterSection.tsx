@@ -37,7 +37,7 @@ export default function FooterSection() {
 
     window.setTimeout(() => {
       setConfirmation({
-        requestId: `MRII-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`,
+        requestId: `FJSTI-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`,
         service: form.service,
         phone: form.phone,
       })
@@ -116,30 +116,33 @@ export default function FooterSection() {
         <div className="hp-footer__shell">
           <div className="hp-footer__brand">
             <a href="/" className="hp-nav__logo">
-              <span className="hp-nav__mark" aria-hidden>M</span>
-              <span className="hp-nav__brand">MRII</span>
+              <img src="/images/fjsti-logo.png" alt="" className="hp-nav__logo-img" width={36} height={36} />
+              <span className="hp-nav__brand">{t.nav.brand}</span>
             </a>
             <p className="hp-footer__tagline">{t.footer.tagline}</p>
           </div>
 
           <div className="hp-footer__nav">
-            {t.footer.cols.map((col) => (
-              <div key={col.title} className="hp-footer__col">
-                <div className="hp-footer__col-title">{col.title}</div>
-                {col.links.slice(0, 5).map((link) => (
-                  <a key={link} href="#" className="hp-footer__link">{link}</a>
-                ))}
-              </div>
-            ))}
+            {t.footer.cols.map((col, colIndex) => {
+              const colHref = ['/clinic', '/research', '/education', '/ai', '/partners'][colIndex] ?? '/'
+              return (
+                <div key={col.title} className="hp-footer__col">
+                  <div className="hp-footer__col-title">{col.title}</div>
+                  {col.links.slice(0, 5).map((link) => (
+                    <a key={link} href={colHref} className="hp-footer__link">{link}</a>
+                  ))}
+                </div>
+              )
+            })}
           </div>
         </div>
 
         <div className="hp-footer__bottom">
           <span>{copyright} · {license}</span>
           <div className="hp-footer__legal">
-            {[t.footer.privacy, t.footer.terms, t.footer.contactsLink].map((l) => (
-              <a key={l} href="#">{l}</a>
-            ))}
+            <a href="/contacts">{t.footer.privacy}</a>
+            <a href="/contacts">{t.footer.terms}</a>
+            <a href="/contacts">{t.footer.contactsLink}</a>
           </div>
         </div>
       </div>
