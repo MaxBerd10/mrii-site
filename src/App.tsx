@@ -18,6 +18,7 @@ import SpecialtyPage from './pages/SpecialtyPage'
 import NewsPage from './pages/NewsPage'
 import AIProductPage from './pages/AIProductPage'
 import NotFoundPage from './pages/NotFoundPage'
+import RobotCompanion from './components/robots/RobotCompanion'
 
 /** Ideal breathing room under nav / above viewport bottom — same for every section. */
 const FRAME_TOP = 36
@@ -238,6 +239,7 @@ export default function App() {
       )}
       <FooterSection />
       <BackToTop />
+      {isHome ? <RobotCompanion /> : null}
     </div>
   )
 }

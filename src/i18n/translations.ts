@@ -72,8 +72,8 @@ const uz = {
     titlePrefix: "to'liq tsikli",
     tagline: 'Klinik yordam · Klinik tadqiqotlar · Tibbiy taʼlim · AI-yechimlar',
     description:
-      "Tibbiy faoliyatning to'liq tsikli — dastlabki qabuldan I–IV bosqichli klinik tadqiqotlarda ishtirok etish, tibbiy ta'lim va sog'liqni saqlash uchun AI-texnologiyalar ishlab chiqishgacha.",
-    buttons: ['Qabulga yozilish', 'Tadqiqotda ishtirok', 'Shifokorlar ta\'limi', 'Tibbiyot uchun AI'],
+      "Klinika + AI robotlar: dezinfeksiya robotlari patrul qiladi, shifokorlar va bemorlar uchun zamonaviy muhit. Qabuldan AI-mahsulotlargacha — bitta institut.",
+    buttons: ['AI robotlarni ko‘rish', 'Tadqiqotda ishtirok', 'Shifokorlar ta\'limi', 'Tibbiyot uchun AI'],
     slideLabel: 'Slayd',
     copyright: 'MRII © 2025 — Toshkent, O\'zbekiston',
     certs: 'ISO 9001:2015 · GCP · ICH E6',
