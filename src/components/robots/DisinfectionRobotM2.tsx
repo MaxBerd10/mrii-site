@@ -22,7 +22,8 @@ export default function DisinfectionRobotM2({ reducedMotion = false }: Props) {
   useFrame((state) => {
     const t = state.clock.elapsedTime
     if (root.current && !reducedMotion) {
-      root.current.rotation.y = t * 0.35
+      root.current.rotation.y = t * 0.45
+      root.current.position.y = Math.sin(t * 1.6) * 0.04
     }
     if (ring.current) {
       const mat = ring.current.material as { emissiveIntensity?: number }

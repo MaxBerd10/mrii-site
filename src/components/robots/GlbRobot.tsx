@@ -1,21 +1,19 @@
-import { Suspense, useRef } from 'react'
+import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Bounds, Center, Clone, useGLTF } from '@react-three/drei'
+import { Center, Clone, useGLTF } from '@react-three/drei'
 import type { Group } from 'three'
 
-/**
- * Meshopt-compressed GLB (~2.5MB) — more reliable than Draco in small canvases.
- * Keep .min.glb (Draco) as alternate for the large AI stage if needed.
- */
+/** Meshopt web model (~2.5MB). */
 export const DISINFECTION_ROBOT_GLB = '/models/disinfection-robot-m2.web.glb'
+
+// Local Draco decoders (also helps if a Draco asset is used later)
+useGLTF.setDecoderPath('/draco/')
 
 type Props = {
   reducedMotion?: boolean
   autoSpin?: boolean
   scale?: number
   bob?: boolean
-  /** Auto-fit camera framing (companion bubble). */
-  fit?: boolean
 }
 
 export default function GlbRobot({
@@ -23,10 +21,10 @@ export default function GlbRobot({
   autoSpin = true,
   scale = 1,
   bob = false,
-  fit = false,
 }: Props) {
   const root = useRef<Group>(null)
-  const { scene } = useGLTF(DISINFECTION_ROBOT_GLB)
+  // useDraco=true, useMeshopt=true — required for .web.glb (EXT_meshopt_compression)
+  const { scene } = useGLTF(DISINFECTION_ROBOT_GLB, true, true)
 
   useFrame((state, delta) => {
     if (!root.current || reducedMotion) return
@@ -36,23 +34,13 @@ export default function GlbRobot({
     }
   })
 
-  const body = (
-    <Center>
-      <Clone object={scene} scale={scale} />
-    </Center>
-  )
-
   return (
-    <group ref={root}>
-      {fit ? (
-        <Bounds fit observe margin={1.25}>
-          {body}
-        </Bounds>
-      ) : (
-        <group position={[0, autoSpin ? -1.05 : 0, 0]}>{body}</group>
-      )}
+    <group ref={root} position={[0, autoSpin ? -1.05 : 0, 0]}>
+      <Center>
+        <Clone object={scene} scale={scale} />
+      </Center>
     </group>
   )
 }
 
-useGLTF.preload(DISINFECTION_ROBOT_GLB)
+useGLTF.preload(DISINFECTION_ROBOT_GLB, true, true)
