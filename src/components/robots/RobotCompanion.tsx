@@ -1,8 +1,15 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { DISINFECTION_ROBOT_GLB } from './GlbRobot'
 
 const RobotWanderCanvas = lazy(() => import('./RobotWanderCanvas'))
+
+// Kick off GLB + Draco decode as soon as the companion module loads
+void import('@react-three/drei').then(({ useGLTF }) => {
+  useGLTF.setDecoderPath('/draco/')
+  useGLTF.preload(DISINFECTION_ROBOT_GLB, true)
+})
 
 /** Viewport % waypoints — robot patrols the page like a clinic corridor. */
 const WAYPOINTS = [

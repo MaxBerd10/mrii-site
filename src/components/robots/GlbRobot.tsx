@@ -3,10 +3,9 @@ import { useFrame } from '@react-three/fiber'
 import { Center, Clone, useGLTF } from '@react-three/drei'
 import type { Group } from 'three'
 
-/** Meshopt web model (~2.5MB). */
-export const DISINFECTION_ROBOT_GLB = '/models/disinfection-robot-m2.web.glb'
+/** Your uploaded robot — Draco (~2.9MB), local /draco/ decoders. */
+export const DISINFECTION_ROBOT_GLB = '/models/disinfection-robot-m2.min.glb'
 
-// Local Draco decoders (also helps if a Draco asset is used later)
 useGLTF.setDecoderPath('/draco/')
 
 type Props = {
@@ -23,8 +22,8 @@ export default function GlbRobot({
   bob = false,
 }: Props) {
   const root = useRef<Group>(null)
-  // useDraco=true, useMeshopt=true — required for .web.glb (EXT_meshopt_compression)
-  const { scene } = useGLTF(DISINFECTION_ROBOT_GLB, true, true)
+  // Draco only — more reliable than Meshopt in a second overlay canvas
+  const { scene } = useGLTF(DISINFECTION_ROBOT_GLB, true)
 
   useFrame((state, delta) => {
     if (!root.current || reducedMotion) return
@@ -35,7 +34,7 @@ export default function GlbRobot({
   })
 
   return (
-    <group ref={root} position={[0, autoSpin ? -1.05 : 0, 0]}>
+    <group ref={root} position={[0, autoSpin ? -1.05 : -0.35, 0]}>
       <Center>
         <Clone object={scene} scale={scale} />
       </Center>
@@ -43,4 +42,4 @@ export default function GlbRobot({
   )
 }
 
-useGLTF.preload(DISINFECTION_ROBOT_GLB, true, true)
+useGLTF.preload(DISINFECTION_ROBOT_GLB, true)
