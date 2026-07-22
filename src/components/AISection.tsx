@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
@@ -7,6 +7,8 @@ import Reveal from './ui/Reveal'
 import { blurUp, rise3d } from '../lib/animations'
 import { media } from '../data/media'
 import { AI_PRODUCT_SLUGS } from '../data/aiDetails'
+
+const RobotStage = lazy(() => import('./robots/RobotStage'))
 
 const PRODUCT_IMAGES = Object.values(media.ai)
 
@@ -46,6 +48,18 @@ export default function AISection() {
             description={t.ai.description}
             accent="#5B4CDB"
           />
+        </Reveal>
+
+        <Reveal variants={blurUp}>
+          <Suspense
+            fallback={
+              <div className="robot-stage robot-stage--loading">
+                <p>3D yuklanmoqda…</p>
+              </div>
+            }
+          >
+            <RobotStage title={t.ai.robotTitle} hint={t.ai.robotHint} />
+          </Suspense>
         </Reveal>
 
         <div className="product-tabs" role="tablist">

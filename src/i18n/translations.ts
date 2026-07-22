@@ -246,6 +246,8 @@ const uz = {
     casesBtn: 'Mahsulot batafsil →',
     sellBtn: 'AI mahsulotlarni ko‘rish',
     liveBadge: 'Live AI',
+    robotTitle: 'Disinfection Robot M2',
+    robotHint: 'Sichqoncha bilan buring — stilizatsiya qilingan 3D (rasmiy Keenon CAD emas).',
     products: [
       {
         id: 'doctor', name: 'AI Doctor Assistant', tag: 'Klinik yechim', tagColor: '#0EA5E9',
@@ -548,6 +550,8 @@ const ru: Translations = {
     casesBtn: 'Подробнее →',
     sellBtn: 'Смотреть AI-продукты',
     liveBadge: 'Live AI',
+    robotTitle: 'Disinfection Robot M2',
+    robotHint: 'Вращайте мышью — стилизованная 3D-модель (не официальный CAD Keenon).',
     products: [
       { id: 'doctor', name: 'AI Doctor Assistant', tag: 'Клиническое решение', tagColor: '#0EA5E9', desc: 'Интеллектуальный ассистент врача на приёме. Протоколы, рекомендации, анализ анамнеза.', features: ['Формирование протокола', 'Клинические рекомендации', 'ICD-10/11 кодирование', 'Интеграция с МИС'], metric: '87%', metricLabel: 'сокращение времени документации' },
       { id: 'radiology', name: 'AI Radiology', tag: 'Радиологическое AI', tagColor: '#6366F1', desc: 'Автоматический анализ рентгенограмм, КТ и МРТ-снимков.', features: ['Анализ КТ грудной клетки', 'МРТ головного мозга', 'Рентген ОГК', 'DICOM / PACS'], metric: '94%', metricLabel: 'чувствительность при раннем обнаружении' },
@@ -856,6 +860,8 @@ const en: Translations = {
     casesBtn: 'Product details →',
     sellBtn: 'Browse AI products',
     liveBadge: 'Live AI',
+    robotTitle: 'Disinfection Robot M2',
+    robotHint: 'Drag to rotate — stylized 3D preview (not official Keenon CAD).',
     products: [
       { id: 'doctor', name: 'AI Doctor Assistant', tag: 'Clinical solution', tagColor: '#0EA5E9', desc: 'Intelligent physician assistant at the point of care. Protocols, recommendations, real-time analysis.', features: ['Protocol generation', 'Clinical recommendations', 'ICD-10/11 coding', 'EMR integration'], metric: '87%', metricLabel: 'documentation time reduction' },
       { id: 'radiology', name: 'AI Radiology', tag: 'Radiology AI', tagColor: '#6366F1', desc: 'Automatic analysis of X-ray, CT, and MRI images in under 4 seconds.', features: ['Chest CT analysis', 'Brain MRI', 'Chest X-ray', 'DICOM / PACS'], metric: '94%', metricLabel: 'early detection sensitivity' },

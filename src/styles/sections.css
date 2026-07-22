@@ -267,6 +267,81 @@
 .ai-console__body .btn-group { width: 100%; }
 .ai-console__features li { display: flex; align-items: center; gap: 10px; font-size: 13px; }
 
+.robot-stage {
+  display: grid;
+  grid-template-columns: minmax(200px, 0.85fr) minmax(0, 1.4fr);
+  gap: 18px;
+  margin: 0 0 28px;
+  padding: 18px;
+  border-radius: 28px;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse 70% 80% at 70% 40%, rgba(14, 165, 233, 0.12), transparent 55%),
+    radial-gradient(ellipse 50% 60% at 10% 90%, rgba(91, 76, 219, 0.1), transparent 50%),
+    #fff;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.robot-stage--loading {
+  min-height: 360px;
+  place-items: center;
+  display: grid;
+  color: var(--text-soft);
+  font-weight: 600;
+}
+.robot-stage__meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 8px 12px 12px;
+}
+.robot-stage__kicker {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #0284c7;
+}
+.robot-stage__title {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+.robot-stage__hint {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-soft);
+  max-width: 32ch;
+}
+.robot-stage__canvas {
+  min-height: 360px;
+  height: clamp(340px, 42vw, 440px);
+  border-radius: 22px;
+  overflow: hidden;
+  background: #07111f;
+  touch-action: none;
+}
+.robot-stage__canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (max-width: 900px) {
+  .robot-stage {
+    grid-template-columns: 1fr;
+  }
+  .robot-stage__meta {
+    padding: 4px 4px 0;
+  }
+}
+
 /* Education */
 .stat-row {
   display: flex;
