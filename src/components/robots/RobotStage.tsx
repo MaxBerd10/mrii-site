@@ -18,7 +18,7 @@ function StageInner({ reducedMotion }: { reducedMotion: boolean }) {
       <pointLight position={[2, 2, 3]} intensity={0.55} color="#38bdf8" />
       <hemisphereLight args={['#e0f2fe', '#0f172a', 0.4]} />
       <Suspense fallback={null}>
-        <GlbRobot reducedMotion={reducedMotion} autoSpin={!reducedMotion} scale={1.35} />
+        <GlbRobot reducedMotion={reducedMotion} autoSpin={!reducedMotion} scale={1} fit={false} />
         <ContactShadows position={[0, -1.2, 0]} opacity={0.4} scale={8} blur={2.6} far={4} />
       </Suspense>
       <OrbitControls
