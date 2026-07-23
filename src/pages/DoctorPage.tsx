@@ -11,6 +11,7 @@ import {
   getDoctorBySlug,
   getDoctorsBySpecialty,
 } from '../data/doctors'
+import { getDoctorPortrait } from '../data/doctorTurnMedia'
 import { blurUp } from '../lib/animations'
 
 export default function DoctorPage({ slug }: { slug: string }) {
@@ -32,6 +33,7 @@ export default function DoctorPage({ slug }: { slug: string }) {
 
   const { profile } = match
   const view = profile.content[lang]
+  const portrait = getDoctorPortrait(profile.slug, profile.photo)
   const sameSpecialty = getDoctorsBySpecialty(profile.content.uz.specialty, slug)
   const relatedSafe =
     sameSpecialty.length > 0
@@ -68,7 +70,7 @@ export default function DoctorPage({ slug }: { slug: string }) {
           initial="hidden"
           animate="show"
         >
-          <DoctorHeroPhoto src={profile.photo} alt={view.name} accent={profile.color} />
+          <DoctorHeroPhoto src={portrait} alt={view.name} accent={profile.color} />
 
           <div className="doctor-page__intro">
             <p className="doctor-page__specialty" style={{ color: profile.color }}>
@@ -156,7 +158,11 @@ export default function DoctorPage({ slug }: { slug: string }) {
                 const c = doc.content[lang]
                 return (
                   <a key={doc.slug} href={`/doctors/${doc.slug}`} className="doctor-page__related-card">
-                    <img src={doc.photo} alt={c.name} loading="lazy" />
+                    <img
+                      src={getDoctorPortrait(doc.slug, doc.photo)}
+                      alt={c.name}
+                      loading="lazy"
+                    />
                     <div>
                       <strong>{c.name}</strong>
                       <span>{c.specialty}</span>

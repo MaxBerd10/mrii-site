@@ -1,5 +1,6 @@
 import type { Lang } from '../i18n/types'
 import { DOCTOR_PHOTOS } from './doctorPhotos'
+import { getDoctorPortrait } from './doctorTurnMedia'
 
 export type StaffKind = 'professor' | 'doctor' | 'nurse'
 
@@ -45,7 +46,7 @@ function profile(
 ): DoctorProfile {
   return {
     slug,
-    photo: DOCTOR_PHOTOS[index % DOCTOR_PHOTOS.length],
+    photo: getDoctorPortrait(slug, DOCTOR_PHOTOS[index % DOCTOR_PHOTOS.length]),
     color: COLORS[index % COLORS.length],
     papers,
     studies,
