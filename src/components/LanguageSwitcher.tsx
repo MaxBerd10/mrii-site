@@ -2,11 +2,12 @@ import { useState } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { LANG_LABELS, type Lang } from '../i18n/types'
 
-const langs: Lang[] = ['uz', 'ru', 'en']
+const langs: Lang[] = ['uz', 'ru', 'en', 'kaa']
 const languageAria: Record<Lang, string> = {
   uz: 'Tilni o‘zgartirish',
   ru: 'Изменить язык',
   en: 'Change language',
+  kaa: 'Tildi ózgertiw',
 }
 
 export default function LanguageSwitcher({ compact }: { compact?: boolean }) {

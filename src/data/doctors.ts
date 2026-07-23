@@ -1,4 +1,4 @@
-import type { Lang } from '../i18n/types'
+import type { ContentLang } from '../i18n/types'
 import { DOCTOR_PHOTOS } from './doctorPhotos'
 import { getDoctorPortrait } from './doctorTurnMedia'
 
@@ -12,7 +12,7 @@ export type DoctorProfile = {
   studies: number
   staffKind: StaffKind
   content: Record<
-    Lang,
+    ContentLang,
     {
       name: string
       role: string
@@ -231,7 +231,7 @@ export function getStaffByKind(kind: StaffKind | 'all') {
 }
 
 export function getSpecialtiesForStaff(
-  lang: Lang,
+  lang: ContentLang,
   kind: StaffKind | 'all' = 'all',
 ): string[] {
   const list = getStaffByKind(kind)
@@ -290,7 +290,7 @@ export function getDoctorBySlug(slug: string) {
 }
 
 export const doctorPageLabels: Record<
-  Lang,
+  ContentLang,
   {
     back: string
     about: string

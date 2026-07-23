@@ -30,9 +30,9 @@ function formatDate(value: string | null | undefined) {
 }
 
 export default function NewsPage({ slug }: { slug: string }) {
-  const { lang, t } = useLanguage()
+  const { lang, contentLang, t } = useLanguage()
   const { home } = useCms()
-  const labels = newsPageLabels[lang]
+  const labels = newsPageLabels[contentLang]
   const staticMatch = getNewsBySlug(slug)
   const [cmsDetail, setCmsDetail] = useState<CmsNewsDetail | null>(null)
   const [triedCms, setTriedCms] = useState(!isCmsEnabled())
@@ -81,7 +81,7 @@ export default function NewsPage({ slug }: { slug: string }) {
     if (!staticMatch) return null
     const { article, index } = staticMatch
     const item = t.news.items[index]
-    const content = article.content[lang]
+    const content = article.content[contentLang]
     return {
       slug: article.slug,
       title: item.title,

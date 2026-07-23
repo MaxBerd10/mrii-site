@@ -31,11 +31,11 @@ type ViewModel = {
 }
 
 export default function SpecialtyPage({ slug }: { slug: string }) {
-  const { lang, t } = useLanguage()
+  const { lang, contentLang, t } = useLanguage()
   const { home } = useCms()
   const reduce = useReducedMotion()
-  const labels = specialtyPageLabels[lang]
-  const worldLabels = specialtyWorldLabels[lang]
+  const labels = specialtyPageLabels[contentLang]
+  const worldLabels = specialtyWorldLabels[contentLang]
   const world = getSpecialtyWorld(slug)
   const staticMatch = getSpecialtyBySlug(slug)
   const [cmsDetail, setCmsDetail] = useState<CmsSpecialtyDetail | null>(null)
@@ -87,7 +87,7 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
     if (!triedCms && isCmsEnabled()) return null
     if (!staticMatch) return null
     const { detail, index } = staticMatch
-    const content = detail.content[lang]
+    const content = detail.content[contentLang]
     return {
       slug: detail.slug,
       name: t.clinic.specialties[index].name,
@@ -266,7 +266,7 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
                 <strong>{worldLabels.aiTitle}</strong>
                 <em>{worldLabels.aiScan}</em>
               </div>
-              <p>{world.aiInsight[lang]}</p>
+              <p>{world.aiInsight[contentLang]}</p>
               <div className="specialty-world__ai-bar" aria-hidden>
                 <motion.span
                   initial={reduce ? { scaleX: 1 } : { scaleX: 0.15 }}
@@ -308,7 +308,7 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
               viewport={{ once: true, amount: 0.15 }}
             >
               {doctors.map((doc) => {
-                const c = doc.content[lang]
+                const c = doc.content[contentLang]
                 return (
                   <motion.article key={doc.slug} className="specialty-doc" variants={rise3d}>
                     <a href={`/doctors/${doc.slug}`} className="specialty-doc__media">

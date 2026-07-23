@@ -34,9 +34,9 @@ type ViewModel = {
 }
 
 export default function AIProductPage({ slug }: { slug: string }) {
-  const { lang, t } = useLanguage()
+  const { lang, contentLang, t } = useLanguage()
   const { home } = useCms()
-  const labels = aiPageLabels[lang]
+  const labels = aiPageLabels[contentLang]
   const staticMatch = getAIProductBySlug(slug)
   const [cmsDetail, setCmsDetail] = useState<CmsAIDetail | null>(null)
   const [triedCms, setTriedCms] = useState(!isCmsEnabled())
@@ -81,7 +81,7 @@ export default function AIProductPage({ slug }: { slug: string }) {
   }, [confirmation])
 
   const view: ViewModel | null = (() => {
-    const staticCases = staticMatch?.detail.content[lang].cases ?? []
+    const staticCases = staticMatch?.detail.content[contentLang].cases ?? []
     if (cmsDetail) {
       const staticIndex = aiProducts.findIndex((item) => item.slug === slug)
       const index = staticIndex >= 0 ? staticIndex : 0
@@ -107,7 +107,7 @@ export default function AIProductPage({ slug }: { slug: string }) {
     if (!staticMatch) return null
     const { detail, index } = staticMatch
     const product = t.ai.products[index]
-    const content = detail.content[lang]
+    const content = detail.content[contentLang]
     return {
       slug: detail.slug,
       name: product.name,

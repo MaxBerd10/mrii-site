@@ -1,4 +1,4 @@
-import type { Lang } from '../i18n/types'
+import type { ContentLang } from '../i18n/types'
 
 export type AIProductContent = {
   overview: string
@@ -10,7 +10,7 @@ export type AIProductContent = {
 
 export type AIProductDetail = {
   slug: string
-  content: Record<Lang, AIProductContent>
+  content: Record<ContentLang, AIProductContent>
 }
 
 export const aiProducts: AIProductDetail[] = [
@@ -156,7 +156,7 @@ export const aiProducts: AIProductDetail[] = [
   },
 ]
 
-export const aiPageLabels: Record<Lang, {
+export const aiPageLabels: Record<ContentLang, {
   back: string
   overview: string
   audience: string

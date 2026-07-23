@@ -1,4 +1,4 @@
-import type { Lang } from '../i18n/types'
+import type { ContentLang } from '../i18n/types'
 
 export type NewsArticleContent = {
   lead: string
@@ -7,7 +7,7 @@ export type NewsArticleContent = {
 
 export type NewsArticle = {
   slug: string
-  content: Record<Lang, NewsArticleContent>
+  content: Record<ContentLang, NewsArticleContent>
 }
 
 export const newsArticles: NewsArticle[] = [
@@ -100,7 +100,7 @@ export const newsArticles: NewsArticle[] = [
   },
 ]
 
-export const newsPageLabels: Record<Lang, {
+export const newsPageLabels: Record<ContentLang, {
   back: string
   related: string
   readMore: string

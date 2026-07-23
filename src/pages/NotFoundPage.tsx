@@ -27,6 +27,13 @@ const COPY: Record<
     home: 'Home',
     clinic: 'Clinic',
   },
+  kaa: {
+    code: '404',
+    title: 'Bet tabılmadı',
+    text: 'Bul adres joq yamasa kóshirip jiberilgen. Bas betke qaytıń yamasa klinikani kóriń.',
+    home: 'Bas bet',
+    clinic: 'Klinika',
+  },
 }
 
 export default function NotFoundPage() {

@@ -1,7 +1,8 @@
 import { useEffect, useId, useMemo, useState, type FormEvent } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
-import type { Lang } from '../i18n/types'
+import type { ContentLang, Lang } from '../i18n/types'
+import { toContentLang } from '../i18n/types'
 
 export type BookingLabels = {
   title: string
@@ -37,7 +38,7 @@ type Props = {
   onClose: () => void
 }
 
-const CLINICS: Record<Lang, string[]> = {
+const CLINICS: Record<ContentLang, string[]> = {
   uz: [
     'FJSTI asosiy klinika',
     'Konsultativ poliklinika',
@@ -113,8 +114,9 @@ export default function DoctorBookingModal({
 }: Props) {
   const { lang } = useLanguage()
   const titleId = useId()
+  const contentLang = toContentLang(lang)
   const dates = useMemo(() => buildDates(lang), [lang])
-  const clinics = CLINICS[lang]
+  const clinics = CLINICS[contentLang]
   const [form, setForm] = useState(emptyForm)
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState<{ id: string } | null>(null)

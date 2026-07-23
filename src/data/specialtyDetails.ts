@@ -1,4 +1,4 @@
-import type { Lang } from '../i18n/types'
+import type { ContentLang } from '../i18n/types'
 
 type SpecialtyContent = {
   overview: string
@@ -9,7 +9,7 @@ type SpecialtyContent = {
 
 export type SpecialtyDetail = {
   slug: string
-  content: Record<Lang, SpecialtyContent>
+  content: Record<ContentLang, SpecialtyContent>
 }
 
 export const specialtyDetails: SpecialtyDetail[] = [
@@ -291,7 +291,7 @@ export const specialtyDetails: SpecialtyDetail[] = [
   },
 ]
 
-export const specialtyPageLabels: Record<Lang, {
+export const specialtyPageLabels: Record<ContentLang, {
   back: string
   expertise: string
   conditions: string

@@ -74,7 +74,7 @@ function AppRoutes() {
     )
   } else if (path === '/prices') {
     body = (
-      <PageShell>
+      <PageShell className="page-shell--prices">
         <PricesPage />
       </PageShell>
     )

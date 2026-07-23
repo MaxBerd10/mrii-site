@@ -15,8 +15,8 @@ import { getDoctorPortrait } from '../data/doctorTurnMedia'
 import { blurUp } from '../lib/animations'
 
 export default function DoctorPage({ slug }: { slug: string }) {
-  const { lang, t } = useLanguage()
-  const labels = doctorPageLabels[lang]
+  const { contentLang, t } = useLanguage()
+  const labels = doctorPageLabels[contentLang]
   const match = getDoctorBySlug(slug)
   const [bookOpen, setBookOpen] = useState(false)
 
@@ -26,13 +26,13 @@ export default function DoctorPage({ slug }: { slug: string }) {
 
   useEffect(() => {
     if (!match) return
-    document.title = `${match.profile.content[lang].name} — ${t.nav.brand}`
-  }, [match, lang, t.nav.brand])
+    document.title = `${match.profile.content[contentLang].name} — ${t.nav.brand}`
+  }, [match, contentLang, t.nav.brand])
 
   if (!match) return <NotFoundPage />
 
   const { profile } = match
-  const view = profile.content[lang]
+  const view = profile.content[contentLang]
   const portrait = getDoctorPortrait(profile.slug, profile.photo)
   const sameSpecialty = getDoctorsBySpecialty(profile.content.uz.specialty, slug)
   const relatedSafe =
@@ -155,7 +155,7 @@ export default function DoctorPage({ slug }: { slug: string }) {
           ) : (
             <div className="doctor-page__related-grid">
               {relatedSafe.map((doc) => {
-                const c = doc.content[lang]
+                const c = doc.content[contentLang]
                 return (
                   <a key={doc.slug} href={`/doctors/${doc.slug}`} className="doctor-page__related-card">
                     <img

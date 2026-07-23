@@ -1,4 +1,4 @@
-import type { Lang } from '../i18n/types'
+import type { ContentLang } from '../i18n/types'
 import { media } from './media'
 import { doctorProfiles, type DoctorProfile } from './doctors'
 
@@ -14,7 +14,7 @@ export type SpecialtyWorldTheme = {
   /** Linked AI product slug on /ai/:slug */
   aiProductSlug: string
   aiMetric: string
-  aiInsight: Record<Lang, string>
+  aiInsight: Record<ContentLang, string>
 }
 
 /** Immersive theme per clinic specialty slug */
@@ -233,7 +233,7 @@ export function getSpecialtyDoctors(slug: string): DoctorProfile[] {
 }
 
 export const specialtyWorldLabels: Record<
-  Lang,
+  ContentLang,
   {
     enter: string
     team: string
