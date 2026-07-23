@@ -1,4 +1,5 @@
 import { useEffect, useId, useMemo, useState, type FormEvent } from 'react'
+import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import type { ContentLang, Lang } from '../i18n/types'
@@ -158,7 +159,7 @@ export default function DoctorBookingModal({
     }, 700)
   }
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {open && (
         <motion.div
@@ -175,10 +176,10 @@ export default function DoctorBookingModal({
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
-            initial={{ opacity: 0, y: 28, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 18, scale: 0.98 }}
-            transition={{ type: 'spring', stiffness: 280, damping: 26 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
           >
             <button
               type="button"
@@ -190,156 +191,160 @@ export default function DoctorBookingModal({
             </button>
 
             {done ? (
-              <div className="doctor-book__success">
-                <p className="doctor-book__success-id">
-                  {labels.requestNumber}: {done.id}
-                </p>
-                <h2 id={titleId}>{labels.successTitle}</h2>
-                <p>{labels.successDesc}</p>
-                <p className="doctor-book__success-meta">
-                  {doctorName}
-                  {doctorSpecialty ? ` · ${doctorSpecialty}` : ''}
-                  <br />
-                  {form.date} · {form.time}
-                </p>
-                <button type="button" className="hp-btn hp-btn--primary" onClick={onClose}>
-                  {labels.successClose}
-                </button>
+              <div className="doctor-book__body">
+                <div className="doctor-book__success">
+                  <p className="doctor-book__success-id">
+                    {labels.requestNumber}: {done.id}
+                  </p>
+                  <h2 id={titleId}>{labels.successTitle}</h2>
+                  <p>{labels.successDesc}</p>
+                  <p className="doctor-book__success-meta">
+                    {doctorName}
+                    {doctorSpecialty ? ` · ${doctorSpecialty}` : ''}
+                    <br />
+                    {form.date} · {form.time}
+                  </p>
+                  <button type="button" className="hp-btn hp-btn--primary" onClick={onClose}>
+                    {labels.successClose}
+                  </button>
+                </div>
               </div>
             ) : (
               <form className="doctor-book__form" onSubmit={onSubmit}>
-                <h2 id={titleId} className="doctor-book__title" style={{ color: accent }}>
-                  {labels.title}: {doctorName}
-                </h2>
+                <div className="doctor-book__body">
+                  <h2 id={titleId} className="doctor-book__title" style={{ color: accent }}>
+                    {labels.title}: {doctorName}
+                  </h2>
 
-                <fieldset className="doctor-book__section">
-                  <legend>{labels.appointment}</legend>
-                  <div className="doctor-book__row doctor-book__row--2">
+                  <fieldset className="doctor-book__section">
+                    <legend>{labels.appointment}</legend>
+                    <div className="doctor-book__row doctor-book__row--2">
+                      <label>
+                        <span>{labels.clinic}</span>
+                        <select
+                          required
+                          value={form.clinic}
+                          onChange={(e) => setForm({ ...form, clinic: e.target.value })}
+                        >
+                          {clinics.map((c) => (
+                            <option key={c} value={c}>
+                              {c}
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                      <label>
+                        <span>{labels.date}</span>
+                        <select
+                          required
+                          value={form.date}
+                          onChange={(e) => setForm({ ...form, date: e.target.value })}
+                        >
+                          {dates.map((d) => (
+                            <option key={d.value} value={d.value}>
+                              {d.label}
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                    </div>
                     <label>
-                      <span>{labels.clinic}</span>
+                      <span>{labels.time}</span>
                       <select
                         required
-                        value={form.clinic}
-                        onChange={(e) => setForm({ ...form, clinic: e.target.value })}
+                        value={form.time}
+                        onChange={(e) => setForm({ ...form, time: e.target.value })}
                       >
-                        {clinics.map((c) => (
-                          <option key={c} value={c}>
-                            {c}
+                        {TIMES.map((t) => (
+                          <option key={t} value={t}>
+                            {t}
                           </option>
                         ))}
                       </select>
                     </label>
-                    <label>
-                      <span>{labels.date}</span>
-                      <select
-                        required
-                        value={form.date}
-                        onChange={(e) => setForm({ ...form, date: e.target.value })}
-                      >
-                        {dates.map((d) => (
-                          <option key={d.value} value={d.value}>
-                            {d.label}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-                  </div>
-                  <label>
-                    <span>{labels.time}</span>
-                    <select
-                      required
-                      value={form.time}
-                      onChange={(e) => setForm({ ...form, time: e.target.value })}
-                    >
-                      {TIMES.map((t) => (
-                        <option key={t} value={t}>
-                          {t}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                </fieldset>
+                  </fieldset>
 
-                <fieldset className="doctor-book__section">
-                  <legend>{labels.patient}</legend>
-                  <label>
-                    <span>{labels.lastName}</span>
-                    <input
-                      required
-                      value={form.lastName}
-                      onChange={(e) => setForm({ ...form, lastName: e.target.value })}
-                      autoComplete="family-name"
+                  <fieldset className="doctor-book__section">
+                    <legend>{labels.patient}</legend>
+                    <label>
+                      <span>{labels.lastName}</span>
+                      <input
+                        required
+                        value={form.lastName}
+                        onChange={(e) => setForm({ ...form, lastName: e.target.value })}
+                        autoComplete="family-name"
+                      />
+                    </label>
+                    <div className="doctor-book__row doctor-book__row--2">
+                      <label>
+                        <span>{labels.firstName}</span>
+                        <input
+                          required
+                          value={form.firstName}
+                          onChange={(e) => setForm({ ...form, firstName: e.target.value })}
+                          autoComplete="given-name"
+                        />
+                      </label>
+                      <label>
+                        <span>{labels.middleName}</span>
+                        <input
+                          required={!form.noMiddleName}
+                          disabled={form.noMiddleName}
+                          value={form.middleName}
+                          onChange={(e) => setForm({ ...form, middleName: e.target.value })}
+                          autoComplete="additional-name"
+                        />
+                      </label>
+                    </div>
+                    <label className="doctor-book__check">
+                      <input
+                        type="checkbox"
+                        checked={form.noMiddleName}
+                        onChange={(e) =>
+                          setForm({
+                            ...form,
+                            noMiddleName: e.target.checked,
+                            middleName: e.target.checked ? '' : form.middleName,
+                          })
+                        }
+                      />
+                      <span>{labels.noMiddleName}</span>
+                    </label>
+                    <div className="doctor-book__row doctor-book__row--2">
+                      <label>
+                        <span>{labels.birthDate}</span>
+                        <input
+                          required
+                          type="date"
+                          value={form.birthDate}
+                          onChange={(e) => setForm({ ...form, birthDate: e.target.value })}
+                        />
+                      </label>
+                      <label>
+                        <span>{labels.phone}</span>
+                        <input
+                          required
+                          type="tel"
+                          minLength={7}
+                          value={form.phone}
+                          onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                          placeholder="+998 __ ___ __ __"
+                          autoComplete="tel"
+                        />
+                      </label>
+                    </div>
+                  </fieldset>
+
+                  <label className="doctor-book__section doctor-book__comment">
+                    <span>{labels.comment}</span>
+                    <textarea
+                      rows={2}
+                      value={form.comment}
+                      onChange={(e) => setForm({ ...form, comment: e.target.value })}
+                      maxLength={500}
                     />
                   </label>
-                  <div className="doctor-book__row doctor-book__row--2">
-                    <label>
-                      <span>{labels.firstName}</span>
-                      <input
-                        required
-                        value={form.firstName}
-                        onChange={(e) => setForm({ ...form, firstName: e.target.value })}
-                        autoComplete="given-name"
-                      />
-                    </label>
-                    <label>
-                      <span>{labels.middleName}</span>
-                      <input
-                        required={!form.noMiddleName}
-                        disabled={form.noMiddleName}
-                        value={form.middleName}
-                        onChange={(e) => setForm({ ...form, middleName: e.target.value })}
-                        autoComplete="additional-name"
-                      />
-                    </label>
-                  </div>
-                  <label className="doctor-book__check">
-                    <input
-                      type="checkbox"
-                      checked={form.noMiddleName}
-                      onChange={(e) =>
-                        setForm({
-                          ...form,
-                          noMiddleName: e.target.checked,
-                          middleName: e.target.checked ? '' : form.middleName,
-                        })
-                      }
-                    />
-                    <span>{labels.noMiddleName}</span>
-                  </label>
-                  <div className="doctor-book__row doctor-book__row--2">
-                    <label>
-                      <span>{labels.birthDate}</span>
-                      <input
-                        required
-                        type="date"
-                        value={form.birthDate}
-                        onChange={(e) => setForm({ ...form, birthDate: e.target.value })}
-                      />
-                    </label>
-                    <label>
-                      <span>{labels.phone}</span>
-                      <input
-                        required
-                        type="tel"
-                        minLength={7}
-                        value={form.phone}
-                        onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                        placeholder="+998 __ ___ __ __"
-                        autoComplete="tel"
-                      />
-                    </label>
-                  </div>
-                </fieldset>
-
-                <label className="doctor-book__section doctor-book__comment">
-                  <span>{labels.comment}</span>
-                  <textarea
-                    rows={3}
-                    value={form.comment}
-                    onChange={(e) => setForm({ ...form, comment: e.target.value })}
-                    maxLength={500}
-                  />
-                </label>
+                </div>
 
                 <div className="doctor-book__footer">
                   <label className="doctor-book__check doctor-book__privacy">
@@ -370,6 +375,7 @@ export default function DoctorBookingModal({
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   )
 }

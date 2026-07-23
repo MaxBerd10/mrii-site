@@ -14,6 +14,8 @@ export const PAGE_SPIN_MS = 900
 type NavContextValue = {
   path: string
   busy: boolean
+  /** True after in-app navigation; false on hard refresh / first paint. */
+  routeEnter: boolean
   navigate: (to: string) => void
 }
 
@@ -46,6 +48,7 @@ function shouldHandleLink(anchor: HTMLAnchorElement) {
 export function PageTransitionProvider({ children }: { children: ReactNode }) {
   const [path, setPath] = useState(() => normalizePath(window.location.pathname))
   const [busy, setBusy] = useState(false)
+  const [routeEnter, setRouteEnter] = useState(false)
 
   const navigate = useCallback((to: string) => {
     let url: URL
@@ -78,6 +81,7 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
     setBusy(true)
     window.setTimeout(() => {
       window.history.pushState(null, '', nextFull)
+      setRouteEnter(true)
       setPath(nextPath)
       window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
       window.setTimeout(() => setBusy(false), 80)
@@ -101,6 +105,7 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
     const onPopState = () => {
       setBusy(true)
       window.setTimeout(() => {
+        setRouteEnter(true)
         setPath(normalizePath(window.location.pathname))
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
         window.setTimeout(() => setBusy(false), 80)
@@ -136,7 +141,10 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
     setPath(normalizePath(target))
   }, [path])
 
-  const value = useMemo(() => ({ path, busy, navigate }), [path, busy, navigate])
+  const value = useMemo(
+    () => ({ path, busy, routeEnter, navigate }),
+    [path, busy, routeEnter, navigate],
+  )
 
   return (
     <NavContext.Provider value={value}>

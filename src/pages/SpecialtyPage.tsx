@@ -139,11 +139,18 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
   }
 
   const ambientHint = worldLabels.ambientHint.replace('{name}', view.name)
+  const doctorCount = doctors.length || view.count
   const themeStyle = {
     '--sw-accent': world.accent,
     '--sw-soft': world.accentSoft,
     '--sw-glow': world.glow,
   } as CSSProperties
+
+  const careGroups = [
+    { number: '01', title: labels.conditions, items: view.conditions },
+    { number: '02', title: labels.services, items: view.services },
+    { number: '03', title: labels.diagnostics, items: view.diagnostics },
+  ]
 
   return (
     <main
@@ -173,13 +180,14 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
         <span className="specialty-world__dust specialty-world__dust--3" />
       </div>
 
+      {/* 1 — Hero: one composition */}
       <section className="specialty-world__hero">
-        <div className="container-main specialty-world__hero-grid">
+        <div className="specialty-world__hero-frame">
           <motion.div
             className="specialty-world__stage"
-            initial={reduce ? false : { opacity: 0, scale: 0.92, rotateY: -12 }}
-            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-            transition={{ duration: 0.85, ease: EASE_OUT }}
+            initial={reduce ? false : { opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, ease: EASE_OUT }}
           >
             <div className="specialty-world__stage-glow" />
             <div className="specialty-world__hud" aria-hidden>
@@ -194,9 +202,6 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
               </span>
               <span className="specialty-world__hud-chip specialty-world__hud-chip--metric">
                 {worldLabels.aiConfidence} {world.aiMetric}
-              </span>
-              <span className="specialty-world__hud-readout">
-                {worldLabels.aiSignal} · {slug.toUpperCase().slice(0, 8)}
               </span>
             </div>
             <span className="specialty-world__index">
@@ -221,18 +226,14 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
                       repeat: Infinity,
                       ease: 'easeInOut',
                     }
-                  : {
-                      duration: 7,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                    }
+                  : { duration: 7, repeat: Infinity, ease: 'easeInOut' }
               }
             />
           </motion.div>
 
           <motion.div
             className="specialty-world__copy"
-            variants={staggerContainer(0.09, 0.12)}
+            variants={staggerContainer(0.08, 0.1)}
             initial="hidden"
             animate="show"
           >
@@ -244,110 +245,48 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
             <motion.p className="specialty-world__ambient" variants={blurUp}>
               {ambientHint}
             </motion.p>
-            <motion.span className="specialty-world__eyebrow" variants={blurUp}>
-              {labels.expertise}
-            </motion.span>
             <motion.h1 variants={blurUp}>{view.name}</motion.h1>
             <motion.p className="specialty-world__lead" variants={blurUp}>
               {view.overview}
             </motion.p>
-            <motion.div className="specialty-world__badges" variants={blurUp}>
+            <motion.p className="specialty-world__meta" variants={blurUp}>
               <span>
-                {doctors.length || view.count} {t.clinic.doctorsCount}
+                {doctorCount} {t.clinic.doctorsCount}
               </span>
+              <span aria-hidden>·</span>
               <span>{labels.accredited}</span>
+              <span aria-hidden>·</span>
               <span>{labels.available}</span>
-              <span className="specialty-world__badge-ai">{worldLabels.aiLive}</span>
-            </motion.div>
-
-            <motion.aside className="specialty-world__ai" variants={blurUp}>
-              <div className="specialty-world__ai-head">
-                <span className="specialty-world__ai-dot" />
-                <strong>{worldLabels.aiTitle}</strong>
-                <em>{worldLabels.aiScan}</em>
-              </div>
-              <p>{world.aiInsight[contentLang]}</p>
-              <div className="specialty-world__ai-bar" aria-hidden>
-                <motion.span
-                  initial={reduce ? { scaleX: 1 } : { scaleX: 0.15 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ duration: 1.4, ease: EASE_OUT, delay: 0.35 }}
-                />
-              </div>
-              <a href={`/ai/${world.aiProductSlug}`} className="specialty-world__ai-link">
-                {worldLabels.aiOpen}
-              </a>
-            </motion.aside>
-
+            </motion.p>
             <motion.div className="specialty-world__actions" variants={blurUp}>
               <Magnetic href="/contacts" className="specialty-world__cta" strength={0.28}>
                 {t.clinic.bookBtn}
               </Magnetic>
               <a href={`/ai/${world.aiProductSlug}`} className="specialty-world__ghost">
-                AI Demo →
-              </a>
-              <a href="/prices" className="specialty-world__ghost">
-                {t.clinic.prices} →
+                {worldLabels.aiOpen}
               </a>
             </motion.div>
           </motion.div>
         </div>
+        <a href="#specialty-care" className="specialty-world__scroll" aria-label={worldLabels.careTitle}>
+          <span />
+        </a>
       </section>
 
-      <section className="specialty-world__team section">
+      {/* 2 — Care */}
+      <section id="specialty-care" className="specialty-world__band specialty-world__care">
         <div className="container-main">
-          <RevealHead title={worldLabels.team} accent={world.accent} />
-          {doctors.length === 0 ? (
-            <p className="specialty-world__empty">{worldLabels.teamEmpty}</p>
-          ) : (
-            <motion.div
-              className="specialty-world__doctors"
-              variants={staggerContainer(0.1)}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.15 }}
-            >
-              {doctors.map((doc) => {
-                const c = doc.content[contentLang]
-                return (
-                  <motion.article key={doc.slug} className="specialty-doc" variants={rise3d}>
-                    <a href={`/doctors/${doc.slug}`} className="specialty-doc__media">
-                      <img src={doc.photo} alt="" loading="lazy" />
-                      <span className="specialty-doc__shade" />
-                    </a>
-                    <div className="specialty-doc__body">
-                      <h3>{c.name}</h3>
-                      <p>{c.role} · {c.exp}</p>
-                      <div className="specialty-doc__actions">
-                        <a href={`/doctors/${doc.slug}`}>{worldLabels.seeDoctor}</a>
-                        <a href={`/doctors/${doc.slug}`}>{worldLabels.book}</a>
-                      </div>
-                    </div>
-                  </motion.article>
-                )
-              })}
-            </motion.div>
-          )}
-        </div>
-      </section>
-
-      <section className="specialty-world__care section">
-        <div className="container-main">
-          <RevealHead title={worldLabels.careTitle} accent={world.accent} />
+          <RevealHead kicker={labels.expertise} title={worldLabels.careTitle} />
           <motion.div
             className="specialty-world__care-grid"
             variants={staggerContainer(0.1)}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.15 }}
+            viewport={{ once: true, amount: 0.25 }}
           >
-            {[
-              { number: '01', title: labels.conditions, items: view.conditions },
-              { number: '02', title: labels.services, items: view.services },
-              { number: '03', title: labels.diagnostics, items: view.diagnostics },
-            ].map((group) => (
-              <motion.article key={group.number} className="specialty-world__card" variants={rise3d}>
-                <span>{group.number}</span>
+            {careGroups.map((group) => (
+              <motion.article key={group.number} className="specialty-world__rail" variants={rise3d}>
+                <span className="specialty-world__rail-num">{group.number}</span>
                 <h2>{group.title}</h2>
                 <ul>
                   {group.items.map((item) => (
@@ -357,45 +296,87 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
               </motion.article>
             ))}
           </motion.div>
+        </div>
+      </section>
 
-          <div className="specialty-world__pathway">
-            <div className="specialty-world__pathway-head">
-              <span>{labels.pathway}</span>
-              <h2>{labels.pathway}</h2>
-              <p>{labels.pathwayText}</p>
-            </div>
-            <div className="specialty-world__pathway-steps">
-              {t.process.steps.map((step, stepIndex) => (
-                <motion.div
-                  key={step.num}
-                  className="specialty-world__step"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: stepIndex * 0.08, ease: EASE_OUT }}
-                >
-                  <span>{step.num}</span>
-                  <strong>{step.title}</strong>
-                  <small>{step.desc}</small>
-                </motion.div>
-              ))}
-            </div>
+      {/* 3 — Pathway */}
+      <section className="specialty-world__band specialty-world__pathway-screen">
+        <div className="container-main">
+          <RevealHead title={labels.pathway} desc={labels.pathwayText} />
+          <div className="specialty-world__timeline" aria-label={labels.pathway}>
+            {t.process.steps.map((step, stepIndex) => (
+              <motion.div
+                key={step.num}
+                className="specialty-world__timeline-step"
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: stepIndex * 0.07, ease: EASE_OUT }}
+              >
+                <span className="specialty-world__timeline-dot">{step.num}</span>
+                <strong>{step.title}</strong>
+                <small>{step.desc}</small>
+              </motion.div>
+            ))}
           </div>
+        </div>
+      </section>
 
-          <div className="specialty-world__related">
-            <div>
-              <span className="specialty-world__eyebrow">{labels.back}</span>
-              <h2>{t.clinic.title2}</h2>
-            </div>
-            <div className="specialty-world__related-grid">
-              {related.map((item) => (
-                <a key={item.slug} href={`/clinic/${item.slug}`} className="specialty-world__related-card">
-                  <img src={item.image} alt="" />
-                  <span>{item.label}</span>
-                  <strong>{item.name}</strong>
-                </a>
-              ))}
-            </div>
+      {/* 4 — Doctors */}
+      <section className="specialty-world__band specialty-world__team">
+        <div className="container-main">
+          <RevealHead
+            kicker={`${doctorCount} ${t.clinic.doctorsCount}`}
+            title={worldLabels.team}
+          />
+          {doctors.length === 0 ? (
+            <p className="specialty-world__empty">{worldLabels.teamEmpty}</p>
+          ) : (
+            <motion.div
+              className="specialty-world__doctors"
+              variants={staggerContainer(0.1)}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              {doctors.map((doc) => {
+                const c = doc.content[contentLang]
+                return (
+                  <motion.article key={doc.slug} className="specialty-doc" variants={rise3d}>
+                    <a href={`/doctors/${doc.slug}`} className="specialty-doc__media">
+                      <img src={doc.photo} alt="" loading="lazy" />
+                    </a>
+                    <div className="specialty-doc__body">
+                      <h3>
+                        <a href={`/doctors/${doc.slug}`}>{c.name}</a>
+                      </h3>
+                      <p>
+                        {c.role} · {c.exp}
+                      </p>
+                      <a href={`/doctors/${doc.slug}`} className="specialty-doc__link">
+                        {worldLabels.seeDoctor} →
+                      </a>
+                    </div>
+                  </motion.article>
+                )
+              })}
+            </motion.div>
+          )}
+        </div>
+      </section>
+
+      {/* 5 — Related */}
+      <section className="specialty-world__band specialty-world__related-screen">
+        <div className="container-main">
+          <RevealHead kicker={labels.back} title={t.clinic.title2} />
+          <div className="specialty-world__related-grid">
+            {related.map((item) => (
+              <a key={item.slug} href={`/clinic/${item.slug}`} className="specialty-world__related-card">
+                <img src={item.image} alt="" />
+                <span>{item.label}</span>
+                <strong>{item.name}</strong>
+              </a>
+            ))}
           </div>
         </div>
       </section>
@@ -403,17 +384,26 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
   )
 }
 
-function RevealHead({ title, accent }: { title: string; accent: string }) {
+function RevealHead({
+  kicker,
+  title,
+  desc,
+}: {
+  kicker?: string
+  title: string
+  desc?: string
+}) {
   return (
-    <motion.div
+    <motion.header
       className="specialty-world__section-head"
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.4 }}
+      viewport={{ once: true, amount: 0.5 }}
       transition={{ duration: 0.45, ease: EASE_OUT }}
     >
-      <span style={{ background: accent }} />
+      {kicker ? <p className="specialty-world__section-kicker">{kicker}</p> : null}
       <h2>{title}</h2>
-    </motion.div>
+      {desc ? <p className="specialty-world__section-desc">{desc}</p> : null}
+    </motion.header>
   )
 }

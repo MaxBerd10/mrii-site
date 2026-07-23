@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState, type CSSProperties } from 'react'
+import { useMemo, useState, type CSSProperties } from 'react'
 import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
-import Reveal from './ui/Reveal'
-import { staggerContainer, rise3d, blurUp } from '../lib/animations'
+import { usePageNav } from './PageTransition'
+import { staggerContainer, fadeUpSmall } from '../lib/animations'
 import { media } from '../data/media'
 import { specialtyDetails } from '../data/specialtyDetails'
 import '../styles/clinic-catalog.css'
@@ -11,7 +11,6 @@ import '../styles/clinic-catalog.css'
 type ClinicCategory = 'all' | 'therapy' | 'surgery' | 'women' | 'diagnostics'
 
 const SPECIALTY_IMAGES = Object.values(media.clinic)
-const PREVIEW_COUNT = 6
 
 const SPECIALTY_CATEGORIES: ClinicCategory[] = [
   'therapy',
@@ -41,8 +40,8 @@ const CATEGORY_META: Record<
 export default function Clinic() {
   const { t, lang } = useLanguage()
   const { home } = useCms()
+  const { routeEnter } = usePageNav()
   const [filter, setFilter] = useState<ClinicCategory>('all')
-  const [expanded, setExpanded] = useState(false)
 
   const specialties = useMemo(() => {
     const base = home?.specialties?.length
@@ -83,13 +82,6 @@ export default function Clinic() {
   }, [specialties, t.clinic.filters])
 
   const filtered = filter === 'all' ? specialties : specialties.filter((s) => s.category === filter)
-  const hasMore = filtered.length > PREVIEW_COUNT
-  const visible = expanded || !hasMore ? filtered : filtered.slice(0, PREVIEW_COUNT)
-  const hiddenCount = Math.max(0, filtered.length - PREVIEW_COUNT)
-
-  useEffect(() => {
-    setExpanded(false)
-  }, [filter])
 
   const categoryLabel = (cat: ClinicCategory) => {
     if (cat === 'all') return ''
@@ -99,25 +91,23 @@ export default function Clinic() {
   return (
     <section id="clinic" className="clinic-section clinic-section--catalog">
       <div className="container-main clinic-catalog-page">
-        <Reveal variants={blurUp}>
-          <header className="clinic-hero">
-            <div className="clinic-hero__copy">
-              <span className="clinic-hero__label">
-                <span className="clinic-hero__dot" aria-hidden />
-                {t.clinic.label}
-              </span>
-              <h1 className="clinic-hero__title">
-                {t.clinic.title1} <em>{t.clinic.title2}</em>
-              </h1>
-              <p className="clinic-hero__desc">{t.clinic.description}</p>
-            </div>
-            <div className="clinic-hero__aside">
-              <a href="/contacts" className="clinic-hero__cta">
-                {t.clinic.bookBtn}
-              </a>
-            </div>
-          </header>
-        </Reveal>
+        <header className="clinic-hero">
+          <div className="clinic-hero__copy">
+            <span className="clinic-hero__label">
+              <span className="clinic-hero__dot" aria-hidden />
+              {t.clinic.label}
+            </span>
+            <h1 className="clinic-hero__title">
+              {t.clinic.title1} <em>{t.clinic.title2}</em>
+            </h1>
+            <p className="clinic-hero__desc">{t.clinic.description}</p>
+          </div>
+          <div className="clinic-hero__aside">
+            <a href="/contacts" className="clinic-hero__cta">
+              {t.clinic.bookBtn}
+            </a>
+          </div>
+        </header>
 
         <div className="clinic-toolbar" role="tablist" aria-label={t.clinic.label}>
           {filters.map((f) => (
@@ -139,20 +129,20 @@ export default function Clinic() {
         </div>
 
         <motion.div
-          key={`${filter}-${lang}-${expanded ? 'all' : 'preview'}`}
+          key={`${filter}-${lang}`}
           className="clinic-catalog"
-          variants={staggerContainer(0.04, 0.02)}
-          initial="hidden"
+          variants={staggerContainer(0.03, 0)}
+          initial={routeEnter ? 'hidden' : false}
           animate="show"
         >
-          {visible.map((sp) => {
+          {filtered.map((sp) => {
             const color = CATEGORY_META[sp.category as Exclude<ClinicCategory, 'all'>].color
             return (
               <motion.a
                 key={sp.slug}
                 href={`/clinic/${sp.slug}`}
                 className="clinic-card"
-                variants={rise3d}
+                variants={fadeUpSmall}
                 style={{ '--clinic-cat': color } as CSSProperties}
               >
                 <div className="clinic-card__media">
@@ -174,21 +164,6 @@ export default function Clinic() {
             )
           })}
         </motion.div>
-
-        {hasMore ? (
-          <div className="clinic-more">
-            <button
-              type="button"
-              className="clinic-more__btn"
-              aria-expanded={expanded}
-              onClick={() => setExpanded((v) => !v)}
-            >
-              {expanded
-                ? t.clinic.showLess
-                : `${t.clinic.showMore}${hiddenCount ? ` · ${hiddenCount}` : ''}`}
-            </button>
-          </div>
-        ) : null}
       </div>
     </section>
   )

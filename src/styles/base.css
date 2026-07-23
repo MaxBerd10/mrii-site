@@ -13,7 +13,7 @@ html.no-smooth-scroll {
 }
 
 .page-shell {
-  padding-top: 88px;
+  padding-top: 64px;
   min-height: 60vh;
   background:
     radial-gradient(ellipse 50% 35% at 0% 0%, rgba(91, 76, 219, 0.07), transparent 55%),
@@ -22,7 +22,7 @@ html.no-smooth-scroll {
 }
 
 .page-shell--contacts {
-  padding-top: 72px;
+  padding-top: 64px;
 }
 
 .site-footer {
@@ -54,6 +54,7 @@ html.no-smooth-scroll {
   text-decoration: none;
 }
 
+/* Section anchors — small offset for in-page jumps only */
 #clinic,
 #research,
 #ai,
@@ -63,25 +64,27 @@ html.no-smooth-scroll {
 #contacts,
 #partners,
 #international {
-  scroll-margin-top: 100px;
+  scroll-margin-top: 88px;
 }
 
 /* Shared section shell — same top/bottom padding for every nav block */
+/* Standalone routes — tight under fixed nav (match clinic/research) */
 #clinic.clinic-section,
 #research.section,
 #education.section,
 #ai.section,
-#doctors.section {
-  padding-block: clamp(64px, 8vw, 104px);
+#doctors.section,
+#news.section,
+#international.section,
+.page-shell .partners-section {
+  padding-block: clamp(8px, 1.2vw, 16px) clamp(28px, 4vw, 48px);
 }
 
-/* Shared section header rhythm — keep every block even */
-#research .section-head,
-#education .section-head,
-#ai .section-head,
-#doctors .section-head,
-#clinic .section-head,
-#clinic .clinic-section__head {
+.page-shell > .section .section-head,
+.page-shell #doctors .section-head,
+.page-shell #news .section-head,
+.page-shell #international .section-head,
+.page-shell #ai .section-head {
   margin-bottom: 18px;
 }
 
@@ -337,15 +340,6 @@ button { color: inherit; }
   border-radius: 999px;
   border: 1px solid var(--border);
   background: #fff;
-}
-
-.scroll-progress {
-  position: fixed;
-  inset: 0 0 auto;
-  z-index: 500;
-  height: 3px;
-  transform-origin: 0 50%;
-  background: linear-gradient(90deg, var(--brand), var(--blue));
 }
 
 .back-to-top {

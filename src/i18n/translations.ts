@@ -4,7 +4,7 @@ export type Translations = typeof uz
 
 const uz = {
   topBar: {
-    phone: '+998 (71) 234-56-78',
+    phone: '(90) 273-23-01',
     hours: 'Dush–Juma · 8:00–20:00',
     badge: 'Onlayn qabul ochiq',
   },
@@ -61,7 +61,7 @@ const uz = {
     },
   },
   hero: {
-    instituteName: 'Fargʻona Jamoat Salomatligi Tibbiyot Instituti',
+    instituteName: "FJSTI KO'P TARMOQLI KLINIKASI",
     instituteSlogan: 'Kelajak tibbiyoti — sunʼiy intellekt bilan bugun.',
     slides: [
       { caption: 'Klinik yordam', alt: 'Fargʻona Jamoat Salomatligi Tibbiyot Instituti zamonaviy klinikasi' },
@@ -464,12 +464,56 @@ const uz = {
       'Narxlar 2026-yil 12-maydagi rasmiy narxnomaga asoslangan. Yakuniy summa qabulda aniqlanadi.',
     empty: 'Hech narsa topilmadi. Boshqa so‘z bilan urinib ko‘ring.',
   },
+  assistant: {
+    name: 'Muxlisa',
+    online: 'Onlayn · yordam beraman',
+    open: 'Yordamchini ochish',
+    close: 'Yopish',
+    greeting:
+      'Salom! Men virtual yordamchi Muxlisa. Manzil, telefon, ish vaqti, narxlar yoki yozilish haqida so‘rashingiz mumkin.',
+    placeholder: 'Savolingizni yozing…',
+    send: 'Yuborish',
+    quickLabel: 'Tezkor savollar',
+    chipAddress: 'Manzil',
+    chipPhone: 'Telefon',
+    chipHours: 'Ish vaqti',
+    chipPrices: 'Narxlar',
+    chipDoctors: 'Shifokorlar',
+    chipBook: 'Yozilish',
+    addressReply:
+      "SOBIQ TEKSTIL SHIFOXONASI\nMuruvvak ko'chasi, 40-A uy.\n\nTelefon:\n(90) 273-23-01\n(90) 533-17-71",
+    phoneReply:
+      "Telefon raqamlarimiz:\n(90) 273-23-01\n(90) 533-17-71\n\nQo‘ng‘iroq qilishingiz mumkin — qabul sizga yordam beradi.",
+    hoursReply: 'Ish vaqti: {hours}',
+    pricesReply: 'Xizmat narxlari va check-up paketlar «Narxlar» sahifasida.',
+    doctorsReply: 'Shifokorlar ro‘yxati va mutaxassisliklar «Shifokorlar» bo‘limida.',
+    bookReply: 'Qabulga yozilish uchun shifokorni tanlang yoki Aloqa orqali ariza qoldiring.',
+    fallback:
+      'Hozircha oddiy savollarga javob beraman: manzil, telefon, ish vaqti, narxlar, shifokorlar, yozilish. Pastdagi tugmalardan birini bosing.',
+    openMap: 'Xaritada ochish',
+    mapHref: "https://maps.google.com/?q=Muruvvak+ko'chasi+40-A+Fargona",
+    callNow: '(90) 273-23-01',
+    callNow2: '(90) 533-17-71',
+    phoneTel: '+998902732301',
+    phoneTel2: '+998905331771',
+    goPrices: 'Narxlarga o‘tish',
+    goDoctors: 'Shifokorlarga o‘tish',
+    goBook: 'Yozilishga o‘tish',
+    keywords: {
+      address: ['manzil', 'qayerda', 'adres', 'address', 'klinika qayer', 'binoga', 'tekstil', 'muruvvak'],
+      phone: ['telefon', 'raqam', 'aloqa', 'call', 'phone', 'qo‘ng‘iroq', 'qongiroq'],
+      hours: ['ish vaqti', 'soat', 'ochiq', 'hours', 'режим'],
+      prices: ['narx', 'narxlar', 'pul', 'price', 'стоимость', 'bahalar'],
+      doctors: ['shifokor', 'doktor', 'vrach', 'doctor', 'shıpaker'],
+      book: ['yozil', 'qabul', 'band', 'book', 'запись', 'jazılıw'],
+    },
+  },
 }
 
 const ru: Translations = {
   ...uz,
   topBar: {
-    phone: '+998 (71) 234-56-78',
+    phone: '(90) 273-23-01',
     hours: 'Пн–Пт · 8:00–20:00',
     badge: 'Онлайн-запись открыта',
   },
@@ -536,8 +580,52 @@ const ru: Translations = {
       'Цены основаны на официальном прейскуранте от 12 мая 2026 г. Итоговая сумма уточняется на приёме.',
     empty: 'Ничего не найдено. Попробуйте другой запрос.',
   },
+  assistant: {
+    name: 'Muxlisa',
+    online: 'Онлайн · помогу вам',
+    open: 'Открыть помощника',
+    close: 'Закрыть',
+    greeting:
+      'Здравствуйте! Я виртуальный помощник Muxlisa. Спросите адрес, телефон, часы работы, цены или запись.',
+    placeholder: 'Напишите вопрос…',
+    send: 'Отправить',
+    quickLabel: 'Быстрые вопросы',
+    chipAddress: 'Адрес',
+    chipPhone: 'Телефон',
+    chipHours: 'Часы работы',
+    chipPrices: 'Цены',
+    chipDoctors: 'Врачи',
+    chipBook: 'Запись',
+    addressReply:
+      'БЫВШАЯ ТЕКСТИЛЬНАЯ БОЛЬНИЦА\nул. Муруввак, 40-А.\n\nТелефон:\n(90) 273-23-01\n(90) 533-17-71',
+    phoneReply:
+      'Наши телефоны:\n(90) 273-23-01\n(90) 533-17-71\n\nМожете позвонить — регистратура поможет.',
+    hoursReply: 'Часы работы: {hours}',
+    pricesReply: 'Цены и check-up пакеты — на странице «Цены».',
+    doctorsReply: 'Список врачей — в разделе «Врачи».',
+    bookReply: 'Чтобы записаться, выберите врача или оставьте заявку в «Контакты».',
+    fallback:
+      'Пока отвечаю на простые вопросы: адрес, телефон, часы, цены, врачи, запись. Нажмите кнопку ниже.',
+    openMap: 'Открыть на карте',
+    mapHref: "https://maps.google.com/?q=Muruvvak+ko'chasi+40-A+Fargona",
+    callNow: '(90) 273-23-01',
+    callNow2: '(90) 533-17-71',
+    phoneTel: '+998902732301',
+    phoneTel2: '+998905331771',
+    goPrices: 'К ценам',
+    goDoctors: 'К врачам',
+    goBook: 'К записи',
+    keywords: {
+      address: ['адрес', 'где', 'manzil', 'address', 'клиника'],
+      phone: ['телефон', 'номер', 'звонок', 'phone', 'call'],
+      hours: ['часы', 'время', 'режим', 'hours', 'открыто'],
+      prices: ['цена', 'цены', 'стоимость', 'price', 'narx'],
+      doctors: ['врач', 'доктор', 'doctor', 'shifokor'],
+      book: ['запись', 'записаться', 'приём', 'book', 'yozil'],
+    },
+  },
   hero: {
-    instituteName: 'Ферганский медицинский институт общественного здоровья',
+    instituteName: 'FJSTI МНОГОПРОФИЛЬНАЯ КЛИНИКА',
     instituteSlogan: 'Медицина будущего — с искусственным интеллектом уже сегодня.',
     slides: [
       { caption: 'Клиническая помощь', alt: 'Современная клиника Ферганский медицинский институт общественного здоровья' },
@@ -872,7 +960,7 @@ const ru: Translations = {
 const en: Translations = {
   ...uz,
   topBar: {
-    phone: '+998 (71) 234-56-78',
+    phone: '(90) 273-23-01',
     hours: 'Mon–Fri · 8:00–20:00',
     badge: 'Online booking open',
   },
@@ -939,8 +1027,52 @@ const en: Translations = {
       'Prices follow the official list of 12 May 2026. Final amount is confirmed at your visit.',
     empty: 'Nothing found. Try a different search term.',
   },
+  assistant: {
+    name: 'Muxlisa',
+    online: 'Online · happy to help',
+    open: 'Open assistant',
+    close: 'Close',
+    greeting:
+      'Hello! I’m Muxlisa, your virtual assistant. Ask about address, phone, hours, prices, or booking.',
+    placeholder: 'Type your question…',
+    send: 'Send',
+    quickLabel: 'Quick questions',
+    chipAddress: 'Address',
+    chipPhone: 'Phone',
+    chipHours: 'Hours',
+    chipPrices: 'Prices',
+    chipDoctors: 'Doctors',
+    chipBook: 'Book',
+    addressReply:
+      "FORMER TEXTILE HOSPITAL\nMuruvvak street, 40-A.\n\nPhone:\n(90) 273-23-01\n(90) 533-17-71",
+    phoneReply:
+      'Our phone numbers:\n(90) 273-23-01\n(90) 533-17-71\n\nFeel free to call — reception will help.',
+    hoursReply: 'Working hours: {hours}',
+    pricesReply: 'Service prices and check-up packages are on the Prices page.',
+    doctorsReply: 'Browse doctors in the Doctors section.',
+    bookReply: 'To book a visit, pick a doctor or leave a request via Contact.',
+    fallback:
+      'I can help with simple questions: address, phone, hours, prices, doctors, booking. Use a button below.',
+    openMap: 'Open in Maps',
+    mapHref: "https://maps.google.com/?q=Muruvvak+ko'chasi+40-A+Fargona",
+    callNow: '(90) 273-23-01',
+    callNow2: '(90) 533-17-71',
+    phoneTel: '+998902732301',
+    phoneTel2: '+998905331771',
+    goPrices: 'Go to prices',
+    goDoctors: 'Go to doctors',
+    goBook: 'Go to booking',
+    keywords: {
+      address: ['address', 'where', 'location', 'clinic', 'manzil'],
+      phone: ['phone', 'number', 'call', 'telefon'],
+      hours: ['hours', 'open', 'time', 'schedule'],
+      prices: ['price', 'prices', 'cost', 'fee', 'narx'],
+      doctors: ['doctor', 'doctors', 'physician'],
+      book: ['book', 'appointment', 'visit', 'schedule'],
+    },
+  },
   hero: {
-    instituteName: 'Ferghana Medical Institute of Public Health',
+    instituteName: 'FJSTI MULTIDISCIPLINARY CLINIC',
     instituteSlogan: 'The future of medicine — powered by AI, here today.',
     slides: [
       { caption: 'Clinical care', alt: 'Modern Ferghana Medical Institute of Public Health clinic' },
@@ -1353,6 +1485,37 @@ const kaa: Translations = {
     reviews: 'Pikirler',
     writeReview: 'Pikir jazıw',
     experienceLabel: 'Tájiriybe',
+  },
+  assistant: {
+    ...uz.assistant,
+    online: 'Onlayn · járdem beremen',
+    open: 'Járdemshini ashıw',
+    close: 'Jabıw',
+    greeting:
+      'Sálem! Men virtual járdemshi Muxlisa. Mánzil, telefon, jumıs waqtı, bahalar yamasa jazılıw haqqında sorawıńız múmkin.',
+    placeholder: 'Sorawıńızdı jazıń…',
+    chipAddress: 'Mánzil',
+    chipPhone: 'Telefon',
+    chipHours: 'Jumıs waqtı',
+    chipPrices: 'Bahalar',
+    chipDoctors: 'Shıpakerler',
+    chipBook: 'Jazılıw',
+    addressReply:
+      "SOBIQ TEKSTIL SHIFOXONASI\nMuruvvak ko'chasi, 40-A uy.\n\nTelefon:\n(90) 273-23-01\n(90) 533-17-71",
+    phoneReply:
+      "Telefon raqamlarımız:\n(90) 273-23-01\n(90) 533-17-71\n\nQońıraw etiwıńız múmkin.",
+    hoursReply: 'Jumıs waqtı: {hours}',
+    pricesReply: 'Xızmet bahaları «Bahalar» betinde.',
+    doctorsReply: 'Shıpakerler dizimi «Shıpakerler» bóliminde.',
+    bookReply: 'Jazılıw ushın shıpakerdi tańlań yamasa Baylanıs arqalı arza qaldırıń.',
+    fallback:
+      'Ázirshe ápiwayı sorawlarǵa juwap beremen: mánzil, telefon, waqıt, bahalar, shıpakerler, jazılıw.',
+    openMap: 'Kartada ashıw',
+    callNow: '(90) 273-23-01',
+    callNow2: '(90) 533-17-71',
+    goPrices: 'Bahalarǵa ótiw',
+    goDoctors: 'Shıpakerlerge ótiw',
+    goBook: 'Jazılıwǵa ótiw',
   },
   backToTop: 'Joqarıǵa',
 }

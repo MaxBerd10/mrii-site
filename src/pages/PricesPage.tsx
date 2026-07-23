@@ -130,8 +130,8 @@ export default function PricesPage() {
                 {tiers.map((tier) => {
                   const featured = tier.tier === 'Standart'
                   const key = `${direction.id}-${tier.tier}`
-                  const expanded = expandedTier[key] ?? featured
-                  const previewCount = 6
+                  const expanded = expandedTier[key] ?? false
+                  const previewCount = 5
                   const visible = expanded ? tier.includes : tier.includes.slice(0, previewCount)
                   const hiddenCount = tier.includes.length - previewCount
 

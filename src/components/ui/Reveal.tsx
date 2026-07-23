@@ -1,10 +1,18 @@
-import type { CSSProperties, ElementType, ReactNode } from 'react'
+import { useMemo, type CSSProperties, type ElementType, type ReactNode } from 'react'
 import { motion, useReducedMotion, type Variants } from 'motion/react'
 import { fadeUp } from '../../lib/animations'
 
+/** Tags Reveal can render — narrowed so `as` stays type-safe for the props we pass. */
+type RevealTag = ElementType<{
+  id?: string
+  className?: string
+  style?: CSSProperties
+  children?: ReactNode
+}>
+
 type RevealProps = {
   children: ReactNode
-  as?: ElementType
+  as?: RevealTag
   variants?: Variants
   className?: string
   delay?: number
@@ -26,10 +34,11 @@ export default function Reveal({
   style,
 }: RevealProps) {
   const reduce = useReducedMotion()
-  const MotionTag = motion(as as ElementType)
+  // motion.create() must not run on every render — a fresh component identity remounts the subtree.
+  const MotionTag = useMemo(() => motion.create(as as ElementType), [as])
 
   if (reduce) {
-    const Tag = as as ElementType
+    const Tag = as
     return (
       <Tag className={className} id={id} style={style}>
         {children}

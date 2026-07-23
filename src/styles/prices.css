@@ -14,7 +14,7 @@
   position: relative;
   isolation: isolate;
   flex: 1 1 auto;
-  padding: clamp(20px, 3vw, 36px) 0 clamp(64px, 8vw, 96px);
+  padding: 6px 0 28px;
 }
 
 .prices-page__atmosphere {
@@ -36,11 +36,11 @@
 
 .prices-page__head {
   max-width: 38rem;
-  margin: 0 0 28px;
+  margin: 0 0 14px;
 }
 
 .prices-page__eyebrow {
-  margin: 0 0 10px;
+  margin: 0 0 4px;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -49,26 +49,26 @@
 }
 
 .prices-page__title {
-  margin: 0 0 12px;
+  margin: 0 0 6px;
   font-family: var(--font-display);
-  font-size: clamp(40px, 5.5vw, 64px);
+  font-size: clamp(28px, 3.4vw, 42px);
   font-weight: 700;
   letter-spacing: -0.05em;
-  line-height: 1.02;
+  line-height: 1.05;
   color: var(--text);
 }
 
 .prices-page__lead {
-  margin: 0 0 8px;
+  margin: 0 0 4px;
   max-width: 34rem;
-  font-size: 16px;
-  line-height: 1.55;
+  font-size: 14px;
+  line-height: 1.45;
   color: var(--text-soft);
 }
 
 .prices-page__updated {
   margin: 0;
-  font-size: 13px;
+  font-size: 12px;
   color: #8b919c;
 }
 
@@ -77,9 +77,9 @@
   display: inline-grid;
   grid-template-columns: 1fr 1fr;
   gap: 4px;
-  margin-bottom: 28px;
+  margin-bottom: 14px;
   padding: 4px;
-  border-radius: 14px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.72);
   border: 1px solid var(--border);
   box-shadow: 0 8px 24px rgba(35, 38, 52, 0.05);
@@ -89,12 +89,12 @@
   appearance: none;
   border: 0;
   margin: 0;
-  padding: 12px 22px;
-  border-radius: 11px;
+  padding: 9px 18px;
+  border-radius: 10px;
   background: transparent;
   color: var(--text-soft);
   font: inherit;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 650;
   cursor: pointer;
   transition: background 0.2s var(--ease), color 0.2s var(--ease), box-shadow 0.2s var(--ease);
@@ -115,9 +115,9 @@
 .prices-dirs {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 18px;
-  margin-bottom: 10px;
-  padding-bottom: 14px;
+  gap: 4px 14px;
+  margin-bottom: 6px;
+  padding-bottom: 8px;
   border-bottom: 1px solid var(--border);
 }
 
@@ -126,9 +126,9 @@
   border: 0;
   background: none;
   margin: 0;
-  padding: 8px 0;
+  padding: 6px 0;
   font: inherit;
-  font-size: 15px;
+  font-size: 13.5px;
   font-weight: 600;
   color: var(--text-soft);
   cursor: pointer;
@@ -167,8 +167,8 @@
 }
 
 .prices-packages__hint {
-  margin: 0 0 20px;
-  font-size: 14px;
+  margin: 0 0 12px;
+  font-size: 13px;
   color: var(--text-soft);
 }
 
@@ -176,51 +176,50 @@
 .prices-tier-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-  align-items: stretch;
+  gap: 12px;
+  align-items: start;
 }
 
 .prices-tier {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 22px 20px 20px;
-  border-radius: 22px;
+  gap: 10px;
+  padding: 16px 14px 14px;
+  border-radius: 18px;
   background: #fff;
   border: 1px solid var(--border);
-  box-shadow: 0 14px 36px rgba(35, 38, 52, 0.05);
+  box-shadow: 0 10px 28px rgba(35, 38, 52, 0.05);
 }
 
 .prices-tier--featured {
   border-color: color-mix(in srgb, var(--tier-accent, var(--blue)) 35%, transparent);
   box-shadow:
-    0 18px 44px color-mix(in srgb, var(--tier-accent, var(--blue)) 16%, transparent),
-    0 14px 36px rgba(35, 38, 52, 0.06);
-  transform: translateY(-4px);
+    0 14px 32px color-mix(in srgb, var(--tier-accent, var(--blue)) 14%, transparent),
+    0 10px 28px rgba(35, 38, 52, 0.05);
 }
 
 .prices-tier__badge {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  padding: 4px 10px;
+  top: 12px;
+  right: 12px;
+  padding: 3px 8px;
   border-radius: 999px;
   background: color-mix(in srgb, var(--tier-accent, var(--blue)) 14%, #fff);
   color: color-mix(in srgb, var(--tier-accent, var(--blue)) 80%, #0f172a);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .prices-tier__head {
-  padding-right: 72px;
+  padding-right: 64px;
 }
 
 .prices-tier__name {
-  margin: 0 0 10px;
-  font-size: 15px;
+  margin: 0 0 6px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -231,13 +230,13 @@
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: 6px 8px;
+  gap: 4px 6px;
   margin: 0;
 }
 
 .prices-tier__price strong {
   font-family: var(--font-display);
-  font-size: clamp(28px, 2.8vw, 36px);
+  font-size: clamp(22px, 2.2vw, 28px);
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 1;
@@ -246,12 +245,12 @@
 
 .prices-tier__price span,
 .prices-tier__per {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-soft);
 }
 
 .prices-tier__per {
-  margin: 6px 0 0;
+  margin: 4px 0 0;
 }
 
 .prices-tier__list {
@@ -259,15 +258,15 @@
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 8px;
+  gap: 5px;
   flex: 1 1 auto;
 }
 
 .prices-tier__list li {
   position: relative;
-  padding-left: 18px;
-  font-size: 13.5px;
-  line-height: 1.4;
+  padding-left: 16px;
+  font-size: 12.5px;
+  line-height: 1.35;
   color: #3a3f4a;
 }
 
@@ -275,9 +274,9 @@
   content: '';
   position: absolute;
   left: 0;
-  top: 0.55em;
-  width: 7px;
-  height: 7px;
+  top: 0.5em;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: color-mix(in srgb, var(--tier-accent, var(--blue)) 70%, #94a3b8);
 }
@@ -290,7 +289,7 @@
   margin: 0;
   align-self: start;
   font: inherit;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 650;
   color: color-mix(in srgb, var(--tier-accent, var(--blue)) 85%, #0f172a);
   cursor: pointer;
@@ -300,10 +299,10 @@
 
 .prices-tier__note {
   margin: 0;
-  padding-top: 10px;
+  padding-top: 8px;
   border-top: 1px solid var(--border);
-  font-size: 12px;
-  line-height: 1.45;
+  font-size: 11px;
+  line-height: 1.4;
   color: #8b919c;
 }
 
@@ -311,13 +310,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-top: 4px;
-  min-height: 44px;
-  padding: 0 18px;
-  border-radius: 12px;
+  margin-top: 2px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 11px;
   background: var(--text);
   color: #fff;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 650;
   text-decoration: none;
   transition: background 0.18s ease, transform 0.18s ease;

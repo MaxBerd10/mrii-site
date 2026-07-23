@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react'
-import ScrollProgress from './components/ScrollProgress'
 import Nav from './components/Nav'
 import Clinic from './components/Clinic'
 import Research from './components/Research'
@@ -12,6 +11,7 @@ import International from './components/International'
 import FooterSection from './components/FooterSection'
 import SiteFooter from './components/SiteFooter'
 import BackToTop from './components/BackToTop'
+import SiteAssistant from './components/SiteAssistant'
 import SpecialtyPage from './pages/SpecialtyPage'
 import NewsPage from './pages/NewsPage'
 import AIProductPage from './pages/AIProductPage'
@@ -135,13 +135,13 @@ function AppRoutes() {
       className="site-shell min-h-screen"
       style={{ backgroundColor: 'var(--background)', color: 'var(--foreground)' }}
     >
-      <ScrollProgress />
       <Nav />
       <PageEnter path={path}>
         {body}
         {isContacts || !known ? null : <SiteFooter />}
       </PageEnter>
       <BackToTop />
+      <SiteAssistant />
     </div>
   )
 }

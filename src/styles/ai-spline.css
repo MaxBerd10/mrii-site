@@ -156,11 +156,11 @@
 }
 
 #ai.section {
-  padding-block: clamp(20px, 3vw, 40px) !important;
+  padding-block: clamp(8px, 1.2vw, 16px) clamp(28px, 4vw, 48px);
 }
 
 #ai .section-head {
-  margin-bottom: 16px !important;
+  margin-bottom: 16px;
 }
 
 #ai .ai-spline-wrap {
