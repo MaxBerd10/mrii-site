@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "src/styles/home-dark.css"
+        ],
+        "createdAt": "2026-07-23T10:35:02.637Z",
+        "reason": "User confirmed: grid is confined to the ECG readout strip and the signal-field canvas stage only — the canvas/measurement surfaces the rule itself exempts. Page ground is plain --hd-void. See DESIGN.md > Material > Calibration grid."
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "src/styles/home-care.css"
+        ],
+        "createdAt": "2026-07-25T11:16:14.875Z",
+        "reason": "DNA molecular scene grid backdrop (.hc-dna-scene__grid) is an intentional scientific visualization surface — user confirmed"
+      }
+    ]
+  }
+}

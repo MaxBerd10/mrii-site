@@ -1,20 +1,63 @@
-:root {
-  --font-display: 'Sora', 'Source Sans 3', system-ui, sans-serif;
-  --font-body: 'Source Sans 3', system-ui, sans-serif;
+/* ============================================================================
+   DAYLIGHT SYSTEM TOKENS — inner routes (/clinic, /doctors, /prices, …).
+
+   Two themes live here, switched by data-theme on <html>:
+     [data-theme="light"]  the default working surface
+     [data-theme="dark"]   the same surface at night
+
+   This is NOT the homepage. The homepage owns a separate committed world
+   (`.home-dark`, see DESIGN.md) with signal colours and glow; it stays dark in
+   both themes and must never read these tokens. The dark theme here is a calm
+   working surface — lifted slate, no bloom — because inner routes are used, not
+   admired. That is why its ground (#111420) is deliberately lighter and less
+   saturated than the instrument's void (#050816).
+
+   Every value below is paired. When adding a token, add both halves.
+   ========================================================================= */
+
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  /* ground + surfaces */
   --bg: #f4f5f7;
   --surface: #ffffff;
   --surface-soft: #f0f1f4;
   --surface-purple: #eeecff;
+  /* translucent surfaces (nav pill, sticky bars, glass panels) */
+  --surface-glass: rgba(255, 255, 255, 0.82);
+  --surface-glass-strong: rgba(255, 255, 255, 0.93);
+  /* a hairline highlight along the top edge of raised cards */
+  --surface-edge: rgba(255, 255, 255, 0.88);
+  /* full-screen scrims behind modals and drawers */
+  --overlay: rgba(23, 24, 28, 0.45);
+
+  /* text */
   --text: #17181c;
   --text-soft: #686d78;
+  /* text sitting on a brand-filled surface */
+  --on-brand: #ffffff;
+
+  /* brand + accents */
   --brand: #5b4cdb;
   --brand-dark: #4638b8;
   --brand-soft: #e9e6ff;
+  /* brand at text weight — same as --brand in light, lifted in dark */
+  --brand-ink: #5b4cdb;
   --blue: #0ea5e9;
+  --blue-ink: #0369a1;
   --green: #059669;
+  --green-ink: #047857;
   --amber: #d97706;
+  --amber-ink: #b45309;
+  --danger: #dc2626;
+  --danger-ink: #b91c1c;
+
+  /* lines */
   --border: rgba(23, 24, 28, 0.08);
   --border-strong: rgba(23, 24, 28, 0.13);
+
+  /* depth — soft neumorphic lift on light, plain elevation on dark */
   --shadow-raised:
     12px 16px 38px rgba(35, 38, 52, 0.09),
     -8px -8px 24px rgba(255, 255, 255, 0.92),
@@ -23,6 +66,94 @@
   --shadow-inset:
     inset 7px 7px 16px rgba(35, 38, 52, 0.07),
     inset -7px -7px 16px rgba(255, 255, 255, 0.94);
+  --shadow-pop: 0 12px 28px rgba(91, 76, 219, 0.22);
+
+  /* ambient page wash — the faint brand/blue glow behind page shells */
+  --wash-brand: rgba(91, 76, 219, 0.07);
+  --wash-blue: rgba(14, 165, 233, 0.06);
+
+  /* embossed SVG illustrations (process section) */
+  --emboss-fill: #e1e4eb;
+  --emboss-stroke: #bcc2cf;
+
+  /* pad behind transparent PNG artwork */
+  --media-well: #f7f8fb;
+  --media-well-2: #eef1f6;
+
+  /* colour-mix partners: shade darkens an accent, wash tints toward the ground */
+  --accent-shade: #0f172a;
+  --accent-wash: #ffffff;
+
+  /* neutral tint fills (count pills, chips) */
+  --tint: rgba(23, 24, 28, 0.06);
+  --tint-strong: rgba(23, 24, 28, 0.1);
+  /* label on an accent-filled control: accents are dark by day, light by night */
+  --on-accent: #ffffff;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #111420;
+  --surface: #171b29;
+  --surface-soft: #1d2233;
+  --surface-purple: #211d3d;
+  --surface-glass: rgba(20, 24, 38, 0.78);
+  --surface-glass-strong: rgba(20, 24, 38, 0.92);
+  --surface-edge: rgba(255, 255, 255, 0.07);
+  --overlay: rgba(4, 6, 12, 0.62);
+
+  --text: #e9ecf5;      /* 15.8:1 on --bg */
+  --text-soft: #a3aabf; /* 7.6:1  on --bg */
+  --on-brand: #ffffff;
+
+  /* The brand fill can stay saturated; brand *text* must lift to clear 4.5:1. */
+  --brand: #6d5df0;
+  --brand-dark: #5b4cdb;
+  --brand-soft: #241f45;
+  --brand-ink: #a394ff;  /* 6.9:1 */
+  --blue: #38bdf8;
+  --blue-ink: #7dd3fc;
+  --green: #10b981;
+  --green-ink: #34d399;
+  --amber: #f59e0b;
+  --amber-ink: #fbbf24;
+  --danger: #ef4444;
+  --danger-ink: #fca5a5;
+
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  /* No inner white highlight on dark — that reads as haze, not lift. */
+  --shadow-raised:
+    0 18px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --shadow-card: 0 20px 55px rgba(0, 0, 0, 0.46);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-pop: 0 12px 28px rgba(0, 0, 0, 0.5);
+
+  --wash-brand: rgba(109, 93, 240, 0.12);
+  --wash-blue: rgba(56, 189, 248, 0.09);
+
+  --emboss-fill: #262c40;
+  --emboss-stroke: #3a4257;
+
+  --media-well: #1c2131;
+  --media-well-2: #232941;
+
+  --accent-shade: #ffffff;
+  --accent-wash: #171b29;
+
+  --tint: rgba(255, 255, 255, 0.09);
+  --tint-strong: rgba(255, 255, 255, 0.15);
+  --on-accent: #0b1020;
+}
+
+/* Shared, theme-independent ------------------------------------------------ */
+:root {
+  --font-display: 'Sora', 'Source Sans 3', system-ui, sans-serif;
+  --font-body: 'Source Sans 3', system-ui, sans-serif;
+
   --radius-sm: 14px;
   --radius-md: 20px;
   --radius-lg: 28px;
@@ -31,6 +162,8 @@
   --gutter: clamp(18px, 4vw, 36px);
   --section-space: clamp(88px, 10vw, 144px);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* aliases kept for existing call sites */
   --foreground: var(--text);
   --muted-foreground: var(--text-soft);
   --primary: var(--brand);
@@ -40,4 +173,14 @@
   --muted: var(--surface-soft);
   --border-light: var(--border);
   --card: var(--surface);
+  --background: var(--bg);
+}
+
+/* Theme changes should feel like a light being dimmed, not a page reload —
+   but only on the shell, and never during the initial paint or for users who
+   asked for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html.theme-ready body {
+    transition: background-color 0.28s var(--ease), color 0.28s var(--ease);
+  }
 }

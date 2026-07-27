@@ -5,29 +5,41 @@ export const media = {
     video: '/videos/clinic-hero.mp4',
     poster: '/videos/clinic-hero-poster.jpg',
     thumbs: {
-      clinic: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=240&h=240&fit=crop&auto=format',
-      research: 'https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=240&h=240&fit=crop&auto=format',
-      education: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=240&h=240&fit=crop&auto=format',
-      ai: 'https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=240&h=240&fit=crop&auto=format',
+      clinic: '/images/fjsticlinic-new/fjsti/entrance.jpg',
+      research: '/images/fjsticlinic-new/fjsti/conference.jpg',
+      education: '/images/fjsticlinic-new/fjsti/education.jpg',
+      ai: '/images/fjsticlinic-new/fjsti/ct.jpg',
     },
   },
   pillars: {
     clinic: {
-      image: 'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=900&h=1100&fit=crop&auto=format',
+      image: '/images/fjsticlinic-new/fjsti/day-care.jpg',
       video: '/videos/pillars/clinic.mp4',
     },
     research: {
-      image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?w=900&h=1100&fit=crop&auto=format',
+      image: '/images/fjsticlinic-new/fjsti/conference.jpg',
       video: '/videos/pillars/research.mp4',
     },
     education: {
-      image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=900&h=1100&fit=crop&auto=format',
+      image: '/images/fjsticlinic-new/fjsti/library.jpg',
       video: '/videos/pillars/education.mp4',
     },
     ai: {
-      image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=900&h=1100&fit=crop&auto=format',
+      image: '/images/fjsticlinic-new/fjsti/ultrasound.jpg',
       video: '/videos/pillars/ai.mp4',
     },
+  },
+  facilities: {
+    clinicEntrance: '/images/fjsticlinic-new/fjsti/entrance.jpg',
+    dayCare: '/images/fjsticlinic-new/fjsti/day-care.jpg',
+    inpatient: '/images/fjsticlinic-new/fjsti/inpatient.jpg',
+    diagnostics: '/images/fjsticlinic-new/fjsti/ct.jpg',
+    ultrasound: '/images/fjsticlinic-new/fjsti/ultrasound.jpg',
+    surgery: '/images/fjsticlinic-new/fjsti/surgery.jpg',
+    gynecology: '/images/fjsticlinic-new/fjsti/gynecology.jpg',
+    research: '/images/fjsticlinic-new/fjsti/conference.jpg',
+    education: '/images/fjsticlinic-new/fjsti/education.jpg',
+    library: '/images/fjsticlinic-new/fjsti/library.jpg',
   },
   clinic: {
     cardiology: '/images/medical/anatomical-heart-transparent.png',
@@ -125,8 +137,8 @@ export const media = {
     turnPoster34: '/videos/doctors/doctor-turn-34-poster.jpg',
   },
   news: {
-    research: 'https://images.pexels.com/photos/3938022/pexels-photo-3938022.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    ai: 'https://images.pexels.com/photos/4226119/pexels-photo-4226119.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    education: 'https://images.pexels.com/photos/3825527/pexels-photo-3825527.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    research: '/images/fjsticlinic-new/clinical-research.png',
+    ai: '/images/fjsticlinic-new/clinic-diagnostics.png',
+    education: '/images/fjsticlinic-new/medical-education.png',
   },
 } as const

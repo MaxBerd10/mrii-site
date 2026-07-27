@@ -1,0 +1,67 @@
+/* Patient-first homepage sections */
+
+.home-section__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--brand-ink, #0ea5e9);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.home-section__more:hover {
+  color: color-mix(in srgb, var(--accent, #0ea5e9) 80%, #000);
+  transform: translateX(2px);
+}
+
+.home-specialties {
+  padding-block: clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.home-specialties__grid {
+  margin-top: 1.75rem;
+}
+
+.home-doctors {
+  padding-block: clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.doctor-grid--home {
+  margin-top: 1.75rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.home-pillars .hp-services {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.hp-hero--patient .hp-hero__pillars {
+  margin-bottom: 0.25rem;
+}
+
+.hp-hero--patient .hp-hero__cta-row {
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 1024px) {
+  .doctor-grid--home {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .home-pillars .hp-services {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .doctor-grid--home {
+    grid-template-columns: 1fr;
+  }
+
+  .home-section__more {
+    margin-top: 0.5rem;
+  }
+}

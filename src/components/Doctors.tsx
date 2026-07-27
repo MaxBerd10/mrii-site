@@ -8,8 +8,9 @@ import { averageRating, getDoctorReviews } from '../lib/doctorReviews'
 import { getDoctorTurnMedia } from '../data/doctorTurnMedia'
 import '../styles/doctor-turn.css'
 import '../styles/doctor-filters.css'
+import { accentInk } from '../lib/accent'
 
-type Doc = {
+export type DoctorCardDoc = {
   id: string
   slug: string
   name: string
@@ -24,6 +25,8 @@ type Doc = {
   video?: string
   staffKind: StaffKind
 }
+
+type Doc = DoctorCardDoc
 
 type StaffFilter = 'all' | StaffKind
 type GroupFilter = 'all' | SpecialtyGroup
@@ -366,7 +369,7 @@ function DoctorCardRating({
       <span className="doctor-card__rating-meta">
         {count > 0 ? (
           <>
-            <strong style={{ color: accent }}>{avg.toFixed(1)}</strong>
+            <strong style={{ color: accentInk(accent) }}>{avg.toFixed(1)}</strong>
             <span>
               ({count} {reviewsLabel})
             </span>
@@ -379,7 +382,7 @@ function DoctorCardRating({
   )
 }
 
-function DoctorCard({
+export function DoctorCard({
   doc,
   bookLabel,
   papersLabel,
@@ -417,11 +420,11 @@ function DoctorCard({
         />
         <div className="doctor-card__stats">
           <div className="doctor-card__stat">
-            <strong style={{ color: doc.color }}>{doc.papers}</strong>
+            <strong style={{ color: accentInk(doc.color) }}>{doc.papers}</strong>
             <span>{papersLabel}</span>
           </div>
           <div className="doctor-card__stat">
-            <strong style={{ color: doc.color }}>{doc.studies}</strong>
+            <strong style={{ color: accentInk(doc.color) }}>{doc.studies}</strong>
             <span>{studiesLabel}</span>
           </div>
         </div>

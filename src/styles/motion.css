@@ -1,7 +1,7 @@
 /* Shared interaction motion — imported from main.tsx */
 
 .page-enter {
-  will-change: opacity, transform;
+  will-change: opacity;
 }
 
 .hp-btn,

@@ -301,6 +301,10 @@ export const specialtyPageLabels: Record<ContentLang, {
   pathwayText: string
   accredited: string
   available: string
+  related: string
+  teamText: string
+  closingTitle: string
+  closingText: string
 }> = {
   uz: {
     back: 'Klinika yo‘nalishlari',
@@ -312,6 +316,10 @@ export const specialtyPageLabels: Record<ContentLang, {
     pathwayText: 'Birinchi konsultatsiyadan natijalarni nazorat qilishgacha barcha bosqichlar bitta koordinatsiyalangan jamoa tomonidan boshqariladi.',
     accredited: 'Xalqaro klinik protokollar',
     available: 'Onlayn yozilish mavjud',
+    related: 'Boshqa klinik yo‘nalishlar',
+    teamText: 'Mutaxassis profilini ko‘ring va sizga mos shifokorni tanlang.',
+    closingTitle: 'Keyingi qadam — qabul vaqtini tanlash',
+    closingText: 'Yo‘nalish va qulay vaqtni tanlang. Qolgan ma’lumotlarni qabul jarayonida aniqlashtiramiz.',
   },
   ru: {
     back: 'Направления клиники',
@@ -323,6 +331,10 @@ export const specialtyPageLabels: Record<ContentLang, {
     pathwayText: 'Все этапы — от первой консультации до контроля результатов — ведёт единая координированная команда.',
     accredited: 'Международные протоколы',
     available: 'Доступна онлайн-запись',
+    related: 'Другие направления клиники',
+    teamText: 'Посмотрите профили специалистов и выберите подходящего врача.',
+    closingTitle: 'Следующий шаг — выбрать время приёма',
+    closingText: 'Выберите направление и удобное время. Остальные детали уточним во время записи.',
   },
   en: {
     back: 'Clinic specialties',
@@ -334,6 +346,10 @@ export const specialtyPageLabels: Record<ContentLang, {
     pathwayText: 'Every stage, from first consultation to outcome monitoring, is managed by one coordinated care team.',
     accredited: 'International clinical protocols',
     available: 'Online booking available',
+    related: 'Other clinical specialties',
+    teamText: 'Review specialist profiles and choose the right doctor for you.',
+    closingTitle: 'Your next step is choosing an appointment time',
+    closingText: 'Choose the specialty and a convenient time. We will confirm the remaining details during booking.',
   },
 }
 

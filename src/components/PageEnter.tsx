@@ -16,8 +16,8 @@ export default function PageEnter({ path, children }: { path: string; children: 
     <motion.div
       key={path}
       className="page-enter"
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.36, ease: EASE_OUT }}
     >
       {children}

@@ -166,3 +166,68 @@
 #ai .ai-spline-wrap {
   margin-bottom: 18px;
 }
+
+/* Real FJSTI spaces keep every AI product grounded in a clinical workflow. */
+#ai .product-tab__thumb {
+  border: 1px solid rgba(13, 32, 53, 0.1);
+  background: #dce6ec;
+}
+
+#ai .product-tab__thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24);
+  pointer-events: none;
+}
+
+#ai .product-tab__thumb img {
+  filter: saturate(0.86) contrast(1.02);
+  transition: transform 420ms var(--ease);
+}
+
+#ai .product-tab:hover .product-tab__thumb img,
+#ai .product-tab--active .product-tab__thumb img {
+  transform: scale(1.07);
+}
+
+#ai .ai-console__visual-stack {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #08111e;
+  transform-style: preserve-3d;
+}
+
+#ai .ai-console__context-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.72) brightness(0.7) contrast(1.08);
+  transform: scale(1.025);
+}
+
+#ai .ai-console__visual-stack::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(5, 13, 24, 0.16), rgba(5, 13, 24, 0.5)),
+    radial-gradient(circle at 70% 44%, rgba(45, 163, 255, 0.18), transparent 46%);
+  pointer-events: none;
+}
+
+#ai .ai-console__shade {
+  z-index: 1;
+  background:
+    linear-gradient(to top, rgba(5, 12, 22, 0.78), transparent 58%),
+    linear-gradient(to right, rgba(5, 12, 22, 0.2), transparent 48%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #ai .product-tab__thumb img {
+    transition: none;
+  }
+}

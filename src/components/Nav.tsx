@@ -9,11 +9,15 @@ import { EASE_OUT } from '../lib/animations'
 type NavChild = { label: string; href: string }
 type NavItem = { label: string; href: string; children: NavChild[] }
 
+/** The highlight slides between items on a spring — the nav's one signature motion. */
+const HIGHLIGHT_SPRING = { type: 'spring', stiffness: 420, damping: 34, mass: 0.7 } as const
+
 export default function Nav() {
   const { t } = useLanguage()
   const { path } = usePageNav()
   const reduce = useReducedMotion()
   const [open, setOpen] = useState<number | null>(null)
+  const [hovered, setHovered] = useState<number | null>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -23,12 +27,13 @@ export default function Nav() {
       label: t.nav.clinic,
       href: '/clinic',
       children: [
-        { label: t.nav.children.services, href: '/prices' },
+        { label: t.nav.children.services, href: '/clinic/services' },
+        { label: t.nav.children.diagnostics, href: '/clinic/diagnostics' },
         { label: t.nav.children.prices, href: '/prices' },
-        { label: t.nav.children.doctors, href: '/doctors' },
-        { label: t.nav.children.diagnostics, href: '/clinic' },
       ],
     },
+    { label: t.nav.children.doctors, href: '/doctors', children: [] },
+    { label: t.nav.ai, href: '/ai', children: [] },
     {
       label: t.nav.research,
       href: '/research',
@@ -46,8 +51,6 @@ export default function Nav() {
         { label: t.nav.children.courses, href: '/education' },
       ],
     },
-    { label: t.nav.ai, href: '/ai', children: [] },
-    { label: t.nav.children.doctors, href: '/doctors', children: [] },
     { label: t.nav.contacts, href: '/contacts', children: [] },
   ]
 
@@ -84,34 +87,81 @@ export default function Nav() {
     return path === href || path.startsWith(`${href}/`)
   }
 
+  const activeIndex = navItems.findIndex((item) => isActive(item.href))
+  const highlighted = hovered ?? activeIndex
+  const isDoctorProfile = path.startsWith('/doctors/')
+
   return (
     <header className={`hp-nav ${scrolled ? 'hp-nav--scrolled' : ''}`}>
-      <div className="container-main hp-nav__bar">
-        <a href="/" className="hp-nav__logo" onClick={closeMenus}>
+      <div className="hp-nav__bar">
+        <a href="/" className="hp-nav__logo" onClick={closeMenus} aria-label={t.nav.brand}>
           <img src="/images/fjsti-logo.png" alt="" className="hp-nav__logo-img" width={36} height={36} />
           <span className="hp-nav__brand">{t.nav.brand}</span>
         </a>
 
-        <nav className="hp-nav__menu" aria-label={t.nav.institute}>
+        <nav
+          className="hp-nav__menu"
+          aria-label={t.nav.institute}
+          onMouseLeave={() => {
+            setHovered(null)
+            setOpen(null)
+          }}
+        >
           {navItems.map((item, i) => (
             <div
               key={i}
               className="hp-nav__item"
-              onMouseEnter={() => item.children.length > 0 && setOpen(i)}
-              onMouseLeave={() => setOpen(null)}
-              onFocus={() => item.children.length > 0 && setOpen(i)}
+              onMouseEnter={() => {
+                setHovered(i)
+                if (item.children.length > 0) setOpen(i)
+                else setOpen(null)
+              }}
+              onFocus={() => {
+                setHovered(i)
+                if (item.children.length > 0) setOpen(i)
+              }}
               onBlur={(event) => {
-                if (!event.currentTarget.contains(event.relatedTarget)) setOpen(null)
+                if (!event.currentTarget.contains(event.relatedTarget)) {
+                  setOpen(null)
+                  setHovered(null)
+                }
               }}
             >
+              {highlighted === i && (
+                <motion.span
+                  layoutId="nav-highlight"
+                  className="hp-nav__highlight"
+                  transition={reduce ? { duration: 0 } : HIGHLIGHT_SPRING}
+                  aria-hidden
+                />
+              )}
               <a
                 href={item.href}
-                className={`hp-nav__link ${open === i || isActive(item.href) ? 'is-active' : ''}`}
+                className={`hp-nav__link${item.children.length > 0 ? ' hp-nav__link--parent' : ''}${isActive(item.href) ? ' is-active' : ''}`}
                 aria-haspopup={item.children.length > 0 ? 'menu' : undefined}
                 aria-expanded={item.children.length > 0 ? open === i : undefined}
+                aria-current={isActive(item.href) ? 'page' : undefined}
                 onClick={closeMenus}
               >
-                {item.label}
+                <span>{item.label}</span>
+                {item.children.length > 0 && (
+                  <svg
+                    className="hp-nav__chevron"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    aria-hidden
+                  >
+                    <path
+                      d="m4.25 5.5 2.75 2.75L9.75 5.5"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                )}
               </a>
               <AnimatePresence>
                 {item.children.length > 0 && open === i && (
@@ -125,7 +175,12 @@ export default function Nav() {
                     style={{ transformOrigin: 'top center' }}
                   >
                     {item.children.map((child, j) => (
-                      <a key={j} href={child.href} onClick={closeMenus}>
+                      <a
+                        key={j}
+                        href={child.href}
+                        onClick={closeMenus}
+                        className={isActive(child.href) ? 'is-active' : undefined}
+                      >
                         {child.label}
                       </a>
                     ))}
@@ -138,12 +193,11 @@ export default function Nav() {
 
         <div className="hp-nav__actions">
           <LanguageSwitcher />
-          <a href="/doctors" className="hp-btn hp-btn--ghost hp-btn--sm">
-            {t.nav.children.doctors}
-          </a>
-          <Magnetic href="/contacts" className="hp-btn hp-btn--primary hp-btn--sm" strength={0.28}>
-            {t.nav.bookAppointment}
-          </Magnetic>
+          {!isDoctorProfile && (
+            <Magnetic href="/contacts" className="hp-btn hp-btn--primary hp-btn--sm" strength={0.28}>
+              {t.nav.bookAppointment}
+            </Magnetic>
+          )}
         </div>
 
         <div className="hp-nav__mobile">
@@ -198,9 +252,11 @@ export default function Nav() {
                 ))}
               </div>
             ))}
-            <a href="/contacts" onClick={closeMenus} className="hp-btn hp-btn--primary" style={{ marginTop: 20 }}>
-              {t.nav.bookAppointment}
-            </a>
+            {!isDoctorProfile && (
+              <a href="/contacts" onClick={closeMenus} className="hp-btn hp-btn--primary" style={{ marginTop: 20 }}>
+                {t.nav.bookAppointment}
+              </a>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

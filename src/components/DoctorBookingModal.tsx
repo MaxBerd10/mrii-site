@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import type { ContentLang, Lang } from '../i18n/types'
 import { toContentLang } from '../i18n/types'
+import { accentInk } from '../lib/accent'
 
 export type BookingLabels = {
   title: string
@@ -35,6 +36,8 @@ type Props = {
   doctorName: string
   doctorSpecialty?: string
   accent?: string
+  initialDate?: string
+  initialTime?: string
   labels: BookingLabels
   onClose: () => void
 }
@@ -76,10 +79,9 @@ function buildDates(lang: Lang, count = 14) {
   const locale = lang === 'ru' ? 'ru-RU' : lang === 'en' ? 'en-US' : 'uz-UZ'
   const out: { value: string; label: string }[] = []
   const now = new Date()
-  for (let i = 1; i <= count; i++) {
+  for (let i = 0; i < count; i++) {
     const d = new Date(now)
     d.setDate(now.getDate() + i)
-    if (d.getDay() === 0) continue // skip Sunday
     const value = d.toISOString().slice(0, 10)
     const label = d.toLocaleDateString(locale, {
       weekday: 'short',
@@ -110,6 +112,8 @@ export default function DoctorBookingModal({
   doctorName,
   doctorSpecialty,
   accent = '#5B4CDB',
+  initialDate,
+  initialTime,
   labels,
   onClose,
 }: Props) {
@@ -127,12 +131,14 @@ export default function DoctorBookingModal({
     setForm({
       ...emptyForm,
       clinic: clinics[0] ?? '',
-      date: dates[0]?.value ?? '',
-      time: TIMES[0],
+      date: dates.some((date) => date.value === initialDate)
+        ? initialDate ?? ''
+        : dates[0]?.value ?? '',
+      time: TIMES.includes(initialTime ?? '') ? initialTime ?? TIMES[0] : TIMES[0],
     })
     setDone(null)
     setSubmitting(false)
-  }, [open, clinics, dates])
+  }, [open, clinics, dates, initialDate, initialTime])
 
   useEffect(() => {
     if (!open) return
@@ -212,7 +218,7 @@ export default function DoctorBookingModal({
             ) : (
               <form className="doctor-book__form" onSubmit={onSubmit}>
                 <div className="doctor-book__body">
-                  <h2 id={titleId} className="doctor-book__title" style={{ color: accent }}>
+                  <h2 id={titleId} className="doctor-book__title" style={{ color: accentInk(accent) }}>
                     {labels.title}: {doctorName}
                   </h2>
 

@@ -4,6 +4,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
 import Reveal from './ui/Reveal'
 import { staggerContainer, rise3d, blurUp } from '../lib/animations'
+import { media } from '../data/media'
 import '../styles/education-page.css'
 
 const PREVIEW_COUNT = 6
@@ -71,14 +72,40 @@ export default function Education() {
                 {t.education.title1} <em>{t.education.titleEm}</em>
               </h1>
               <p className="education-hero__desc">{t.education.description}</p>
+              <p className="education-hero__uni">
+                {t.education.universityNote}{' '}
+                <a
+                  href={t.education.universityHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t.education.universityLink}
+                </a>
+              </p>
             </div>
             <div className="education-hero__aside">
-              <a href="/contacts" className="education-hero__cta">
+              <figure className="education-hero__photo">
+                <img
+                  src={media.facilities.education}
+                  alt={t.education.pageLabel}
+                  decoding="async"
+                />
+              </figure>
+              <a href="/contacts?intent=education" className="education-hero__cta">
                 {t.education.applyBtn}
               </a>
             </div>
           </header>
         </Reveal>
+
+        <div className="education-caps" aria-label={t.education.programsLabel}>
+          {t.education.stats.map(([value, label]) => (
+            <div key={label} className="education-cap">
+              <strong>{value}</strong>
+              <span>{label}</span>
+            </div>
+          ))}
+        </div>
 
         <div className="education-toolbar" role="tablist" aria-label={t.education.pageLabel}>
           <button
@@ -111,15 +138,6 @@ export default function Education() {
           ))}
         </div>
 
-        <div className="education-caps" aria-label={t.education.programsLabel}>
-          {t.education.stats.map(([value, label]) => (
-            <div key={label} className="education-cap">
-              <strong>{value}</strong>
-              <span>{label}</span>
-            </div>
-          ))}
-        </div>
-
         <motion.div
           key={`${filter}-${lang}-${expanded ? 'all' : 'preview'}`}
           className="education-catalog"
@@ -130,16 +148,13 @@ export default function Education() {
           {visible.map((prog) => (
             <motion.a
               key={prog.id}
-              href="/contacts"
+              href="/contacts?intent=education"
               className="education-card"
               variants={rise3d}
               style={{ '--edu-accent': prog.color } as CSSProperties}
             >
               <div className="education-card__top">
                 <span className="education-card__eyebrow">{prog.audience}</span>
-                <span className="education-card__icon" aria-hidden>
-                  {prog.icon}
-                </span>
               </div>
               <strong className="education-card__title">{prog.name}</strong>
               <div className="education-card__meta">

@@ -2,20 +2,47 @@ import { useEffect, useState, type FormEvent } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
+import { usePageNav } from './PageTransition'
 import { rise3d } from '../lib/animations'
+
+type ContactIntent = 'booking' | 'sponsor' | 'education' | 'ai' | 'international'
+
+const INTENT_IDS: ContactIntent[] = ['booking', 'sponsor', 'education', 'ai', 'international']
+
+function readIntentFromUrl(): ContactIntent {
+  try {
+    const value = new URLSearchParams(window.location.search).get('intent')
+    if (value && INTENT_IDS.includes(value as ContactIntent)) return value as ContactIntent
+  } catch {
+    /* ignore */
+  }
+  return 'booking'
+}
 
 export default function FooterSection() {
   const { t } = useLanguage()
   const { home } = useCms()
+  const { path, navigate } = usePageNav()
   const copyright = home?.settings?.copyright || t.footer.copyright
   const license = home?.settings?.license || t.footer.license
+  const [intent, setIntent] = useState<ContactIntent>(() => readIntentFromUrl())
   const [form, setForm] = useState({ name: '', phone: '', email: '', service: '', message: '' })
   const [submitting, setSubmitting] = useState(false)
   const [confirmation, setConfirmation] = useState<null | {
     requestId: string
     service: string
     phone: string
+    successDesc: string
   }>(null)
+
+  const intentCopy = t.footer.intents[intent]
+
+  useEffect(() => {
+    if (path !== '/contacts') return
+    const next = readIntentFromUrl()
+    setIntent(next)
+    setForm((prev) => ({ ...prev, service: '' }))
+  }, [path])
 
   useEffect(() => {
     if (!confirmation) return
@@ -30,6 +57,17 @@ export default function FooterSection() {
     }
   }, [confirmation])
 
+  const selectIntent = (next: ContactIntent) => {
+    setIntent(next)
+    setForm((prev) => ({ ...prev, service: '' }))
+    const url = next === 'booking' ? '/contacts' : `/contacts?intent=${next}`
+    if (path === '/contacts') {
+      window.history.replaceState(null, '', url)
+      return
+    }
+    navigate(url)
+  }
+
   const submitBooking = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (submitting) return
@@ -40,6 +78,7 @@ export default function FooterSection() {
         requestId: `FJSTI-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`,
         service: form.service,
         phone: form.phone,
+        successDesc: intentCopy.successDesc,
       })
       setForm({ name: '', phone: '', email: '', service: '', message: '' })
       setSubmitting(false)
@@ -57,8 +96,26 @@ export default function FooterSection() {
           viewport={{ once: true, amount: 0.18 }}
         >
           <div className="hp-book__copy">
-            <h2 className="hp-book__title">{t.footer.ready}</h2>
-            <p className="hp-book__desc">{t.footer.readyDesc}</p>
+            <p className="hp-book__intent-label">{t.footer.intentLabel}</p>
+            <div className="hp-book__intents" role="tablist" aria-label={t.footer.intentLabel}>
+              {INTENT_IDS.map((id) => (
+                <button
+                  key={id}
+                  type="button"
+                  role="tab"
+                  aria-selected={intent === id}
+                  className={`hp-book__intent${intent === id ? ' is-active' : ''}`}
+                  onClick={() => selectIntent(id)}
+                >
+                  {t.footer.intents[id].label}
+                </button>
+              ))}
+            </div>
+            <h2 className="hp-book__title">{intentCopy.title}</h2>
+            <p className="hp-book__desc">{intentCopy.desc}</p>
+            <a href={`tel:${t.topBar.phone.replace(/[^\d+]/g, '')}`} className="hp-book__phone">
+              {t.topBar.phone}
+            </a>
           </div>
           <form className="hp-book__form" onSubmit={submitBooking}>
             <div className="hp-book__row">
@@ -88,17 +145,32 @@ export default function FooterSection() {
                 placeholder={t.footer.emailField}
                 aria-label={t.footer.emailField}
               />
-              <select
-                required
-                aria-label={t.footer.serviceField}
-                value={form.service}
-                onChange={(event) => setForm({ ...form, service: event.target.value })}
-              >
-                <option value="" disabled>{t.footer.serviceField}</option>
-                {t.clinic.specialties.map(s => (
-                  <option key={s.name} value={s.name}>{s.name}</option>
-                ))}
-              </select>
+              {intent === 'booking' ? (
+                <select
+                  required
+                  aria-label={intentCopy.topicField}
+                  value={form.service}
+                  onChange={(event) => setForm({ ...form, service: event.target.value })}
+                >
+                  <option value="" disabled>
+                    {intentCopy.topicField}
+                  </option>
+                  {t.clinic.specialties.map((s) => (
+                    <option key={s.name} value={s.name}>
+                      {s.name}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  required
+                  type="text"
+                  value={form.service}
+                  onChange={(event) => setForm({ ...form, service: event.target.value })}
+                  placeholder={intentCopy.topicField}
+                  aria-label={intentCopy.topicField}
+                />
+              )}
             </div>
             <textarea
               rows={3}
@@ -108,7 +180,7 @@ export default function FooterSection() {
               aria-label={t.footer.messageField}
             />
             <button type="submit" className="hp-btn hp-btn--primary" disabled={submitting}>
-              {submitting ? t.footer.submitting : t.footer.bookBtn}
+              {submitting ? t.footer.submitting : intentCopy.submit}
             </button>
           </form>
         </motion.div>
@@ -129,7 +201,9 @@ export default function FooterSection() {
                 <div key={col.title} className="hp-footer__col">
                   <div className="hp-footer__col-title">{col.title}</div>
                   {col.links.slice(0, 5).map((link) => (
-                    <a key={link} href={colHref} className="hp-footer__link">{link}</a>
+                    <a key={link} href={colHref} className="hp-footer__link">
+                      {link}
+                    </a>
                   ))}
                 </div>
               )
@@ -138,7 +212,9 @@ export default function FooterSection() {
         </div>
 
         <div className="hp-footer__bottom">
-          <span>{copyright} · {license}</span>
+          <span>
+            {copyright} · {license}
+          </span>
           <div className="hp-footer__legal">
             <a href="/contacts">{t.footer.privacy}</a>
             <a href="/contacts">{t.footer.terms}</a>
@@ -163,9 +239,9 @@ export default function FooterSection() {
               aria-modal="true"
               aria-labelledby="booking-success-title"
               className="booking-success__dialog"
-              initial={{ opacity: 0, y: 35, scale: .9, rotateX: 8 }}
+              initial={{ opacity: 0, y: 35, scale: 0.9, rotateX: 8 }}
               animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-              exit={{ opacity: 0, y: 20, scale: .94 }}
+              exit={{ opacity: 0, y: 20, scale: 0.94 }}
               transition={{ type: 'spring', stiffness: 230, damping: 24 }}
             >
               <button
@@ -181,26 +257,39 @@ export default function FooterSection() {
                 <span className="booking-success__ring" />
                 <motion.span
                   className="booking-success__check"
-                  initial={{ scale: .4, rotate: -18, opacity: 0 }}
+                  initial={{ scale: 0.4, rotate: -18, opacity: 0 }}
                   animate={{ scale: 1, rotate: -5, opacity: 1 }}
-                  transition={{ type: 'spring', stiffness: 280, damping: 16, delay: .08 }}
+                  transition={{ type: 'spring', stiffness: 280, damping: 16, delay: 0.08 }}
                 >
                   ✓
                 </motion.span>
               </div>
-              <span className="booking-success__eyebrow">{t.footer.requestNumber}: {confirmation.requestId}</span>
+              <span className="booking-success__eyebrow">
+                {t.footer.requestNumber}: {confirmation.requestId}
+              </span>
               <h2 id="booking-success-title">{t.footer.successTitle}</h2>
-              <p>{t.footer.successDesc}</p>
+              <p>{confirmation.successDesc}</p>
               <dl className="booking-success__details">
-                <div><dt>{t.footer.selectedService}</dt><dd>{confirmation.service}</dd></div>
-                <div><dt>{t.footer.contactPhone}</dt><dd>{confirmation.phone}</dd></div>
-                <div><dt>{t.footer.callbackTime}</dt><dd>{t.footer.callbackValue}</dd></div>
+                <div>
+                  <dt>{t.footer.selectedService}</dt>
+                  <dd>{confirmation.service}</dd>
+                </div>
+                <div>
+                  <dt>{t.footer.contactPhone}</dt>
+                  <dd>{confirmation.phone}</dd>
+                </div>
+                <div>
+                  <dt>{t.footer.callbackTime}</dt>
+                  <dd>{t.footer.callbackValue}</dd>
+                </div>
               </dl>
               <div className="booking-success__actions">
                 <button type="button" className="hp-btn hp-btn--primary" onClick={() => setConfirmation(null)}>
                   {t.footer.close}
                 </button>
-                <a href="/" className="hp-btn hp-btn--ghost">{t.footer.home}</a>
+                <a href="/" className="hp-btn hp-btn--ghost">
+                  {t.footer.home}
+                </a>
               </div>
             </motion.div>
           </motion.div>

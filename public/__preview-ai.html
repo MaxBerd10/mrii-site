@@ -1,0 +1,1166 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FJSTI — AI yechimlar preview</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+    :root {
+      --ink: #071a2e;
+      --muted: #607286;
+      --line: #d9e3ed;
+      --paper: #f5f8fb;
+      --white: #ffffff;
+      --blue: #1767b0;
+      --blue-deep: #082b4c;
+      --cyan: #64d4ff;
+      --mint: #53dfb1;
+      --ease-out: cubic-bezier(.23, 1, .32, 1);
+      --ease-in-out: cubic-bezier(.77, 0, .175, 1);
+      --shadow: 0 28px 80px rgba(20, 47, 74, .13);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Figtree, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, a { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    button { color: inherit; }
+
+    .shell {
+      width: min(100% - 64px, 1440px);
+      margin-inline: auto;
+    }
+
+    .nav {
+      position: fixed;
+      z-index: 30;
+      top: 18px;
+      left: 50%;
+      display: flex;
+      width: min(calc(100% - 36px), 1220px);
+      min-height: 64px;
+      align-items: center;
+      gap: 26px;
+      padding: 8px 10px 8px 14px;
+      border: 1px solid rgba(136, 190, 230, .18);
+      border-radius: 22px;
+      color: #fff;
+      background: rgba(5, 25, 44, .78);
+      box-shadow: 0 14px 44px rgba(1, 13, 26, .26);
+      backdrop-filter: blur(18px);
+      transform: translateX(-50%);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 182px;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+    }
+
+    .brand small {
+      display: block;
+      margin-top: 3px;
+      color: #87a8c2;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .nav-links a {
+      padding: 11px 13px;
+      border-radius: 13px;
+      color: #9eb7cb;
+      font-size: 13px;
+      font-weight: 650;
+      transition: color 180ms ease, background-color 180ms ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #fff;
+      background: rgba(100, 212, 255, .12);
+    }
+
+    .nav-cta,
+    .button {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 19px;
+      border: 0;
+      border-radius: 14px;
+      color: #03223c;
+      background: var(--cyan);
+      box-shadow: 0 11px 24px rgba(64, 194, 244, .24);
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 160ms var(--ease-out), background-color 180ms ease;
+    }
+
+    .nav-cta { font-size: 13px; white-space: nowrap; }
+    .nav-cta:hover, .button:hover { background: #8ae2ff; }
+    .nav-cta:active, .button:active { transform: scale(.97); }
+    .button:focus-visible, .nav-cta:focus-visible, .module-tab:focus-visible {
+      outline: 3px solid rgba(100, 212, 255, .55);
+      outline-offset: 3px;
+    }
+
+    .button--ghost {
+      color: var(--ink);
+      border: 1px solid #cddbe7;
+      background: rgba(255, 255, 255, .72);
+      box-shadow: none;
+    }
+    .button--ghost:hover { background: #fff; }
+
+    .hero .button--ghost {
+      color: #e8f5ff;
+      border-color: rgba(159, 207, 239, .28);
+      background: rgba(255, 255, 255, .055);
+    }
+
+    .hero .button--ghost:hover { background: rgba(255, 255, 255, .1); }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      overflow: hidden;
+      padding: 142px 0 80px;
+      color: #fff;
+      background:
+        linear-gradient(rgba(87, 183, 239, .075) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(87, 183, 239, .075) 1px, transparent 1px),
+        radial-gradient(circle at 12% 24%, rgba(40, 126, 197, .34), transparent 29%),
+        radial-gradient(circle at 83% 50%, rgba(45, 193, 239, .17), transparent 32%),
+        #041526;
+      background-size: 68px 68px, 68px 68px, auto, auto, auto;
+    }
+
+    .hero::before {
+      position: absolute;
+      top: -200px;
+      left: -240px;
+      width: 680px;
+      height: 680px;
+      border-radius: 50%;
+      background: rgba(74, 151, 228, .22);
+      filter: blur(32px);
+      content: "";
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .88fr) minmax(520px, 1.12fr);
+      gap: clamp(52px, 6vw, 96px);
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 22px;
+      color: #8eb5d2;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 24px;
+      height: 1px;
+      background: var(--cyan);
+      content: "";
+    }
+
+    h1 {
+      max-width: 770px;
+      margin: 0;
+      font-size: clamp(58px, 6.2vw, 102px);
+      font-weight: 730;
+      letter-spacing: -.072em;
+      line-height: .88;
+    }
+
+    h1 span {
+      display: block;
+      color: transparent;
+      background: linear-gradient(96deg, #5ad1ff 0%, #8ba8ff 62%, #b49dff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .hero-lead {
+      max-width: 600px;
+      margin: 31px 0 0;
+      color: #a9c2d6;
+      font-size: clamp(17px, 1.35vw, 21px);
+      line-height: 1.65;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+      margin-top: 32px;
+    }
+
+    .hero-proof {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 620px;
+      margin-top: 48px;
+      border-top: 1px solid rgba(158, 199, 229, .2);
+    }
+
+    .proof-item {
+      padding: 19px 16px 0 0;
+    }
+
+    .proof-item + .proof-item {
+      padding-left: 20px;
+      border-left: 1px solid rgba(158, 199, 229, .2);
+    }
+
+    .proof-item b {
+      display: block;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 750;
+      letter-spacing: -.035em;
+    }
+
+    .proof-item span {
+      display: block;
+      margin-top: 5px;
+      color: #86a8c2;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .decision-stage {
+      position: relative;
+      min-height: 640px;
+      overflow: hidden;
+      border: 1px solid rgba(99, 205, 252, .34);
+      border-radius: 30px;
+      background: #071c30;
+      box-shadow:
+        0 34px 90px rgba(0, 8, 19, .48),
+        0 0 0 7px rgba(99, 205, 252, .035),
+        inset 0 1px 0 rgba(255, 255, 255, .08);
+      isolation: isolate;
+    }
+
+    .decision-stage::before {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background:
+        linear-gradient(90deg, rgba(3, 17, 31, .14), transparent 50%),
+        linear-gradient(180deg, rgba(6, 27, 48, .02), rgba(3, 20, 36, .82));
+      content: "";
+      pointer-events: none;
+    }
+
+    .decision-stage::after {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      border-radius: inherit;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .04);
+      content: "";
+      pointer-events: none;
+    }
+
+    .decision-stage > img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: saturate(.9) contrast(1.08);
+      transition: opacity 220ms ease, transform 600ms var(--ease-out);
+    }
+
+    .stage-top {
+      position: absolute;
+      z-index: 6;
+      top: 22px;
+      right: 22px;
+      left: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .live-chip,
+    .case-chip {
+      display: inline-flex;
+      min-height: 34px;
+      align-items: center;
+      gap: 9px;
+      padding: 0 12px;
+      border: 1px solid rgba(167, 214, 245, .2);
+      border-radius: 12px;
+      color: #dceefd;
+      background: rgba(5, 29, 51, .66);
+      backdrop-filter: blur(12px);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .live-chip i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 0 5px rgba(83, 223, 177, .12);
+    }
+
+    .case-chip { color: #8eb4d2; }
+
+    .scan-rail {
+      position: absolute;
+      z-index: 5;
+      top: 18%;
+      right: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 2%, var(--cyan) 30%, #fff 50%, var(--cyan) 70%, transparent 98%);
+      box-shadow: 0 0 24px rgba(100, 212, 255, .75);
+      animation: scan 5.2s var(--ease-in-out) infinite;
+    }
+
+    .scan-rail::before {
+      position: absolute;
+      top: -22px;
+      right: 0;
+      left: 0;
+      height: 44px;
+      background: linear-gradient(180deg, transparent, rgba(76, 196, 246, .1), transparent);
+      content: "";
+    }
+
+    @keyframes scan {
+      0%, 12% { transform: translateY(0); opacity: 0; }
+      18% { opacity: 1; }
+      76% { opacity: 1; }
+      88%, 100% { transform: translateY(390px); opacity: 0; }
+    }
+
+    .target {
+      position: absolute;
+      z-index: 6;
+      top: 34%;
+      left: 25%;
+      width: 112px;
+      height: 84px;
+      border: 1px solid rgba(100, 212, 255, .8);
+      border-radius: 12px;
+      box-shadow: 0 0 0 1px rgba(100, 212, 255, .12), inset 0 0 30px rgba(100, 212, 255, .09);
+    }
+
+    .target::before, .target::after {
+      position: absolute;
+      background: var(--cyan);
+      content: "";
+    }
+    .target::before { top: 50%; left: -7px; width: 14px; height: 1px; }
+    .target::after { top: -7px; left: 50%; width: 1px; height: 14px; }
+
+    .target-label {
+      position: absolute;
+      z-index: 6;
+      top: calc(34% - 40px);
+      left: 25%;
+      color: #d9f5ff;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .stage-summary {
+      position: absolute;
+      z-index: 7;
+      right: 22px;
+      bottom: 22px;
+      left: 22px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: end;
+      padding: 22px;
+      border: 1px solid rgba(172, 216, 245, .18);
+      border-radius: 20px;
+      background: rgba(5, 27, 48, .74);
+      backdrop-filter: blur(18px);
+    }
+
+    .stage-summary small {
+      color: #8fb4d0;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10px;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    .stage-summary strong {
+      display: block;
+      margin-top: 8px;
+      color: #fff;
+      font-size: clamp(20px, 2vw, 28px);
+      letter-spacing: -.035em;
+    }
+
+    .confidence { text-align: right; }
+    .confidence b {
+      display: block;
+      color: var(--mint);
+      font-size: 34px;
+      letter-spacing: -.055em;
+    }
+    .confidence span { color: #9cbbd2; font-size: 11px; }
+
+    .decision-rule {
+      position: absolute;
+      z-index: 7;
+      right: 22px;
+      bottom: 148px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 13px;
+      border-radius: 12px;
+      color: #d9eafa;
+      background: rgba(5, 27, 48, .68);
+      font-size: 11px;
+      font-weight: 650;
+      backdrop-filter: blur(12px);
+    }
+
+    .decision-rule svg { color: var(--mint); }
+
+    .neural-field {
+      position: absolute;
+      z-index: 6;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .neural-field i {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border: 1px solid rgba(148, 223, 255, .85);
+      border-radius: 50%;
+      background: rgba(70, 200, 255, .28);
+      box-shadow: 0 0 16px rgba(75, 207, 255, .72);
+      animation: neural-float 4.8s var(--ease-in-out) infinite alternate;
+    }
+
+    .neural-field i::after {
+      position: absolute;
+      top: 50%;
+      left: 6px;
+      width: var(--wire, 90px);
+      height: 1px;
+      background: linear-gradient(90deg, rgba(108, 211, 255, .55), transparent);
+      transform: rotate(var(--angle, 0deg));
+      transform-origin: left center;
+      content: "";
+    }
+
+    .neural-field i:nth-child(1) { top: 20%; left: 14%; --wire: 140px; --angle: 24deg; }
+    .neural-field i:nth-child(2) { top: 31%; left: 48%; --wire: 120px; --angle: -18deg; animation-delay: -.8s; }
+    .neural-field i:nth-child(3) { top: 57%; left: 18%; --wire: 170px; --angle: -12deg; animation-delay: -1.6s; }
+    .neural-field i:nth-child(4) { top: 62%; left: 66%; --wire: 96px; --angle: 42deg; animation-delay: -2.4s; }
+    .neural-field i:nth-child(5) { top: 43%; left: 76%; --wire: 75px; --angle: -58deg; animation-delay: -3.2s; }
+
+    @keyframes neural-float {
+      from { transform: translate3d(0, 0, 0); opacity: .45; }
+      to { transform: translate3d(8px, -11px, 0); opacity: 1; }
+    }
+
+    .trust-rail {
+      color: #fff;
+      border-top: 1px solid rgba(129, 190, 232, .17);
+      border-bottom: 1px solid rgba(129, 190, 232, .17);
+      background: #071d33;
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: 1.05fr repeat(3, 1fr);
+      min-height: 120px;
+      align-items: stretch;
+    }
+
+    .trust-grid > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 22px 28px;
+      border-left: 1px solid rgba(129, 190, 232, .17);
+    }
+    .trust-grid > div:first-child { padding-left: 0; border-left: 0; }
+    .trust-grid p { margin: 0; color: #98b7ce; font-size: 14px; line-height: 1.5; }
+    .trust-grid b { color: #fff; font-size: 24px; letter-spacing: -.04em; }
+    .trust-grid span { margin-top: 4px; color: #7ea2bd; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    .modules {
+      padding: 126px 0 130px;
+      background: #fff;
+    }
+
+    .modules-head {
+      display: grid;
+      grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr);
+      gap: 80px;
+      align-items: end;
+      margin-bottom: 46px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(42px, 5.5vw, 82px);
+      font-weight: 730;
+      letter-spacing: -.065em;
+      line-height: .98;
+    }
+
+    .modules-head > p {
+      max-width: 580px;
+      margin: 0 0 7px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    .module-board {
+      display: grid;
+      grid-template-columns: 330px minmax(0, 1fr);
+      min-height: 640px;
+      overflow: hidden;
+      border: 1px solid #d5e1eb;
+      border-radius: 28px;
+      background: #f4f7fa;
+      box-shadow: 0 24px 70px rgba(18, 52, 79, .1);
+    }
+
+    .module-tabs {
+      display: flex;
+      flex-direction: column;
+      padding: 14px;
+      border-right: 1px solid #d5e1eb;
+      background: #fbfcfd;
+    }
+
+    .module-tab {
+      position: relative;
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
+      gap: 13px;
+      align-items: center;
+      min-height: 84px;
+      padding: 13px;
+      border: 0;
+      border-radius: 17px;
+      text-align: left;
+      background: transparent;
+      cursor: pointer;
+      transition: background-color 180ms ease, transform 180ms var(--ease-out);
+    }
+
+    .module-tab:hover { background: #edf3f8; }
+    .module-tab:active { transform: scale(.985); }
+    .module-tab.active { color: #fff; background: var(--blue-deep); }
+
+    .module-icon {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border: 1px solid #d7e2eb;
+      border-radius: 13px;
+      color: var(--blue);
+      background: #fff;
+    }
+
+    .module-tab strong { display: block; font-size: 14px; }
+    .module-tab small { display: block; margin-top: 4px; color: #7b8c9c; font-size: 11px; }
+    .module-tab.active small { color: #a9c5da; }
+    .module-tab .arrow { color: #8ba0b2; font-size: 18px; }
+    .module-tab.active .arrow { color: var(--cyan); }
+
+    .module-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(310px, .82fr);
+      gap: 0;
+      min-width: 0;
+    }
+
+    .module-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(38px, 5vw, 78px);
+    }
+
+    .module-kicker {
+      color: var(--blue);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .module-copy h3 {
+      max-width: 560px;
+      margin: 18px 0 0;
+      font-size: clamp(36px, 4.6vw, 68px);
+      letter-spacing: -.06em;
+      line-height: .98;
+    }
+
+    .module-copy > p {
+      max-width: 560px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    .module-points {
+      display: grid;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .module-point {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: #324c64;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .module-point i {
+      display: grid;
+      width: 24px;
+      height: 24px;
+      place-items: center;
+      border-radius: 8px;
+      color: #087254;
+      background: #dff8ef;
+      font-style: normal;
+      font-size: 12px;
+    }
+
+    .module-visual {
+      position: relative;
+      overflow: hidden;
+      min-height: 100%;
+      background: #0b2946;
+    }
+
+    .module-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .92;
+      transition: opacity 180ms ease, transform 500ms var(--ease-out);
+    }
+
+    .module-visual::after {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 48%, rgba(5, 26, 45, .88));
+      content: "";
+    }
+
+    .visual-metric {
+      position: absolute;
+      z-index: 2;
+      right: 22px;
+      bottom: 22px;
+      left: 22px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: 17px;
+      color: #fff;
+      background: rgba(6, 32, 55, .7);
+      backdrop-filter: blur(14px);
+    }
+
+    .visual-metric small {
+      color: #a8c5db;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 9px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .visual-metric strong {
+      display: block;
+      margin-top: 7px;
+      color: var(--mint);
+      font-size: 28px;
+      letter-spacing: -.045em;
+    }
+
+    .flow {
+      padding: 124px 0;
+      color: #fff;
+      background: var(--blue-deep);
+    }
+
+    .flow-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 40px;
+      margin-bottom: 56px;
+    }
+
+    .flow .eyebrow { color: #9dbbd3; }
+    .flow .section-title { max-width: 760px; }
+    .flow-head > p { max-width: 430px; margin: 0; color: #a9c3d8; line-height: 1.6; }
+
+    .flow-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .flow-grid::before {
+      position: absolute;
+      top: 32px;
+      right: 10%;
+      left: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--cyan), var(--mint));
+      content: "";
+    }
+
+    .flow-step {
+      position: relative;
+      z-index: 1;
+      padding: 0 18px;
+    }
+
+    .flow-step:first-child { padding-left: 0; }
+    .flow-step:last-child { padding-right: 0; }
+
+    .flow-node {
+      display: grid;
+      width: 64px;
+      height: 64px;
+      place-items: center;
+      border: 1px solid rgba(147, 205, 245, .3);
+      border-radius: 18px;
+      color: var(--cyan);
+      background: var(--blue-deep);
+      box-shadow: 0 0 0 9px rgba(8, 43, 76, .92);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+    }
+
+    .flow-step h3 { margin: 28px 0 0; font-size: 21px; letter-spacing: -.03em; }
+    .flow-step p { margin: 11px 0 0; color: #9bb8ce; font-size: 14px; line-height: 1.6; }
+
+    .closing {
+      padding: 112px 0;
+      background: #fff;
+    }
+
+    .closing-card {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 70px;
+      align-items: end;
+      padding: clamp(38px, 6vw, 84px);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(100, 212, 255, .28), transparent 32%),
+        #eaf4fa;
+    }
+
+    .closing-card h2 {
+      margin: 0;
+      font-size: clamp(42px, 5.5vw, 78px);
+      letter-spacing: -.065em;
+      line-height: .98;
+    }
+
+    .closing-card p { margin: 20px 0 0; color: var(--muted); font-size: 17px; line-height: 1.6; }
+    .closing-actions { display: flex; flex-direction: column; gap: 10px; }
+
+    @media (max-width: 1100px) {
+      .nav-links { display: none; }
+      .nav { justify-content: space-between; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-copy { max-width: 780px; }
+      .decision-stage { min-height: 600px; }
+      .module-board { grid-template-columns: 260px minmax(0, 1fr); }
+      .module-content { grid-template-columns: 1fr; }
+      .module-visual { min-height: 360px; }
+    }
+
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 32px, 1440px); }
+      .nav { top: 10px; min-height: 58px; border-radius: 18px; }
+      .brand { min-width: auto; }
+      .brand span { display: none; }
+      .brand img { width: 39px; height: 39px; }
+      .nav-cta { min-height: 42px; padding-inline: 14px; }
+      .hero { padding-top: 112px; }
+      h1 { font-size: clamp(48px, 15vw, 72px); }
+      .hero-proof { grid-template-columns: 1fr; }
+      .proof-item + .proof-item { padding-left: 0; border-left: 0; }
+      .decision-stage { min-height: 520px; border-radius: 26px; }
+      .stage-summary { grid-template-columns: 1fr; }
+      .confidence { text-align: left; }
+      .decision-rule { display: none; }
+      .trust-grid { grid-template-columns: 1fr 1fr; }
+      .trust-grid > div { border-top: 1px solid rgba(129, 190, 232, .17); }
+      .trust-grid > div:nth-child(odd) { padding-left: 0; border-left: 0; }
+      .modules { padding-block: 86px; }
+      .modules-head { grid-template-columns: 1fr; gap: 24px; }
+      .module-board { display: block; }
+      .module-tabs {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(180px, 1fr));
+        overflow-x: auto;
+        border-right: 0;
+        border-bottom: 1px solid #d5e1eb;
+      }
+      .module-tab { min-width: 180px; }
+      .module-copy { padding: 32px 24px 44px; }
+      .flow { padding-block: 86px; }
+      .flow-head { display: block; }
+      .flow-head > p { margin-top: 24px; }
+      .flow-grid { grid-template-columns: 1fr; gap: 34px; }
+      .flow-grid::before { top: 32px; bottom: 32px; left: 31px; width: 1px; height: auto; }
+      .flow-step, .flow-step:first-child, .flow-step:last-child { padding-left: 92px; }
+      .flow-node { position: absolute; left: 0; }
+      .flow-step h3 { margin-top: 2px; }
+      .closing { padding-block: 76px; }
+      .closing-card { grid-template-columns: 1fr; gap: 34px; padding: 34px 24px; border-radius: 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Asosiy navigatsiya">
+    <a class="brand" href="/ai">
+      <img src="/images/fjsti-logo.png" alt="FJSTI" />
+      <span>FJSTI Klinikasi<small>AI va klinik texnologiyalar</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="/">Bosh sahifa</a>
+      <a href="/clinic">Klinika</a>
+      <a href="/doctors">Shifokorlar</a>
+      <a class="active" href="/ai">AI Yechimlar</a>
+      <a href="/research">Tadqiqotlar</a>
+      <a href="/education">Klinik baza</a>
+      <a href="/contacts">Aloqa</a>
+    </div>
+    <a class="nav-cta" href="#demo">Demo so‘rash <span aria-hidden>→</span></a>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Klinik AI / Inson nazoratida</p>
+          <h1>AI ko‘radi.<span>Shifokor qaror qiladi.</span></h1>
+          <p class="hero-lead">
+            Tasvir, protokol va klinik ma’lumotlarni bir oqimda tahlil qilamiz.
+            Tizim ehtimolni ko‘rsatadi — yakuniy xulosa har doim mutaxassisda qoladi.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="#solutions">Yechimlarni ko‘rish <span aria-hidden>↓</span></a>
+            <a class="button button--ghost" href="#flow">Qanday ishlaydi</a>
+          </div>
+          <div class="hero-proof" aria-label="Asosiy afzalliklar">
+            <div class="proof-item"><b>4 soniya</b><span>tasvirning dastlabki tahlili</span></div>
+            <div class="proof-item"><b>DICOM / PACS</b><span>mavjud klinika tizimlari bilan</span></div>
+            <div class="proof-item"><b>100% nazorat</b><span>xulosa shifokor tasdig‘idan so‘ng</span></div>
+          </div>
+        </div>
+
+        <div class="decision-stage" aria-label="AI klinik tahlili namoyishi">
+          <img src="/images/medical/therapy-ai-3d.png" alt="Holografik anatomiya bilan ishlayotgan shifokor" />
+          <div class="stage-top">
+            <span class="live-chip"><i></i> Model faol</span>
+            <span class="case-chip">Clinical AI / 02</span>
+          </div>
+          <div class="neural-field" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="scan-rail" aria-hidden="true"></div>
+          <span class="target-label">Signal bog‘landi / 03</span>
+          <span class="target" aria-hidden="true"></span>
+          <div class="decision-rule">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3l7 3v5c0 4.5-2.8 7.6-7 10-4.2-2.4-7-5.5-7-10V6l7-3z" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Shifokor tasdig‘isiz xulosa berilmaydi
+          </div>
+          <div class="stage-summary">
+            <div>
+              <small>Multimodal tahlil</small>
+              <strong>3 ta klinik signal birlashtirildi</strong>
+            </div>
+            <div class="confidence">
+              <b>94%</b>
+              <span>ishonch darajasi</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-rail" aria-label="Klinik ishonch ko‘rsatkichlari">
+      <div class="shell trust-grid">
+        <div><p>Texnologiya tezlik beradi.<br />Mas’uliyat mutaxassisda qoladi.</p></div>
+        <div><b>ISO 27001</b><span>Ma’lumotlar xavfsizligi</span></div>
+        <div><b>24 / 7</b><span>Klinik monitoring</span></div>
+        <div><b>3 bosqich</b><span>Inson nazorati</span></div>
+      </div>
+    </section>
+
+    <section class="modules" id="solutions">
+      <div class="shell">
+        <div class="modules-head">
+          <div>
+            <p class="eyebrow">Bitta platforma / 4 modul</p>
+            <h2 class="section-title">Har bir qarorga kerakli yordam.</h2>
+          </div>
+          <p>
+            Har bir modul alohida vazifani bajaradi, lekin bemorning klinik kartasi
+            va shifokor nazorati ostida bitta tizim sifatida ishlaydi.
+          </p>
+        </div>
+
+        <div class="module-board">
+          <div class="module-tabs" role="tablist" aria-label="AI modullari">
+            <button class="module-tab active" type="button" data-module="0" role="tab" aria-selected="true">
+              <span class="module-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21a9 9 0 100-18 9 9 0 000 18zM8 12h8M12 8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </span>
+              <span><strong>Doctor Assistant</strong><small>Qabul va protokollar</small></span>
+              <span class="arrow">→</span>
+            </button>
+            <button class="module-tab" type="button" data-module="1" role="tab" aria-selected="false">
+              <span class="module-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16v12H4zM7 14l2-3 2 2 3-5 3 6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              </span>
+              <span><strong>AI Radiology</strong><small>KT, MRT va rentgen</small></span>
+              <span class="arrow">→</span>
+            </button>
+            <button class="module-tab" type="button" data-module="2" role="tab" aria-selected="false">
+              <span class="module-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4v6a5 5 0 0010 0V4M5 20h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </span>
+              <span><strong>AI Ultrasound</strong><small>Real vaqt segmentatsiyasi</small></span>
+              <span class="arrow">→</span>
+            </button>
+            <button class="module-tab" type="button" data-module="3" role="tab" aria-selected="false">
+              <span class="module-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 3h6M10 3v5l-5 10a2 2 0 002 3h10a2 2 0 002-3L14 8V3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span><strong>Clinical Research</strong><small>Tadqiqotlarni tezlashtirish</small></span>
+              <span class="arrow">→</span>
+            </button>
+          </div>
+
+          <div class="module-content" aria-live="polite">
+            <div class="module-copy">
+              <span class="module-kicker" id="module-kicker">Klinik co-pilot</span>
+              <h3 id="module-title">Qabul paytida kerakli ma’lumot yoningizda.</h3>
+              <p id="module-description">Anamnez, protokol va oldingi tekshiruvlarni bir joyda jamlab, shifokorga keyingi qadamlarni ko‘rsatadi.</p>
+              <div class="module-points" id="module-points">
+                <span class="module-point"><i>✓</i> Anamnezni tartiblash</span>
+                <span class="module-point"><i>✓</i> Klinik protokol tavsiyasi</span>
+                <span class="module-point"><i>✓</i> Qaror shifokor tasdig‘idan so‘ng</span>
+              </div>
+            </div>
+            <div class="module-visual">
+              <img id="module-image" src="/images/medical/therapy-ai-3d.png" alt="AI Doctor Assistant" />
+              <div class="visual-metric">
+                <small id="metric-label">Hujjatlashtirish vaqti</small>
+                <strong id="metric-value">−38%</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="flow" id="flow">
+      <div class="shell">
+        <div class="flow-head">
+          <div>
+            <p class="eyebrow">Nazoratli klinik oqim</p>
+            <h2 class="section-title">Tezroq tahlil.<br />Ikki karra tekshiruv.</h2>
+          </div>
+          <p>AI alohida ishlamaydi. Har bir natija klinik ma’lumot, mutaxassis bahosi va audit iziga ulanadi.</p>
+        </div>
+        <div class="flow-grid">
+          <article class="flow-step"><span class="flow-node">01</span><h3>Ma’lumot olinadi</h3><p>Tasvir, tahlil yoki qabul ma’lumoti xavfsiz oqimga kiradi.</p></article>
+          <article class="flow-step"><span class="flow-node">02</span><h3>AI tahlil qiladi</h3><p>E’tibor talab qiladigan joylar va ehtimollar belgilanadi.</p></article>
+          <article class="flow-step"><span class="flow-node">03</span><h3>Shifokor tekshiradi</h3><p>Mutaxassis natijani klinik holat bilan solishtirib tasdiqlaydi.</p></article>
+          <article class="flow-step"><span class="flow-node">04</span><h3>Xulosa saqlanadi</h3><p>Tasdiqlangan qaror bemorning klinik kartasiga yoziladi.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing" id="demo">
+      <div class="shell closing-card">
+        <div>
+          <h2>AI klinikangizda qanday ishlashini ko‘ring.</h2>
+          <p>20 daqiqalik demo davomida mavjud tizimingiz bilan integratsiya va real ish jarayonini ko‘rsatamiz.</p>
+        </div>
+        <div class="closing-actions">
+          <a class="button" href="/contacts">Demo vaqtini tanlash <span aria-hidden>→</span></a>
+          <a class="button button--ghost" href="tel:+998902732301">(90) 273-23-01</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const modules = [
+      {
+        kicker: 'Klinik co-pilot',
+        title: 'Qabul paytida kerakli ma’lumot yoningizda.',
+        description: 'Anamnez, protokol va oldingi tekshiruvlarni bir joyda jamlab, shifokorga keyingi qadamlarni ko‘rsatadi.',
+        points: ['Anamnezni tartiblash', 'Klinik protokol tavsiyasi', 'Qaror shifokor tasdig‘idan so‘ng'],
+        image: '/images/medical/therapy-ai-3d.png',
+        alt: 'AI Doctor Assistant',
+        metric: '−38%',
+        metricLabel: 'Hujjatlashtirish vaqti'
+      },
+      {
+        kicker: 'Tasviriy diagnostika',
+        title: 'Tasvirdagi kichik o‘zgarishni ham e’tibordan qoldirmaydi.',
+        description: 'KT, MRT va rentgen tasvirlarida shifokor e’tiborini talab qiladigan zonalarni avtomatik belgilaydi.',
+        points: ['DICOM va PACS bilan integratsiya', 'Ustuvor holatlarni navbat boshiga chiqarish', 'Tahlil izini to‘liq saqlash'],
+        image: '/images/medical/diagnostics-3d.png',
+        alt: 'AI Radiology',
+        metric: '4 soniya',
+        metricLabel: 'Dastlabki tasvir tahlili'
+      },
+      {
+        kicker: 'Real vaqt tahlili',
+        title: 'UTT tekshiruvida o‘lchovlar aniqroq va izchilroq.',
+        description: 'Organ chegaralarini real vaqtda ajratadi, o‘lchaydi va mutaxassis ko‘rib chiqishi uchun tayyorlaydi.',
+        points: ['Real vaqt segmentatsiyasi', 'Avtomatik o‘lchov va solishtirish', 'Standartlashtirilgan protokol'],
+        image: '/images/medical/gynecology-3d.png',
+        alt: 'AI Ultrasound',
+        metric: '94%',
+        metricLabel: 'Segmentatsiya aniqligi'
+      },
+      {
+        kicker: 'Ilmiy platforma',
+        title: 'Klinik tadqiqotni ma’lumotdan natijagacha tezlashtiradi.',
+        description: 'Bemorlarni mezon bo‘yicha topish, ma’lumotlarni tekshirish va kuzatuv natijalarini tartiblashga yordam beradi.',
+        points: ['AI-bemor tanlash', 'CRF sifat nazorati', 'Auditga tayyor hisobot'],
+        image: '/images/medical/oncology-3d.png',
+        alt: 'AI Clinical Research',
+        metric: '−47%',
+        metricLabel: 'Tadqiqot tayyorlash vaqti'
+      }
+    ];
+
+    const tabs = Array.from(document.querySelectorAll('.module-tab'));
+    const refs = {
+      kicker: document.getElementById('module-kicker'),
+      title: document.getElementById('module-title'),
+      description: document.getElementById('module-description'),
+      points: document.getElementById('module-points'),
+      image: document.getElementById('module-image'),
+      metric: document.getElementById('metric-value'),
+      metricLabel: document.getElementById('metric-label')
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => {
+        const item = modules[index];
+        tabs.forEach((node, nodeIndex) => {
+          node.classList.toggle('active', nodeIndex === index);
+          node.setAttribute('aria-selected', String(nodeIndex === index));
+        });
+
+        refs.image.style.opacity = '0';
+        refs.image.style.transform = 'scale(1.025)';
+        window.setTimeout(() => {
+          refs.kicker.textContent = item.kicker;
+          refs.title.textContent = item.title;
+          refs.description.textContent = item.description;
+          refs.points.innerHTML = item.points.map(point => `<span class="module-point"><i>✓</i>${point}</span>`).join('');
+          refs.image.src = item.image;
+          refs.image.alt = item.alt;
+          refs.metric.textContent = item.metric;
+          refs.metricLabel.textContent = item.metricLabel;
+          refs.image.style.opacity = '1';
+          refs.image.style.transform = 'scale(1)';
+        }, 170);
+      });
+    });
+  </script>
+</body>
+</html>

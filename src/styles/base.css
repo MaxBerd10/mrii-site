@@ -16,42 +16,13 @@ html.no-smooth-scroll {
   padding-top: 64px;
   min-height: 60vh;
   background:
-    radial-gradient(ellipse 50% 35% at 0% 0%, rgba(91, 76, 219, 0.07), transparent 55%),
-    radial-gradient(ellipse 45% 30% at 100% 5%, rgba(14, 165, 233, 0.06), transparent 50%),
+    radial-gradient(ellipse 50% 35% at 0% 0%, var(--wash-brand), transparent 55%),
+    radial-gradient(ellipse 45% 30% at 100% 5%, var(--wash-blue), transparent 50%),
     var(--bg);
 }
 
 .page-shell--contacts {
   padding-top: 64px;
-}
-
-.site-footer {
-  margin-top: auto;
-  flex-shrink: 0;
-  border-top: 1px solid var(--border);
-  background: #fff;
-  padding: 22px 0 28px;
-}
-
-.site-footer__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.site-footer__copy {
-  margin: 0;
-  color: var(--text-soft);
-  font-size: 13px;
-}
-
-.site-footer__link {
-  color: var(--brand);
-  font-size: 13px;
-  font-weight: 700;
-  text-decoration: none;
 }
 
 /* Section anchors — small offset for in-page jumps only */
@@ -179,7 +150,12 @@ button { color: inherit; }
   flex: 1 1 auto;
 }
 
-.site-main { position: relative; overflow: clip; }
+.site-main {
+  position: relative;
+  /* clip only X — Y must stay visible or sticky scroll stories break */
+  overflow-x: clip;
+  overflow-y: visible;
+}
 
 .container-main {
   width: min(var(--container), calc(100% - (var(--gutter) * 2)));
@@ -191,7 +167,7 @@ button { color: inherit; }
   padding-block: var(--section-space);
 }
 
-.section--white { background: #fff; }
+.section--white { background: var(--surface); }
 .section--muted { background: var(--bg); }
 .section--soft { background: var(--surface-soft); }
 
@@ -213,7 +189,7 @@ button { color: inherit; }
   align-items: center;
   gap: 9px;
   margin-bottom: 16px;
-  color: var(--brand);
+  color: var(--brand-ink);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -255,7 +231,7 @@ button { color: inherit; }
 .card,
 .soft-surface {
   background: var(--surface);
-  border: 1px solid rgba(255, 255, 255, 0.88);
+  border: 1px solid var(--surface-edge);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-raised);
 }
@@ -299,15 +275,15 @@ button { color: inherit; }
 .hp-btn--primary,
 .btn-primary,
 .btn-accent {
-  color: #fff;
+  color: var(--on-brand);
   background: var(--brand);
-  box-shadow: 0 12px 28px rgba(91, 76, 219, .22);
+  box-shadow: var(--shadow-pop);
 }
 
 .hp-btn--primary:hover,
 .btn-primary:hover,
 .btn-accent:hover {
-  color: #fff;
+  color: var(--on-brand);
   background: var(--brand-dark);
   transform: translateY(-2px);
 }
@@ -316,15 +292,15 @@ button { color: inherit; }
 .btn-outline,
 .btn-ghost {
   color: var(--text);
-  background: rgba(255,255,255,.7);
+  background: var(--surface-glass);
   border-color: var(--border);
 }
 
 .hp-btn--ghost:hover,
 .btn-outline:hover,
 .btn-ghost:hover {
-  color: var(--brand);
-  background: #fff;
+  color: var(--brand-ink);
+  background: var(--surface);
 }
 
 .hp-btn--sm,
@@ -339,7 +315,7 @@ button { color: inherit; }
   align-items: center;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--surface);
 }
 
 .back-to-top {
@@ -353,9 +329,9 @@ button { color: inherit; }
   height: 46px;
   border: 0;
   border-radius: 50%;
-  color: #fff;
+  color: var(--on-brand);
   background: var(--brand);
-  box-shadow: 0 12px 30px rgba(91, 76, 219, .28);
+  box-shadow: var(--shadow-pop);
   cursor: pointer;
 }
 

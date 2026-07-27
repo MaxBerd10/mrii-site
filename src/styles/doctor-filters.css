@@ -7,7 +7,7 @@
   padding: 14px 16px;
   border: 1px solid rgba(35, 38, 52, 0.06);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.72);
+  background: var(--surface-glass);
 }
 
 .doctor-filters {
@@ -61,7 +61,7 @@
 }
 
 .doctor-filters__btn--soft.is-active {
-  color: var(--brand, #5b4cdb);
+  color: var(--brand-ink, #5b4cdb);
   background: rgba(91, 76, 219, 0.1);
   border-color: rgba(91, 76, 219, 0.2);
   box-shadow: none;
@@ -79,7 +79,7 @@
 }
 
 .doctor-filters__btn.is-active:not(.doctor-filters__btn--soft) .doctor-filters__dot {
-  background: #fff !important;
+  background: var(--surface) !important;
 }
 
 .doctor-filters__count {

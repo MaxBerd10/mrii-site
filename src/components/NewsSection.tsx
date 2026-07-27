@@ -6,6 +6,7 @@ import Reveal from './ui/Reveal'
 import { staggerContainer, rise3d, blurUp } from '../lib/animations'
 import { media } from '../data/media'
 import { newsArticles } from '../data/newsDetails'
+import { accentInk, accentWash } from '../lib/accent'
 
 const NEWS_IMAGES = Object.values(media.news)
 
@@ -68,7 +69,7 @@ export default function NewsSection() {
                 />
                 <span
                   className="news-card__badge"
-                  style={{ color: item.categoryColor, background: `${item.categoryColor}18` }}
+                  style={{ color: accentInk(item.categoryColor), background: accentWash(item.categoryColor) }}
                 >
                   {item.category}
                 </span>

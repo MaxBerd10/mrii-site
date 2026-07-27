@@ -3,6 +3,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
 import Reveal from './ui/Reveal'
 import { staggerContainer, rise3d, blurUp } from '../lib/animations'
+import { accentInk, accentWash } from '../lib/accent'
 
 const FALLBACK_COLORS = ['#0EA5E9', '#10B981', '#6366F1', '#F59E0B']
 
@@ -70,7 +71,7 @@ export default function Partners() {
               </svg>
               <p className="testimonial-card__text">"{item.quote}"</p>
               <div className="testimonial-card__meta">
-                <span className="testimonial-card__avatar" style={{ background: `${item.color}18`, color: item.color }}>
+                <span className="testimonial-card__avatar" style={{ background: accentWash(item.color), color: accentInk(item.color) }}>
                   {initials(item.author)}
                 </span>
                 <span className="testimonial-card__info">

@@ -76,7 +76,17 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
       return
     }
 
-    if (nextFull === currentFull || busy) return
+    if (busy) return
+
+    // Choosing the page you are already on should return you to the top, the
+    // way every other site behaves. Bailing out silently made "Bosh sahifa"
+    // and the logo look broken once the reader had scrolled down. There is no
+    // route change here, so this skips the logo spin.
+    if (nextFull === currentFull) {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      window.scrollTo({ top: 0, left: 0, behavior: reduceMotion ? 'auto' : 'smooth' })
+      return
+    }
 
     setBusy(true)
     window.setTimeout(() => {

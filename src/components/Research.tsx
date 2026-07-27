@@ -4,6 +4,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
 import Reveal from './ui/Reveal'
 import { staggerContainer, rise3d, blurUp } from '../lib/animations'
+import { media } from '../data/media'
 import '../styles/research-page.css'
 
 const PREVIEW_COUNT = 4
@@ -20,6 +21,11 @@ export default function Research() {
   const whyItems = cms?.whyItems?.length ? cms.whyItems : t.research.whyItems
   const studies = cms?.studies?.length ? cms.studies : t.research.studies
   const croFeatures = t.research.croFeatures
+  const capabilities =
+    cms?.capabilities?.length ? cms.capabilities : t.research.capabilities
+  const proofCapabilities = capabilities
+    .filter((capability) => !/^(Ha|Да|Yes)$/i.test(capability.value))
+    .slice(0, 4)
   const panelTitle =
     tab === 0
       ? cms?.whyTitle || t.research.whyTitle
@@ -80,9 +86,24 @@ export default function Research() {
                 <em>{cms?.titleEm || t.research.titleEm}</em>
               </h1>
               <p className="research-hero__desc">{cms?.description || t.research.description}</p>
+              <div className="research-proof" aria-label={t.research.capabilitiesTitle}>
+                {proofCapabilities.map((capability) => (
+                  <div className="research-proof__item" key={capability.label}>
+                    <strong>{capability.value}</strong>
+                    <span>{capability.label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="research-hero__aside">
-              <a href="/contacts" className="research-hero__cta">
+              <figure className="research-hero__photo">
+                <img
+                  src={media.facilities.research}
+                  alt={t.research.pageLabel}
+                  decoding="async"
+                />
+              </figure>
+              <a href="/contacts?intent=sponsor" className="research-hero__cta">
                 {ctaLabel}
               </a>
             </div>
@@ -145,7 +166,7 @@ export default function Research() {
                   </div>
                   <strong className="research-card__title">{card.title}</strong>
                   {card.meta ? <span className="research-card__meta">{card.meta}</span> : null}
-                  <a href="/contacts" className="research-card__link">
+                  <a href="/contacts?intent=sponsor" className="research-card__link">
                     {ctaLabel} <span aria-hidden>→</span>
                   </a>
                 </motion.article>
@@ -172,7 +193,7 @@ export default function Research() {
             <div className="research-side__block">
               <h3 className="research-side__title">{t.research.capabilitiesTitle}</h3>
               <ul className="research-side__list">
-                {(cms?.capabilities?.length ? cms.capabilities : t.research.capabilities)
+                {capabilities
                   .filter((c) => /^(Ha|Да|Yes)$/i.test(c.value))
                   .slice(0, 4)
                   .map((c) => (

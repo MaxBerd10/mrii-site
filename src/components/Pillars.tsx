@@ -7,6 +7,7 @@ import Reveal from './ui/Reveal'
 import { staggerContainer, rise3d, blurUp } from '../lib/animations'
 import { media } from '../data/media'
 import '../styles/pillar-videos.css'
+import '../styles/home-patient.css'
 
 const PILLAR_HREFS = ['/clinic', '/research', '/education', '/ai'] as const
 const ACCENTS = ['#5B4CDB', '#3B82F6', '#14B8A6', '#8B5CF6'] as const
@@ -68,17 +69,32 @@ function PillarMedia({
   )
 }
 
-export default function Pillars() {
+export default function Pillars({ secondary = false }: { secondary?: boolean }) {
   const { t } = useLanguage()
+  const indices = secondary ? ([1, 2, 3] as const) : ([0, 1, 2, 3] as const)
 
   return (
-    <section id="pillars" className="section section--white" style={{ perspective: 1200 }}>
+    <section
+      id="pillars"
+      className={`section section--white${secondary ? ' home-pillars' : ''}`}
+      style={{ perspective: 1200 }}
+    >
       <div className="container-main">
         <Reveal variants={blurUp}>
           <SectionHeader
-            label={t.pillars.label}
-            title={<>{t.pillars.title1} <em>{t.pillars.titleEm}</em></>}
-            description={t.pillars.description}
+            label={secondary ? t.pillars.secondaryLabel : t.pillars.label}
+            title={
+              secondary ? (
+                <>
+                  {t.pillars.secondaryTitle1} <em>{t.pillars.secondaryTitleEm}</em>
+                </>
+              ) : (
+                <>
+                  {t.pillars.title1} <em>{t.pillars.titleEm}</em>
+                </>
+              )
+            }
+            description={secondary ? t.pillars.secondaryDescription : t.pillars.description}
             accent="#5B4CDB"
           />
         </Reveal>
@@ -90,7 +106,8 @@ export default function Pillars() {
           whileInView="show"
           viewport={{ once: true, amount: 0.15 }}
         >
-          {t.pillars.items.map((p, idx) => {
+          {indices.map((idx) => {
+            const p = t.pillars.items[idx]
             const asset = PILLARS[idx]
             return (
               <motion.article

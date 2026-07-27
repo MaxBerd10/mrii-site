@@ -1,0 +1,108 @@
+import { useMemo, type CSSProperties } from 'react'
+import { motion } from 'motion/react'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { useCms } from '../../cms/CmsContext'
+import { media } from '../../data/media'
+import { specialtyDetails } from '../../data/specialtyDetails'
+import HdHead from './HdHead'
+import { settle, settleStagger, inView } from '../../lib/homeDarkMotion'
+
+type ClinicImageKey = keyof typeof media.clinic
+
+/**
+ * Signal by clinical family, not by variety:
+ * care is clinical blue, procedures are research violet, women & children are
+ * vitals green, and imaging is machine cyan — that is where the AI actually is.
+ */
+const SIGNAL_BY_SLUG: Record<string, string> = {
+  cardiology: 'var(--hd-blue)',
+  neurology: 'var(--hd-blue)',
+  therapy: 'var(--hd-blue)',
+  gastroenterology: 'var(--hd-blue)',
+  endocrinology: 'var(--hd-blue)',
+  urology: 'var(--hd-violet-lt)',
+  gynecology: 'var(--hd-green)',
+  pediatrics: 'var(--hd-green)',
+  surgery: 'var(--hd-violet-lt)',
+  rehabilitation: 'var(--hd-green)',
+  diagnostics: 'var(--hd-cyan)',
+  oncology: 'var(--hd-violet-lt)',
+}
+
+/** CH.06 — all twelve departments. The one dense passage on the page. */
+export default function ServiceGrid() {
+  const { t, lang } = useLanguage()
+  const { home } = useCms()
+  const copy = t.homeDark.services
+
+  const specialties = useMemo(() => {
+    const slugs = specialtyDetails.map((detail) => detail.slug)
+    const source = home?.specialties?.length ? home.specialties : null
+
+    return t.clinic.specialties.map((specialty, i) => {
+      const slug = source?.[i]?.slug ?? slugs[i] ?? `specialty-${i}`
+      return {
+        slug,
+        name: source?.[i]?.name ?? specialty.name,
+        desc: source?.[i]?.desc ?? specialty.desc,
+        count: source?.[i]?.count ?? specialty.count,
+        image: source?.[i]?.image || media.clinic[slug as ClinicImageKey] || media.clinic.therapy,
+        signal: SIGNAL_BY_SLUG[slug] ?? 'var(--hd-blue)',
+      }
+    })
+  }, [home, t.clinic.specialties])
+
+  return (
+    <section className="hd-section hd-services" aria-labelledby="hd-services-title">
+      <div className="container-main">
+        <HdHead
+          channel={copy.channel}
+          title={
+            <span id="hd-services-title">
+              {copy.title1} <em>{copy.titleEm}</em>
+            </span>
+          }
+          description={copy.description}
+          action={
+            <a href="/clinic" className="hd-more">
+              {copy.viewAll} <span aria-hidden>→</span>
+            </a>
+          }
+        />
+
+        <motion.div
+          key={lang}
+          className="hd-services__grid"
+          variants={settleStagger(0.04)}
+          initial="hidden"
+          whileInView="show"
+          viewport={inView}
+        >
+          {specialties.map((specialty) => (
+            <motion.a
+              key={specialty.slug}
+              href={`/clinic/${specialty.slug}`}
+              className="hd-panel hd-panel--link hd-service"
+              style={{ '--hd-signal': specialty.signal } as CSSProperties}
+              variants={settle}
+            >
+              <span className="hd-service__media" aria-hidden>
+                <img src={specialty.image} alt="" loading="lazy" className="hd-service__img" />
+              </span>
+              <span className="hd-service__body">
+                <strong className="hd-service__name">{specialty.name}</strong>
+                <span className="hd-service__desc">{specialty.desc}</span>
+                <span className="hd-service__foot">
+                  <span>
+                    {specialty.count} {copy.doctorsLabel}
+                  </span>
+                  <span aria-hidden>→</span>
+                </span>
+              </span>
+            </motion.a>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  )
+}

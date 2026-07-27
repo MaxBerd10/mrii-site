@@ -9,7 +9,6 @@ import NewsSection from './components/NewsSection'
 import Partners from './components/Partners'
 import International from './components/International'
 import FooterSection from './components/FooterSection'
-import SiteFooter from './components/SiteFooter'
 import BackToTop from './components/BackToTop'
 import SiteAssistant from './components/SiteAssistant'
 import SpecialtyPage from './pages/SpecialtyPage'
@@ -18,6 +17,7 @@ import AIProductPage from './pages/AIProductPage'
 import DoctorPage from './pages/DoctorPage'
 import NotFoundPage from './pages/NotFoundPage'
 import HomePage from './pages/HomePage'
+import HomeCarePage from './pages/HomeCarePage'
 import PageShell from './pages/PageShell'
 import PricesPage from './pages/PricesPage'
 import { PageTransitionProvider, usePageNav } from './components/PageTransition'
@@ -26,7 +26,11 @@ import PageEnter from './components/PageEnter'
 function AppRoutes() {
   const { path } = usePageNav()
 
-  const specialtyMatch = path.match(/^\/clinic\/([^/]+)$/)
+  const isClinicServices = path === '/clinic/services'
+  const isClinicDiagnostics = path === '/clinic/diagnostics'
+  const isClinicIndex = path === '/clinic'
+  const specialtyMatch =
+    isClinicServices || isClinicDiagnostics ? null : path.match(/^\/clinic\/([^/]+)$/)
   const specialtySlug = specialtyMatch?.[1] ?? null
   const newsMatch = path.match(/^\/news\/([^/]+)$/)
   const newsSlug = newsMatch?.[1] ?? null
@@ -34,21 +38,13 @@ function AppRoutes() {
   const aiSlug = aiMatch?.[1] ?? null
   const doctorMatch = path.match(/^\/doctors\/([^/]+)$/)
   const doctorSlug = doctorMatch?.[1] ?? null
+  const isDoctorDetail = doctorSlug !== null
 
   const isHome = path === '/'
+  // The dark "instrument" homepage stays reachable while the light care system
+  // is built out, so the two can be compared side by side. See DESIGN.md.
+  const isHomeInstrument = path === '/home-instrument'
   const isContacts = path === '/contacts'
-  const known =
-    isHome ||
-    path === '/clinic' ||
-    path === '/prices' ||
-    path === '/research' ||
-    path === '/education' ||
-    path === '/ai' ||
-    path === '/doctors' ||
-    path === '/news' ||
-    path === '/partners' ||
-    path === '/international' ||
-    Boolean(specialtySlug || newsSlug || aiSlug || doctorSlug)
 
   let body: ReactNode
 
@@ -63,13 +59,31 @@ function AppRoutes() {
   } else if (isHome) {
     body = (
       <main className="site-main">
+        <HomeCarePage />
+      </main>
+    )
+  } else if (isHomeInstrument) {
+    body = (
+      <main className="site-main">
         <HomePage />
       </main>
     )
-  } else if (path === '/clinic') {
+  } else if (isClinicIndex) {
     body = (
       <PageShell className="page-shell--clinic">
         <Clinic />
+      </PageShell>
+    )
+  } else if (isClinicServices) {
+    body = (
+      <PageShell className="page-shell--clinic">
+        <Clinic view="services" />
+      </PageShell>
+    )
+  } else if (isClinicDiagnostics) {
+    body = (
+      <PageShell className="page-shell--clinic">
+        <Clinic view="diagnostics" />
       </PageShell>
     )
   } else if (path === '/prices') {
@@ -135,13 +149,13 @@ function AppRoutes() {
       className="site-shell min-h-screen"
       style={{ backgroundColor: 'var(--background)', color: 'var(--foreground)' }}
     >
-      <Nav />
-      <PageEnter path={path}>
-        {body}
-        {isContacts || !known ? null : <SiteFooter />}
-      </PageEnter>
-      <BackToTop />
-      <SiteAssistant />
+      {!isDoctorDetail && <Nav />}
+      {/* The cinematic footer is the homepage's own closing moment and ships
+          with it; no route adds a footer here. Inner pages end on their own
+          last section. */}
+      <PageEnter path={path}>{body}</PageEnter>
+      {!isDoctorDetail && <BackToTop />}
+      {!isDoctorDetail && <SiteAssistant />}
     </div>
   )
 }

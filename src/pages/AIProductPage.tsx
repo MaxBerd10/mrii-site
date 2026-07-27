@@ -8,6 +8,7 @@ import { aiPageLabels, aiProducts, getAIProductBySlug } from '../data/aiDetails'
 import { blurUp, rise3d, staggerContainer } from '../lib/animations'
 import SectionBackLink from '../components/ui/SectionBackLink'
 import NotFoundPage from './NotFoundPage'
+import { accentInk, accentWash } from '../lib/accent'
 
 const PRODUCT_IMAGES = [
   media.ai.doctor,
@@ -190,7 +191,7 @@ export default function AIProductPage({ slug }: { slug: string }) {
             transition={{ duration: .55, ease: [0.22, 1, 0.36, 1] }}
           >
             <img src={view.image} alt={view.name} />
-            <div className="ai-product-hero__metric" style={{ color: view.tagColor }}>
+            <div className="ai-product-hero__metric" style={{ color: accentInk(view.tagColor) }}>
               <strong>{view.metric}</strong>
               <span>{view.metricLabel}</span>
             </div>
@@ -210,7 +211,7 @@ export default function AIProductPage({ slug }: { slug: string }) {
             <motion.div variants={blurUp} className="ai-product__tag-wrap">
               <span
                 className="ai-product__tag"
-                style={{ color: view.tagColor, background: `${view.tagColor}15` }}
+                style={{ color: accentInk(view.tagColor), background: accentWash(view.tagColor) }}
               >
                 {view.tag}
               </span>
@@ -346,7 +347,7 @@ export default function AIProductPage({ slug }: { slug: string }) {
               {related.map((item) => (
                 <a key={item.slug} href={`/ai/${item.slug}`} className="ai-product-related__card">
                   <img src={item.image} alt="" />
-                  <span style={{ color: item.tagColor }}>{item.tag}</span>
+                  <span style={{ color: accentInk(item.tagColor) }}>{item.tag}</span>
                   <strong>{item.name}</strong>
                 </a>
               ))}

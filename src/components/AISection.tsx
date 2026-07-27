@@ -9,12 +9,13 @@ import { media } from '../data/media'
 import { AI_PRODUCT_SLUGS } from '../data/aiDetails'
 import { SplineSceneBasic } from './ui/spline-scene-basic'
 import '../styles/ai-spline.css'
+import { accentInk, accentWash } from '../lib/accent'
 
-const PRODUCT_IMAGES = [
-  media.ai.doctor,
-  media.ai.radiology,
-  media.ai.ultrasound,
-  media.ai.clinicalResearch,
+const PRODUCT_CONTEXT_IMAGES = [
+  media.facilities.dayCare,
+  media.facilities.diagnostics,
+  media.facilities.ultrasound,
+  media.facilities.research,
 ]
 
 export default function AISection() {
@@ -31,12 +32,12 @@ export default function AISection() {
         features: prod.features,
         metric: prod.metric,
         metricLabel: prod.metric_label,
-        image: prod.image || PRODUCT_IMAGES[i],
+        contextImage: PRODUCT_CONTEXT_IMAGES[i % PRODUCT_CONTEXT_IMAGES.length],
         slug: prod.slug,
       }))
     : t.ai.products.map((prod, i) => ({
         ...prod,
-        image: PRODUCT_IMAGES[i],
+        contextImage: PRODUCT_CONTEXT_IMAGES[i % PRODUCT_CONTEXT_IMAGES.length],
         slug: AI_PRODUCT_SLUGS[i],
       }))
   const safeActive = Math.min(active, Math.max(products.length - 1, 0))
@@ -92,12 +93,12 @@ export default function AISection() {
                 />
               )}
               <span className="product-tab__thumb">
-                <img src={prod.image} alt="" loading="lazy" />
+                <img src={prod.contextImage} alt="" loading="lazy" />
               </span>
               <span className="product-tab__copy">
                 <span
                   className="product-tab__tag"
-                  style={{ color: safeActive === i ? prod.tagColor : '#6B7280' }}
+                  style={{ color: safeActive === i ? accentInk(prod.tagColor) : 'var(--text-soft)' }}
                 >
                   {prod.tag}
                 </span>
@@ -123,16 +124,21 @@ export default function AISection() {
               {t.ai.liveBadge}
             </div>
             <AnimatePresence mode="wait">
-              <motion.img
-                key={`img-${safeActive}`}
-                src={p.image}
-                alt={p.name}
-                className="ai-console__photo media-alive media-alive--ai"
+              <motion.div
+                key={`visual-${safeActive}`}
+                className="ai-console__visual-stack"
                 initial={{ opacity: 0, scale: 1.04, rotateY: -6 }}
                 animate={{ opacity: 1, scale: 1, rotateY: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.45 }}
-              />
+              >
+                <img
+                  src={p.contextImage}
+                  alt=""
+                  className="ai-console__context-photo"
+                  loading="lazy"
+                />
+              </motion.div>
             </AnimatePresence>
             <div className="ai-console__shade" aria-hidden />
             <motion.div
@@ -142,7 +148,7 @@ export default function AISection() {
               transition={{ duration: 0.4, delay: 0.08 }}
               className="ai-console__metric"
             >
-              <div className="ai-console__metric-value" style={{ color: p.tagColor }}>
+              <div className="ai-console__metric-value" style={{ color: accentInk(p.tagColor) }}>
                 {p.metric}
               </div>
               <div className="ai-console__metric-label">{p.metricLabel}</div>
@@ -160,7 +166,7 @@ export default function AISection() {
             >
               <span
                 className="badge badge--accent"
-                style={{ color: p.tagColor, background: `${p.tagColor}15` }}
+                style={{ color: accentInk(p.tagColor), background: accentWash(p.tagColor) }}
               >
                 {p.tag}
               </span>

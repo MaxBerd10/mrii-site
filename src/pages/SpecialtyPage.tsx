@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type CSSProperties } from 'react'
+import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
@@ -10,11 +10,23 @@ import {
   getSpecialtyWorld,
   specialtyWorldLabels,
 } from '../data/specialtyWorld'
-import { blurUp, rise3d, staggerContainer, EASE_OUT } from '../lib/animations'
+import { staggerContainer, fadeUpSmall, EASE_OUT } from '../lib/animations'
 import SectionBackLink from '../components/ui/SectionBackLink'
 import Magnetic from '../components/ui/Magnetic'
 import NotFoundPage from './NotFoundPage'
 import '../styles/specialty-world.css'
+
+/**
+ * THESIS: A specialty page is a clear care plan, not an AI control room.
+ * OWN-WORLD: Daylight paper, clinical navy, one department accent, open rails,
+ * real doctor portraits, and one atlas-scale organ image.
+ * STORY: The patient understands the department, checks conditions, services,
+ * and diagnostics, sees the visit pathway and doctors, then books.
+ * FIRST VIEWPORT: Plain-language department copy and actions sit beside one
+ * large medical image; verified practical facts are visible without scrolling.
+ * FORM: Patient pathway detail, extending the confirmed finder-led clinic
+ * catalog; no concept seed was needed because the task sequence is fixed.
+ */
 
 const SPECIALTY_IMAGES = Object.values(media.clinic)
 
@@ -30,6 +42,43 @@ type ViewModel = {
   index: number
 }
 
+type CareIconKind = 'conditions' | 'services' | 'diagnostics'
+type ActiveSection = 'specialty-care' | 'specialty-pathway' | 'specialty-doctors'
+
+function Arrow() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden>
+      <path d="M4 10h11M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function CareIcon({ kind }: { kind: CareIconKind }) {
+  const paths: Record<CareIconKind, ReactNode> = {
+    conditions: (
+      <path d="M12 20s-7-4.2-7-10.2A4.3 4.3 0 0 1 12 6.5a4.3 4.3 0 0 1 7 3.3C19 15.8 12 20 12 20Z" stroke="currentColor" strokeWidth="1.65" strokeLinejoin="round" />
+    ),
+    services: (
+      <>
+        <path d="M12 4v16M4 12h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <circle cx="12" cy="12" r="8.2" stroke="currentColor" strokeWidth="1.5" />
+      </>
+    ),
+    diagnostics: (
+      <>
+        <path d="M5 19h14M8 16h8M9 5h6v8H9z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+        <path d="M7 5h10M12 2v3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      </>
+    ),
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      {paths[kind]}
+    </svg>
+  )
+}
+
 export default function SpecialtyPage({ slug }: { slug: string }) {
   const { lang, contentLang, t } = useLanguage()
   const { home } = useCms()
@@ -40,14 +89,11 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
   const staticMatch = getSpecialtyBySlug(slug)
   const [cmsDetail, setCmsDetail] = useState<CmsSpecialtyDetail | null>(null)
   const [triedCms, setTriedCms] = useState(!isCmsEnabled())
-  const [entered, setEntered] = useState(false)
+  const [activeSection, setActiveSection] = useState<ActiveSection>('specialty-care')
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    setEntered(false)
-    const id = window.setTimeout(() => setEntered(true), reduce ? 0 : 80)
-    return () => window.clearTimeout(id)
-  }, [slug, reduce])
+  }, [slug])
 
   useEffect(() => {
     if (!isCmsEnabled()) {
@@ -55,6 +101,7 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
       setTriedCms(true)
       return
     }
+
     let cancelled = false
     setTriedCms(false)
     fetchSpecialty(slug, lang).then((data) => {
@@ -86,6 +133,7 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
     }
     if (!triedCms && isCmsEnabled()) return null
     if (!staticMatch) return null
+
     const { detail, index } = staticMatch
     const content = detail.content[contentLang]
     return {
@@ -107,13 +155,39 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
 
   const doctors = useMemo(() => getSpecialtyDoctors(slug), [slug])
 
+  useEffect(() => {
+    const sectionIds: ActiveSection[] = [
+      'specialty-care',
+      'specialty-pathway',
+      'specialty-doctors',
+    ]
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => Boolean(section))
+
+    if (!sections.length) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+        if (visible) setActiveSection(visible.target.id as ActiveSection)
+      },
+      { rootMargin: '-24% 0px -62% 0px', threshold: [0, 0.15, 0.4] },
+    )
+
+    sections.forEach((section) => observer.observe(section))
+    return () => observer.disconnect()
+  }, [slug, triedCms])
+
   const relatedFromCms = home?.specialties?.filter((item) => item.slug !== slug).slice(0, 3)
   const related = relatedFromCms?.length
     ? relatedFromCms.map((item, i) => ({
         slug: item.slug,
         name: item.name,
         image: item.image || getSpecialtyWorld(item.slug).organ || SPECIALTY_IMAGES[i],
-        label: String(i + 1).padStart(2, '0'),
+        accent: getSpecialtyWorld(item.slug).accent,
       }))
     : specialtyDetails
         .map((item, itemIndex) => ({ ...item, index: itemIndex }))
@@ -123,7 +197,7 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
           slug: item.slug,
           name: t.clinic.specialties[item.index].name,
           image: getSpecialtyWorld(item.slug).organ || SPECIALTY_IMAGES[item.index],
-          label: String(item.index + 1).padStart(2, '0'),
+          accent: getSpecialtyWorld(item.slug).accent,
         }))
 
   if (!triedCms && isCmsEnabled() && !view) {
@@ -134,11 +208,8 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
     )
   }
 
-  if (!view) {
-    return <NotFoundPage />
-  }
+  if (!view) return <NotFoundPage />
 
-  const ambientHint = worldLabels.ambientHint.replace('{name}', view.name)
   const doctorCount = doctors.length || view.count
   const themeStyle = {
     '--sw-accent': world.accent,
@@ -146,215 +217,218 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
     '--sw-glow': world.glow,
   } as CSSProperties
 
-  const careGroups = [
-    { number: '01', title: labels.conditions, items: view.conditions },
-    { number: '02', title: labels.services, items: view.services },
-    { number: '03', title: labels.diagnostics, items: view.diagnostics },
+  const careGroups: Array<{
+    kind: CareIconKind
+    title: string
+    items: string[]
+  }> = [
+    { kind: 'conditions', title: labels.conditions, items: view.conditions },
+    { kind: 'services', title: labels.services, items: view.services },
+    { kind: 'diagnostics', title: labels.diagnostics, items: view.diagnostics },
   ]
 
   return (
-    <main
-      className={`specialty-world specialty-world--${world.mood}${entered ? ' specialty-world--entered' : ''}`}
-      style={themeStyle}
-      data-specialty={slug}
-    >
-      {!reduce && (
-        <motion.div
-          className="specialty-world__veil"
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 0 }}
-          transition={{ duration: 0.7, ease: EASE_OUT, delay: 0.05 }}
-          aria-hidden
-        />
-      )}
+    <main className="specialty-detail" style={themeStyle} data-specialty={slug}>
+      <section className="specialty-detail__hero">
+        <div className="container-main">
+          <SectionBackLink href="/clinic" className="specialty-detail__back">
+            ← {labels.back}
+          </SectionBackLink>
 
-      <div className="specialty-world__atmosphere" aria-hidden>
-        <span className="specialty-world__pulse specialty-world__pulse--a" />
-        <span className="specialty-world__pulse specialty-world__pulse--b" />
-        <span className="specialty-world__pulse specialty-world__pulse--c" />
-        <span className="specialty-world__breath" />
-        <span className="specialty-world__orb specialty-world__orb--a" />
-        <span className="specialty-world__orb specialty-world__orb--b" />
-        <span className="specialty-world__dust" />
-        <span className="specialty-world__dust specialty-world__dust--2" />
-        <span className="specialty-world__dust specialty-world__dust--3" />
-      </div>
+          <div className="specialty-detail__hero-grid">
+            <motion.div
+              className="specialty-detail__hero-copy"
+              initial={reduce ? false : { opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: EASE_OUT }}
+            >
+              <p className="specialty-detail__eyebrow">{labels.expertise}</p>
+              <h1>{view.name}</h1>
+              <p className="specialty-detail__lead">{view.overview}</p>
 
-      {/* 1 — Hero: one composition */}
-      <section className="specialty-world__hero">
-        <div className="specialty-world__hero-frame">
-          <motion.div
-            className="specialty-world__stage"
-            initial={reduce ? false : { opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, ease: EASE_OUT }}
-          >
-            <div className="specialty-world__stage-glow" />
-            <div className="specialty-world__hud" aria-hidden>
-              <span className="specialty-world__hud-corner specialty-world__hud-corner--tl" />
-              <span className="specialty-world__hud-corner specialty-world__hud-corner--tr" />
-              <span className="specialty-world__hud-corner specialty-world__hud-corner--bl" />
-              <span className="specialty-world__hud-corner specialty-world__hud-corner--br" />
-              <span className="specialty-world__scan" />
-              <span className="specialty-world__hud-chip specialty-world__hud-chip--live">
+              <div className="specialty-detail__facts">
+                <span>
+                  <strong>{doctorCount}</strong>
+                  {t.clinic.doctorsCount}
+                </span>
+                <span>{t.topBar.phone}</span>
+                <span>{t.topBar.hours}</span>
+              </div>
+
+              <div className="specialty-detail__actions">
+                <Magnetic href="/contacts?intent=booking" className="specialty-detail__cta" strength={0.24}>
+                  {t.clinic.bookBtn}
+                  <Arrow />
+                </Magnetic>
+                <a href="#specialty-doctors" className="specialty-detail__text-link">
+                  {t.clinic.specialists}
+                  <Arrow />
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="specialty-detail__visual"
+              initial={reduce ? false : { opacity: 0, scale: 0.94 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.85, ease: EASE_OUT, delay: 0.08 }}
+              aria-hidden
+            >
+              <span className="specialty-detail__visual-ring specialty-detail__visual-ring--one" />
+              <span className="specialty-detail__visual-ring specialty-detail__visual-ring--two" />
+              {slug === 'cardiology' ? (
+                <svg
+                  className="specialty-detail__signal"
+                  viewBox="0 0 800 180"
+                  preserveAspectRatio="none"
+                >
+                  <path d="M0 95h132l25-2 18-22 20 66 28-112 28 145 29-75h92l17-2 20-31 23 82 26-121 29 148 30-76h283" />
+                </svg>
+              ) : null}
+              <span className="specialty-detail__visual-label">{view.name}</span>
+              <span className="specialty-detail__visual-status">
                 <i />
-                {worldLabels.aiLive}
+                {t.topBar.badge}
               </span>
-              <span className="specialty-world__hud-chip specialty-world__hud-chip--metric">
-                {worldLabels.aiConfidence} {world.aiMetric}
-              </span>
-            </div>
-            <span className="specialty-world__index">
-              {String(view.index + 1).padStart(2, '0')} / 12
-            </span>
-            <motion.img
-              src={view.image}
-              alt=""
-              className={`specialty-world__organ${world.mood === 'pulse' ? ' specialty-world__organ--pulse' : ''}`}
-              animate={
-                reduce
-                  ? undefined
-                  : world.mood === 'pulse'
-                    ? { scale: [1, 1.08, 1.02, 1.12, 1, 1] }
-                    : { y: [0, -14, 0], rotateY: [-4, 4, -4] }
-              }
-              transition={
-                world.mood === 'pulse'
-                  ? {
-                      duration: 1.8,
-                      times: [0, 0.1, 0.18, 0.28, 0.38, 1],
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                    }
-                  : { duration: 7, repeat: Infinity, ease: 'easeInOut' }
-              }
-            />
-          </motion.div>
-
-          <motion.div
-            className="specialty-world__copy"
-            variants={staggerContainer(0.08, 0.1)}
-            initial="hidden"
-            animate="show"
-          >
-            <motion.div variants={blurUp}>
-              <SectionBackLink href="/clinic" className="specialty-world__back">
-                ← {labels.back}
-              </SectionBackLink>
+              <img src={view.image} alt="" />
             </motion.div>
-            <motion.p className="specialty-world__ambient" variants={blurUp}>
-              {ambientHint}
-            </motion.p>
-            <motion.h1 variants={blurUp}>{view.name}</motion.h1>
-            <motion.p className="specialty-world__lead" variants={blurUp}>
-              {view.overview}
-            </motion.p>
-            <motion.p className="specialty-world__meta" variants={blurUp}>
-              <span>
-                {doctorCount} {t.clinic.doctorsCount}
-              </span>
-              <span aria-hidden>·</span>
-              <span>{labels.accredited}</span>
-              <span aria-hidden>·</span>
-              <span>{labels.available}</span>
-            </motion.p>
-            <motion.div className="specialty-world__actions" variants={blurUp}>
-              <Magnetic href="/contacts" className="specialty-world__cta" strength={0.28}>
-                {t.clinic.bookBtn}
-              </Magnetic>
-              <a href={`/ai/${world.aiProductSlug}`} className="specialty-world__ghost">
-                {worldLabels.aiOpen}
-              </a>
-            </motion.div>
-          </motion.div>
+          </div>
         </div>
-        <a href="#specialty-care" className="specialty-world__scroll" aria-label={worldLabels.careTitle}>
-          <span />
-        </a>
       </section>
 
-      {/* 2 — Care */}
-      <section id="specialty-care" className="specialty-world__band specialty-world__care">
+      <nav className="specialty-detail__nav" aria-label={view.name}>
         <div className="container-main">
-          <RevealHead kicker={labels.expertise} title={worldLabels.careTitle} />
+          <a
+            href="#specialty-care"
+            className={activeSection === 'specialty-care' ? 'is-active' : undefined}
+            aria-current={activeSection === 'specialty-care' ? 'location' : undefined}
+          >
+            {worldLabels.careTitle}
+          </a>
+          <a
+            href="#specialty-pathway"
+            className={activeSection === 'specialty-pathway' ? 'is-active' : undefined}
+            aria-current={activeSection === 'specialty-pathway' ? 'location' : undefined}
+          >
+            {labels.pathway}
+          </a>
+          <a
+            href="#specialty-doctors"
+            className={activeSection === 'specialty-doctors' ? 'is-active' : undefined}
+            aria-current={activeSection === 'specialty-doctors' ? 'location' : undefined}
+          >
+            {worldLabels.team}
+          </a>
+          <a href="/prices">{t.clinic.prices}</a>
+          <a href="/contacts" className="specialty-detail__nav-book">
+            {t.clinic.bookBtn}
+          </a>
+        </div>
+      </nav>
+
+      <section id="specialty-care" className="specialty-detail__section specialty-detail__care">
+        <div className="container-main">
+          <SectionTitle eyebrow={labels.expertise} title={worldLabels.careTitle} />
+
           <motion.div
-            className="specialty-world__care-grid"
-            variants={staggerContainer(0.1)}
+            className="specialty-detail__care-grid"
+            variants={staggerContainer(0.08)}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.25 }}
+            viewport={{ once: true, amount: 0.2 }}
           >
             {careGroups.map((group) => (
-              <motion.article key={group.number} className="specialty-world__rail" variants={rise3d}>
-                <span className="specialty-world__rail-num">{group.number}</span>
+              <motion.article
+                key={group.kind}
+                className="specialty-detail__care-column"
+                variants={fadeUpSmall}
+              >
+                <span className="specialty-detail__care-icon">
+                  <CareIcon kind={group.kind} />
+                </span>
                 <h2>{group.title}</h2>
                 <ul>
                   {group.items.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
+                {group.kind === 'services' ? (
+                  <a href="/prices">
+                    {t.clinic.prices}
+                    <Arrow />
+                  </a>
+                ) : null}
               </motion.article>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* 3 — Pathway */}
-      <section className="specialty-world__band specialty-world__pathway-screen">
+      <section id="specialty-pathway" className="specialty-detail__section specialty-detail__pathway">
         <div className="container-main">
-          <RevealHead title={labels.pathway} desc={labels.pathwayText} />
-          <div className="specialty-world__timeline" aria-label={labels.pathway}>
-            {t.process.steps.map((step, stepIndex) => (
-              <motion.div
+          <SectionTitle title={labels.pathway} description={labels.pathwayText} inverse />
+          <div className="specialty-detail__steps">
+            {t.process.steps.map((step, index) => (
+              <motion.article
                 key={step.num}
-                className="specialty-world__timeline-step"
-                initial={{ opacity: 0, y: 18 }}
+                className="specialty-detail__step"
+                initial={reduce ? false : { opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: stepIndex * 0.07, ease: EASE_OUT }}
+                transition={{ delay: index * 0.06, duration: 0.45, ease: EASE_OUT }}
               >
-                <span className="specialty-world__timeline-dot">{step.num}</span>
+                <span>{step.num}</span>
                 <strong>{step.title}</strong>
-                <small>{step.desc}</small>
-              </motion.div>
+                <p>{step.desc}</p>
+              </motion.article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 4 — Doctors */}
-      <section className="specialty-world__band specialty-world__team">
+      <section id="specialty-doctors" className="specialty-detail__section specialty-detail__team">
         <div className="container-main">
-          <RevealHead
-            kicker={`${doctorCount} ${t.clinic.doctorsCount}`}
-            title={worldLabels.team}
-          />
+          <div className="specialty-detail__team-head">
+            <SectionTitle
+              eyebrow={`${doctorCount} ${t.clinic.doctorsCount}`}
+              title={worldLabels.team}
+              description={labels.teamText}
+            />
+            <a href="/doctors" className="specialty-detail__all-doctors">
+              {t.clinic.specialists}
+              <Arrow />
+            </a>
+          </div>
+
           {doctors.length === 0 ? (
-            <p className="specialty-world__empty">{worldLabels.teamEmpty}</p>
+            <div className="specialty-detail__empty">
+              <p>{worldLabels.teamEmpty}</p>
+              <a href="/contacts">{t.clinic.bookBtn}</a>
+            </div>
           ) : (
             <motion.div
-              className="specialty-world__doctors"
-              variants={staggerContainer(0.1)}
+              className="specialty-detail__doctors"
+              variants={staggerContainer(0.08)}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.16 }}
             >
-              {doctors.map((doc) => {
-                const c = doc.content[contentLang]
+              {doctors.map((doctor) => {
+                const content = doctor.content[contentLang]
                 return (
-                  <motion.article key={doc.slug} className="specialty-doc" variants={rise3d}>
-                    <a href={`/doctors/${doc.slug}`} className="specialty-doc__media">
-                      <img src={doc.photo} alt="" loading="lazy" />
+                  <motion.article key={doctor.slug} className="specialty-doctor" variants={fadeUpSmall}>
+                    <a href={`/doctors/${doctor.slug}`} className="specialty-doctor__media">
+                      <img src={doctor.photo} alt={content.name} loading="lazy" decoding="async" />
                     </a>
-                    <div className="specialty-doc__body">
+                    <div className="specialty-doctor__body">
                       <h3>
-                        <a href={`/doctors/${doc.slug}`}>{c.name}</a>
+                        <a href={`/doctors/${doctor.slug}`}>{content.name}</a>
                       </h3>
-                      <p>
-                        {c.role} · {c.exp}
-                      </p>
-                      <a href={`/doctors/${doc.slug}`} className="specialty-doc__link">
-                        {worldLabels.seeDoctor} →
+                      <p>{content.role}</p>
+                      <small>{content.exp}</small>
+                      <a href={`/doctors/${doctor.slug}`} className="specialty-doctor__link">
+                        {worldLabels.seeDoctor}
+                        <Arrow />
                       </a>
                     </div>
                   </motion.article>
@@ -365,18 +439,44 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
         </div>
       </section>
 
-      {/* 5 — Related */}
-      <section className="specialty-world__band specialty-world__related-screen">
+      <section className="specialty-detail__section specialty-detail__related">
         <div className="container-main">
-          <RevealHead kicker={labels.back} title={t.clinic.title2} />
-          <div className="specialty-world__related-grid">
+          <SectionTitle eyebrow={labels.back} title={labels.related} />
+          <div className="specialty-detail__related-grid">
             {related.map((item) => (
-              <a key={item.slug} href={`/clinic/${item.slug}`} className="specialty-world__related-card">
-                <img src={item.image} alt="" />
-                <span>{item.label}</span>
-                <strong>{item.name}</strong>
+              <a
+                key={item.slug}
+                href={`/clinic/${item.slug}`}
+                className="specialty-detail__related-card"
+                style={{ '--related-accent': item.accent } as CSSProperties}
+              >
+                <span>
+                  <small>{labels.expertise}</small>
+                  <strong>{item.name}</strong>
+                  <i>
+                    <Arrow />
+                  </i>
+                </span>
+                <img src={item.image} alt="" loading="lazy" decoding="async" />
               </a>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="specialty-detail__closing">
+        <div className="container-main">
+          <div>
+            <p>{labels.available}</p>
+            <h2>{labels.closingTitle}</h2>
+            <span>{labels.closingText}</span>
+          </div>
+          <div className="specialty-detail__closing-actions">
+            <a href="/contacts">
+              {t.clinic.bookBtn}
+              <Arrow />
+            </a>
+            <a href="/prices">{t.clinic.prices}</a>
           </div>
         </div>
       </section>
@@ -384,26 +484,28 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
   )
 }
 
-function RevealHead({
-  kicker,
+function SectionTitle({
+  eyebrow,
   title,
-  desc,
+  description,
+  inverse = false,
 }: {
-  kicker?: string
+  eyebrow?: string
   title: string
-  desc?: string
+  description?: string
+  inverse?: boolean
 }) {
   return (
     <motion.header
-      className="specialty-world__section-head"
+      className={`specialty-detail__section-title${inverse ? ' is-inverse' : ''}`}
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.5 }}
       transition={{ duration: 0.45, ease: EASE_OUT }}
     >
-      {kicker ? <p className="specialty-world__section-kicker">{kicker}</p> : null}
+      {eyebrow ? <p>{eyebrow}</p> : null}
       <h2>{title}</h2>
-      {desc ? <p className="specialty-world__section-desc">{desc}</p> : null}
+      {description ? <span>{description}</span> : null}
     </motion.header>
   )
 }

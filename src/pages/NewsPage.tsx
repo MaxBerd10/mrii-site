@@ -8,6 +8,7 @@ import { getNewsBySlug, newsArticles, newsPageLabels } from '../data/newsDetails
 import { blurUp, rise3d, staggerContainer } from '../lib/animations'
 import SectionBackLink from '../components/ui/SectionBackLink'
 import NotFoundPage from './NotFoundPage'
+import { accentInk, accentWash } from '../lib/accent'
 
 const NEWS_IMAGES = Object.values(media.news)
 
@@ -161,7 +162,7 @@ export default function NewsPage({ slug }: { slug: string }) {
             <img src={view.cover} alt={view.title} />
             <span
               className="news-card__badge"
-              style={{ color: view.categoryColor, background: `${view.categoryColor}18` }}
+              style={{ color: accentInk(view.categoryColor), background: accentWash(view.categoryColor) }}
             >
               {view.category}
             </span>
@@ -209,7 +210,7 @@ export default function NewsPage({ slug }: { slug: string }) {
                   <img src={entry.cover} alt="" loading="lazy" className="news-card-img" />
                   <span
                     className="news-card__badge"
-                    style={{ color: entry.categoryColor, background: `${entry.categoryColor}18` }}
+                    style={{ color: accentInk(entry.categoryColor), background: accentWash(entry.categoryColor) }}
                   >
                     {entry.category}
                   </span>

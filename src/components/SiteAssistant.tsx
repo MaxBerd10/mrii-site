@@ -43,6 +43,9 @@ function matchIntent(raw: string, keys: Record<string, string[]>): string | null
   return null
 }
 
+/** Dispatch on `window` to open the assistant from anywhere. */
+export const ASSISTANT_OPEN_EVENT = 'fjsti:assistant-open'
+
 export default function SiteAssistant() {
   const { t } = useLanguage()
   const a = t.assistant
@@ -60,6 +63,13 @@ export default function SiteAssistant() {
       setMessages([{ id: 'hello', role: 'bot', text: a.greeting }])
     }
   }, [open, a.greeting])
+
+  // Lets any page open the assistant — the homepage CTA uses this.
+  useEffect(() => {
+    const openAssistant = () => setOpen(true)
+    window.addEventListener(ASSISTANT_OPEN_EVENT, openAssistant)
+    return () => window.removeEventListener(ASSISTANT_OPEN_EVENT, openAssistant)
+  }, [])
 
   useEffect(() => {
     const el = listRef.current
