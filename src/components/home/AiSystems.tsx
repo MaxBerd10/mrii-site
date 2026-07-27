@@ -65,37 +65,12 @@ export default function AiSystems() {
                       <strong className="hd-value">{product.metric}</strong>
                       <span>{product.metricLabel}</span>
                     </div>
-                    {/* AI Doctor Assistant is the AiShifokor product itself and lives on
-                        its own domain; the other three are internal product pages. */}
-                    {product.id === 'doctor' ? (
-                      <a
-                        href="https://aishifokor.uz/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hd-more"
-                      >
-                        {copy.cta}
-                        <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          aria-hidden
-                        >
-                          <path
-                            d="M7 17L17 7M17 7H9M17 7v8"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </a>
-                    ) : (
-                      <a href={`/ai/${product.id}`} className="hd-more">
-                        {copy.cta} <span aria-hidden>→</span>
-                      </a>
-                    )}
+                    <a
+                      href={`/ai/${product.id === 'doctor' ? 'doctor-assistant' : product.id}`}
+                      className="hd-more"
+                    >
+                      {copy.cta} <span aria-hidden>→</span>
+                    </a>
                   </div>
                 </div>
 

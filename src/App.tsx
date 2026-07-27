@@ -14,6 +14,7 @@ import SiteAssistant from './components/SiteAssistant'
 import SpecialtyPage from './pages/SpecialtyPage'
 import NewsPage from './pages/NewsPage'
 import AIProductPage from './pages/AIProductPage'
+import DoctorAssistantPage from './pages/DoctorAssistantPage'
 import DoctorPage from './pages/DoctorPage'
 import NotFoundPage from './pages/NotFoundPage'
 import HomePage from './pages/HomePage'
@@ -52,6 +53,8 @@ function AppRoutes() {
     body = <SpecialtyPage slug={specialtySlug} />
   } else if (newsSlug) {
     body = <NewsPage slug={newsSlug} />
+  } else if (aiSlug === 'doctor-assistant' || aiSlug === 'doctor') {
+    body = <DoctorAssistantPage />
   } else if (aiSlug) {
     body = <AIProductPage slug={aiSlug} />
   } else if (doctorSlug) {

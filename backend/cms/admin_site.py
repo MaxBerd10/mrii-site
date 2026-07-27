@@ -97,7 +97,17 @@ class MriiAdminSite(AdminSite):
                 return reverse(f'admin:cms_{name}_change', args=[obj.pk])
             return reverse(f'admin:cms_{name}_add')
 
+        new_leads = models.Inquiry.objects.filter(status=models.Inquiry.Status.NEW).count()
+
         primary = [
+            {
+                'title': 'Murojaatlar',
+                'desc': 'Kontakt va AI demo arizalari — telefon, holat, izoh.',
+                'meta': f'{new_leads} yangi' if new_leads else 'Leadlar',
+                'icon': 'inbox',
+                'tone': 'mint',
+                'url': url('inquiry'),
+            },
             {
                 'title': 'Yangiliklar',
                 'desc': 'Maqola, sana, kategoriya va muqova rasmi.',
@@ -196,10 +206,10 @@ class MriiAdminSite(AdminSite):
         extra = extra_context or {}
         extra.update({
             'mrii_stats': [
+                {'label': 'Yangi murojaat', 'value': new_leads, 'tone': 'mint'},
                 {'label': 'Yo‘nalishlar', 'value': models.Specialty.objects.count(), 'tone': 'navy'},
                 {'label': 'Shifokorlar', 'value': models.Doctor.objects.count(), 'tone': 'teal'},
                 {'label': 'Yangiliklar', 'value': models.NewsArticle.objects.count(), 'tone': 'sky'},
-                {'label': 'AI mahsulotlar', 'value': models.AIProduct.objects.count(), 'tone': 'indigo'},
             ],
             'mrii_primary': primary,
             'mrii_secondary': secondary,

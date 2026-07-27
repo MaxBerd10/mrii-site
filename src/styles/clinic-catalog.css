@@ -33,12 +33,19 @@
 }
 
 .clinic-intro {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(10px, 1.4vw, 14px);
+  display: grid;
+  grid-template-areas:
+    'label label'
+    'title cta'
+    'desc desc';
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 24px;
+  row-gap: clamp(10px, 1.4vw, 14px);
+  align-items: center;
 }
 
 .clinic-intro__label {
+  grid-area: label;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -57,15 +64,8 @@
   box-shadow: 0 0 0 5px rgba(66, 184, 231, 0.14);
 }
 
-.clinic-intro__row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px 24px;
-}
-
 .clinic-intro__title {
+  grid-area: title;
   max-width: 22ch;
   margin: 0;
   color: #071727;
@@ -84,6 +84,7 @@
 }
 
 .clinic-intro__desc {
+  grid-area: desc;
   max-width: 62ch;
   margin: 0;
   color: #526575;
@@ -92,6 +93,7 @@
 }
 
 .clinic-intro__cta {
+  grid-area: cta;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -605,13 +607,23 @@
     padding-top: 88px;
   }
 
-  .clinic-intro__row {
-    flex-direction: column;
-    align-items: flex-start;
+  .clinic-intro {
+    grid-template-areas:
+      'label'
+      'title'
+      'desc'
+      'cta';
+    grid-template-columns: 1fr;
+    align-items: stretch;
   }
 
   .clinic-intro__title {
     max-width: none;
+  }
+
+  .clinic-intro__cta {
+    width: 100%;
+    justify-self: stretch;
   }
 
   .clinic-finder {
@@ -653,10 +665,6 @@
   .clinic-opening {
     gap: 16px;
     margin-bottom: 32px;
-  }
-
-  .clinic-intro__cta {
-    width: 100%;
   }
 
   .clinic-search {

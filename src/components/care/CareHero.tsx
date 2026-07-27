@@ -84,7 +84,7 @@ export default function CareHero() {
               </MaskedText>
 
               <div className="hc-hero__cta">
-                <a className="hc-btn" href="/contacts">
+                <a className="hc-btn" href="/contacts?intent=booking">
                   {c.ctaPrimary}
                 </a>
                 <a

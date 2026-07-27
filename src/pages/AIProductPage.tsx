@@ -2,13 +2,16 @@ import { useEffect, useState, type FormEvent } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
-import { fetchAIProduct, isCmsEnabled, type CmsAIDetail } from '../api/client'
+import { fetchAIProduct, isCmsEnabled, submitInquiry, type CmsAIDetail } from '../api/client'
 import { media } from '../data/media'
 import { aiPageLabels, aiProducts, getAIProductBySlug } from '../data/aiDetails'
 import { blurUp, rise3d, staggerContainer } from '../lib/animations'
 import SectionBackLink from '../components/ui/SectionBackLink'
 import NotFoundPage from './NotFoundPage'
 import { accentInk, accentWash } from '../lib/accent'
+import RadiologyDemo from '../components/ai/RadiologyDemo'
+import UltrasoundDemo from '../components/ai/UltrasoundDemo'
+import ClinicalResearchDemo from '../components/ai/ClinicalResearchDemo'
 
 const PRODUCT_IMAGES = [
   media.ai.doctor,
@@ -16,6 +19,13 @@ const PRODUCT_IMAGES = [
   media.ai.ultrasound,
   media.ai.clinicalResearch,
 ]
+
+const PRODUCT_IMAGE_BY_SLUG: Record<string, string> = {
+  'doctor-assistant': media.ai.doctor,
+  radiology: media.ai.radiology,
+  ultrasound: media.ai.ultrasound,
+  'clinical-research': media.ai.clinicalResearch,
+}
 
 type ViewModel = {
   slug: string
@@ -43,6 +53,7 @@ export default function AIProductPage({ slug }: { slug: string }) {
   const [triedCms, setTriedCms] = useState(!isCmsEnabled())
   const [form, setForm] = useState({ name: '', phone: '', email: '', clinic: '', message: '' })
   const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
   const [confirmation, setConfirmation] = useState<null | { requestId: string; phone: string }>(null)
 
   useEffect(() => {
@@ -143,6 +154,9 @@ export default function AIProductPage({ slug }: { slug: string }) {
     return <NotFoundPage />
   }
 
+  const imageForSlug = (productSlug: string, fallbackIndex = 0) =>
+    PRODUCT_IMAGE_BY_SLUG[productSlug] || PRODUCT_IMAGES[fallbackIndex] || PRODUCT_IMAGES[0]
+
   const relatedFromCms = home?.aiProducts?.filter((item) => item.slug !== slug)
   const related = relatedFromCms?.length
     ? relatedFromCms.map((item, i) => ({
@@ -150,7 +164,7 @@ export default function AIProductPage({ slug }: { slug: string }) {
         name: item.name,
         tag: item.tag,
         tagColor: item.tag_color,
-        image: item.image || PRODUCT_IMAGES[i] || PRODUCT_IMAGES[0],
+        image: item.image || imageForSlug(item.slug, i),
       }))
     : aiProducts
         .map((item, itemIndex) => ({ ...item, index: itemIndex }))
@@ -162,22 +176,48 @@ export default function AIProductPage({ slug }: { slug: string }) {
             name: relatedProduct.name,
             tag: relatedProduct.tag,
             tagColor: relatedProduct.tagColor,
-            image: PRODUCT_IMAGES[item.index],
+            image: imageForSlug(item.slug, item.index),
           }
         })
 
-  const submitDemo = (event: FormEvent<HTMLFormElement>) => {
+  const submitDemo = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (submitting) return
     setSubmitting(true)
-    window.setTimeout(() => {
+    setSubmitError('')
+
+    const localId = `AI-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`
+    try {
+      let requestId = localId
+      if (isCmsEnabled()) {
+        const result = await submitInquiry({
+          intent: 'ai',
+          name: form.name.trim(),
+          phone: form.phone.trim(),
+          email: form.email.trim(),
+          clinic: form.clinic.trim(),
+          product_slug: slug,
+          topic: view?.name || slug,
+          message: form.message.trim(),
+          lang,
+          source_path: `/ai/${slug}`,
+        })
+        if (!result) throw new Error('Submit failed')
+        requestId = result.request_id
+      } else {
+        await new Promise((resolve) => window.setTimeout(resolve, 750))
+      }
+
       setConfirmation({
-        requestId: `AI-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`,
+        requestId,
         phone: form.phone,
       })
       setForm({ name: '', phone: '', email: '', clinic: '', message: '' })
+    } catch {
+      setSubmitError(labels.submitError)
+    } finally {
       setSubmitting(false)
-    }, 750)
+    }
   }
 
   return (
@@ -261,6 +301,10 @@ export default function AIProductPage({ slug }: { slug: string }) {
             </motion.article>
           </motion.div>
 
+          {view.slug === 'radiology' ? <RadiologyDemo lang={contentLang} /> : null}
+          {view.slug === 'ultrasound' ? <UltrasoundDemo lang={contentLang} /> : null}
+          {view.slug === 'clinical-research' ? <ClinicalResearchDemo lang={contentLang} /> : null}
+
           {view.cases.length > 0 && (
             <div id="ai-cases" className="ai-product-cases">
               <div className="ai-product-cases__head">
@@ -335,6 +379,7 @@ export default function AIProductPage({ slug }: { slug: string }) {
               >
                 {submitting ? labels.submitting : labels.demoTitle}
               </button>
+              {submitError ? <p className="ai-demo__error" role="alert">{submitError}</p> : null}
             </form>
           </div>
 

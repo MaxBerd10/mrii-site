@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import LanguageSwitcher from './LanguageSwitcher'
@@ -92,7 +93,7 @@ export default function Nav() {
   const isDoctorProfile = path.startsWith('/doctors/')
 
   return (
-    <header className={`hp-nav ${scrolled ? 'hp-nav--scrolled' : ''}`}>
+    <header className={`hp-nav${scrolled ? ' hp-nav--scrolled' : ''}${mobileOpen ? ' is-menu-open' : ''}`}>
       <div className="hp-nav__bar">
         <a href="/" className="hp-nav__logo" onClick={closeMenus} aria-label={t.nav.brand}>
           <img src="/images/fjsti-logo.png" alt="" className="hp-nav__logo-img" width={36} height={36} />
@@ -204,62 +205,97 @@ export default function Nav() {
           <LanguageSwitcher compact />
           <button
             type="button"
-            className="hp-nav__burger"
+            className={`hp-nav__burger${mobileOpen ? ' is-open' : ''}`}
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? t.nav.closeMenu : t.nav.openMenu}
             aria-expanded={mobileOpen}
+            aria-controls="hp-mobile-menu"
           >
-            <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
-              {mobileOpen ? (
-                <path
-                  d="M4 4L18 18M18 4L4 18"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              ) : (
-                <path
-                  d="M3 6h16M3 11h16M3 16h16"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              )}
-            </svg>
+            <span className="hp-nav__burger-lines" aria-hidden>
+              <span />
+              <span />
+              <span />
+            </span>
           </button>
         </div>
       </div>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            className="container-main hp-nav__drawer"
-            key="mobile-drawer"
-            initial={reduce ? false : { opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduce ? undefined : { opacity: 0, y: -6 }}
-            transition={{ duration: 0.18, ease: EASE_OUT }}
-          >
-            {navItems.map((item, i) => (
-              <div key={i}>
-                <a href={item.href} onClick={closeMenus} className="hp-nav__drawer-link">
-                  {item.label}
-                </a>
-                {item.children.map((child, j) => (
-                  <a key={j} href={child.href} onClick={closeMenus} className="hp-nav__drawer-sub">
-                    {child.label}
-                  </a>
-                ))}
-              </div>
-            ))}
-            {!isDoctorProfile && (
-              <a href="/contacts" onClick={closeMenus} className="hp-btn hp-btn--primary" style={{ marginTop: 20 }}>
-                {t.nav.bookAppointment}
-              </a>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {createPortal(
+        <AnimatePresence>
+          {mobileOpen ? (
+            <div className="hp-nav__portal" key="mobile-portal">
+              <motion.button
+                key="mobile-scrim"
+                type="button"
+                className="hp-nav__scrim"
+                aria-label={t.nav.closeMenu}
+                onClick={closeMenus}
+                initial={reduce ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={reduce ? undefined : { opacity: 0 }}
+                transition={{ duration: 0.18 }}
+              />
+              <motion.nav
+                id="hp-mobile-menu"
+                className="hp-nav__drawer"
+                key="mobile-drawer"
+                aria-label={t.nav.institute}
+                initial={reduce ? false : { y: -18 }}
+                animate={{ y: 0 }}
+                exit={reduce ? undefined : { y: -12 }}
+                transition={{ duration: 0.22, ease: EASE_OUT }}
+              >
+                <div className="hp-nav__drawer-list">
+                  {navItems.map((item, i) => (
+                    <div key={i} className="hp-nav__drawer-group">
+                      <a
+                        href={item.href}
+                        onClick={closeMenus}
+                        className={`hp-nav__drawer-link${isActive(item.href) ? ' is-active' : ''}`}
+                      >
+                        {item.label}
+                      </a>
+                      {item.children.length > 0 ? (
+                        <div className="hp-nav__drawer-subs">
+                          {item.children.map((child, j) => (
+                            <a
+                              key={j}
+                              href={child.href}
+                              onClick={closeMenus}
+                              className={`hp-nav__drawer-sub${isActive(child.href) ? ' is-active' : ''}`}
+                            >
+                              {child.label}
+                            </a>
+                          ))}
+                        </div>
+                      ) : null}
+                    </div>
+                  ))}
+                </div>
+
+                {!isDoctorProfile ? (
+                  <div className="hp-nav__drawer-foot">
+                    <a
+                      className="hp-nav__drawer-phone"
+                      href={`tel:${t.topBar.phone.replace(/[^\d+]/g, '')}`}
+                    >
+                      {t.topBar.phone}
+                    </a>
+                    <a
+                      href="/contacts?intent=booking"
+                      onClick={closeMenus}
+                      className="hp-btn hp-btn--primary hp-nav__drawer-cta"
+                    >
+                      {t.nav.bookAppointment}
+                    </a>
+                  </div>
+                ) : null}
+              </motion.nav>
+            </div>
+          ) : null}
+        </AnimatePresence>,
+        document.body,
+      )}
     </header>
   )
 }

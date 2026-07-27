@@ -156,3 +156,44 @@ class EducationAPI(APIView):
         lang = resolve_lang(request)
         qs = models.EducationTrack.objects.filter(is_active=True).prefetch_related('programs')
         return Response(serializers.EducationTrackSerializer(qs, many=True, context=ctx(request, lang)).data)
+
+
+class InquiryCreateAPI(APIView):
+    """Public POST for contact / AI demo / consult leads → Django admin."""
+
+    authentication_classes = []
+
+    def post(self, request):
+        serializer = serializers.InquiryCreateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        inquiry = serializer.save()
+        return Response(
+            {
+                'ok': True,
+                'request_id': inquiry.request_id,
+                'intent': inquiry.intent,
+            },
+            status=201,
+        )
+
+
+class InquiryAdviceAPI(APIView):
+    """Public GET: patient checks advice by request_id (no private medical dump)."""
+
+    authentication_classes = []
+
+    def get(self, request, request_id: str):
+        inquiry = models.Inquiry.objects.filter(request_id__iexact=request_id.strip()).first()
+        if not inquiry:
+            return Response({'detail': 'Murojaat topilmadi.'}, status=404)
+        advice = (inquiry.advice or '').strip()
+        return Response(
+            {
+                'request_id': inquiry.request_id,
+                'status': inquiry.status,
+                'has_advice': bool(advice),
+                'advice': advice if advice else '',
+                'name': inquiry.name,
+                'created_at': inquiry.created_at,
+            }
+        )

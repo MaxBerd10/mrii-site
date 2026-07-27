@@ -201,24 +201,22 @@ export default function Clinic({ view = 'overview' }: { view?: ClinicView }) {
               <span className="clinic-intro__dot" aria-hidden />
               {t.clinic.label}
             </span>
-            <div className="clinic-intro__row">
-              <h1 className="clinic-intro__title">
-                {isFocusedView ? (
-                  focusedTitle
-                ) : (
-                  <>
-                    {t.clinic.title1} <em>{t.clinic.title2}</em>
-                  </>
-                )}
-              </h1>
-              <a href="/contacts?intent=booking" className="clinic-intro__cta">
-                {t.clinic.bookBtn}
-                <Arrow />
-              </a>
-            </div>
+            <h1 className="clinic-intro__title">
+              {isFocusedView ? (
+                focusedTitle
+              ) : (
+                <>
+                  {t.clinic.title1} <em>{t.clinic.title2}</em>
+                </>
+              )}
+            </h1>
             <p className="clinic-intro__desc">
               {isFocusedView ? t.clinic.catalogDescription : t.clinic.description}
             </p>
+            <a href="/contacts?intent=booking" className="clinic-intro__cta">
+              {t.clinic.bookBtn}
+              <Arrow />
+            </a>
           </header>
 
           <div className="clinic-finder">

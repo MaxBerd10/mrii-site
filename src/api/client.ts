@@ -145,3 +145,75 @@ export function fetchNewsArticle(slug: string, lang: Lang) {
 export function fetchAIProduct(slug: string, lang: Lang) {
   return getJson<CmsAIDetail>(`/api/ai-products/${slug}/`, lang)
 }
+
+export type InquiryIntent =
+  | 'booking'
+  | 'sponsor'
+  | 'education'
+  | 'ai'
+  | 'international'
+  | 'consult'
+
+export type InquiryPayload = {
+  intent: InquiryIntent
+  name: string
+  phone: string
+  email?: string
+  topic?: string
+  clinic?: string
+  product_slug?: string
+  medical_history?: string
+  allergies?: string
+  message?: string
+  lang?: string
+  source_path?: string
+}
+
+export type InquiryResponse = {
+  ok: boolean
+  request_id: string
+  intent: InquiryIntent
+}
+
+export type InquiryAdvice = {
+  request_id: string
+  status: string
+  has_advice: boolean
+  advice: string
+  name: string
+  created_at: string
+}
+
+export async function submitInquiry(payload: InquiryPayload): Promise<InquiryResponse | null> {
+  if (!API_URL) return null
+  const res = await fetch(`${API_URL}/api/inquiries/`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+  if (!res.ok) {
+    let detail = 'Submit failed'
+    try {
+      const data = (await res.json()) as { detail?: string }
+      if (data.detail) detail = data.detail
+    } catch {
+      /* ignore */
+    }
+    throw new Error(detail)
+  }
+  return (await res.json()) as InquiryResponse
+}
+
+export async function fetchInquiryAdvice(requestId: string): Promise<InquiryAdvice | null> {
+  if (!API_URL) return null
+  const id = encodeURIComponent(requestId.trim())
+  const res = await fetch(`${API_URL}/api/inquiries/${id}/`, {
+    headers: { Accept: 'application/json' },
+  })
+  if (res.status === 404) return null
+  if (!res.ok) throw new Error('Lookup failed')
+  return (await res.json()) as InquiryAdvice
+}

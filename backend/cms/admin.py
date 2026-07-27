@@ -517,6 +517,81 @@ class InternationalServiceAdmin(AutoTranslateAdmin):
     )
 
 
+@admin.register(models.Inquiry, site=mrii_admin_site)
+class InquiryAdmin(admin.ModelAdmin):
+    list_display = (
+        'request_id',
+        'intent',
+        'name',
+        'phone',
+        'status',
+        'has_advice_display',
+        'created_at',
+    )
+    list_filter = ('intent', 'status', 'created_at')
+    search_fields = (
+        'request_id',
+        'name',
+        'phone',
+        'email',
+        'topic',
+        'clinic',
+        'product_slug',
+        'message',
+        'medical_history',
+        'allergies',
+    )
+    list_editable = ('status',)
+    readonly_fields = (
+        'request_id',
+        'intent',
+        'name',
+        'phone',
+        'email',
+        'topic',
+        'clinic',
+        'product_slug',
+        'medical_history',
+        'allergies',
+        'message',
+        'lang',
+        'source_path',
+        'created_at',
+        'updated_at',
+    )
+    date_hierarchy = 'created_at'
+    ordering = ('-created_at',)
+    fieldsets = (
+        ('Holat va javob', {
+            'fields': ('status', 'advice', 'notes'),
+            'description': '«Javob / maslahat» to‘ldirilsa bemor murojaat raqami orqali o‘qiydi. Telefon orqali ham bog‘laning.',
+        }),
+        ('Bemor anketasi', {
+            'fields': (
+                'request_id',
+                'intent',
+                'name',
+                'phone',
+                'email',
+                'medical_history',
+                'allergies',
+                'message',
+                'topic',
+                'clinic',
+                'product_slug',
+            ),
+        }),
+        ('Meta', {'fields': ('lang', 'source_path', 'created_at', 'updated_at')}),
+    )
+
+    @admin.display(boolean=True, description='Javob')
+    def has_advice_display(self, obj):
+        return bool((obj.advice or '').strip())
+
+    def has_add_permission(self, request):
+        return False
+
+
 # Keep default site labels in sync if anything still references admin.site
 admin.site.site_header = mrii_admin_site.site_header
 admin.site.site_title = mrii_admin_site.site_title

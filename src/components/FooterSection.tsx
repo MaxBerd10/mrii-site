@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
+import { isCmsEnabled, submitInquiry } from '../api/client'
 import { usePageNav } from './PageTransition'
 import { rise3d } from '../lib/animations'
 
@@ -20,7 +21,7 @@ function readIntentFromUrl(): ContactIntent {
 }
 
 export default function FooterSection() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const { home } = useCms()
   const { path, navigate } = usePageNav()
   const copyright = home?.settings?.copyright || t.footer.copyright
@@ -28,6 +29,7 @@ export default function FooterSection() {
   const [intent, setIntent] = useState<ContactIntent>(() => readIntentFromUrl())
   const [form, setForm] = useState({ name: '', phone: '', email: '', service: '', message: '' })
   const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
   const [confirmation, setConfirmation] = useState<null | {
     requestId: string
     service: string
@@ -68,21 +70,44 @@ export default function FooterSection() {
     navigate(url)
   }
 
-  const submitBooking = (event: FormEvent<HTMLFormElement>) => {
+  const submitBooking = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (submitting) return
     setSubmitting(true)
+    setSubmitError('')
 
-    window.setTimeout(() => {
+    const localId = `FJSTI-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`
+    try {
+      let requestId = localId
+      if (isCmsEnabled()) {
+        const result = await submitInquiry({
+          intent,
+          name: form.name.trim(),
+          phone: form.phone.trim(),
+          email: form.email.trim(),
+          topic: form.service.trim(),
+          message: form.message.trim(),
+          lang,
+          source_path: typeof window !== 'undefined' ? window.location.pathname + window.location.search : path,
+        })
+        if (!result) throw new Error('Submit failed')
+        requestId = result.request_id
+      } else {
+        await new Promise((resolve) => window.setTimeout(resolve, 750))
+      }
+
       setConfirmation({
-        requestId: `FJSTI-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`,
+        requestId,
         service: form.service,
         phone: form.phone,
         successDesc: intentCopy.successDesc,
       })
       setForm({ name: '', phone: '', email: '', service: '', message: '' })
+    } catch {
+      setSubmitError(t.footer.submitError)
+    } finally {
       setSubmitting(false)
-    }, 750)
+    }
   }
 
   return (
@@ -182,6 +207,7 @@ export default function FooterSection() {
             <button type="submit" className="hp-btn hp-btn--primary" disabled={submitting}>
               {submitting ? t.footer.submitting : intentCopy.submit}
             </button>
+            {submitError ? <p className="hp-book__error" role="alert">{submitError}</p> : null}
           </form>
         </motion.div>
 

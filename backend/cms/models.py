@@ -384,3 +384,61 @@ class InternationalService(TimeStampedModel, OrderedModel):
 
     def __str__(self):
         return self.title_uz
+
+
+class Inquiry(TimeStampedModel):
+    """Public lead from contact / AI demo forms — managed in admin."""
+
+    class Intent(models.TextChoices):
+        BOOKING = 'booking', 'Qabulga yozilish'
+        SPONSOR = 'sponsor', 'Homiy / tadqiqot'
+        EDUCATION = 'education', 'Klinik baza'
+        AI = 'ai', 'AI demo'
+        INTERNATIONAL = 'international', 'Xalqaro bo‘lim'
+        CONSULT = 'consult', 'Maslahat so‘rovi'
+
+    class Status(models.TextChoices):
+        NEW = 'new', 'Yangi'
+        CONTACTED = 'contacted', 'Bog‘lanildi'
+        CLOSED = 'closed', 'Yopildi'
+
+    request_id = models.CharField('Murojaat raqami', max_length=32, unique=True, db_index=True)
+    intent = models.CharField(
+        'Maqsad',
+        max_length=32,
+        choices=Intent.choices,
+        default=Intent.BOOKING,
+        db_index=True,
+    )
+    status = models.CharField(
+        'Holat',
+        max_length=16,
+        choices=Status.choices,
+        default=Status.NEW,
+        db_index=True,
+    )
+    name = models.CharField('Ism familiya', max_length=255)
+    phone = models.CharField('Telefon', max_length=64)
+    email = models.EmailField('Email', blank=True)
+    topic = models.CharField('Mavzu / xizmat', max_length=255, blank=True)
+    clinic = models.CharField('Klinika / tashkilot', max_length=255, blank=True)
+    product_slug = models.SlugField('AI mahsulot', max_length=128, blank=True)
+    medical_history = models.TextField('Kasallik tarixi', blank=True)
+    allergies = models.TextField('Allergiya', blank=True)
+    message = models.TextField('Shikoyat / xabar', blank=True)
+    advice = models.TextField(
+        'Javob / maslahat',
+        blank=True,
+        help_text='Bemor uchun javob. To‘ldirilsa, murojaat raqami orqali ko‘rinadi.',
+    )
+    lang = models.CharField('Til', max_length=8, blank=True)
+    source_path = models.CharField('Manba sahifa', max_length=512, blank=True)
+    notes = models.TextField('Ichki izoh', blank=True, help_text='Faqat admin uchun.')
+
+    class Meta:
+        verbose_name = 'Murojaat'
+        verbose_name_plural = 'Murojaatlar'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'{self.request_id} — {self.name}'

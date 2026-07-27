@@ -326,3 +326,56 @@ class HeroSerializer(LangContextMixin, serializers.ModelSerializer):
 
     def get_image(self, obj):
         return media_url(self.request, obj.image, obj.image_url)
+
+
+class InquiryCreateSerializer(serializers.Serializer):
+    intent = serializers.ChoiceField(choices=models.Inquiry.Intent.values)
+    name = serializers.CharField(max_length=255)
+    phone = serializers.CharField(max_length=64)
+    email = serializers.EmailField(required=False, allow_blank=True, default='')
+    topic = serializers.CharField(max_length=255, required=False, allow_blank=True, default='')
+    clinic = serializers.CharField(max_length=255, required=False, allow_blank=True, default='')
+    product_slug = serializers.SlugField(max_length=128, required=False, allow_blank=True, default='')
+    medical_history = serializers.CharField(required=False, allow_blank=True, default='')
+    allergies = serializers.CharField(required=False, allow_blank=True, default='')
+    message = serializers.CharField(required=False, allow_blank=True, default='')
+    lang = serializers.CharField(max_length=8, required=False, allow_blank=True, default='')
+    source_path = serializers.CharField(max_length=512, required=False, allow_blank=True, default='')
+
+    def validate_phone(self, value: str) -> str:
+        digits = ''.join(ch for ch in value if ch.isdigit() or ch == '+')
+        if len(digits.replace('+', '')) < 7:
+            raise serializers.ValidationError('Telefon raqami juda qisqa.')
+        return value.strip()
+
+    def validate(self, attrs):
+        if attrs.get('intent') == models.Inquiry.Intent.CONSULT:
+            if not (attrs.get('message') or '').strip():
+                raise serializers.ValidationError({'message': 'Shikoyatni yozing.'})
+        return attrs
+
+    def create(self, validated_data):
+        from django.utils import timezone
+
+        year = timezone.now().year
+        suffix = timezone.now().strftime('%H%M%S')[-6:]
+        intent = validated_data['intent']
+        if intent == models.Inquiry.Intent.AI:
+            prefix = 'AI'
+        elif intent == models.Inquiry.Intent.CONSULT:
+            prefix = 'MAS'
+        else:
+            prefix = 'FJSTI'
+        request_id = f'{prefix}-{year}-{suffix}'
+        if models.Inquiry.objects.filter(request_id=request_id).exists():
+            request_id = f'{prefix}-{year}-{timezone.now().strftime("%f")[-6:]}'
+        return models.Inquiry.objects.create(request_id=request_id, **validated_data)
+
+
+class InquiryAdviceSerializer(serializers.Serializer):
+    request_id = serializers.CharField()
+    status = serializers.CharField()
+    has_advice = serializers.BooleanField()
+    advice = serializers.CharField(allow_blank=True)
+    name = serializers.CharField()
+    created_at = serializers.DateTimeField()

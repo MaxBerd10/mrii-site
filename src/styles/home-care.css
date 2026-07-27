@@ -1853,7 +1853,7 @@ a.hc-card:hover {
 
 @media (max-width: 599px) {
   .hc-orbit {
-    height: 220vh;
+    height: 160vh;
   }
 
   .hc-orbit__card {
@@ -4628,17 +4628,29 @@ a.hc-card:active {
 }
 
 @media (max-width: 760px) {
+  /* Phone: drop scroll-theater. Stack claim → CTAs → team photo. */
   .hc-hero--dna .hc-hero__track {
-    height: max(132svh, 900px);
+    height: auto;
   }
 
   .hc-hero--dna .hc-hero__sticky {
-    height: 100svh;
-    min-height: 700px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    padding: 84px 0 0;
   }
 
   .hc-hero--dna .hc-hero__dna {
-    inset: 34% 0 0;
+    position: relative;
+    inset: auto;
+    order: 2;
+    width: 100%;
+    height: min(72vw, 380px);
+    min-height: 280px;
+    margin-block-end: 8px;
     background: #f6f8fa;
   }
 
@@ -4648,9 +4660,8 @@ a.hc-card:active {
     height: 100%;
     object-fit: contain;
     object-position: center bottom;
-    transform:
-      translate3d(0, calc(var(--hero-progress) * -0.5vh), 0)
-      scale(calc(1 + var(--hero-progress) * 0.014));
+    transform: none;
+    will-change: auto;
   }
 
   .hc-hero--dna .hc-hero__dna span {
@@ -4658,40 +4669,54 @@ a.hc-card:active {
       linear-gradient(
         180deg,
         #f6f8fa 0%,
-        rgba(246, 248, 250, 0.92) 5%,
-        transparent 16%
+        rgba(246, 248, 250, 0.92) 8%,
+        transparent 22%
       );
   }
 
+  .hc-hero--dna .hc-hero__stage {
+    position: relative;
+    order: 1;
+    height: auto;
+    padding: 0 20px 18px;
+  }
+
   .hc-hero--dna .hc-hero__copy {
-    inset: 92px 22px auto;
+    position: relative;
+    inset: auto;
     width: auto;
-    max-width: 390px;
-    gap: 14px;
+    max-width: none;
+    gap: 12px;
     opacity: 1;
     transform: none;
   }
 
   .hc-hero--dna .hc-display {
-    /* Same 15-character Russian word as the desktop cap above; the phone
-       breakpoint needs its own headroom or the hero splits it mid-word. */
-    max-width: 13ch;
-    font-size: clamp(2.25rem, 10vw, 3.05rem);
-    line-height: 1;
+    max-width: 14ch;
+    font-size: clamp(1.85rem, 8.4vw, 2.55rem);
+    line-height: 1.05;
   }
 
   .hc-hero--dna .hc-lead {
-    max-width: 32ch;
-    font-size: 0.92rem;
-    line-height: 1.45;
+    max-width: none;
+    font-size: 0.94rem;
+    line-height: 1.5;
     color: #55677a;
     text-shadow: none;
   }
 
+  .hc-hero--dna .hc-hero__cta {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-block-start: 6px;
+  }
+
   .hc-hero--dna .hc-btn {
-    min-height: 44px;
+    width: 100%;
+    min-height: 48px;
     padding-inline: 18px;
-    font-size: 0.86rem;
+    font-size: 0.92rem;
   }
 
   .hc-hero--dna .hc-hero__cue {
@@ -4706,8 +4731,8 @@ a.hc-card:active {
 
   .hc-hero--dna .hc-hero__sticky {
     position: relative;
-    height: 100svh;
-    min-height: 680px;
+    height: auto;
+    min-height: 0;
   }
 
   .hc-hero--dna .hc-hero__dna {
@@ -4736,8 +4761,8 @@ a.hc-card:active {
 
 @media (max-width: 760px) and (prefers-reduced-motion: reduce) {
   .hc-hero--dna .hc-hero__sticky {
-    height: 100svh;
-    min-height: 700px;
+    height: auto;
+    min-height: 0;
   }
 
   .hc-hero--dna .hc-hero__copy {

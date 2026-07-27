@@ -149,7 +149,7 @@ export function CareAi() {
             <Reveal key={product.id} delay={i * 70}>
               <a
                 className="hc-card"
-                href={`/ai/${product.id}`}
+                href={`/ai/${product.id === 'doctor' ? 'doctor-assistant' : product.id}`}
                 style={{ height: '100%' }}
                 onPointerMove={pointAiCard}
                 onPointerLeave={resetAiCard}

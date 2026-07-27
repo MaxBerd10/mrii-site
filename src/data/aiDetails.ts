@@ -172,6 +172,7 @@ export const aiPageLabels: Record<ContentLang, {
   emailField: string
   messageField: string
   submitting: string
+  submitError: string
   successTitle: string
   successDesc: string
   requestNumber: string
@@ -195,6 +196,7 @@ export const aiPageLabels: Record<ContentLang, {
     emailField: 'Email',
     messageField: 'Izoh',
     submitting: 'Yuborilmoqda...',
+    submitError: 'Yuborishda xatolik. Qayta urinib ko‘ring yoki qo‘ng‘iroq qiling.',
     successTitle: 'Demo so‘rovi qabul qilindi',
     successDesc: 'Fargʻona Jamoat Salomatligi Tibbiyot Instituti AI jamoasi ma’lumotlarni ko‘rib chiqib, demo vaqtini tasdiqlash uchun bog‘lanadi.',
     requestNumber: 'So‘rov raqami',
@@ -218,6 +220,7 @@ export const aiPageLabels: Record<ContentLang, {
     emailField: 'Email',
     messageField: 'Комментарий',
     submitting: 'Отправляем...',
+    submitError: 'Ошибка отправки. Попробуйте ещё раз или позвоните.',
     successTitle: 'Заявка на демо принята',
     successDesc: 'Команда AI Ферганский медицинский институт общественного здоровья проверит данные и свяжется для подтверждения времени демо.',
     requestNumber: 'Номер заявки',
@@ -241,6 +244,7 @@ export const aiPageLabels: Record<ContentLang, {
     emailField: 'Email',
     messageField: 'Comment',
     submitting: 'Sending...',
+    submitError: 'Could not send. Please try again or call us.',
     successTitle: 'Demo request received',
     successDesc: 'The Ferghana Medical Institute of Public Health AI team will review your details and confirm a demo time.',
     requestNumber: 'Request number',
