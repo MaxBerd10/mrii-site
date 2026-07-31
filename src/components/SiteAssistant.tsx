@@ -272,7 +272,7 @@ export default function SiteAssistant() {
         onClick={() => setOpen((v) => !v)}
       >
         <RobotHead />
-        {!open ? <span className="site-assistant__fab-dot" aria-hidden /> : null}
+        {!open ? <span className="site-assistant__fab-dot" aria-hidden>AI</span> : null}
       </button>
     </div>
   )

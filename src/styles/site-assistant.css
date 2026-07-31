@@ -113,13 +113,20 @@
 
 .site-assistant__fab-dot {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #22c55e;
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+  top: 6px;
+  right: 6px;
+  min-width: 22px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #0ea5e9;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 18px;
+  text-align: center;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.95);
 }
 
 .site-assistant__panel {
