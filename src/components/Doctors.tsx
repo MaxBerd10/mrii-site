@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import SectionHeader from './ui/SectionHeader'
-import { staggerContainer, rise3d, blurUp } from '../lib/animations'
+import { staggerContainer, fadeUp, blurUp } from '../lib/animations'
 import { doctorProfiles, getSpecialtyGroup, type SpecialtyGroup, type StaffKind } from '../data/doctors'
 import { averageRating, getDoctorReviews } from '../lib/doctorReviews'
 import { getDoctorTurnMedia } from '../data/doctorTurnMedia'
@@ -224,28 +224,10 @@ function DoctorPortrait({
   specialty: string
   video?: string
 }) {
-  const ref = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const reduceMotion = usePrefersReducedMotion()
-  const [looking, setLooking] = useState(false)
-  const [look, setLook] = useState({ x: 0, y: 0 })
   const [failed, setFailed] = useState(false)
   const useVideo = Boolean(video) && !reduceMotion && !failed
-
-  const onMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (reduceMotion || useVideo) return
-    const el = ref.current
-    if (!el) return
-    const rect = el.getBoundingClientRect()
-    if (rect.width < 1 || rect.height < 1) return
-    const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2
-    const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2
-    setLooking(true)
-    setLook({
-      x: Math.max(-1, Math.min(1, x)),
-      y: Math.max(-1, Math.min(1, y)),
-    })
-  }
 
   const playVideo = () => {
     const el = videoRef.current
@@ -276,21 +258,13 @@ function DoctorPortrait({
     }
   }
 
-  const transform = reduceMotion || useVideo
-    ? undefined
-    : `scale(${looking ? 1.1 : 1.04}) translate3d(${look.x * 14}px, ${look.y * 10}px, 0) rotateY(${look.x * 9}deg) rotateX(${-look.y * 7}deg)`
-
   return (
     <div
-      ref={ref}
-      className={`doctor-card__media${looking ? ' is-looking' : ''}${useVideo ? ' doctor-card__media--video' : ''}`}
-      onPointerMove={onMove}
+      className={`doctor-card__media${useVideo ? ' doctor-card__media--video' : ''}`}
       onPointerEnter={() => {
         if (useVideo) playVideo()
       }}
       onPointerLeave={() => {
-        setLooking(false)
-        setLook({ x: 0, y: 0 })
         if (useVideo) stopVideo()
       }}
     >
@@ -317,7 +291,6 @@ function DoctorPortrait({
           alt={alt}
           loading="lazy"
           className="doctor-card__photo"
-          style={transform ? { transform } : undefined}
           draggable={false}
         />
       )}
@@ -445,9 +418,9 @@ export function DoctorCard({
     <motion.a
       href={href}
       className="doctor-card doctor-card--link"
-      variants={rise3d}
+      variants={fadeUp}
       whileHover={{ y: -7, transition: { type: 'spring', stiffness: 260, damping: 20 } }}
-      style={{ transformStyle: 'preserve-3d', height: '100%' }}
+      style={{ height: '100%' }}
     >
       {body}
     </motion.a>

@@ -13,25 +13,28 @@ import BackToTop from './components/BackToTop'
 import SiteAssistant from './components/SiteAssistant'
 import SpecialtyPage from './pages/SpecialtyPage'
 import NewsPage from './pages/NewsPage'
-import AIProductPage from './pages/AIProductPage'
-import DoctorAssistantPage from './pages/DoctorAssistantPage'
+import AiShifokorRedirect from './components/AiShifokorRedirect'
 import DoctorPage from './pages/DoctorPage'
 import NotFoundPage from './pages/NotFoundPage'
 import HomePage from './pages/HomePage'
 import HomeCarePage from './pages/HomeCarePage'
 import PageShell from './pages/PageShell'
 import PricesPage from './pages/PricesPage'
+import ClinicGalleryPage from './pages/ClinicGalleryPage'
+import ClinicTourPage from './pages/ClinicTourPage'
 import { PageTransitionProvider, usePageNav } from './components/PageTransition'
 import PageEnter from './components/PageEnter'
 
 function AppRoutes() {
-  const { path } = usePageNav()
+  const { path, busy } = usePageNav()
 
   const isClinicServices = path === '/clinic/services'
   const isClinicDiagnostics = path === '/clinic/diagnostics'
+  const isClinicGallery = path === '/clinic/gallery'
+  const isClinicTour = path === '/clinic/tour'
   const isClinicIndex = path === '/clinic'
   const specialtyMatch =
-    isClinicServices || isClinicDiagnostics ? null : path.match(/^\/clinic\/([^/]+)$/)
+    isClinicServices || isClinicDiagnostics || isClinicGallery || isClinicTour ? null : path.match(/^\/clinic\/([^/]+)$/)
   const specialtySlug = specialtyMatch?.[1] ?? null
   const newsMatch = path.match(/^\/news\/([^/]+)$/)
   const newsSlug = newsMatch?.[1] ?? null
@@ -39,6 +42,8 @@ function AppRoutes() {
   const aiSlug = aiMatch?.[1] ?? null
   const doctorMatch = path.match(/^\/doctors\/([^/]+)$/)
   const doctorSlug = doctorMatch?.[1] ?? null
+  const isDoctorPortal = path === '/doctor' || path === '/doctor/login'
+  const isAiLegacyRoute = aiSlug !== null
   const isDoctorDetail = doctorSlug !== null
 
   const isHome = path === '/'
@@ -53,10 +58,8 @@ function AppRoutes() {
     body = <SpecialtyPage slug={specialtySlug} />
   } else if (newsSlug) {
     body = <NewsPage slug={newsSlug} />
-  } else if (aiSlug === 'doctor-assistant' || aiSlug === 'doctor') {
-    body = <DoctorAssistantPage />
-  } else if (aiSlug) {
-    body = <AIProductPage slug={aiSlug} />
+  } else if (isDoctorPortal || isAiLegacyRoute) {
+    body = <AiShifokorRedirect />
   } else if (doctorSlug) {
     body = <DoctorPage slug={doctorSlug} />
   } else if (isHome) {
@@ -87,6 +90,18 @@ function AppRoutes() {
     body = (
       <PageShell className="page-shell--clinic">
         <Clinic view="diagnostics" />
+      </PageShell>
+    )
+  } else if (isClinicGallery) {
+    body = (
+      <PageShell className="page-shell--clinic-gallery">
+        <ClinicGalleryPage />
+      </PageShell>
+    )
+  } else if (isClinicTour) {
+    body = (
+      <PageShell className="page-shell--clinic-tour">
+        <ClinicTourPage />
       </PageShell>
     )
   } else if (path === '/prices') {
@@ -151,14 +166,16 @@ function AppRoutes() {
     <div
       className="site-shell min-h-screen"
       style={{ backgroundColor: 'var(--background)', color: 'var(--foreground)' }}
+      inert={busy || undefined}
+      aria-hidden={busy || undefined}
     >
-      {!isDoctorDetail && <Nav />}
+      {!isDoctorDetail && !isDoctorPortal && !isAiLegacyRoute && <Nav />}
       {/* The cinematic footer is the homepage's own closing moment and ships
           with it; no route adds a footer here. Inner pages end on their own
           last section. */}
       <PageEnter path={path}>{body}</PageEnter>
-      {!isDoctorDetail && <BackToTop />}
-      {!isDoctorDetail && <SiteAssistant />}
+      {!isDoctorDetail && !isDoctorPortal && !isAiLegacyRoute && <BackToTop />}
+      {!isDoctorDetail && !isDoctorPortal && !isAiLegacyRoute && <SiteAssistant />}
     </div>
   )
 }

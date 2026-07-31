@@ -18,7 +18,7 @@ const TIER_ORDER: PriceTier[] = ['Layt', 'Standart', 'Premium']
 
 export default function PricesPage() {
   const { lang, t } = useLanguage()
-  const [tab, setTab] = useState<Tab>('packages')
+  const [tab, setTab] = useState<Tab>('catalog')
   const [directionId, setDirectionId] = useState(CHECKUP_DIRECTIONS[0].id)
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState('all')
@@ -81,20 +81,20 @@ export default function PricesPage() {
           <button
             type="button"
             role="tab"
-            aria-selected={tab === 'packages'}
-            className={`prices-tabs__btn${tab === 'packages' ? ' is-active' : ''}`}
-            onClick={() => setTab('packages')}
-          >
-            {t.prices.tabPackages}
-          </button>
-          <button
-            type="button"
-            role="tab"
             aria-selected={tab === 'catalog'}
             className={`prices-tabs__btn${tab === 'catalog' ? ' is-active' : ''}`}
             onClick={() => setTab('catalog')}
           >
             {t.prices.tabCatalog}
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={tab === 'packages'}
+            className={`prices-tabs__btn${tab === 'packages' ? ' is-active' : ''}`}
+            onClick={() => setTab('packages')}
+          >
+            {t.prices.tabPackages}
           </button>
         </div>
 

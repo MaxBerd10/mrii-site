@@ -213,6 +213,7 @@
   font-size: 0.82rem;
   font-weight: 700;
   transition: color 160ms var(--ease), background 160ms var(--ease);
+  scroll-margin-top: 96px;
 }
 
 .research-toolbar__btn:hover {
@@ -312,15 +313,14 @@
   gap: 7px 22px;
   align-items: center;
   min-height: 112px;
-  padding: 20px 4px;
+  padding: 20px 14px;
   border-bottom: 1px solid var(--surface-edge);
   color: inherit;
   background: transparent;
-  transition: padding 180ms var(--ease), background 180ms var(--ease);
+  transition: background 180ms var(--ease);
 }
 
 .research-card:hover {
-  padding-inline: 14px;
   background: color-mix(in srgb, var(--brand) 5%, transparent);
 }
 

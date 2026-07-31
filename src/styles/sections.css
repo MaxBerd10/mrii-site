@@ -1106,21 +1106,15 @@
   height: 220px;
   overflow: hidden;
   background: var(--surface-soft);
-  perspective: 720px;
   touch-action: pan-y;
 }
 .doctor-card__media img,
 .doctor-card__photo {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  transform-origin: center 35%;
-  will-change: transform;
-  transition: transform 0.18s ease-out;
-}
-.doctor-card__media.is-looking img {
-  transition: transform 0.08s linear;
 }
 .doctor-card__badge { position: absolute; top: 14px; left: 14px; padding: 6px 10px; border-radius: 999px; background: var(--surface-glass); font-size: 9px; font-weight: 700; text-transform: uppercase; z-index: 1; }
 .doctor-card__body { display: flex; flex: 1; flex-direction: column; padding: 20px; }
@@ -1665,6 +1659,15 @@
 }
 .ai-demo__copy h2 { margin: 0 0 12px; font-size: clamp(30px,4vw,46px); letter-spacing: -.05em; }
 .ai-demo__copy p { margin: 0; max-width: 36ch; color: var(--text-soft); line-height: 1.65; }
+.ai-demo__platform {
+  display: inline-flex;
+  margin-top: 18px;
+  color: var(--brand, #0ea5e9);
+  font-size: 14px;
+  font-weight: 750;
+  text-decoration: none;
+}
+.ai-demo__platform:hover { text-decoration: underline; }
 .ai-demo__form { display: grid; gap: 12px; }
 .ai-demo__row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .ai-demo input,.ai-demo textarea {
@@ -1724,6 +1727,7 @@
 
 /* Footer */
 .hp-footer { padding: 44px 0 26px; background: var(--surface); }
+
 .hp-book {
   position: relative;
   display: grid;

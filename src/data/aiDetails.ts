@@ -18,7 +18,7 @@ export const aiProducts: AIProductDetail[] = [
     slug: 'doctor-assistant',
     content: {
       uz: {
-        overview: 'AI Doctor Assistant qabulda shifokorga real vaqtda yordam beradi: anamnezni tahlil qiladi, protokol shakllantiradi, klinik tavsiyalar beradi va ICD kodlashni tezlashtiradi.',
+        overview: 'AiShifokor qabulda shifokorga real vaqtda yordam beradi: anamnezni tahlil qiladi, protokol shakllantiradi, klinik tavsiyalar beradi va ICD kodlashni tezlashtiradi.',
         audience: 'Klinikalar, ambulatoriya va ko‘p tarmoqli markazlar uchun.',
         outcomes: ['Hujjatlashtirish vaqtini 87% gacha qisqartirish', 'Yagona klinik protokol sifati', 'MIS bilan tez integratsiya', 'Shifokor e’tiborini bemorga qaytarish'],
         workflow: ['Qabulda suhbat va anamnez yig‘ish', 'AI protokol va tavsiyalar', 'ICD-10/11 kodlash', 'MIS ga avtomatik uzatish'],
@@ -28,7 +28,7 @@ export const aiProducts: AIProductDetail[] = [
         ],
       },
       ru: {
-        overview: 'AI Doctor Assistant помогает врачу на приёме в реальном времени: анализирует анамнез, формирует протокол, даёт рекомендации и ускоряет ICD-кодирование.',
+        overview: 'AiShifokor помогает врачу на приёме в реальном времени: анализирует анамнез, формирует протокол, даёт рекомендации и ускоряет ICD-кодирование.',
         audience: 'Для клиник, амбулаторий и многопрофильных центров.',
         outcomes: ['Сокращение времени документации до 87%', 'Единое качество клинических протоколов', 'Быстрая интеграция с МИС', 'Больше внимания врачу к пациенту'],
         workflow: ['Сбор анамнеза на приёме', 'AI-протокол и рекомендации', 'Кодирование ICD-10/11', 'Автопередача в МИС'],
@@ -38,7 +38,7 @@ export const aiProducts: AIProductDetail[] = [
         ],
       },
       en: {
-        overview: 'AI Doctor Assistant supports physicians in real time: analyzing history, drafting protocols, suggesting care steps, and accelerating ICD coding.',
+        overview: 'AiShifokor supports physicians in real time: analyzing history, drafting protocols, suggesting care steps, and accelerating ICD coding.',
         audience: 'For clinics, outpatient units, and multidisciplinary centers.',
         outcomes: ['Up to 87% less documentation time', 'Consistent protocol quality', 'Fast EMR integration', 'More physician focus on patients'],
         workflow: ['Capture history during visit', 'AI protocol and recommendations', 'ICD-10/11 coding', 'Auto-sync to EMR'],

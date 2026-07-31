@@ -1,5 +1,6 @@
 import type { ContentLang } from '../i18n/types'
 import { media } from './media'
+import { getClinicSpecialtyImage } from './specialtyImages'
 import { doctorProfiles, type DoctorProfile } from './doctors'
 
 export type SpecialtyWorldTheme = {
@@ -19,6 +20,21 @@ export type SpecialtyWorldTheme = {
 
 /** Immersive theme per clinic specialty slug */
 export const specialtyWorlds: Record<string, SpecialtyWorldTheme> = {
+  ent: {
+    accent: '#0284C7',
+    accentSoft: 'rgba(2, 132, 199, 0.14)',
+    glow: 'rgba(2, 132, 199, 0.3)',
+    doctorSpecialtyUz: 'LOR',
+    organ: media.clinic.ent,
+    mood: 'cool',
+    aiProductSlug: 'doctor-assistant',
+    aiMetric: '85%',
+    aiInsight: {
+      uz: 'AI endoskopik kadrlarda burun va tomoq o‘zgarishlarini ajratadi — LOR shifokoriga tez xulosa beradi.',
+      ru: 'ИИ выделяет изменения носа и горла на эндоскопических кадрах — быстрое заключение для ЛОР-врача.',
+      en: 'AI highlights nasal and throat changes on endoscopy frames — quick summary for the ENT physician.',
+    },
+  },
   cardiology: {
     accent: '#E11D48',
     accentSoft: 'rgba(225, 29, 72, 0.14)',
@@ -107,6 +123,66 @@ export const specialtyWorlds: Record<string, SpecialtyWorldTheme> = {
       uz: 'AI buyrak/siydik yo‘llari tasvirida tosh va tugunlarni ajratib ko‘rsatadi.',
       ru: 'ИИ выделяет камни и узлы на снимках почек и мочевых путей.',
       en: 'AI highlights stones and nodules on kidney and urinary tract imaging.',
+    },
+  },
+  pulmonology: {
+    accent: '#0EA5E9',
+    accentSoft: 'rgba(14, 165, 233, 0.14)',
+    glow: 'rgba(14, 165, 233, 0.3)',
+    doctorSpecialtyUz: 'Pulmonologiya',
+    organ: media.clinic.pulmonology,
+    mood: 'soft',
+    aiProductSlug: 'radiology',
+    aiMetric: '89%',
+    aiInsight: {
+      uz: 'AI KT o‘pkada o‘zgarishlarni belgilaydi — nafas yo‘llari kasalliklarini erta aniqlashga yordam beradi.',
+      ru: 'ИИ отмечает изменения в лёгких на КТ — помогает раннему выявлению заболеваний дыхательных путей.',
+      en: 'AI marks lung changes on CT — helps early detection of respiratory conditions.',
+    },
+  },
+  rheumatology: {
+    accent: '#14B8A6',
+    accentSoft: 'rgba(20, 184, 166, 0.14)',
+    glow: 'rgba(20, 184, 166, 0.3)',
+    doctorSpecialtyUz: 'Revmatologiya',
+    organ: media.clinic.rheumatology,
+    mood: 'soft',
+    aiProductSlug: 'doctor-assistant',
+    aiMetric: '1.5×',
+    aiInsight: {
+      uz: 'AI bo‘g‘im va tiklanish dinamikasini kuzatadi — davolash rejasini individual moslashtiradi.',
+      ru: 'ИИ отслеживает динамику суставов и восстановления — персонализирует план лечения.',
+      en: 'AI tracks joint and recovery dynamics — personalizes the treatment plan.',
+    },
+  },
+  laboratory: {
+    accent: '#6366F1',
+    accentSoft: 'rgba(99, 102, 241, 0.14)',
+    glow: 'rgba(99, 102, 241, 0.3)',
+    doctorSpecialtyUz: 'Laboratoriya',
+    organ: media.clinic.laboratory,
+    mood: 'cool',
+    aiProductSlug: 'doctor-assistant',
+    aiMetric: '2×',
+    aiInsight: {
+      uz: 'AI lab natijalaridagi trendlarni tahlil qiladi — shifokorga prioritetli ko‘rsatkichlarni chiqaradi.',
+      ru: 'ИИ анализирует тренды лабораторных результатов — выводит приоритетные показатели врачу.',
+      en: 'AI analyzes lab result trends — surfaces priority markers for the physician.',
+    },
+  },
+  'intensive-care': {
+    accent: '#475569',
+    accentSoft: 'rgba(71, 85, 105, 0.16)',
+    glow: 'rgba(71, 85, 105, 0.28)',
+    doctorSpecialtyUz: 'Reanimatsiya',
+    organ: media.clinic['intensive-care'],
+    mood: 'cool',
+    aiProductSlug: 'doctor-assistant',
+    aiMetric: '24/7',
+    aiInsight: {
+      uz: 'AI vital ko‘rsatkichlarni kuzatadi — kritik holatlarda tez ogohlantirish beradi.',
+      ru: 'ИИ мониторит витальные показатели — быстро предупреждает в критических состояниях.',
+      en: 'AI monitors vital signs — alerts quickly in critical conditions.',
     },
   },
   gynecology: {
@@ -208,7 +284,7 @@ export function getSpecialtyWorld(slug: string): SpecialtyWorldTheme {
       accentSoft: 'rgba(91, 76, 219, 0.14)',
       glow: 'rgba(91, 76, 219, 0.28)',
       doctorSpecialtyUz: '',
-      organ: media.clinic.therapy,
+      organ: getClinicSpecialtyImage(slug),
       mood: 'soft' as const,
       aiProductSlug: 'doctor-assistant',
       aiMetric: 'AI',

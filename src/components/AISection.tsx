@@ -1,29 +1,28 @@
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
-import SectionHeader from './ui/SectionHeader'
 import Reveal from './ui/Reveal'
-import { blurUp, rise3d } from '../lib/animations'
-import { media } from '../data/media'
+import { blurUp } from '../lib/animations'
 import { AI_PRODUCT_SLUGS } from '../data/aiDetails'
-import { SplineSceneBasic } from './ui/spline-scene-basic'
+import { AISHIFOKOR_URL } from '../data/aiPlatform'
+import { AISHIFOKOR_COPY } from '../data/aiShifokorCopy'
+import { ClinicalAiHero } from './ui/clinical-ai-hero'
 import '../styles/ai-spline.css'
-import { accentInk, accentWash } from '../lib/accent'
+import { accentInk } from '../lib/accent'
 
-const PRODUCT_CONTEXT_IMAGES = [
-  media.facilities.dayCare,
-  media.facilities.diagnostics,
-  media.facilities.ultrasound,
-  media.facilities.research,
-]
+const AI_HERO_IMAGES: Record<string, string> = {
+  'doctor-assistant': '/images/ai/doctor-assistant-hero-v3.webp',
+  radiology: '/images/ai/radiology-hero-v1.webp',
+  ultrasound: '/images/ai/ultrasound-hero-v1.webp',
+  'clinical-research': '/images/ai/clinical-research-hero-v1.webp',
+}
 
 export default function AISection() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const { home } = useCms()
-  const [active, setActive] = useState(0)
+  const platform = t.homeCare.aiPlatform
+  const copy = AISHIFOKOR_COPY[lang]
   const products = home?.aiProducts?.length
-    ? home.aiProducts.map((prod, i) => ({
+    ? home.aiProducts.map((prod) => ({
         id: prod.id || prod.slug,
         name: prod.name,
         tag: prod.tag,
@@ -32,178 +31,108 @@ export default function AISection() {
         features: prod.features,
         metric: prod.metric,
         metricLabel: prod.metric_label,
-        contextImage: PRODUCT_CONTEXT_IMAGES[i % PRODUCT_CONTEXT_IMAGES.length],
         slug: prod.slug,
       }))
     : t.ai.products.map((prod, i) => ({
         ...prod,
-        contextImage: PRODUCT_CONTEXT_IMAGES[i % PRODUCT_CONTEXT_IMAGES.length],
         slug: AI_PRODUCT_SLUGS[i],
       }))
-  const safeActive = Math.min(active, Math.max(products.length - 1, 0))
-  const p = products[safeActive] ?? products[0]
-  const productHref = `/ai/${p?.slug ?? AI_PRODUCT_SLUGS[0]}`
+  const p = products[0]
+  const heroImage = AI_HERO_IMAGES[p?.slug] ?? AI_HERO_IMAGES['doctor-assistant']
 
   return (
     <section id="ai" className="section section--muted">
       <div className="container-main">
         <Reveal variants={blurUp}>
-          <SectionHeader
-            label={t.ai.label}
-            title={
-              <>
-                {t.ai.title1} <em>{t.ai.titleEm}</em>
-              </>
-            }
-            description={t.ai.description}
-            accent="#5B4CDB"
-          />
+          <a className="ai-platform-strip" href={AISHIFOKOR_URL}>
+            <strong>{platform.brand}</strong>
+            <span>{platform.title}</span>
+            <em>{platform.cta} →</em>
+          </a>
         </Reveal>
 
         <Reveal variants={blurUp}>
           <div className="ai-spline-wrap">
-            <SplineSceneBasic
-              kicker={t.ai.splineKicker}
-              title={t.ai.splineTitle}
-              description={t.ai.splineHint}
+            <ClinicalAiHero
+              productName={p.name}
+              productTag={p.tag}
+              productDescription={p.desc}
+              metric={p.metric}
+              metricLabel={p.metricLabel}
+              demoLabel={t.ai.platformBtn}
+              detailLabel={t.ai.casesBtn}
+              demoHref={AISHIFOKOR_URL}
+              detailHref={AISHIFOKOR_URL}
+              imageSrc={heroImage}
+              accent={accentInk(p.tagColor)}
             />
           </div>
         </Reveal>
 
-        <div className="product-tabs" role="tablist">
-          {products.map((prod, i) => (
-            <motion.button
-              key={prod.id}
-              type="button"
-              role="tab"
-              aria-selected={safeActive === i}
-              aria-controls={`ai-panel-${i}`}
-              id={`ai-tab-${i}`}
-              className={`product-tab ${safeActive === i ? 'product-tab--active' : ''}`}
-              style={safeActive === i ? { borderColor: prod.tagColor } : undefined}
-              onClick={() => setActive(i)}
-              whileTap={{ scale: 0.97 }}
-            >
-              {safeActive === i && (
-                <motion.span
-                  layoutId="product-tab-active"
-                  className="product-tab__glow"
-                  style={{ background: `${prod.tagColor}14` }}
-                  transition={{ type: 'spring', stiffness: 320, damping: 30 }}
-                />
-              )}
-              <span className="product-tab__thumb">
-                <img src={prod.contextImage} alt="" loading="lazy" />
-              </span>
-              <span className="product-tab__copy">
-                <span
-                  className="product-tab__tag"
-                  style={{ color: safeActive === i ? accentInk(prod.tagColor) : 'var(--text-soft)' }}
-                >
-                  {prod.tag}
-                </span>
-                <span className="product-tab__name">{prod.name}</span>
-              </span>
-            </motion.button>
-          ))}
-        </div>
-
-        <motion.div
-          id={`ai-panel-${safeActive}`}
-          role="tabpanel"
-          aria-labelledby={`ai-tab-${safeActive}`}
-          className="ai-console"
-          variants={rise3d}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.05, margin: '120px 0px' }}
-        >
-          <div className="ai-console__visual" style={{ position: 'relative', minHeight: 280, overflow: 'hidden' }}>
-            <div className="ai-console__robot" aria-hidden>
-              <span className="ai-console__robot-dot" />
-              {t.ai.liveBadge}
-            </div>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`visual-${safeActive}`}
-                className="ai-console__visual-stack"
-                initial={{ opacity: 0, scale: 1.04, rotateY: -6 }}
-                animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.45 }}
-              >
-                <img
-                  src={p.contextImage}
-                  alt=""
-                  className="ai-console__context-photo"
-                  loading="lazy"
-                />
-              </motion.div>
-            </AnimatePresence>
-            <div className="ai-console__shade" aria-hidden />
-            <motion.div
-              key={`metric-${safeActive}`}
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.08 }}
-              className="ai-console__metric"
-            >
-              <div className="ai-console__metric-value" style={{ color: accentInk(p.tagColor) }}>
-                {p.metric}
+        <Reveal variants={blurUp}>
+          <div className="ai-stats" aria-label={copy.statsTitle}>
+            {copy.stats.map((stat) => (
+              <div key={stat.label} className="ai-stats__item">
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
               </div>
-              <div className="ai-console__metric-label">{p.metricLabel}</div>
-            </motion.div>
+            ))}
           </div>
+        </Reveal>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`body-${safeActive}`}
-              className="ai-console__body card--pad"
-              initial={{ opacity: 0, x: 16 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -8 }}
-              transition={{ duration: 0.35 }}
-            >
-              <span
-                className="badge badge--accent"
-                style={{ color: accentInk(p.tagColor), background: accentWash(p.tagColor) }}
-              >
-                {p.tag}
-              </span>
-              <h3 className="ai-console__title">{p.name}</h3>
-              <p className="ai-console__desc">{p.desc}</p>
-              <ul className="ai-console__features">
-                {p.features.map((f) => (
-                  <li key={f}>
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-                      <circle cx="8" cy="8" r="8" fill={`${p.tagColor}20`} />
-                      <path
-                        d="M5 8l2 2 4-4"
-                        stroke={p.tagColor}
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <div className="btn-group">
-                <a
-                  href={`${productHref}#ai-demo`}
-                  className="btn-accent"
-                  style={{ background: p.tagColor }}
-                >
-                  {t.ai.demoBtn}
-                </a>
-                <a href={productHref} className="btn-outline btn-sm">
-                  {t.ai.casesBtn}
-                </a>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
+        <Reveal variants={blurUp}>
+          <header className="ai-caps__head">
+            <h2>{copy.capsTitle}</h2>
+            <p>{copy.capsSubtitle}</p>
+          </header>
+          <div className="ai-caps">
+            {copy.caps.map((cap) => (
+              <article key={cap.title} className="ai-caps__card">
+                <span className="ai-caps__dot" aria-hidden />
+                <strong>{cap.title}</strong>
+                <p>{cap.desc}</p>
+              </article>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal variants={blurUp}>
+          <header className="ai-flow__head">
+            <h2>{copy.flowTitle}</h2>
+            <p>{copy.flowSubtitle}</p>
+          </header>
+          <ol className="ai-flow">
+            {copy.steps.map((step, i) => (
+              <li key={step.title} className="ai-flow__step">
+                <span className="ai-flow__num">{String(i + 1).padStart(2, '0')}</span>
+                <div className="ai-flow__body">
+                  <div className="ai-flow__row">
+                    <strong>{step.title}</strong>
+                    <span className="ai-flow__duration">{step.duration}</span>
+                  </div>
+                  <p>{step.desc}</p>
+                  <ul>
+                    {step.bullets.map((b) => (
+                      <li key={b}>{b}</li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </Reveal>
+
+        <Reveal variants={blurUp}>
+          <a className="ai-banner" href={AISHIFOKOR_URL}>
+            <div className="ai-banner__copy">
+              <strong>{copy.bannerTitle}</strong>
+              <span>{copy.bannerSubtitle}</span>
+            </div>
+            <span className="ai-banner__cta">
+              {copy.bannerCta} <em aria-hidden>→</em>
+            </span>
+          </a>
+        </Reveal>
       </div>
     </section>
   )

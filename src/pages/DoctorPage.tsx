@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { CLINIC_PHONE_LOCAL, CLINIC_PHONE_TEL } from '../data/clinicContact'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import type { ContentLang } from '../i18n/types'
 import DoctorReviews from '../components/DoctorReviews'
-import DoctorBookingModal from '../components/DoctorBookingModal'
 import NotFoundPage from './NotFoundPage'
 import {
   doctorPageLabels,
@@ -13,24 +13,26 @@ import {
 } from '../data/doctors'
 import { getDoctorDossier } from '../data/doctorDossier'
 import { getDoctorPortrait, getDoctorTurnMedia } from '../data/doctorTurnMedia'
+import { useScrollToTopOnRoute } from '../lib/scrollRoute'
 import '../styles/doctor-profile.css'
+import '../styles/doctor-booking-phone.css'
 
 type ProfileUi = {
   profile: string
   available: string
+  hoursShort: string
   book: string
   booking: string
   schedule: string
-  chooseTime: string
-  realtime: string
-  today: string
+  phoneBookingTitle: string
+  phoneBookingLead: string
+  phoneSteps: string[]
   doctor: string
   direction: string
-  date: string
-  time: string
-  notSelected: string
+  hours: string
   price: string
-  confirm: string
+  callToBook: string
+  contactsCta: string
   bookingNote: string
   about: string
   aboutTitle: string
@@ -59,21 +61,26 @@ type ProfileUi = {
 const profileUi: Record<ContentLang, ProfileUi> = {
   uz: {
     profile: 'Shifokor profili',
-    available: 'Qabul ochiq — eng yaqin vaqt bugun 14:30',
+    available: 'Qabul olayapti · Dushanba–Shanba, 09:00–18:00',
+    hoursShort: '09:00–18:00 · Du–Sha',
     book: 'Qabulga yozilish',
     booking: 'Yozilish',
-    schedule: 'Qabul jadvali',
-    chooseTime: 'Vaqtni tanlang',
-    realtime: 'Jadval real vaqtda yangilanadi',
-    today: 'Bugun',
+    schedule: 'Telefon orqali yozilish',
+    phoneBookingTitle: 'Bitta qo‘ng‘iroq — vaqt tasdiqlanadi',
+    phoneBookingLead:
+      'Onlayn jadval yo‘q. Registratura telefon orqali ishlaydi: shifokor, kun va vaqtni birga kelishamiz.',
+    phoneSteps: [
+      'Belgilangan raqamga qo‘ng‘iroq qiling yoki qayta qo‘ng‘iroq so‘rang.',
+      'Mutaxassislik va shikoyatingizni ayting — mos shifokor tanlanadi.',
+      'Qulay kun va vaqt tasdiqlanadi, qabulga kelishingiz mumkin.',
+    ],
     doctor: 'Shifokor',
     direction: 'Yo‘nalish',
-    date: 'Sana',
-    time: 'Vaqt',
-    notSelected: 'tanlanmagan',
-    price: 'Narx',
-    confirm: 'Bandlikni tasdiqlash',
-    bookingNote: 'Ariza bepul. Bekor qilish — qabuldan 2 soat oldin, jarimasiz.',
+    hours: 'Ish vaqti',
+    price: 'Birinchi qabul narxi',
+    callToBook: 'Qo‘ng‘iroq qilish',
+    contactsCta: 'Aloqa va manzil',
+    bookingNote: 'Ish vaqti: Dushanba–Shanba, 09:00–18:00.',
     about: 'Mutaxassis haqida',
     aboutTitle: 'Sog‘liqni erta asrash — kech davolashdan samaraliroq.',
     focus: 'Yordam yo‘nalishlari',
@@ -99,21 +106,26 @@ const profileUi: Record<ContentLang, ProfileUi> = {
   },
   ru: {
     profile: 'Профиль врача',
-    available: 'Запись открыта — ближайшее время сегодня в 14:30',
+    available: 'Приём открыт · Пн–Сб, 09:00–18:00',
+    hoursShort: '09:00–18:00 · Пн–Сб',
     book: 'Записаться на приём',
     booking: 'Записаться',
-    schedule: 'Расписание приёма',
-    chooseTime: 'Выберите время',
-    realtime: 'Расписание обновляется в реальном времени',
-    today: 'Сегодня',
+    schedule: 'Запись по телефону',
+    phoneBookingTitle: 'Один звонок — время подтверждается',
+    phoneBookingLead:
+      'Онлайн-расписания нет. Регистратура работает по телефону: врач, день и время согласуются с вами.',
+    phoneSteps: [
+      'Позвоните на указанный номер или закажите обратный звонок.',
+      'Опишите жалобы — вас направят к нужному специалисту.',
+      'Подберут удобные день и время приёма.',
+    ],
     doctor: 'Врач',
     direction: 'Направление',
-    date: 'Дата',
-    time: 'Время',
-    notSelected: 'не выбрано',
-    price: 'Стоимость',
-    confirm: 'Подтвердить время',
-    bookingNote: 'Заявка бесплатна. Отмена без штрафа — за 2 часа до приёма.',
+    hours: 'Часы приёма',
+    price: 'Стоимость первого приёма',
+    callToBook: 'Позвонить',
+    contactsCta: 'Контакты и адрес',
+    bookingNote: 'Приём: Пн–Сб, 09:00–18:00.',
     about: 'О специалисте',
     aboutTitle: 'Раннее внимание к здоровью эффективнее позднего лечения.',
     focus: 'Направления помощи',
@@ -139,21 +151,26 @@ const profileUi: Record<ContentLang, ProfileUi> = {
   },
   en: {
     profile: 'Doctor profile',
-    available: 'Appointments open — next slot today at 14:30',
+    available: 'Accepting patients · Mon–Sat, 09:00–18:00',
+    hoursShort: '09:00–18:00 · Mon–Sat',
     book: 'Book appointment',
     booking: 'Book',
-    schedule: 'Appointment schedule',
-    chooseTime: 'Choose a time',
-    realtime: 'Schedule updates in real time',
-    today: 'Today',
+    schedule: 'Phone booking',
+    phoneBookingTitle: 'One call — we confirm the time',
+    phoneBookingLead:
+      'There is no online schedule. Registration works by phone: we agree on the doctor, day, and time with you.',
+    phoneSteps: [
+      'Call the clinic number or request a callback.',
+      'Describe your symptoms — we match you with the right specialist.',
+      'We confirm a convenient day and time for your visit.',
+    ],
     doctor: 'Doctor',
     direction: 'Specialty',
-    date: 'Date',
-    time: 'Time',
-    notSelected: 'not selected',
-    price: 'Price',
-    confirm: 'Confirm availability',
-    bookingNote: 'The request is free. Cancel without a fee up to two hours before the visit.',
+    hours: 'Clinic hours',
+    price: 'First visit fee',
+    callToBook: 'Call to book',
+    contactsCta: 'Contact and address',
+    bookingNote: 'Hours: Mon–Sat, 09:00–18:00.',
     about: 'About the specialist',
     aboutTitle: 'Early attention to health is more effective than late treatment.',
     focus: 'Areas of care',
@@ -179,28 +196,6 @@ const profileUi: Record<ContentLang, ProfileUi> = {
   },
 }
 
-const slotRows = [
-  { label: '09:00', disabled: true },
-  { label: '09:40', disabled: false },
-  { label: '10:20', disabled: false },
-  { label: '11:00', disabled: true },
-  { label: '14:30', disabled: false },
-  { label: '15:10', disabled: false },
-  { label: '15:50', disabled: true },
-  { label: '16:30', disabled: false },
-]
-
-const modalTimeBySlot: Record<string, string> = {
-  '09:00': '09:00 – 09:30',
-  '09:40': '09:30 – 10:00',
-  '10:20': '10:00 – 10:30',
-  '11:00': '11:00 – 11:30',
-  '14:30': '14:30 – 15:00',
-  '15:10': '15:00 – 15:30',
-  '15:50': '15:30 – 16:00',
-  '16:30': '16:00 – 16:30',
-}
-
 const barHeights = [42, 55, 47, 73, 86, 88, 82]
 
 function splitName(name: string) {
@@ -211,51 +206,16 @@ function splitName(name: string) {
   }
 }
 
-function buildDays(lang: ContentLang) {
-  const weekdays: Record<ContentLang, string[]> = {
-    uz: ['Yak', 'Dush', 'Sesh', 'Chor', 'Pay', 'Jum', 'Shan'],
-    ru: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-    en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-  }
-  const months: Record<ContentLang, string[]> = {
-    uz: ['yanvar', 'fevral', 'mart', 'aprel', 'may', 'iyun', 'iyul', 'avgust', 'sentabr', 'oktabr', 'noyabr', 'dekabr'],
-    ru: ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'],
-    en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-  }
-  const now = new Date()
-  return Array.from({ length: 6 }, (_, index) => {
-    const date = new Date(now)
-    date.setDate(now.getDate() + index)
-    return {
-      iso: date.toISOString().slice(0, 10),
-      day: date.getDate(),
-      weekday: weekdays[lang][date.getDay()],
-      full:
-        lang === 'en'
-          ? `${months.en[date.getMonth()]} ${date.getDate()}`
-          : `${date.getDate()}-${months[lang][date.getMonth()]}`,
-      count: [5, 7, 3, 6, 4, 8][index],
-    }
-  })
-}
-
 export default function DoctorPage({ slug }: { slug: string }) {
   const { contentLang, t } = useLanguage()
   const labels = doctorPageLabels[contentLang]
   const ui = profileUi[contentLang]
   const match = getDoctorBySlug(slug)
-  const [bookOpen, setBookOpen] = useState(false)
-  const [selectedDay, setSelectedDay] = useState(0)
-  const [selectedTime, setSelectedTime] = useState('')
   const [dockVisible, setDockVisible] = useState(false)
   const portraitVideoRef = useRef<HTMLVideoElement>(null)
   const reduce = useReducedMotion()
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-    setSelectedDay(0)
-    setSelectedTime('')
-  }, [slug])
+  useScrollToTopOnRoute(slug)
 
   useEffect(() => {
     const onScroll = () => setDockVisible(window.scrollY > 560)
@@ -268,8 +228,6 @@ export default function DoctorPage({ slug }: { slug: string }) {
     if (!match) return
     document.title = `${match.profile.content[contentLang].name} - ${t.nav.brand}`
   }, [match, contentLang, t.nav.brand])
-
-  const days = useMemo(() => buildDays(contentLang), [contentLang])
 
   if (!match) return <NotFoundPage />
 
@@ -291,7 +249,6 @@ export default function DoctorPage({ slug }: { slug: string }) {
   const aboutText = view.about.startsWith(view.name)
     ? view.about.slice(view.name.length).replace(/^\s*[—–-]\s*/, '')
     : view.about
-  const selectedDate = days[selectedDay]
   const localeReviewText: Record<ContentLang, [string, string, string]> = {
     uz: [
       'Natijalarni birinchi marta tushunarli qilib izohlab berdilar. Davolash rejasini yozib berdilar, uyda ham adashmadim.',
@@ -364,7 +321,7 @@ export default function DoctorPage({ slug }: { slug: string }) {
             </p>
           </div>
           <span className="dp-dockbar__spacer" />
-          <span className="dp-dockbar__slot">{ui.available.replace('Qabul ochiq — ', '')}</span>
+          <span className="dp-dockbar__slot">{ui.hoursShort}</span>
           <button type="button" className="dp-btn dp-btn--solid" onClick={scrollToBooking}>
             {ui.booking} <span aria-hidden>→</span>
           </button>
@@ -413,7 +370,7 @@ export default function DoctorPage({ slug }: { slug: string }) {
                 <button type="button" className="dp-btn dp-btn--primary" onClick={scrollToBooking}>
                   {ui.book} <span className="dp-btn__arrow" aria-hidden>→</span>
                 </button>
-                <a className="dp-btn dp-btn--ghost" href="tel:+998902732301">
+                <a className="dp-btn dp-btn--ghost" href={`tel:${CLINIC_PHONE_TEL}`}>
                   {t.topBar.phone}
                 </a>
               </div>
@@ -490,49 +447,24 @@ export default function DoctorPage({ slug }: { slug: string }) {
       </section>
 
       <section className="dp-shell dp-booking-wrap" id="doctor-booking">
-        <div className="dp-booking">
+        <div className="dp-booking dp-booking--phone">
           <div>
             <header className="dp-booking__head">
               <div>
                 <p className="dp-chan">{ui.schedule}</p>
-                <h2>{ui.chooseTime}</h2>
+                <h2>{ui.phoneBookingTitle}</h2>
+                <p className="dp-booking__lead">{ui.phoneBookingLead}</p>
               </div>
-              <p>{ui.realtime}</p>
             </header>
 
-            <div className="dp-days" role="group" aria-label={ui.date}>
-              {days.map((day, index) => (
-                <button
-                  key={day.iso}
-                  type="button"
-                  className="dp-day"
-                  aria-pressed={selectedDay === index}
-                  onClick={() => {
-                    setSelectedDay(index)
-                    setSelectedTime('')
-                  }}
-                >
-                  <span>{index === 0 ? ui.today : day.weekday}</span>
-                  <b>{day.day}</b>
-                  <em>{day.count} {ui.time.toLocaleLowerCase()}</em>
-                </button>
+            <ol className="dp-booking__steps">
+              {ui.phoneSteps.map((step, index) => (
+                <li key={step}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <p>{step}</p>
+                </li>
               ))}
-            </div>
-
-            <div className="dp-slots" role="group" aria-label={ui.time}>
-              {slotRows.map((slot) => (
-                <button
-                  key={slot.label}
-                  type="button"
-                  className="dp-slot"
-                  disabled={slot.disabled}
-                  aria-pressed={selectedTime === slot.label}
-                  onClick={() => setSelectedTime(slot.label)}
-                >
-                  {slot.label}
-                </button>
-              ))}
-            </div>
+            </ol>
           </div>
 
           <aside className="dp-booking__aside">
@@ -540,22 +472,17 @@ export default function DoctorPage({ slug }: { slug: string }) {
               <dl>
                 <div><dt>{ui.doctor}</dt><dd>{view.name}</dd></div>
                 <div><dt>{ui.direction}</dt><dd>{view.specialty}</dd></div>
-                <div><dt>{ui.date}</dt><dd>{selectedDate?.full}</dd></div>
-                <div>
-                  <dt>{ui.time}</dt>
-                  <dd className={selectedTime ? '' : 'is-empty'}>{selectedTime || ui.notSelected}</dd>
-                </div>
+                <div><dt>{ui.hours}</dt><dd>{ui.hoursShort}</dd></div>
                 <div><dt>{ui.price}</dt><dd>{dossier.ui.visit.firstVisitValue}</dd></div>
               </dl>
             </div>
-            <button
-              type="button"
-              className="dp-btn dp-btn--solid"
-              disabled={!selectedTime}
-              onClick={() => setBookOpen(true)}
-            >
-              {ui.confirm} <span className="dp-btn__arrow" aria-hidden>→</span>
-            </button>
+            <a className="dp-btn dp-btn--solid dp-booking__call" href={`tel:${CLINIC_PHONE_TEL}`}>
+              <span className="dp-booking__call-label">{ui.callToBook}</span>
+              <span className="dp-booking__call-number">{CLINIC_PHONE_LOCAL}</span>
+            </a>
+            <a className="dp-btn dp-booking__contacts" href="/contacts?intent=booking">
+              {ui.contactsCta} <span className="dp-btn__arrow" aria-hidden>→</span>
+            </a>
             <p className="dp-booking__note">{ui.bookingNote}</p>
           </aside>
         </div>
@@ -727,7 +654,7 @@ export default function DoctorPage({ slug }: { slug: string }) {
                 <span className="dp-mini__body">
                   <strong>{content.name}</strong>
                   <span>{content.role} · {content.exp}</span>
-                  <em>{ui.available.replace('Qabul ochiq — eng yaqin vaqt ', '')}</em>
+                  <em>{ui.hoursShort}</em>
                 </span>
               </a>
             )
@@ -742,26 +669,15 @@ export default function DoctorPage({ slug }: { slug: string }) {
             <p>{ui.coordinatorText}</p>
           </div>
           <div className="dp-close__actions">
-            <a className="dp-btn dp-btn--primary" href="tel:+998902732301">{t.topBar.phone}</a>
-            <button type="button" className="dp-btn dp-btn--ghost" onClick={() => setBookOpen(true)}>
+            <a className="dp-btn dp-btn--primary" href={`tel:${CLINIC_PHONE_TEL}`}>{t.topBar.phone}</a>
+            <a className="dp-btn dp-btn--ghost" href="/contacts?intent=booking">
               {ui.callback}
-            </button>
+            </a>
           </div>
         </div>
       </section>
 
       <footer className="dp-shell dp-foot">{ui.footnote}</footer>
-
-      <DoctorBookingModal
-        open={bookOpen}
-        doctorName={view.name}
-        doctorSpecialty={view.specialty}
-        accent={profile.color}
-        initialDate={selectedDate?.iso}
-        initialTime={modalTimeBySlot[selectedTime]}
-        labels={labels.booking}
-        onClose={() => setBookOpen(false)}
-      />
     </main>
   )
 }

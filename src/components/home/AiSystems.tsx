@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react'
 import { motion } from 'motion/react'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { media } from '../../data/media'
+import { AISHIFOKOR_URL } from '../../data/aiPlatform'
 import HdHead from './HdHead'
 import { settle, inView } from '../../lib/homeDarkMotion'
 
@@ -65,10 +66,7 @@ export default function AiSystems() {
                       <strong className="hd-value">{product.metric}</strong>
                       <span>{product.metricLabel}</span>
                     </div>
-                    <a
-                      href={`/ai/${product.id === 'doctor' ? 'doctor-assistant' : product.id}`}
-                      className="hd-more"
-                    >
+                    <a href={AISHIFOKOR_URL} className="hd-more">
                       {copy.cta} <span aria-hidden>→</span>
                     </a>
                   </div>

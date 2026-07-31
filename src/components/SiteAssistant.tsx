@@ -89,7 +89,6 @@ export default function SiteAssistant() {
           links: [
             { label: a.openMap, href: a.mapHref },
             { label: a.callNow, href: `tel:${a.phoneTel}` },
-            { label: a.callNow2, href: `tel:${a.phoneTel2}` },
           ],
         },
       ])
@@ -102,10 +101,7 @@ export default function SiteAssistant() {
           id,
           role: 'bot',
           text: a.phoneReply,
-          links: [
-            { label: a.callNow, href: `tel:${a.phoneTel}` },
-            { label: a.callNow2, href: `tel:${a.phoneTel2}` },
-          ],
+          links: [{ label: a.callNow, href: `tel:${a.phoneTel}` }],
         },
       ])
       return

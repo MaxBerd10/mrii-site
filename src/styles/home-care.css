@@ -1700,9 +1700,8 @@ a.hc-card:hover {
 
 .hc-orbit {
   position: relative;
-  /* The extra height IS the animation's runway — 260vh of scroll maps to the
-     full ring→arch morph. Shorter and the shape snaps; longer and it drags. */
-  height: 260vh;
+  /* Scroll runway for the ring→arch morph. Shorter keeps PageDown useful. */
+  height: 170vh;
   background: linear-gradient(
     180deg,
     var(--hc-card) 0%,
@@ -1716,6 +1715,32 @@ a.hc-card:hover {
   top: 0;
   height: 100vh;
   overflow: clip;
+}
+
+.hc-orbit__skip {
+  position: absolute;
+  inset-block-start: 12px;
+  inset-inline-end: max(12px, var(--hc-gutter));
+  z-index: 4;
+  padding: 8px 12px;
+  border: 1px solid color-mix(in srgb, var(--hc-ink) 14%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hc-card) 88%, transparent);
+  color: var(--hc-ink-soft, #3a5166);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: color 0.2s var(--hc-ease), border-color 0.2s var(--hc-ease), background 0.2s var(--hc-ease);
+}
+
+.hc-orbit__skip:hover,
+.hc-orbit__skip:focus-visible {
+  color: var(--hc-ink);
+  border-color: color-mix(in srgb, var(--hc-ink) 28%, transparent);
+  outline: none;
 }
 
 .hc-orbit__stage {
@@ -1774,6 +1799,13 @@ a.hc-card:hover {
 .hc-orbit__card:hover .hc-orbit__label,
 .hc-orbit__card:focus-visible .hc-orbit__label {
   opacity: 1;
+}
+
+/* Touch / coarse pointers never hover — keep names readable by default. */
+@media (hover: none) {
+  .hc-orbit__label {
+    opacity: 1;
+  }
 }
 
 .hc-orbit__label strong {
@@ -1853,7 +1885,7 @@ a.hc-card:hover {
 
 @media (max-width: 599px) {
   .hc-orbit {
-    height: 160vh;
+    height: 140vh;
   }
 
   .hc-orbit__card {
@@ -2161,6 +2193,271 @@ a.hc-card:hover {
   background:
     radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--hc-cyan) 11%, transparent), transparent 28%),
     var(--hc-bg);
+}
+
+/* One quiet strip — brand, line, CTA. No dark panel, no checklist. */
+.hc-ai-platform {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 18px;
+  margin: 0 0 clamp(28px, 4vw, 40px);
+  padding: 18px 0;
+  border-block: 1px solid color-mix(in srgb, var(--hc-ink) 10%, transparent);
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s var(--hc-ease);
+}
+
+.hc-ai-platform:hover {
+  opacity: 0.82;
+}
+
+.hc-ai-platform__brand {
+  font-family: var(--hc-display);
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--hc-ink);
+}
+
+.hc-ai-platform__lead {
+  flex: 1 1 12rem;
+  color: var(--hc-ink-soft, #3a5166);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.hc-ai-platform__cta {
+  margin-inline-start: auto;
+  color: var(--hc-blue, #0b6e99);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .hc-ai-platform {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .hc-ai-platform__cta {
+    margin-inline-start: 0;
+  }
+}
+
+.hc-ai-panel {
+  max-width: 42rem;
+}
+
+.hc-ai-panel .hc-ai-platform {
+  margin-bottom: clamp(18px, 2.5vw, 24px);
+}
+
+.hc-ai-panel__note {
+  margin: 0 0 clamp(16px, 2vw, 22px);
+  color: var(--hc-ink-soft, #3a5166);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.hc-ai-panel__points {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hc-ai-panel__points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--hc-ink);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.hc-ai-panel__points svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--hc-blue, #0b6e99);
+}
+
+.hc-ai-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(20px, 3vw, 36px);
+  align-items: stretch;
+  margin-bottom: clamp(24px, 3.5vw, 40px);
+}
+
+.hc-ai-showcase__card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: clamp(24px, 3vw, 36px);
+  border-radius: 28px;
+  background:
+    linear-gradient(165deg, color-mix(in srgb, var(--hc-card) 96%, white), var(--hc-card));
+  border: 1px solid color-mix(in srgb, var(--hc-blue) 14%, transparent);
+  box-shadow:
+    0 24px 60px color-mix(in srgb, var(--hc-blue) 10%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 70%, transparent);
+}
+
+.hc-ai-showcase__eyebrow {
+  margin: 0;
+  color: var(--hc-blue, #0b6e99);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hc-ai-showcase__title {
+  margin: 0;
+  font-family: var(--hc-display);
+  font-size: clamp(1.45rem, 2.8vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  color: var(--hc-ink);
+}
+
+.hc-ai-showcase__lead {
+  margin: 0;
+  color: var(--hc-ink-soft, #3a5166);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.hc-ai-showcase__points {
+  display: grid;
+  gap: 10px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hc-ai-showcase__points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--hc-ink);
+}
+
+.hc-ai-showcase__points svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--hc-blue, #0b6e99);
+}
+
+.hc-ai-showcase__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 20px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.hc-ai-showcase__visual {
+  position: relative;
+  margin: 0;
+  min-height: 100%;
+  border-radius: 28px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--hc-blue) 8%, var(--hc-bg));
+  box-shadow: 0 28px 70px color-mix(in srgb, var(--hc-ink) 12%, transparent);
+}
+
+.hc-ai-showcase__visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  object-fit: cover;
+}
+
+.hc-ai-showcase__visual figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 16px 18px;
+  background: linear-gradient(180deg, transparent, rgb(8 28 44 / 0.72));
+  color: rgb(255 255 255 / 0.92);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.hc-ai-features {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 22px);
+}
+
+.hc-ai-feature {
+  display: grid;
+  gap: 10px;
+  padding: clamp(18px, 2.2vw, 24px);
+  border-radius: 22px;
+  background: color-mix(in srgb, var(--hc-card) 88%, white);
+  border: 1px solid color-mix(in srgb, var(--hc-ink) 8%, transparent);
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--hc-ink) 5%, transparent);
+  transition:
+    transform 220ms var(--hc-ease),
+    box-shadow 220ms var(--hc-ease),
+    border-color 220ms var(--hc-ease);
+}
+
+.hc-ai-feature:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--hc-blue) 22%, transparent);
+  box-shadow: 0 18px 40px color-mix(in srgb, var(--hc-blue) 12%, transparent);
+}
+
+.hc-ai-feature__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--hc-blue) 10%, white);
+  color: var(--hc-blue, #0b6e99);
+}
+
+.hc-ai-feature h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--hc-ink);
+}
+
+.hc-ai-feature p {
+  margin: 0;
+  color: var(--hc-ink-soft, #3a5166);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 900px) {
+  .hc-ai-showcase {
+    grid-template-columns: 1fr;
+  }
+
+  .hc-ai-showcase__visual {
+    min-height: 280px;
+  }
+
+  .hc-ai-features {
+    grid-template-columns: 1fr;
+  }
 }
 
 .hc-ai__grid {
@@ -3094,7 +3391,7 @@ a.hc-card:active {
 
 .hc-harmony-gallery {
   position: relative;
-  height: 240vh;
+  height: 165vh;
   background: #07111f;
   color: #f7f9fc;
 }
@@ -3102,8 +3399,7 @@ a.hc-card:active {
 .hc-harmony-gallery__sticky {
   position: sticky;
   inset-block-start: 0;
-  height: 100vh;
-  min-height: 680px;
+  height: 100dvh;
   overflow: clip;
   isolation: isolate;
 }
@@ -3244,6 +3540,14 @@ a.hc-card:active {
   transform-style: preserve-3d;
   animation: hc-dna-turn 8s ease-in-out infinite;
   animation-play-state: paused;
+}
+
+.hc-dna-hologram__rotor picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .hc-harmony-gallery.is-animating .hc-dna-hologram__rotor {
@@ -3750,11 +4054,12 @@ a.hc-card:active {
 
 @media (max-width: 899px) {
   .hc-harmony-gallery {
-    height: 220vh;
+    height: 180vh;
   }
 
   .hc-harmony-gallery__sticky {
-    min-height: 620px;
+    height: 100dvh;
+    min-height: 0;
   }
 
   .hc-dna-hologram {
@@ -3778,11 +4083,11 @@ a.hc-card:active {
 
 @media (max-width: 599px) {
   .hc-harmony-gallery {
-    height: 260vh;
+    height: 180vh;
   }
 
   .hc-harmony-gallery__sticky {
-    min-height: 640px;
+    height: 100dvh;
   }
 
   .hc-dna-hologram {
@@ -3883,7 +4188,7 @@ a.hc-card:active {
   .hc-harmony-gallery__sticky {
     position: relative;
     height: auto;
-    min-height: 960px;
+    min-height: 0;
   }
 
   .hc-harmony-gallery__intro {
@@ -4459,7 +4764,7 @@ a.hc-card:active {
   --hero-progress: 0;
   --hero-dna-opacity: 1;
   --hero-copy: 1;
-  background: #f6f8fa;
+  background: #fff;
   color: #0b1f33;
 }
 
@@ -4468,21 +4773,27 @@ a.hc-card:active {
 }
 
 .hc-hero--dna .hc-hero__track {
-  height: max(148svh, 1040px);
+  height: max(128svh, 900px);
 }
 
 .hc-hero--dna .hc-hero__sticky {
   position: sticky;
   inset-block-start: 0;
   height: 100svh;
-  min-height: 680px;
+  min-height: 0;
   padding: 0;
   overflow: hidden;
 }
 
+.hc-hero--dna .hc-shell {
+  /* Full-bleed gutter so the copy sits at the far-left edge (aligned with the
+     logo) and the feature row reaches the right gutter — matching the target. */
+  width: min(calc(100% - 156px), 1360px);
+}
+
 .hc-hero--dna .hc-hero__aurora {
   z-index: 0;
-  background: #f6f8fa;
+  background: #fff;
 }
 
 .hc-hero--dna .hc-hero__aurora::after {
@@ -4490,61 +4801,65 @@ a.hc-card:active {
 }
 
 .hc-hero--dna .hc-hero__dna {
-  z-index: 2;
-  inset: 0 0 0 43%;
-  overflow: hidden;
-  background: #f6f8fa;
+  z-index: 5;
+  /*
+   * A single, proportionate team image — no crop masks or perspective
+   * stretching. The left edge begins after the headline, while the people
+   * occupy the complete right half of the hero.
+   */
+  inset: 7% -3% 0 39%;
+  overflow: visible;
+  background: transparent;
   opacity: 1;
 }
 
+/* No blue blob — clean white field behind the team. */
+.hc-hero--dna .hc-hero__dna::before {
+  display: none;
+}
+
+/* The source artwork carries its own soft lower edge. */
+.hc-hero--dna .hc-hero__dna::after {
+  display: none;
+}
+
 .hc-hero--dna .hc-hero__team img {
+  z-index: 2;
   inset: 0;
   width: 100%;
   height: 100%;
   max-width: none;
   object-fit: contain;
-  object-position: right bottom;
+  object-position: center bottom;
   transform:
-    translate3d(calc(var(--hero-progress) * 0.5vw), calc(var(--hero-progress) * -0.8vh), 0)
-    scale(calc(1.002 + var(--hero-progress) * 0.022));
-  transform-origin: 62% 54%;
+    translate3d(calc(0.4vw + var(--hero-progress) * 0.2vw), calc(1vh + var(--hero-progress) * -0.15vh), 0)
+    scale(calc(1 + var(--hero-progress) * 0.012));
+  transform-origin: 50% 100%;
+  filter: none;
+  will-change: transform;
   -webkit-mask-image: none;
   mask-image: none;
-  filter:
-    saturate(1.015)
-    contrast(1.025)
-    brightness(1.012);
-  will-change: transform, filter;
 }
 
 .hc-hero--dna .hc-hero__dna span {
-  background:
-    linear-gradient(
-      90deg,
-      #f6f8fa 0%,
-      rgba(246, 248, 250, 0.98) 4%,
-      rgba(246, 248, 250, 0.76) 9%,
-      transparent 20%
-    ),
-    linear-gradient(
-      180deg,
-      #f6f8fa 0%,
-      rgba(246, 248, 250, 0.82) 3%,
-      transparent 10%
-    );
+  display: none;
 }
 
 .hc-hero--dna .hc-hero__stage {
   position: relative;
-  z-index: 3;
+  /* Above the white wave (z 4) so the scroll cue stays visible on the field. */
+  z-index: 5;
   height: 100%;
   pointer-events: none;
 }
 
 .hc-hero--dna .hc-hero__copy {
-  inset-block-start: 51%;
+  /* High enough that the eyebrow sits near the top of the stage and the scroll
+     cue keeps clearance below the trust row, matching the target rhythm. */
+  z-index: 6;
+  inset-block-start: 52%;
   inset-inline-start: 0;
-  width: min(560px, 44%);
+  width: min(560px, 47%);
   gap: 22px;
   opacity: 1;
   transform: translate3d(0, -50%, 0);
@@ -4552,7 +4867,7 @@ a.hc-card:active {
 }
 
 .hc-hero--dna .hc-eyebrow {
-  color: #0f4c81;
+  color: #2455df;
   text-shadow: none;
 }
 
@@ -4562,69 +4877,368 @@ a.hc-card:active {
 }
 
 .hc-hero--dna .hc-display {
-  /* 13.5ch, not 12.5: the Russian hero's "здравоохранения" is 15 characters and
-     measured 2px past the old cap — just enough to trigger a mid-word break.
-     The extra character of headroom costs nothing in the shorter locales. */
-  max-width: 13.5ch;
+  /* Sized so the ink lead wraps like the target ("Farg‘onada / ishonchli
+     tibbiy / yordam —") while the blue phrase below still fits one line. */
+  max-width: 8.2em;
   color: #0b1f33;
-  font-size: clamp(3rem, 4.8vw, 4.85rem);
-  line-height: 1.01;
+  font-size: clamp(3rem, 4.35vw, 4.35rem);
+  line-height: 1.03;
   letter-spacing: -0.038em;
   text-shadow: none;
 }
 
 .hc-hero--dna .hc-display em {
-  color: #0f4c81;
+  /* The blue phrase owns its line and never breaks, as in the target — greedy
+     wrapping alone cannot keep it whole because it is wider than the lead's
+     measure. It may exceed the h1's max-width; the copy column absorbs it. */
+  display: block;
+  white-space: nowrap;
+  color: #2455df;
   background: none;
   -webkit-text-fill-color: currentColor;
 }
 
 .hc-hero--dna .hc-lead {
-  max-width: 43ch;
+  max-width: 44ch;
   color: #55677a;
+  font-size: 1rem;
+  line-height: 1.6;
   text-shadow: none;
 }
 
 .hc-hero--dna .hc-btn {
-  --_bg: #0f4c81;
+  --_bg: #2455df;
   --_fg: #fff;
-  box-shadow: 0 14px 34px rgba(15, 76, 129, 0.2);
+  box-shadow: 0 14px 34px rgba(36, 85, 223, 0.22);
 }
 
 .hc-hero--dna .hc-btn:hover {
-  --_bg: #0a3a63;
+  --_bg: #1f49c8;
 }
 
 .hc-hero--dna .hc-btn--ghost {
   --_bg: rgba(255, 255, 255, 0.76);
-  --_fg: #0f4c81;
-  border-color: rgba(15, 76, 129, 0.16);
+  --_fg: #2455df;
+  border-color: rgba(36, 85, 223, 0.16);
   -webkit-backdrop-filter: blur(18px) saturate(1.25);
   backdrop-filter: blur(18px) saturate(1.25);
 }
 
 .hc-hero--dna .hc-btn--ghost:hover {
   --_bg: #fff;
-  border-color: rgba(15, 76, 129, 0.32);
+  border-color: rgba(36, 85, 223, 0.32);
 }
 
 .hc-hero--dna .hc-hero__cue {
-  inset-inline-start: 0;
-  inset-block-end: 32px;
-  color: rgba(11, 31, 51, 0.48);
+  /* Centered under the statistics column, like the target's SCROLL pill. */
+  inset-inline-start: 13%;
+  inset-block-end: 36px;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  color: rgba(11, 31, 51, 0.5);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   opacity: clamp(0, calc(1 - var(--hero-progress) * 2.3), 1);
 }
 
-.hc-hero--dna .hc-hero__cue span {
-  background: rgba(15, 76, 129, 0.16);
+.hc-hero--dna .hc-hero__cue-label {
+  width: auto;
+  height: auto;
+  overflow: visible;
+  background: none;
+  line-height: 1;
 }
 
-.hc-hero--dna .hc-hero__cue span::after {
-  background: linear-gradient(180deg, transparent, #0f4c81, transparent);
+.hc-hero--dna .hc-hero__cue-label::after {
+  display: none;
+}
+
+.hc-hero--dna .hc-hero__cue-btn {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  overflow: visible;
+  border-radius: 50%;
+  border: 1px solid rgba(36, 85, 223, 0.24);
+  background: #fff;
+  color: #2455df;
+  box-shadow: 0 8px 20px rgba(36, 85, 223, 0.12);
+  animation: hc-cue-bob 2s var(--hc-ease) infinite;
+}
+
+.hc-hero--dna .hc-hero__cue-btn::after {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hc-hero--dna .hc-hero__cue-btn {
+    animation: none;
+  }
+}
+
+@keyframes hc-cue-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
 }
 
 .hc-hero--dna + .hc-orbit {
   margin-block-start: 0;
+}
+
+/* Trust strip under CTAs */
+.hc-hero--dna .hc-trust--hero {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px 18px;
+  width: 100%;
+  max-width: 455px;
+  margin: 10px 0 0;
+  padding: 16px 0 0;
+  border-block-start: 0;
+}
+
+.hc-hero--dna .hc-trust__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  text-align: center;
+}
+
+.hc-hero--dna .hc-trust__icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: #2455df;
+}
+
+.hc-hero--dna .hc-trust__value {
+  margin: 0;
+  font-size: clamp(1rem, 1.35vw, 1.18rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #2455df;
+}
+
+.hc-hero--dna .hc-trust__label {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--hc-muted);
+}
+
+/* Decorative blobs behind team */
+.hc-hero--dna .hc-hero__blobs {
+  position: absolute;
+  z-index: 1;
+  inset: 0 0 0 36%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.hc-hero--dna .hc-hero__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(0.5px);
+}
+
+.hc-hero--dna .hc-hero__blob--a {
+  display: none;
+}
+
+.hc-hero--dna .hc-hero__blob--b,
+.hc-hero--dna .hc-hero__blob--c {
+  display: none;
+}
+
+.hc-hero--dna .hc-hero__plus {
+  position: absolute;
+  font-family: var(--hc-display);
+  font-size: clamp(1.15rem, 1.9vw, 1.7rem);
+  font-weight: 500;
+  line-height: 1;
+  color: rgba(36, 85, 223, 0.82);
+}
+
+.hc-hero--dna .hc-hero__plus--a {
+  inset-block-start: 15%;
+  inset-inline-start: 42%;
+}
+
+.hc-hero--dna .hc-hero__plus--b {
+  inset-block-start: 52%;
+  inset-inline-end: 1%;
+}
+
+.hc-hero--dna .hc-hero__plus--c {
+  inset-block-end: 26%;
+  inset-inline-end: 2%;
+}
+
+.hc-hero--dna .hc-hero__plus--d {
+  inset-block-start: 20%;
+  inset-inline-start: 8%;
+  color: rgba(36, 85, 223, 0.6);
+}
+
+/* Dot grid — blue, not grey: on the white ground the grey version read as dirt */
+.hc-hero--dna .hc-hero__dots {
+  position: absolute;
+  background-image: radial-gradient(rgba(96, 137, 226, 0.55) 1.5px, transparent 1.6px);
+  background-size: 13px 13px;
+}
+
+.hc-hero--dna .hc-hero__dots--a {
+  width: 78px;
+  height: 66px;
+  inset-block-start: 34%;
+  inset-inline-start: 4%;
+}
+
+.hc-hero--dna .hc-hero__dots--b {
+  width: 52px;
+  height: 52px;
+  inset-block-start: 12%;
+  inset-inline-start: 20%;
+  opacity: 0.7;
+}
+
+/* Sparkles */
+.hc-hero--dna .hc-hero__spark {
+  position: absolute;
+  fill: rgba(36, 85, 223, 0.42);
+}
+
+.hc-hero--dna .hc-hero__spark--a {
+  width: 24px;
+  height: 24px;
+  inset-block-start: 8%;
+  inset-inline-start: 5%;
+  fill: rgba(36, 85, 223, 0.5);
+}
+
+.hc-hero--dna .hc-hero__spark--b {
+  width: 13px;
+  height: 13px;
+  inset-block-start: 15%;
+  inset-inline-start: 10%;
+  fill: rgba(36, 85, 223, 0.32);
+}
+
+.hc-hero--dna .hc-hero__spark--c {
+  width: 10px;
+  height: 10px;
+  inset-block-start: 6%;
+  inset-inline-start: 11%;
+  fill: rgba(36, 85, 223, 0.24);
+}
+
+/* Feature cards */
+.hc-hero--dna .hc-hero__features {
+  position: absolute;
+  z-index: 6;
+  inset-inline-start: 46%;
+  inset-inline-end: clamp(40px, 4.5vw, 64px);
+  /* Sits inside the white wave field, clear of the photo above it. */
+  inset-block-end: clamp(70px, 8vh, 88px);
+  width: auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  pointer-events: auto;
+}
+
+.hc-hero--dna .hc-hero__feature {
+  /* Reference layout: icon chip + title share the top row, left-aligned; the
+     description spans below, centred. */
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 12px;
+  row-gap: 12px;
+  min-height: 138px;
+  padding: 22px 20px;
+  border-radius: 18px;
+  border: 1px solid var(--hc-line-soft);
+  background: #fff;
+  box-shadow: var(--hc-shadow-md);
+}
+
+.hc-hero--dna .hc-hero__feature-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 12px;
+  /* Tinted chip, not a solid slab — the icon stays the blue accent so the card
+     reads as light as the rest of the white field it sits on. */
+  background: #eaefff;
+  color: #2455df;
+}
+
+.hc-hero--dna .hc-hero__feature-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.hc-hero--dna .hc-hero__feature-title {
+  margin: 0;
+  font-family: var(--hc-display);
+  font-size: 0.94rem;
+  font-weight: 750;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  color: var(--hc-ink);
+}
+
+.hc-hero--dna .hc-hero__feature-desc {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--hc-muted);
+  text-align: center;
+}
+
+/* Wave removed — its hard white crest was slicing the soft coat hems into a
+   ruler cut. Feature cards sit on the page white; soft alpha lives in the asset. */
+.hc-hero--dna .hc-hero__wave {
+  display: none;
+}
+
+.hc-hero--dna .hc-hero__track {
+  height: max(128svh, 900px);
+}
+
+@media (max-width: 900px) {
+  .hc-hero--dna .hc-trust--hero {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: none;
+  }
+
+  .hc-hero--dna .hc-hero__features {
+    grid-template-columns: 1fr;
+    inset-block-end: clamp(36px, 5vh, 56px);
+  }
+
+  .hc-hero--dna .hc-hero__feature {
+    min-height: 0;
+  }
 }
 
 @media (max-width: 760px) {
@@ -4721,6 +5335,37 @@ a.hc-card:active {
 
   .hc-hero--dna .hc-hero__cue {
     display: none;
+  }
+
+  .hc-hero--dna .hc-hero__blobs {
+    position: absolute;
+    inset: auto 0 0;
+    height: min(72vw, 380px);
+  }
+
+  .hc-hero--dna .hc-hero__features {
+    position: relative;
+    inset: auto;
+    left: auto;
+    width: min(calc(100% - 40px), var(--hc-max));
+    transform: none;
+    order: 3;
+    margin: 0 auto 12px;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .hc-hero--dna .hc-trust--hero {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 12px;
+    padding-top: 16px;
+  }
+
+  .hc-hero--dna .hc-hero__wave {
+    position: relative;
+    order: 4;
+    height: 40px;
+    margin-top: 4px;
   }
 }
 

@@ -1,0 +1,149 @@
+.page-shell--clinic-tour { padding-top: clamp(110px, 10vw, 150px); }
+
+.clinic-tour-page {
+  width: min(1280px, calc(100% - 64px));
+  margin: 0 auto;
+  padding-bottom: clamp(88px, 11vw, 148px);
+}
+
+.clinic-tour-page__intro {
+  max-width: 680px;
+  margin: 0 auto clamp(42px, 5vw, 70px);
+  text-align: center;
+}
+
+.clinic-tour-page__back {
+  display: inline-block;
+  margin-bottom: clamp(30px, 4vw, 52px);
+  color: #4e6977;
+  font-size: .84rem;
+  font-weight: 720;
+  text-decoration: none;
+}
+
+.clinic-tour-page__back:hover { color: #087ca7; }
+
+.clinic-tour-page__intro > span,
+.clinic-tour-page__selector-heading > span,
+.clinic-tour-page__selector-copy > span {
+  display: block;
+  color: #087ca7;
+  font-size: .72rem;
+  font-weight: 780;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.clinic-tour-page__intro h1 {
+  margin: 14px 0 0;
+  color: #071727;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5.5vw, 5.8rem);
+  font-weight: 710;
+  letter-spacing: -.07em;
+  line-height: .92;
+}
+
+.clinic-tour-page__intro p {
+  max-width: 52ch;
+  margin: 22px auto 0;
+  color: #536a79;
+  font-size: clamp(1rem, 1.25vw, 1.12rem);
+  line-height: 1.65;
+}
+
+.clinic-tour-page__stage {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 8.9;
+  border-radius: clamp(24px, 3vw, 38px);
+  background: #092433;
+  box-shadow: 0 30px 80px rgba(6, 39, 57, .16);
+}
+
+.clinic-tour-page__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.clinic-tour-page__play-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 34px;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(90deg, rgba(4, 24, 42, .75), rgba(5, 24, 37, .24) 56%, rgba(4, 17, 28, .54));
+  transition: background 240ms var(--ease);
+}
+
+.clinic-tour-page__play-layer:hover { background: linear-gradient(90deg, rgba(4, 24, 42, .84), rgba(5, 24, 37, .35) 56%, rgba(4, 17, 28, .64)); }
+
+.clinic-tour-page__play-button {
+  display: grid;
+  width: clamp(62px, 6vw, 86px);
+  height: clamp(62px, 6vw, 86px);
+  margin-bottom: clamp(24px, 3vw, 38px);
+  place-items: center;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(255, 255, 255, .2);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, .19);
+  backdrop-filter: blur(10px);
+  transition: transform 240ms var(--ease), background 240ms var(--ease);
+}
+
+.clinic-tour-page__play-button svg { width: 34%; transform: translateX(2px); }
+.clinic-tour-page__play-layer:hover .clinic-tour-page__play-button { background: #087ca7; transform: scale(1.07); }
+
+.clinic-tour-page__stage-copy { display: grid; max-width: 680px; text-align: center; }
+.clinic-tour-page__stage-copy small { margin-bottom: 13px; color: #9bdbf2; font-size: .7rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+.clinic-tour-page__stage-copy strong { font-family: var(--font-display); font-size: clamp(2rem, 4.5vw, 4.8rem); font-weight: 650; letter-spacing: -.065em; line-height: .95; }
+.clinic-tour-page__stage-copy em { max-width: 47ch; margin: 17px auto 0; color: rgba(255, 255, 255, .8); font-size: clamp(.92rem, 1.3vw, 1.1rem); font-style: normal; line-height: 1.6; }
+
+.clinic-tour-page__selector { margin-top: clamp(74px, 10vw, 138px); }
+.clinic-tour-page__selector-heading { max-width: 640px; margin-bottom: clamp(32px, 4vw, 54px); }
+.clinic-tour-page__selector-heading h2 { margin: 13px 0 14px; color: #0b2638; font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 4.3rem); letter-spacing: -.065em; line-height: .94; }
+.clinic-tour-page__selector-heading p { max-width: 50ch; margin: 0; color: #607887; line-height: 1.63; }
+
+.clinic-tour-page__video-list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid #d4e4e9; border-bottom: 1px solid #d4e4e9; }
+.clinic-tour-page__video-choice { min-height: 190px; padding: 25px 22px 24px; border: 0; border-right: 1px solid #d4e4e9; color: #234354; text-align: left; cursor: pointer; background: transparent; transition: color 180ms var(--ease), background 180ms var(--ease); }
+.clinic-tour-page__video-choice:last-child { border-right: 0; }
+.clinic-tour-page__video-choice:hover, .clinic-tour-page__video-choice.is-active { color: #075b7c; background: #eef9fc; }
+.clinic-tour-page__video-choice span { display: block; margin-bottom: 32px; color: #89a4af; font-size: .74rem; font-weight: 760; letter-spacing: .08em; }
+.clinic-tour-page__video-choice.is-active span { color: #087ca7; }
+.clinic-tour-page__video-choice strong { display: block; min-height: 44px; font-size: 1rem; line-height: 1.28; }
+.clinic-tour-page__video-choice small { display: block; margin-top: 11px; color: #6c8592; font-size: .8rem; line-height: 1.46; }
+.clinic-tour-page__note { margin: 21px 0 0; color: #718795; font-size: .82rem; }
+
+@media (max-width: 900px) {
+  .clinic-tour-page { width: min(100% - 40px, 760px); }
+  .clinic-tour-page__stage { aspect-ratio: 16 / 10; }
+  .clinic-tour-page__video-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .clinic-tour-page__video-choice { border-bottom: 1px solid #d4e4e9; }
+  .clinic-tour-page__video-choice:nth-child(2n) { border-right: 0; }
+  .clinic-tour-page__video-choice:last-child { border-bottom: 0; }
+}
+
+@media (max-width: 640px) {
+  .page-shell--clinic-tour { padding-top: 94px; }
+  .clinic-tour-page { width: min(100% - 32px, 560px); }
+  .clinic-tour-page__stage { aspect-ratio: .95 / 1; border-radius: 22px; }
+  .clinic-tour-page__play-layer { padding: 24px; }
+  .clinic-tour-page__stage-copy strong { font-size: clamp(2rem, 10vw, 3.25rem); }
+  .clinic-tour-page__video-list { grid-template-columns: 1fr; }
+  .clinic-tour-page__video-choice { min-height: auto; padding: 20px 0; border-right: 0; border-bottom: 1px solid #d4e4e9; background: transparent; }
+  .clinic-tour-page__video-choice:hover, .clinic-tour-page__video-choice.is-active { background: transparent; }
+  .clinic-tour-page__video-choice span { margin-bottom: 8px; }
+  .clinic-tour-page__video-choice strong { min-height: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clinic-tour-page__play-layer, .clinic-tour-page__play-button, .clinic-tour-page__video-choice { transition: none; }
+}

@@ -3,8 +3,8 @@ import { motion, useReducedMotion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
 import { fetchSpecialty, isCmsEnabled, type CmsSpecialtyDetail } from '../api/client'
-import { media } from '../data/media'
 import { getSpecialtyBySlug, specialtyDetails, specialtyPageLabels } from '../data/specialtyDetails'
+import { getClinicSpecialtyImage } from '../data/specialtyImages'
 import {
   getSpecialtyDoctors,
   getSpecialtyWorld,
@@ -14,6 +14,7 @@ import { staggerContainer, fadeUpSmall, EASE_OUT } from '../lib/animations'
 import SectionBackLink from '../components/ui/SectionBackLink'
 import Magnetic from '../components/ui/Magnetic'
 import NotFoundPage from './NotFoundPage'
+import { useScrollToTopOnRoute } from '../lib/scrollRoute'
 import '../styles/specialty-world.css'
 
 /**
@@ -27,8 +28,6 @@ import '../styles/specialty-world.css'
  * FORM: Patient pathway detail, extending the confirmed finder-led clinic
  * catalog; no concept seed was needed because the task sequence is fixed.
  */
-
-const SPECIALTY_IMAGES = Object.values(media.clinic)
 
 type ViewModel = {
   slug: string
@@ -91,9 +90,7 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
   const [triedCms, setTriedCms] = useState(!isCmsEnabled())
   const [activeSection, setActiveSection] = useState<ActiveSection>('specialty-care')
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [slug])
+  useScrollToTopOnRoute(slug)
 
   useEffect(() => {
     if (!isCmsEnabled()) {
@@ -123,7 +120,7 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
         slug: cmsDetail.slug,
         name: cmsDetail.name,
         count: cmsDetail.count,
-        image: cmsDetail.image || world.organ || SPECIALTY_IMAGES[index] || SPECIALTY_IMAGES[0],
+        image: cmsDetail.image || world.organ || getClinicSpecialtyImage(slug),
         overview: cmsDetail.overview,
         conditions: cmsDetail.conditions,
         services: cmsDetail.services,
@@ -140,7 +137,7 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
       slug: detail.slug,
       name: t.clinic.specialties[index].name,
       count: t.clinic.specialties[index].count,
-      image: world.organ || SPECIALTY_IMAGES[index],
+      image: world.organ || getClinicSpecialtyImage(detail.slug),
       overview: content.overview,
       conditions: content.conditions.split('|'),
       services: content.services.split('|'),
@@ -183,10 +180,10 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
 
   const relatedFromCms = home?.specialties?.filter((item) => item.slug !== slug).slice(0, 3)
   const related = relatedFromCms?.length
-    ? relatedFromCms.map((item, i) => ({
+    ? relatedFromCms.map((item) => ({
         slug: item.slug,
         name: item.name,
-        image: item.image || getSpecialtyWorld(item.slug).organ || SPECIALTY_IMAGES[i],
+        image: item.image || getSpecialtyWorld(item.slug).organ || getClinicSpecialtyImage(item.slug),
         accent: getSpecialtyWorld(item.slug).accent,
       }))
     : specialtyDetails
@@ -196,7 +193,7 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
         .map((item) => ({
           slug: item.slug,
           name: t.clinic.specialties[item.index].name,
-          image: getSpecialtyWorld(item.slug).organ || SPECIALTY_IMAGES[item.index],
+          image: getSpecialtyWorld(item.slug).organ || getClinicSpecialtyImage(item.slug),
           accent: getSpecialtyWorld(item.slug).accent,
         }))
 

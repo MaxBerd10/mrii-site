@@ -1,4 +1,4 @@
-/* Full-page transition: institute logo spins once + tech ring */
+/* Full-page transition: 3D institute emblem turns once. */
 
 .page-loader {
   position: fixed;
@@ -6,15 +6,14 @@
   z-index: 200;
   display: grid;
   place-items: center;
+  /* Fully opaque so the outgoing route never bleeds through during navigate. */
   background:
-    radial-gradient(ellipse 55% 45% at 50% 42%, rgba(14, 165, 233, 0.08), transparent 60%),
-    rgba(248, 250, 252, 0.94);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+    radial-gradient(ellipse 55% 45% at 50% 42%, rgba(14, 165, 233, 0.1), transparent 60%),
+    #f8fafc;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
+  transition: opacity 0.14s ease, visibility 0.14s ease;
 }
 
 .page-loader--active {
@@ -32,70 +31,108 @@
   background: transparent;
   border: none;
   box-shadow: none;
+  perspective: 1000px;
 }
 
-.page-loader__ring {
+.page-loader__panel::before {
+  content: '';
   position: absolute;
-  inset: 8%;
+  bottom: 5px;
+  width: min(150px, 42vw);
+  height: 24px;
   border-radius: 50%;
-  border: 1.5px solid rgba(91, 76, 219, 0.12);
-  border-top-color: #5b4cdb;
-  border-right-color: #0ea5e9;
-  opacity: 0;
+  background: rgba(5, 21, 47, 0.2);
+  filter: blur(16px);
+  transform: translateY(13px) scaleX(0.82);
 }
 
-.page-loader--active .page-loader__ring {
-  opacity: 1;
-  animation: page-loader-ring 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.page-loader__logo {
-  width: min(148px, 38vw);
-  height: min(148px, 38vw);
-  object-fit: contain;
-  border-radius: 50%;
+.page-loader__emblem-frame {
+  position: relative;
   display: block;
-  background: transparent;
-  filter: drop-shadow(0 16px 32px rgba(15, 23, 42, 0.18));
+  width: min(178px, 46vw);
+  aspect-ratio: 1;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  perspective: 1000px;
 }
 
-.page-loader__logo--spin {
-  animation: page-loader-spin 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+.page-loader__coin {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border-radius: 50%;
+  background: #06152f;
+  border: 4px solid #07162f;
+  box-shadow:
+    0 18px 32px rgba(15, 23, 42, 0.25),
+    inset 0 0 0 3px rgba(255, 255, 255, 0.1);
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
-@keyframes page-loader-spin {
+.page-loader__coin::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  box-shadow:
+    inset 8px 2px 13px rgba(255, 255, 255, 0.1),
+    inset -7px -9px 14px rgba(1, 8, 25, 0.24);
+  pointer-events: none;
+}
+
+.page-loader__emblem {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.page-loader__emblem--front {
+  transform: translateZ(1px);
+}
+
+.page-loader__emblem--back {
+  transform: rotateY(180deg) translateZ(1px);
+}
+
+.page-loader__emblem-frame--turn .page-loader__coin {
+  animation: page-loader-emblem-turn 0.68s cubic-bezier(0.45, 0, 0.55, 1) both;
+}
+
+@keyframes page-loader-emblem-turn {
   from {
-    transform: rotate(0deg) scale(0.92);
+    transform: rotateY(0deg) scale(0.9);
+    filter: brightness(1);
     opacity: 0.7;
   }
-  to {
-    transform: rotate(360deg) scale(1);
-    opacity: 1;
+  25% {
+    transform: rotateY(90deg) scale(0.98);
+    filter: brightness(0.72);
   }
-}
-
-@keyframes page-loader-ring {
-  from {
-    transform: rotate(0deg) scale(0.88);
-    opacity: 0;
+  50% {
+    transform: rotateY(180deg) scale(1.03);
+    filter: brightness(1);
   }
-  30% {
-    opacity: 1;
+  75% {
+    transform: rotateY(270deg) scale(1.01);
+    filter: brightness(0.72);
   }
   to {
-    transform: rotate(360deg) scale(1);
-    opacity: 0.35;
+    transform: rotateY(360deg) scale(1);
+    filter: brightness(1);
+    opacity: 1;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .page-loader__logo--spin,
-  .page-loader--active .page-loader__ring {
+  .page-loader__emblem-frame--turn .page-loader__coin {
     animation: none;
-  }
-
-  .page-loader {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
   }
 }

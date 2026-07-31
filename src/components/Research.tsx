@@ -10,12 +10,39 @@ import '../styles/research-page.css'
 const PREVIEW_COUNT = 4
 const TAB_COLORS = ['#6366F1', '#0EA5E9', '#059669'] as const
 const PHASE_COLORS = ['#6366F1', '#0891B2', '#0B3D6B', '#059669']
+const TAB_HASHES = ['sponsors', 'patients', 'cro'] as const
+
+function hashToTab(hash: string): number {
+  const clean = hash.replace(/^#/, '')
+  const i = TAB_HASHES.indexOf(clean as (typeof TAB_HASHES)[number])
+  return i >= 0 ? i : 0
+}
 
 export default function Research() {
   const { t, lang } = useLanguage()
   const { home } = useCms()
-  const [tab, setTab] = useState(0)
+  const [tab, setTab] = useState(() =>
+    typeof window === 'undefined' ? 0 : hashToTab(window.location.hash),
+  )
   const [expanded, setExpanded] = useState(false)
+
+  useEffect(() => {
+    const sync = () => setTab(hashToTab(window.location.hash))
+    window.addEventListener('hashchange', sync)
+    window.addEventListener('popstate', sync)
+    return () => {
+      window.removeEventListener('hashchange', sync)
+      window.removeEventListener('popstate', sync)
+    }
+  }, [])
+
+  const selectTab = (i: number) => {
+    setTab(i)
+    const nextHash = `#${TAB_HASHES[i]}`
+    if (window.location.hash !== nextHash) {
+      window.history.replaceState(null, '', `${window.location.pathname}${nextHash}`)
+    }
+  }
   const cms = home?.research
 
   const whyItems = cms?.whyItems?.length ? cms.whyItems : t.research.whyItems
@@ -103,7 +130,7 @@ export default function Research() {
                   decoding="async"
                 />
               </figure>
-              <a href="/contacts?intent=sponsor" className="research-hero__cta">
+              <a href="/contacts#homiy" className="research-hero__cta">
                 {ctaLabel}
               </a>
             </div>
@@ -114,11 +141,12 @@ export default function Research() {
           {t.research.tabs.map((tabLabel, i) => (
             <button
               key={tabLabel}
+              id={TAB_HASHES[i]}
               type="button"
               role="tab"
               aria-selected={tab === i}
               className={`research-toolbar__btn${tab === i ? ' is-active' : ''}`}
-              onClick={() => setTab(i)}
+              onClick={() => selectTab(i)}
             >
               <span
                 className="research-toolbar__dot"
@@ -166,7 +194,7 @@ export default function Research() {
                   </div>
                   <strong className="research-card__title">{card.title}</strong>
                   {card.meta ? <span className="research-card__meta">{card.meta}</span> : null}
-                  <a href="/contacts?intent=sponsor" className="research-card__link">
+                  <a href="/contacts#homiy" className="research-card__link">
                     {ctaLabel} <span aria-hidden>→</span>
                   </a>
                 </motion.article>

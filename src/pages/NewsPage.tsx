@@ -8,6 +8,7 @@ import { getNewsBySlug, newsArticles, newsPageLabels } from '../data/newsDetails
 import { blurUp, rise3d, staggerContainer } from '../lib/animations'
 import SectionBackLink from '../components/ui/SectionBackLink'
 import NotFoundPage from './NotFoundPage'
+import { useScrollToTopOnRoute } from '../lib/scrollRoute'
 import { accentInk, accentWash } from '../lib/accent'
 
 const NEWS_IMAGES = Object.values(media.news)
@@ -38,9 +39,7 @@ export default function NewsPage({ slug }: { slug: string }) {
   const [cmsDetail, setCmsDetail] = useState<CmsNewsDetail | null>(null)
   const [triedCms, setTriedCms] = useState(!isCmsEnabled())
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [slug])
+  useScrollToTopOnRoute(slug)
 
   useEffect(() => {
     if (!isCmsEnabled()) {

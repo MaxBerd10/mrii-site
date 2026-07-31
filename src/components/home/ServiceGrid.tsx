@@ -2,12 +2,10 @@ import { useMemo, type CSSProperties } from 'react'
 import { motion } from 'motion/react'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { useCms } from '../../cms/CmsContext'
-import { media } from '../../data/media'
 import { specialtyDetails } from '../../data/specialtyDetails'
+import { getClinicSpecialtyImage } from '../../data/specialtyImages'
 import HdHead from './HdHead'
 import { settle, settleStagger, inView } from '../../lib/homeDarkMotion'
-
-type ClinicImageKey = keyof typeof media.clinic
 
 /**
  * Signal by clinical family, not by variety:
@@ -15,21 +13,20 @@ type ClinicImageKey = keyof typeof media.clinic
  * vitals green, and imaging is machine cyan — that is where the AI actually is.
  */
 const SIGNAL_BY_SLUG: Record<string, string> = {
+  ent: 'var(--hd-blue)',
   cardiology: 'var(--hd-blue)',
   neurology: 'var(--hd-blue)',
   therapy: 'var(--hd-blue)',
   gastroenterology: 'var(--hd-blue)',
-  endocrinology: 'var(--hd-blue)',
-  urology: 'var(--hd-violet-lt)',
+  pulmonology: 'var(--hd-blue)',
+  rheumatology: 'var(--hd-blue)',
   gynecology: 'var(--hd-green)',
-  pediatrics: 'var(--hd-green)',
   surgery: 'var(--hd-violet-lt)',
-  rehabilitation: 'var(--hd-green)',
-  diagnostics: 'var(--hd-cyan)',
-  oncology: 'var(--hd-violet-lt)',
+  laboratory: 'var(--hd-cyan)',
+  'intensive-care': 'var(--hd-violet-lt)',
 }
 
-/** CH.06 — all twelve departments. The one dense passage on the page. */
+/** CH.06 — all clinical departments. The one dense passage on the page. */
 export default function ServiceGrid() {
   const { t, lang } = useLanguage()
   const { home } = useCms()
@@ -46,7 +43,7 @@ export default function ServiceGrid() {
         name: source?.[i]?.name ?? specialty.name,
         desc: source?.[i]?.desc ?? specialty.desc,
         count: source?.[i]?.count ?? specialty.count,
-        image: source?.[i]?.image || media.clinic[slug as ClinicImageKey] || media.clinic.therapy,
+        image: source?.[i]?.image || getClinicSpecialtyImage(slug),
         signal: SIGNAL_BY_SLUG[slug] ?? 'var(--hd-blue)',
       }
     })

@@ -2,10 +2,13 @@ import { useEffect, useRef } from 'react'
 import { useReducedMotion } from 'motion/react'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { MaskedText } from './careUi'
+import { FEATURE_ICONS, IconCalendar, TRUST_ICONS } from './CareHeroIcons'
+
+import { CLINIC_PHONE_TEL } from '../../data/clinicContact'
 
 function telHref(phone: string) {
   const digits = phone.replace(/[^\d+]/g, '')
-  return digits ? `tel:${digits}` : 'tel:+998902732301'
+  return digits ? `tel:${digits}` : `tel:${CLINIC_PHONE_TEL}`
 }
 
 /**
@@ -58,9 +61,30 @@ export default function CareHero() {
         <div className="hc-hero__sticky">
           <div className="hc-hero__aurora" aria-hidden />
 
+          <div className="hc-hero__blobs" aria-hidden>
+            <span className="hc-hero__blob hc-hero__blob--a" />
+            <span className="hc-hero__blob hc-hero__blob--b" />
+            <span className="hc-hero__blob hc-hero__blob--c" />
+            <span className="hc-hero__dots hc-hero__dots--a" />
+            <span className="hc-hero__dots hc-hero__dots--b" />
+            <svg className="hc-hero__spark hc-hero__spark--a" viewBox="0 0 24 24" aria-hidden>
+              <path d="M12 0c1 8 4 11 12 12-8 1-11 4-12 12-1-8-4-11-12-12 8-1 11-4 12-12z" />
+            </svg>
+            <svg className="hc-hero__spark hc-hero__spark--b" viewBox="0 0 24 24" aria-hidden>
+              <path d="M12 0c1 8 4 11 12 12-8 1-11 4-12 12-1-8-4-11-12-12 8-1 11-4 12-12z" />
+            </svg>
+            <svg className="hc-hero__spark hc-hero__spark--c" viewBox="0 0 24 24" aria-hidden>
+              <path d="M12 0c1 8 4 11 12 12-8 1-11 4-12 12-1-8-4-11-12-12 8-1 11-4 12-12z" />
+            </svg>
+            <span className="hc-hero__plus hc-hero__plus--a">+</span>
+            <span className="hc-hero__plus hc-hero__plus--b">+</span>
+            <span className="hc-hero__plus hc-hero__plus--c">+</span>
+            <span className="hc-hero__plus hc-hero__plus--d">+</span>
+          </div>
+
           <div className="hc-hero__dna hc-hero__team">
             <img
-              src="/images/medical/fjsti-real-team-collage-flat-v1.webp"
+              src="/images/medical/fjsti-real-team-collage-flat-smooth-white-v3.webp"
               alt={c.imageAlt}
               width={1800}
               height={1970}
@@ -85,6 +109,7 @@ export default function CareHero() {
 
               <div className="hc-hero__cta">
                 <a className="hc-btn" href="/contacts?intent=booking">
+                  <IconCalendar />
                   {c.ctaPrimary}
                 </a>
                 <a
@@ -104,13 +129,39 @@ export default function CareHero() {
                   {t.topBar.phone}
                 </a>
               </div>
-            </div>
 
-            <div className="hc-hero__cue" aria-hidden>
-              <span />
-              Scroll
+              <dl className="hc-trust hc-trust--hero">
+                {c.trust.map((item, index) => {
+                  const Icon = TRUST_ICONS[index] ?? TRUST_ICONS[0]
+                  return (
+                    <div key={item.label} className="hc-trust__item">
+                      <span className="hc-trust__icon" aria-hidden>
+                        <Icon />
+                      </span>
+                      <dt className="hc-trust__value">{item.value}</dt>
+                      <dd className="hc-trust__label">{item.label}</dd>
+                    </div>
+                  )
+                })}
+              </dl>
             </div>
           </div>
+
+          <div className="hc-shell hc-hero__features" aria-label={c.heroFeatures[0]?.title}>
+            {c.heroFeatures.map((feature, index) => {
+              const Icon = FEATURE_ICONS[index] ?? FEATURE_ICONS[0]
+              return (
+                <article key={feature.title} className="hc-hero__feature">
+                  <span className="hc-hero__feature-icon" aria-hidden>
+                    <Icon />
+                  </span>
+                  <h2 className="hc-hero__feature-title">{feature.title}</h2>
+                  <p className="hc-hero__feature-desc">{feature.desc}</p>
+                </article>
+              )
+            })}
+          </div>
+
         </div>
       </div>
     </section>

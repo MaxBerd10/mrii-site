@@ -4,8 +4,8 @@ import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
 import { usePageNav } from './PageTransition'
 import { staggerContainer, fadeUpSmall } from '../lib/animations'
-import { media } from '../data/media'
 import { specialtyDetails } from '../data/specialtyDetails'
+import { CLINIC_SPECIALTY_CATEGORIES, getClinicSpecialtyImage } from '../data/specialtyImages'
 import '../styles/clinic-catalog.css'
 
 /**
@@ -20,32 +20,18 @@ import '../styles/clinic-catalog.css'
  * no concept seed was needed because the interaction path was specified.
  */
 
-type ClinicCategory = 'all' | 'therapy' | 'surgery' | 'women' | 'diagnostics'
+type ClinicCategory = 'all' | 'therapy' | 'surgery' | 'women' | 'diagnostics' | 'emergency'
 type QuickActionKind = 'doctor' | 'price' | 'calendar'
 type ClinicView = 'overview' | 'services' | 'diagnostics'
 
-const SPECIALTY_IMAGES = Object.values(media.clinic)
-
-const SPECIALTY_CATEGORIES: ClinicCategory[] = [
-  'therapy',
-  'therapy',
-  'therapy',
-  'therapy',
-  'therapy',
-  'surgery',
-  'women',
-  'women',
-  'surgery',
-  'diagnostics',
-  'diagnostics',
-  'surgery',
-]
+const SPECIALTY_CATEGORIES = CLINIC_SPECIALTY_CATEGORIES
 
 const CATEGORY_META: Record<Exclude<ClinicCategory, 'all'>, { color: string }> = {
   therapy: { color: '#087CA7' },
   surgery: { color: '#4E5AC7' },
   women: { color: '#B84072' },
   diagnostics: { color: '#168264' },
+  emergency: { color: '#E85D04' },
 }
 
 function SearchIcon() {
@@ -118,17 +104,19 @@ export default function Clinic({ view = 'overview' }: { view?: ClinicView }) {
           name: sp.name,
           desc: sp.desc,
           count: sp.count,
-          image: sp.image || SPECIALTY_IMAGES[i % SPECIALTY_IMAGES.length],
-          category: SPECIALTY_CATEGORIES[i] ?? 'therapy',
+          image: sp.image || getClinicSpecialtyImage(sp.slug),
+          category: (SPECIALTY_CATEGORIES[i] ?? 'therapy') as Exclude<ClinicCategory, 'all'>,
         }))
-      : t.clinic.specialties.map((sp, i) => ({
-          slug: specialtyDetails[i]?.slug ?? `specialty-${i}`,
+      : t.clinic.specialties.map((sp, i) => {
+          const slug = specialtyDetails[i]?.slug ?? `specialty-${i}`
+          return {
+          slug,
           name: sp.name,
           desc: sp.desc,
           count: sp.count,
-          image: SPECIALTY_IMAGES[i] ?? SPECIALTY_IMAGES[0],
-          category: SPECIALTY_CATEGORIES[i] ?? 'therapy',
-        }))
+          image: getClinicSpecialtyImage(slug),
+          category: (SPECIALTY_CATEGORIES[i] ?? 'therapy') as Exclude<ClinicCategory, 'all'>,
+        }})
     return base
   }, [home, t.clinic.specialties])
 
@@ -139,6 +127,7 @@ export default function Clinic({ view = 'overview' }: { view?: ClinicView }) {
       surgery: specialties.filter((s) => s.category === 'surgery').length,
       women: specialties.filter((s) => s.category === 'women').length,
       diagnostics: specialties.filter((s) => s.category === 'diagnostics').length,
+      emergency: specialties.filter((s) => s.category === 'emergency').length,
     }
     return [
       { id: 'all' as const, label: t.clinic.filters.all, count: counts.all, color: null },
@@ -146,6 +135,7 @@ export default function Clinic({ view = 'overview' }: { view?: ClinicView }) {
       { id: 'surgery' as const, label: t.clinic.filters.surgery, count: counts.surgery, color: CATEGORY_META.surgery.color },
       { id: 'women' as const, label: t.clinic.filters.women, count: counts.women, color: CATEGORY_META.women.color },
       { id: 'diagnostics' as const, label: t.clinic.filters.diagnostics, count: counts.diagnostics, color: CATEGORY_META.diagnostics.color },
+      { id: 'emergency' as const, label: t.clinic.filters.emergency, count: counts.emergency, color: CATEGORY_META.emergency.color },
     ]
   }, [specialties, t.clinic.filters])
 

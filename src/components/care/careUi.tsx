@@ -121,7 +121,12 @@ function maskedWords(node: ReactNode, counter: { value: number }, path = 'text')
 
 function useMaskedTextReveal(threshold: number) {
   const ref = useRef<HTMLElement>(null)
-  const [seen, setSeen] = useState(false)
+  // A hidden tab pauses both rAF and observers, so copy that mounts in the
+  // background would stay masked even after the reader switches to it. Match
+  // `useReveal` and show it outright rather than risk an invisible headline.
+  const [seen, setSeen] = useState(
+    () => typeof document !== 'undefined' && document.hidden,
+  )
 
   useEffect(() => {
     const node = ref.current
@@ -129,10 +134,9 @@ function useMaskedTextReveal(threshold: number) {
 
     let observer: IntersectionObserver | null = null
     let cancelled = false
-    let preparing = false
 
     const observe = () => {
-      if (document.hidden || observer) return
+      if (cancelled || observer) return
 
       if (typeof IntersectionObserver === 'undefined') {
         setSeen(true)
@@ -150,28 +154,16 @@ function useMaskedTextReveal(threshold: number) {
       observer.observe(node)
     }
 
-    const prepare = async () => {
-      if (document.hidden || preparing || observer) return
-      preparing = true
-
-      if ('fonts' in document) {
-        await document.fonts.ready
-      }
-
-      await new Promise<void>((resolve) => {
-        requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
-      })
-
-      preparing = false
-      if (!cancelled) observe()
-    }
-
+    // Observe right away. Fonts load with `display: swap`, so the copy paints in
+    // the fallback face immediately and swaps in place — waiting on
+    // `document.fonts.ready` here was the main cause of the hero text arriving
+    // late on first load.
     const resumeWhenVisible = () => {
-      if (!document.hidden) void prepare()
+      if (!document.hidden) observe()
     }
 
     document.addEventListener('visibilitychange', resumeWhenVisible)
-    void prepare()
+    observe()
 
     return () => {
       cancelled = true

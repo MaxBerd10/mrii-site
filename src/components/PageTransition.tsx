@@ -3,13 +3,18 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react'
 
-/** One full logo spin during page change. */
-export const PAGE_SPIN_MS = 900
+/** Emblem turn duration while the new route mounts under an opaque veil. */
+export const PAGE_SPIN_MS = 720
+const PAGE_SPIN_REDUCED_MS = 120
+/** Commit the new route once the veil is fully painted. */
+const ROUTE_COMMIT_MS = 40
 
 type NavContextValue = {
   path: string
@@ -45,58 +50,123 @@ function shouldHandleLink(anchor: HTMLAnchorElement) {
   }
 }
 
+function prefersReducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
+function spinDurationMs() {
+  return prefersReducedMotion() ? PAGE_SPIN_REDUCED_MS : PAGE_SPIN_MS
+}
+
+function focusPageLandmark() {
+  const main = document.querySelector('main')
+  const heading = main?.querySelector('h1')
+  const target = (heading instanceof HTMLElement ? heading : main) as HTMLElement | null
+  if (!target) return
+  if (!target.hasAttribute('tabindex')) target.tabIndex = -1
+  target.focus({ preventScroll: true })
+}
+
 export function PageTransitionProvider({ children }: { children: ReactNode }) {
   const [path, setPath] = useState(() => normalizePath(window.location.pathname))
   const [busy, setBusy] = useState(false)
   const [routeEnter, setRouteEnter] = useState(false)
+  const timersRef = useRef<number[]>([])
 
-  const navigate = useCallback((to: string) => {
-    let url: URL
-    try {
-      url = new URL(to, window.location.origin)
-    } catch {
-      return
-    }
-    if (url.origin !== window.location.origin) {
-      window.location.href = to
-      return
-    }
+  const clearTimers = useCallback(() => {
+    timersRef.current.forEach((id) => window.clearTimeout(id))
+    timersRef.current = []
+  }, [])
 
-    const nextPath = normalizePath(url.pathname)
-    const nextFull = `${nextPath}${url.search}${url.hash}`
-    const currentFull = `${normalizePath(window.location.pathname)}${window.location.search}${window.location.hash}`
+  const schedule = useCallback((fn: () => void, ms: number) => {
+    const id = window.setTimeout(fn, ms)
+    timersRef.current.push(id)
+    return id
+  }, [])
 
-    // Same path, only hash — no logo spin
-    if (nextPath === normalizePath(window.location.pathname) && url.hash) {
-      if (window.location.hash !== url.hash) {
-        window.history.pushState(null, '', nextFull)
-        const el = document.querySelector(url.hash)
-        if (el instanceof HTMLElement) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const commitRoute = useCallback((nextPath: string, nextFull: string) => {
+    window.history.pushState(null, '', nextFull)
+    setRouteEnter(true)
+    setPath(nextPath)
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [])
+
+  const finishTransition = useCallback(() => {
+    setBusy(false)
+    schedule(() => focusPageLandmark(), 16)
+  }, [schedule])
+
+  const runTransition = useCallback(
+    (nextPath: string, nextFull: string, { push = true }: { push?: boolean } = {}) => {
+      clearTimers()
+      setBusy(true)
+
+      const total = spinDurationMs()
+
+      schedule(() => {
+        if (push) commitRoute(nextPath, nextFull)
+        else {
+          setRouteEnter(true)
+          setPath(nextPath)
+          window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+        }
+      }, ROUTE_COMMIT_MS)
+
+      schedule(finishTransition, total)
+    },
+    [clearTimers, commitRoute, finishTransition, schedule],
+  )
+
+  const navigate = useCallback(
+    (to: string) => {
+      let url: URL
+      try {
+        url = new URL(to, window.location.origin)
+      } catch {
+        return
       }
-      return
+      if (url.origin !== window.location.origin) {
+        window.location.href = to
+        return
+      }
+
+      const nextPath = normalizePath(url.pathname)
+      const nextFull = `${nextPath}${url.search}${url.hash}`
+      const currentFull = `${normalizePath(window.location.pathname)}${window.location.search}${window.location.hash}`
+
+      // Same path, only hash — no logo spin
+      if (nextPath === normalizePath(window.location.pathname) && url.hash) {
+        if (window.location.hash !== url.hash) {
+          window.history.pushState(null, '', nextFull)
+          const el = document.querySelector(url.hash)
+          if (el instanceof HTMLElement) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+        return
+      }
+
+      if (busy) return
+
+      // Choosing the page you are already on should return you to the top, the
+      // way every other site behaves. Bailing out silently made "Bosh sahifa"
+      // and the logo look broken once the reader had scrolled down. There is no
+      // route change here, so this skips the logo spin.
+      if (nextFull === currentFull) {
+        const reduceMotion = prefersReducedMotion()
+        window.scrollTo({ top: 0, left: 0, behavior: reduceMotion ? 'auto' : 'smooth' })
+        return
+      }
+
+      runTransition(nextPath, nextFull, { push: true })
+    },
+    [busy, runTransition],
+  )
+
+  useLayoutEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual'
     }
-
-    if (busy) return
-
-    // Choosing the page you are already on should return you to the top, the
-    // way every other site behaves. Bailing out silently made "Bosh sahifa"
-    // and the logo look broken once the reader had scrolled down. There is no
-    // route change here, so this skips the logo spin.
-    if (nextFull === currentFull) {
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      window.scrollTo({ top: 0, left: 0, behavior: reduceMotion ? 'auto' : 'smooth' })
-      return
-    }
-
-    setBusy(true)
-    window.setTimeout(() => {
-      window.history.pushState(null, '', nextFull)
-      setRouteEnter(true)
-      setPath(nextPath)
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
-      window.setTimeout(() => setBusy(false), 80)
-    }, PAGE_SPIN_MS)
-  }, [busy])
+    window.scrollTo(0, 0)
+  }, [])
 
   useEffect(() => {
     const onClick = (event: MouseEvent) => {
@@ -113,13 +183,11 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
     }
 
     const onPopState = () => {
-      setBusy(true)
-      window.setTimeout(() => {
-        setRouteEnter(true)
-        setPath(normalizePath(window.location.pathname))
-        window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
-        window.setTimeout(() => setBusy(false), 80)
-      }, PAGE_SPIN_MS)
+      clearTimers()
+      setRouteEnter(true)
+      setPath(normalizePath(window.location.pathname))
+      setBusy(false)
+      // Back/forward: browser restores scroll — do not force top.
     }
 
     document.addEventListener('click', onClick, true)
@@ -128,7 +196,20 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
       document.removeEventListener('click', onClick, true)
       window.removeEventListener('popstate', onPopState)
     }
-  }, [navigate])
+  }, [navigate, runTransition])
+
+  // Lock page scroll while the transition veil is up — keyboard PageDown
+  // otherwise still moves the outgoing page underneath.
+  useEffect(() => {
+    if (!busy) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previous
+    }
+  }, [busy])
+
+  useEffect(() => () => clearTimers(), [clearTimers])
 
   // Legacy hash bookmarks → real pages
   useEffect(() => {
@@ -174,19 +255,33 @@ function PageLoaderOverlay({ active }: { active: boolean }) {
   return (
     <div
       className={`page-loader${active ? ' page-loader--active' : ''}`}
+      role="status"
+      aria-live="polite"
       aria-hidden={!active}
       aria-busy={active}
     >
+      <span className="sr-only">{active ? 'Sahifa yuklanmoqda' : ''}</span>
       <div className="page-loader__panel">
-        <span className="page-loader__ring" aria-hidden />
-        <img
-          src="/images/fjsti-logo.png"
-          alt=""
-          className={`page-loader__logo${active ? ' page-loader__logo--spin' : ''}`}
-          width={148}
-          height={148}
-          decoding="async"
-        />
+        <span className={`page-loader__emblem-frame${active ? ' page-loader__emblem-frame--turn' : ''}`}>
+          <span className="page-loader__coin">
+            <img
+              src="/images/transition-medallion-v1.webp"
+              alt=""
+              className="page-loader__emblem page-loader__emblem--front"
+              width={192}
+              height={192}
+              decoding="async"
+            />
+            <img
+              src="/images/transition-medallion-v1.webp"
+              alt=""
+              className="page-loader__emblem page-loader__emblem--back"
+              width={192}
+              height={192}
+              decoding="async"
+            />
+          </span>
+        </span>
       </div>
     </div>
   )

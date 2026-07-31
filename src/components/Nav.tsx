@@ -29,7 +29,8 @@ export default function Nav() {
       href: '/clinic',
       children: [
         { label: t.nav.children.services, href: '/clinic/services' },
-        { label: t.nav.children.diagnostics, href: '/clinic/diagnostics' },
+        { label: t.nav.children.tour, href: '/clinic/tour' },
+        { label: t.nav.children.gallery, href: '/clinic/gallery' },
         { label: t.nav.children.prices, href: '/prices' },
       ],
     },
@@ -39,17 +40,17 @@ export default function Nav() {
       label: t.nav.research,
       href: '/research',
       children: [
-        { label: t.nav.children.forPatients, href: '/research' },
-        { label: t.nav.children.forSponsors, href: '/research' },
-        { label: t.nav.children.forCRO, href: '/research' },
+        { label: t.nav.children.forPatients, href: '/research#patients' },
+        { label: t.nav.children.forSponsors, href: '/research#sponsors' },
+        { label: t.nav.children.forCRO, href: '/research#cro' },
       ],
     },
     {
       label: t.nav.education,
       href: '/education',
       children: [
-        { label: t.nav.children.residency, href: '/education' },
-        { label: t.nav.children.courses, href: '/education' },
+        { label: t.nav.children.residency, href: '/education#ordinatura' },
+        { label: t.nav.children.courses, href: '/education#kurslar' },
       ],
     },
     { label: t.nav.contacts, href: '/contacts', children: [] },

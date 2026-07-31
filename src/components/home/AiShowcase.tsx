@@ -35,7 +35,7 @@ function useTicker(length: number, running: boolean, intervalMs = 2600) {
 
 /**
  * The screen inside the tablet — an authored product interface, not a stock
- * photo. It's the real AI Doctor Assistant surface: today's queue and
+ * photo. It's the AiShifokor console surface: today's queue and
  * physicians on the left, live activity feed and AI panel on the right. Built
  * from the app's own doctor data so it reads as the product.
  *

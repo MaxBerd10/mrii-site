@@ -158,7 +158,7 @@ function CardFace({ doctor }: { doctor: Doctor }) {
         className="hc-orbit__photo"
         src={doctor.photo}
         alt={doctor.name}
-        loading="eager"
+        loading="lazy"
         fetchPriority="low"
         decoding="async"
       />
@@ -219,19 +219,32 @@ export default function CareOrbit() {
     target: sectionRef,
     offset: ['start start', 'end end'],
   })
-  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 26, restDelta: 0.001 })
+  const progress = useSpring(scrollYProgress, { stiffness: 180, damping: 32, restDelta: 0.001 })
 
   // The ring's own caption sits in the hole and leaves once the shape opens;
   // the section heading takes over as the arch forms.
   const ringCopyOpacity = useTransform(progress, [0, 0.22], [1, 0])
   const archCopyOpacity = useTransform(progress, [0.42, 0.72], [0, 1])
   const archCopyY = useTransform(progress, [0.42, 0.72], [24, 0])
+  const skipMorph = () => {
+    const section = sectionRef.current
+    if (!section) return
+    const top = section.offsetTop + section.offsetHeight
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({ top, left: 0, behavior: reduceMotion ? 'auto' : 'smooth' })
+  }
+
   return (
     <section
       ref={sectionRef}
       className={`hc-orbit${reduce ? ' is-static' : ''}`}
       aria-labelledby="hc-orbit-title"
     >
+      {reduce ? null : (
+        <button type="button" className="hc-orbit__skip" onClick={skipMorph}>
+          {t.homeCare.orbitSkip}
+        </button>
+      )}
       <div className="hc-orbit__sticky">
         <div className="hc-orbit__stage" ref={stageRef}>
           {size.w > 0

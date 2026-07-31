@@ -27,6 +27,11 @@
   backdrop-filter: blur(20px) saturate(1.4);
   -webkit-backdrop-filter: blur(20px) saturate(1.4);
   pointer-events: auto;
+  /* Keep the bar on its own GPU layer. A backdrop-filter re-samples whatever is
+     behind it every frame, so when a video plays underneath the pill it used to
+     flicker; isolating it on a composited layer stops that repaint storm. */
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
   /* CSS keyframe, not motion: it runs even when the tab loads in the background,
      where requestAnimationFrame is paused and a JS entrance would stay hidden. */
   animation: hp-nav-in 0.6s var(--ease) both;
@@ -39,8 +44,8 @@
 }
 
 @keyframes hp-nav-in {
-  from { opacity: 0; transform: translateY(-16px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translate3d(0, -16px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {

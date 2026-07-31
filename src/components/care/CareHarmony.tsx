@@ -16,7 +16,8 @@ import {
 import { useLanguage } from '../../i18n/LanguageContext'
 import { Check, MaskedText } from './careUi'
 
-const DNA_IMAGE = '/images/medical/dna-isolated-v2.png'
+const DNA_IMAGE = '/images/medical/dna-isolated-v2.webp'
+const DNA_IMAGE_FALLBACK = '/images/medical/dna-isolated-v2.png'
 
 const DNA_PARTICLES = [
   { x: 19, y: 17, size: 4, delay: -1.4, duration: 8.4 },
@@ -74,8 +75,8 @@ export default function CareHarmony() {
     offset: ['start start', 'end end'],
   })
   const progress = useSpring(scrollYProgress, {
-    stiffness: 82,
-    damping: 28,
+    stiffness: 170,
+    damping: 34,
     restDelta: 0.001,
   })
 
@@ -181,13 +182,16 @@ export default function CareHarmony() {
                 </div>
 
                 <div className="hc-dna-hologram__rotor">
-                  <img
-                    className="hc-dna-hologram__image hc-dna-hologram__image--front"
-                    src={DNA_IMAGE}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                  />
+                  <picture>
+                    <source srcSet={DNA_IMAGE} type="image/webp" />
+                    <img
+                      className="hc-dna-hologram__image hc-dna-hologram__image--front"
+                      src={DNA_IMAGE_FALLBACK}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
                 </div>
 
                 <div className="hc-dna-hologram__reflection" />
@@ -213,10 +217,10 @@ export default function CareHarmony() {
 
             <span className="hc-dna-hologram__hud hc-dna-hologram__hud--top">
               <i />
-              GENOMIC / 01
+              FJSTI · 2008
             </span>
             <span className="hc-dna-hologram__hud hc-dna-hologram__hud--bottom">
-              CLINICAL AI
+              AiShifokor
               <i />
             </span>
           </motion.div>

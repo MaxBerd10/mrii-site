@@ -6,29 +6,24 @@ import {
   useReducedMotion,
 } from 'motion/react'
 import { useLanguage } from '../../i18n/LanguageContext'
-import { media } from '../../data/media'
+import { CLINIC_SPECIALTY_IMAGES, CLINIC_SPECIALTY_SLUGS } from '../../data/specialtyImages'
 import HdHead from './HdHead'
 import { EASE_OUT } from '../../lib/animations'
 
 /**
- * The twelve clinical organs, in the order the specialties are named in i18n.
- * Rotating through them at the centre of the orbit reads as "everything the
- * clinic covers" without a wall of icons.
+ * Clinical departments, in the order shown on clinic signage / i18n organs list.
  */
-const ORGANS = [
-  { src: media.clinic.cardiology, signal: 'var(--hd-blue)' },
-  { src: media.clinic.neurology, signal: 'var(--hd-blue)' },
-  { src: media.clinic.therapy, signal: 'var(--hd-blue)' },
-  { src: media.clinic.endocrinology, signal: 'var(--hd-blue)' },
-  { src: media.clinic.urology, signal: 'var(--hd-violet-lt)' },
-  { src: media.clinic.gynecology, signal: 'var(--hd-green)' },
-  { src: media.clinic.pediatrics, signal: 'var(--hd-green)' },
-  { src: media.clinic.surgery, signal: 'var(--hd-violet-lt)' },
-  { src: media.clinic.rehabilitation, signal: 'var(--hd-green)' },
-  { src: media.clinic.diagnostics, signal: 'var(--hd-cyan)' },
-  { src: media.clinic.oncology, signal: 'var(--hd-violet-lt)' },
-  { src: media.clinic.gastroenterology, signal: 'var(--hd-blue)' },
-] as const
+const ORGANS = CLINIC_SPECIALTY_SLUGS.map((slug) => ({
+  src: CLINIC_SPECIALTY_IMAGES[slug],
+  signal:
+    slug === 'laboratory'
+      ? 'var(--hd-cyan)'
+      : slug === 'intensive-care' || slug === 'surgery'
+        ? 'var(--hd-violet-lt)'
+        : slug === 'gynecology'
+          ? 'var(--hd-green)'
+          : 'var(--hd-blue)',
+}))
 
 /** Endpoints for the SVG connector lines, in the ring viewBox's -100..100
  *  coordinate system. They point at the cards' inner corners so the hairlines
@@ -43,7 +38,7 @@ const CARD_TARGETS = [
 /**
  * CH.03 — the institute at a glance.
  *
- * Centre: a rotating gallery of the twelve organ artworks — one every 2.4s.
+ * Centre: a rotating gallery of the eleven department artworks — one every 2.4s.
  * Around it: four stat cards, connected to the centre by hairline paths. Each
  * connection carries a slow pulse of light travelling outward, so the
  * relationship reads as "everything flows from one institute" without needing

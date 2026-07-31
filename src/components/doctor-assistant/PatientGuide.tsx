@@ -77,7 +77,7 @@ export default function PatientGuide({ lang, uiLang }: Props) {
       const messageForAdmin = [
         form.message.trim(),
         '',
-        '--- AI Doctor Assistant ---',
+        '--- AiShifokor ---',
         built.fullText,
       ].join('\n')
 

@@ -5,7 +5,9 @@ import { useCms } from '../cms/CmsContext'
 import { fetchAIProduct, isCmsEnabled, submitInquiry, type CmsAIDetail } from '../api/client'
 import { media } from '../data/media'
 import { aiPageLabels, aiProducts, getAIProductBySlug } from '../data/aiDetails'
+import { AISHIFOKOR_URL } from '../data/aiPlatform'
 import { blurUp, rise3d, staggerContainer } from '../lib/animations'
+import { useScrollToTopOnRoute } from '../lib/scrollRoute'
 import SectionBackLink from '../components/ui/SectionBackLink'
 import NotFoundPage from './NotFoundPage'
 import { accentInk, accentWash } from '../lib/accent'
@@ -56,9 +58,7 @@ export default function AIProductPage({ slug }: { slug: string }) {
   const [submitError, setSubmitError] = useState('')
   const [confirmation, setConfirmation] = useState<null | { requestId: string; phone: string }>(null)
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [slug])
+  useScrollToTopOnRoute(slug)
 
   useEffect(() => {
     if (!isCmsEnabled()) {
@@ -260,8 +260,12 @@ export default function AIProductPage({ slug }: { slug: string }) {
             <motion.p className="ai-product-hero__lead" variants={blurUp}>{view.overview}</motion.p>
             <motion.p className="ai-product-hero__audience" variants={blurUp}>{view.audience}</motion.p>
             <motion.div className="ai-product-hero__actions" variants={blurUp}>
-              <a href="#ai-demo" className="btn-accent" style={{ background: view.tagColor }}>
-                {labels.demoTitle}
+              <a
+                href={AISHIFOKOR_URL}
+                className="btn-accent"
+                style={{ background: view.tagColor }}
+              >
+                {t.ai.platformBtn}
               </a>
               <a href="#ai-cases" className="btn-outline btn-sm">{labels.cases}</a>
             </motion.div>
@@ -326,6 +330,12 @@ export default function AIProductPage({ slug }: { slug: string }) {
             <div className="ai-demo__copy">
               <h2>{labels.demoTitle}</h2>
               <p>{labels.demoDesc}</p>
+              <a
+                className="ai-demo__platform"
+                href={AISHIFOKOR_URL}
+              >
+                {t.ai.platformBtn} →
+              </a>
             </div>
             <form className="ai-demo__form" onSubmit={submitDemo}>
               <div className="ai-demo__row">

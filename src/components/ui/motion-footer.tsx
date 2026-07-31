@@ -3,6 +3,8 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useCms } from '../../cms/CmsContext'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { CLINIC_PHONE_TEL } from '../../data/clinicContact'
+import { refreshScrollTriggersPreservingScroll } from '../../lib/scrollRoute'
 import { cn } from '../../lib/utils'
 import '../../styles/motion-footer.css'
 
@@ -118,7 +120,7 @@ export function CinematicFooter() {
   const phone = settings?.phone || t.topBar.phone
   const copyright = settings?.copyright || t.footer.copyright
   const license = settings?.license || t.footer.license
-  const phoneHref = `tel:+998${phone.replace(/\D/g, '').slice(-9)}`
+  const phoneHref = `tel:${CLINIC_PHONE_TEL}`
   const marqueeItems = [
     t.nav.clinic,
     t.nav.children.doctors,
@@ -196,7 +198,7 @@ export function CinematicFooter() {
       if (height === lastHeight) return
       lastHeight = height
       cancelAnimationFrame(refreshFrame)
-      refreshFrame = requestAnimationFrame(() => ScrollTrigger.refresh())
+      refreshFrame = requestAnimationFrame(() => refreshScrollTriggersPreservingScroll())
     })
     observer.observe(document.body)
 
@@ -238,14 +240,11 @@ export function CinematicFooter() {
             <p className="motion-footer__lead">{t.footer.readyDesc}</p>
 
             <div className="motion-footer__primary-actions">
-              <MagneticLink href="/contacts" className="motion-footer__pill motion-footer__pill--primary">
+              <MagneticLink href={phoneHref} className="motion-footer__pill motion-footer__pill--primary">
                 {t.footer.bookBtn}
                 <span aria-hidden="true">↗</span>
               </MagneticLink>
-              <MagneticLink href={phoneHref} className="motion-footer__pill">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M6.7 2.8l2.6 4.4-2 2a16.1 16.1 0 007.5 7.5l2-2 4.4 2.6-1.1 3.9c-.2.7-.8 1.1-1.5 1.1C9.3 21.7 2.3 14.7 1.7 5.4c0-.7.4-1.3 1.1-1.5l3.9-1.1z" />
-                </svg>
+              <MagneticLink href="/contacts" className="motion-footer__pill">
                 {phone}
               </MagneticLink>
             </div>

@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { usePageNav } from '../components/PageTransition'
 import type { Lang } from '../i18n/types'
 
 const COPY: Record<
@@ -38,12 +39,17 @@ const COPY: Record<
 
 export default function NotFoundPage() {
   const { lang, t: i18n } = useLanguage()
+  const { path, routeEnter } = usePageNav()
   const t = COPY[lang] ?? COPY.uz
 
   useEffect(() => {
     document.title = `${t.code} — ${t.title} | ${i18n.nav.brand}`
-    window.scrollTo(0, 0)
   }, [t.code, t.title, i18n.nav.brand])
+
+  useEffect(() => {
+    if (!routeEnter) return
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [path, routeEnter])
 
   return (
     <main className="not-found">

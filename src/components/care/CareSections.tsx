@@ -1,129 +1,44 @@
-import {
-  useEffect,
-  useMemo,
-  useRef,
-  type CSSProperties,
-  type PointerEvent as ReactPointerEvent,
-  type ReactNode,
-  type SyntheticEvent,
-} from 'react'
+import { useMemo, type CSSProperties } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
-import { media } from '../../data/media'
 import { specialtyDetails } from '../../data/specialtyDetails'
+import { getClinicSpecialtyImage } from '../../data/specialtyImages'
 import { doctorProfiles } from '../../data/doctors'
+import { AISHIFOKOR_URL } from '../../data/aiPlatform'
 import { Check, Reveal, SectionHead, Star, useReveal } from './careUi'
-
-type ClinicImageKey = keyof typeof media.clinic
-
-/**
- * The AI products get line icons rather than the `-3d.png` renders used
- * elsewhere: those have baked-in backgrounds and read as muddy dark chips at
- * card size, which is the opposite of what this page is trying to feel like.
- * The organ renders in the departments grid are transparent, so they stay.
- */
-const AI_ICONS: Record<string, ReactNode> = {
-  doctor: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M12 13a4 4 0 100-8 4 4 0 000 8zM4 21a8 8 0 0116 0"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
-    </svg>
-  ),
-  radiology: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" strokeWidth="1.8" />
-      <path
-        d="M7 13h2l1.6-3.5L13 16l1.4-3H17"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-  ultrasound: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M4 18c3-9 13-9 16 0M8 18c1.8-5 6.2-5 8 0"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
-      <circle cx="12" cy="6" r="2" stroke="currentColor" strokeWidth="1.8" />
-    </svg>
-  ),
-  'clinical-research': (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M9 3v6.5L4.5 18A2 2 0 006.3 21h11.4a2 2 0 001.8-3L15 9.5V3M8 3h8M7.5 15h9"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-}
 
 const STEP_ACCENTS = ['#79c8ff', '#6fa8ff', '#8f8cff', '#55d7c1', '#37d1a4']
 
-function pointAiCard(event: ReactPointerEvent<HTMLAnchorElement>) {
-  if (event.pointerType === 'touch') return
+const AI_FEATURE_ICONS = [
+  (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M8 4h8l2 4v12a2 2 0 01-2 2H8a2 2 0 01-2-2V8l2-4z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+      <path d="M9 12h6M9 16h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  ),
+  (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M8 10h3l2 3 3-5 2 2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M7 4h10v16H7z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+      <path d="M10 8h6M10 12h6M10 16h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  ),
+]
 
-  const card = event.currentTarget
-  const rect = card.getBoundingClientRect()
-  const x = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width))
-  const y = Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height))
-
-  card.classList.add('is-pointing')
-  card.style.setProperty('--card-light-x', `${(x * 100).toFixed(2)}%`)
-  card.style.setProperty('--card-light-y', `${(y * 100).toFixed(2)}%`)
-  card.style.setProperty('--card-rotate-x', `${((0.5 - y) * 5).toFixed(2)}deg`)
-  card.style.setProperty('--card-rotate-y', `${((x - 0.5) * 6).toFixed(2)}deg`)
-}
-
-function clearAiCard(card: HTMLAnchorElement) {
-  card.classList.remove('is-pointing')
-  card.style.setProperty('--card-light-x', '50%')
-  card.style.setProperty('--card-light-y', '50%')
-  card.style.setProperty('--card-rotate-x', '0deg')
-  card.style.setProperty('--card-rotate-y', '0deg')
-}
-
-function resetAiCard(event: SyntheticEvent<HTMLAnchorElement>) {
-  clearAiCard(event.currentTarget)
-}
+const AI_CLINIC_PHOTO = '/images/clinic-gallery/consultation.webp'
 
 /* ======================================================================
- * AI systems — what the machine half actually is, as four real products.
+ * AiShifokor — clinic-first, but with real photo and readable feature tiles.
  * ==================================================================== */
 
 export function CareAi() {
   const { t } = useLanguage()
-  const gridRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const resetActiveCard = (event?: PointerEvent) => {
-      const active = gridRef.current?.querySelector<HTMLAnchorElement>('.hc-card.is-pointing')
-      if (!active) return
-      if (event?.target instanceof Node && active.contains(event.target)) return
-      clearAiCard(active)
-    }
-    const resetOnExit = () => resetActiveCard()
-
-    document.addEventListener('pointermove', resetActiveCard, { passive: true })
-    window.addEventListener('scroll', resetOnExit, { passive: true })
-    window.addEventListener('blur', resetOnExit)
-
-    return () => {
-      document.removeEventListener('pointermove', resetActiveCard)
-      window.removeEventListener('scroll', resetOnExit)
-      window.removeEventListener('blur', resetOnExit)
-    }
-  }, [])
+  const platform = t.homeCare.aiPlatform
+  const features = t.homeCare.aiFeatures
 
   return (
     <section className="hc-section hc-section--ai" aria-labelledby="hc-ai-title">
@@ -137,34 +52,54 @@ export function CareAi() {
             </>
           }
           description={t.homeCare.aiDescription}
-          action={
-            <a className="hc-more" href="/ai">
-              {t.homeDark.ai.viewAll} <span aria-hidden>→</span>
-            </a>
-          }
         />
 
-        <div ref={gridRef} className="hc-ai__grid">
-          {t.ai.products.map((product, i) => (
-            <Reveal key={product.id} delay={i * 70}>
-              <a
-                className="hc-card"
-                href={`/ai/${product.id === 'doctor' ? 'doctor-assistant' : product.id}`}
-                style={{ height: '100%' }}
-                onPointerMove={pointAiCard}
-                onPointerLeave={resetAiCard}
-                onPointerCancel={resetAiCard}
-                onMouseLeave={resetAiCard}
-                onBlur={resetAiCard}
-              >
-                <span className="hc-card__icon">{AI_ICONS[product.id] ?? AI_ICONS.doctor}</span>
-                <h3 className="hc-card__name">{product.name}</h3>
-                <p className="hc-card__desc">{product.desc}</p>
-                <p className="hc-card__metric">
-                  <strong>{product.metric}</strong>
-                  <span>{product.metricLabel}</span>
-                </p>
-              </a>
+        <Reveal>
+          <div className="hc-ai-showcase">
+            <div className="hc-ai-showcase__card">
+              <p className="hc-ai-showcase__eyebrow">{platform.brand}</p>
+              <h3 className="hc-ai-showcase__title">{platform.title}</h3>
+              <p className="hc-ai-showcase__lead">{platform.lead}</p>
+              <ul className="hc-ai-showcase__points">
+                {platform.points.map((point) => (
+                  <li key={point}>
+                    <Check />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+              <div className="hc-ai-showcase__actions">
+                <a className="hc-btn" href={AISHIFOKOR_URL}>
+                  {platform.cta}
+                </a>
+                <a className="hc-more" href="/ai">
+                  {platform.secondary} <span aria-hidden>→</span>
+                </a>
+              </div>
+            </div>
+
+            <figure className="hc-ai-showcase__visual">
+              <img
+                src={AI_CLINIC_PHOTO}
+                alt={t.homeCare.aiPhotoAlt}
+                width={960}
+                height={1200}
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>{t.homeCare.aiPhotoCaption}</figcaption>
+            </figure>
+          </div>
+        </Reveal>
+
+        <div className="hc-ai-features">
+          {features.map((feature, i) => (
+            <Reveal key={feature.title} delay={i * 70}>
+              <article className="hc-ai-feature">
+                <span className="hc-ai-feature__icon">{AI_FEATURE_ICONS[i]}</span>
+                <h3>{feature.title}</h3>
+                <p>{feature.desc}</p>
+              </article>
             </Reveal>
           ))}
         </div>
@@ -310,7 +245,7 @@ export function CareServices() {
         slug,
         name: s.name,
         count: s.count,
-        image: media.clinic[slug as ClinicImageKey] ?? media.clinic.therapy,
+        image: getClinicSpecialtyImage(slug),
       }
     })
   }, [t.clinic.specialties])
