@@ -1,10 +1,11 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { usePageNav } from '../components/PageTransition'
+import { fetchClinicTourVideos, type CmsClinicTourVideo } from '../api/client'
 import '../styles/clinic-tour.css'
 
-const TOUR_VIDEOS = [
+const FALLBACK_VIDEOS = [
   { id: 'tour', src: '/videos/clinic-tour/virtual-tour.web.mp4', poster: '/images/clinic-gallery/courtyard.webp' },
   { id: 'officialVisit', src: '/videos/clinic-tour/official-visit.web.mp4', poster: '/images/clinic-gallery/entrance.webp' },
   { id: 'opening', src: '/videos/clinic-tour/clinic-opening.web.mp4', poster: '/images/clinic-gallery/campus.webp' },
@@ -12,21 +13,73 @@ const TOUR_VIDEOS = [
   { id: 'innovation', src: '/videos/clinic-tour/innovation-tour.web.mp4', poster: '/images/clinic-gallery/treatment-area.webp' },
 ] as const
 
-type TourVideoId = typeof TOUR_VIDEOS[number]['id']
+type TourVideoId = typeof FALLBACK_VIDEOS[number]['id']
+
+type TourVideo = {
+  id: TourVideoId
+  src: string
+  poster: string
+}
+
+function mergeTourVideos(cms: CmsClinicTourVideo[] | null): TourVideo[] {
+  const fallbackById = Object.fromEntries(FALLBACK_VIDEOS.map((video) => [video.id, video])) as Record<
+    TourVideoId,
+    (typeof FALLBACK_VIDEOS)[number]
+  >
+
+  if (!cms?.length) {
+    return FALLBACK_VIDEOS.map((video) => ({ id: video.id, src: video.src, poster: video.poster }))
+  }
+
+  const merged: TourVideo[] = []
+  const seen = new Set<TourVideoId>()
+
+  for (const item of cms) {
+    const id = item.id as TourVideoId
+    if (!fallbackById[id]) continue
+    merged.push({
+      id,
+      src: item.src || fallbackById[id].src,
+      poster: item.poster || fallbackById[id].poster,
+    })
+    seen.add(id)
+  }
+
+  for (const video of FALLBACK_VIDEOS) {
+    if (!seen.has(video.id)) {
+      merged.push({ id: video.id, src: video.src, poster: video.poster })
+    }
+  }
+
+  return merged
+}
 
 function PlayIcon() {
   return <svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="m10.5 8.5 9 5.5-9 5.5v-11Z" fill="currentColor" /></svg>
 }
 
 export default function ClinicTourPage() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const { routeEnter } = usePageNav()
   const reduceMotion = useReducedMotion()
   const shouldAnimate = routeEnter && !reduceMotion
+  const [videos, setVideos] = useState<TourVideo[]>(() => mergeTourVideos(null))
   const [activeId, setActiveId] = useState<TourVideoId>('tour')
   const [isPlaying, setIsPlaying] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
-  const activeVideo = TOUR_VIDEOS.find((video) => video.id === activeId) ?? TOUR_VIDEOS[0]
+
+  useEffect(() => {
+    let cancelled = false
+    void fetchClinicTourVideos(lang).then((cms) => {
+      if (cancelled) return
+      setVideos(mergeTourVideos(cms))
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [lang])
+
+  const activeVideo = videos.find((video) => video.id === activeId) ?? videos[0]
 
   const videoCopy = {
     tour: { title: t.clinic.tour.featuredTitle, description: t.clinic.tour.featuredDescription, label: t.clinic.tour.featuredLabel },
@@ -46,6 +99,8 @@ export default function ClinicTourPage() {
     setActiveId(id)
     setIsPlaying(false)
   }
+
+  if (!activeVideo) return null
 
   return (
     <main className="clinic-tour-page">
@@ -69,7 +124,7 @@ export default function ClinicTourPage() {
         transition={{ duration: 0.62, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
       >
         <video
-          key={activeVideo.id}
+          key={activeVideo.id + activeVideo.src}
           ref={videoRef}
           className="clinic-tour-page__video"
           controls={isPlaying}
@@ -99,7 +154,7 @@ export default function ClinicTourPage() {
           <p>{t.clinic.tour.eventsDescription}</p>
         </div>
         <div className="clinic-tour-page__video-list" role="tablist" aria-label={t.clinic.tour.eventsTitle}>
-          {TOUR_VIDEOS.map((video, index) => {
+          {videos.map((video, index) => {
             const copy = videoCopy[video.id]
             const isActive = video.id === activeId
             return (

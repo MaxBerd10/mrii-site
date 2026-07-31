@@ -196,6 +196,12 @@ class MriiAdminSite(AdminSite):
                 'url': url('internationalservice'),
             },
             {
+                'title': 'Klinika sayohati',
+                'desc': 'Virtual tur va tadbir videolari',
+                'icon': 'clinic',
+                'url': url('clinictourvideo'),
+            },
+            {
                 'title': 'Tadqiqot imkoniyatlari',
                 'desc': 'Statistika qiymatlari',
                 'icon': 'chart',

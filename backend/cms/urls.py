@@ -14,6 +14,7 @@ urlpatterns = [
     path('ai-products/<slug:slug>/', api.AIProductDetailAPI.as_view()),
     path('research/', api.ResearchAPI.as_view()),
     path('education/', api.EducationAPI.as_view()),
+    path('clinic-tour/', api.ClinicTourListAPI.as_view()),
     path('inquiries/', api.InquiryCreateAPI.as_view()),
     path('inquiries/<str:request_id>/', api.InquiryAdviceAPI.as_view()),
 ]

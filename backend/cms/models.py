@@ -386,6 +386,47 @@ class InternationalService(TimeStampedModel, OrderedModel):
         return self.title_uz
 
 
+class ClinicTourVideo(TimeStampedModel, OrderedModel):
+    """Clinic tour page videos — swap files in admin without redeploy."""
+
+    class VideoKey(models.TextChoices):
+        TOUR = 'tour', 'Asosiy virtual sayohat'
+        OFFICIAL_VISIT = 'officialVisit', 'Rasmiy tashrif'
+        OPENING = 'opening', 'Ochilish marosimi'
+        OPEN_DOORS = 'openDoors', 'Ochiq eshiklar'
+        INNOVATION = 'innovation', 'Innovatsiya sayohati'
+
+    video_key = models.CharField(
+        'Video turi',
+        max_length=32,
+        choices=VideoKey.choices,
+        unique=True,
+    )
+    video = models.FileField('Video fayl', upload_to='clinic-tour/', blank=True, null=True)
+    video_url = models.CharField(
+        'Yoki video yo‘li/URL',
+        max_length=512,
+        blank=True,
+        help_text='Masalan: /videos/clinic-tour/virtual-tour.web.mp4',
+    )
+    poster = models.ImageField('Poster', upload_to='clinic-tour/posters/', blank=True, null=True)
+    poster_url = models.CharField(
+        'Yoki poster yo‘li/URL',
+        max_length=512,
+        blank=True,
+        help_text='Masalan: /images/clinic-gallery/courtyard.webp',
+    )
+    is_active = models.BooleanField('Faol', default=True)
+
+    class Meta:
+        verbose_name = 'Klinika sayohati videosi'
+        verbose_name_plural = 'Klinika sayohati videolari'
+        ordering = ['order', 'id']
+
+    def __str__(self):
+        return self.get_video_key_display()
+
+
 class Inquiry(TimeStampedModel):
     """Public lead from contact / AI demo forms — managed in admin."""
 

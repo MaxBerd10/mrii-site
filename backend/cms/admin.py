@@ -45,6 +45,10 @@ LANG_RU = (
 )
 LANG_EN = LANG_RU
 IMG_HELP = 'Yangi rasm yuklang yoki tayyor URL qoldiring. Yuklangan rasm ustunlik qiladi.'
+VIDEO_HELP = (
+    'MP4 yuklang — to‘liq sifat saqlanadi. '
+    'Yuklangan fayl «video yo‘li» dan ustun. Katta fayllar 256 MB gacha.'
+)
 AUTO_TIP = (
     'O‘zbekcha yozing, keyin yuqoridagi «Rus va inglizchani to‘ldirish» tugmasini bosing — '
     'maydonlar forma ichida to‘ldiriladi. So‘ng Saqlash.'
@@ -484,6 +488,36 @@ class TestimonialAdmin(AutoTranslateAdmin):
         ('English', {
             'description': LANG_EN,
             'fields': ('quote_en', 'author_en', 'role_en'),
+        }),
+    )
+
+
+@admin.register(models.ClinicTourVideo, site=mrii_admin_site)
+class ClinicTourVideoAdmin(AutoTranslateAdmin):
+    list_display = ('video_key', 'order', 'is_active', 'preview', 'has_video')
+    list_editable = ('order', 'is_active')
+    list_display_links = ('video_key',)
+    preview = thumb('poster_url', 'poster')
+
+    @admin.display(description='Video', boolean=True)
+    def has_video(self, obj):
+        return bool(obj.video or obj.video_url)
+
+    fieldsets = (
+        ('Asosiy', {
+            'description': (
+                'Video turi saytdagi bo‘lim bilan mos keladi. '
+                'Sarlavha va tavsiflar frontend tarjimalarida.'
+            ),
+            'fields': ('video_key', 'order', 'is_active'),
+        }),
+        ('Video', {
+            'description': VIDEO_HELP,
+            'fields': ('video', 'video_url'),
+        }),
+        ('Poster', {
+            'description': IMG_HELP + ' Play tugmasidan oldin ko‘rinadigan kadr.',
+            'fields': ('poster', 'poster_url'),
         }),
     )
 

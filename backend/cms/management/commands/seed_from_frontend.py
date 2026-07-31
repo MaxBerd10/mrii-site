@@ -51,6 +51,7 @@ class Command(BaseCommand):
         self.seed_education()
         self.seed_partners()
         self.seed_international()
+        self.seed_clinic_tour()
         if options['superuser']:
             self.ensure_superuser()
         self.stdout.write(self.style.SUCCESS('CMS seed completed.'))
@@ -585,4 +586,43 @@ class Command(BaseCommand):
                 title_uz=s[0], title_ru=s[1], title_en=s[2],
                 desc_uz=s[3], desc_ru=s[4], desc_en=s[5],
                 is_active=True,
+            )
+
+    def seed_clinic_tour(self):
+        items = [
+            {
+                'video_key': 'tour',
+                'order': 1,
+                'video_url': '/videos/clinic-tour/virtual-tour.web.mp4',
+                'poster_url': '/images/clinic-gallery/courtyard.webp',
+            },
+            {
+                'video_key': 'officialVisit',
+                'order': 2,
+                'video_url': '/videos/clinic-tour/official-visit.web.mp4',
+                'poster_url': '/images/clinic-gallery/entrance.webp',
+            },
+            {
+                'video_key': 'opening',
+                'order': 3,
+                'video_url': '/videos/clinic-tour/clinic-opening.web.mp4',
+                'poster_url': '/images/clinic-gallery/campus.webp',
+            },
+            {
+                'video_key': 'openDoors',
+                'order': 4,
+                'video_url': '/videos/clinic-tour/open-doors.web.mp4',
+                'poster_url': '/images/clinic-gallery/reception.webp',
+            },
+            {
+                'video_key': 'innovation',
+                'order': 5,
+                'video_url': '/videos/clinic-tour/innovation-tour.web.mp4',
+                'poster_url': '/images/clinic-gallery/treatment-area.webp',
+            },
+        ]
+        for item in items:
+            models.ClinicTourVideo.objects.update_or_create(
+                video_key=item['video_key'],
+                defaults={**item, 'is_active': True},
             )

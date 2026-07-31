@@ -130,6 +130,17 @@ export type CmsAIDetail = CmsHome['aiProducts'][number] & {
   workflow: string[]
 }
 
+export type CmsClinicTourVideo = {
+  id: string
+  src: string
+  poster: string
+  order: number
+}
+
+export function fetchClinicTourVideos(lang: Lang) {
+  return getJson<CmsClinicTourVideo[]>('/api/clinic-tour/', lang)
+}
+
 export function fetchHome(lang: Lang) {
   return getJson<CmsHome>('/api/home/', lang)
 }

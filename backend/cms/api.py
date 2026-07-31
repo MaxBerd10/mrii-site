@@ -158,6 +158,15 @@ class EducationAPI(APIView):
         return Response(serializers.EducationTrackSerializer(qs, many=True, context=ctx(request, lang)).data)
 
 
+class ClinicTourListAPI(APIView):
+    def get(self, request):
+        lang = resolve_lang(request)
+        qs = models.ClinicTourVideo.objects.filter(is_active=True)
+        return Response(
+            serializers.ClinicTourVideoSerializer(qs, many=True, context=ctx(request, lang)).data
+        )
+
+
 class InquiryCreateAPI(APIView):
     """Public POST for contact / AI demo / consult leads → Django admin."""
 

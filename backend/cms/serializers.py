@@ -328,6 +328,22 @@ class HeroSerializer(LangContextMixin, serializers.ModelSerializer):
         return media_url(self.request, obj.image, obj.image_url)
 
 
+class ClinicTourVideoSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(source='video_key')
+    src = serializers.SerializerMethodField()
+    poster = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.ClinicTourVideo
+        fields = ('id', 'src', 'poster', 'order')
+
+    def get_src(self, obj):
+        return media_url(self.context.get('request'), obj.video, obj.video_url)
+
+    def get_poster(self, obj):
+        return media_url(self.context.get('request'), obj.poster, obj.poster_url)
+
+
 class InquiryCreateSerializer(serializers.Serializer):
     intent = serializers.ChoiceField(choices=models.Inquiry.Intent.values)
     name = serializers.CharField(max_length=255)
