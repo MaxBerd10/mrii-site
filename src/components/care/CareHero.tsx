@@ -32,6 +32,14 @@ export default function CareHero() {
 
     const render = () => {
       frame = 0
+      // The scroll-driven camera push-in only exists on the desktop hero. The
+      // mobile layout is static (transform: none), so skip the per-frame
+      // getBoundingClientRect() layout read there — it was the main scroll cost.
+      if (window.innerWidth <= 760) {
+        section.style.setProperty('--hero-progress', '0')
+        section.style.setProperty('--hero-dna-opacity', '1')
+        return
+      }
       const rect = track.getBoundingClientRect()
       const travel = Math.max(rect.height - window.innerHeight, 1)
       const progress = reduce ? 0 : Math.min(1, Math.max(0, -rect.top / travel))

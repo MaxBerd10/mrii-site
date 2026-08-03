@@ -1311,6 +1311,15 @@
     border-radius: 18px;
     padding-inline: 10px 6px;
     justify-content: space-between;
+    /* Drop the live blur on phones: a backdrop-filter re-samples the page behind
+       it on every scroll frame, which was the main cause of the choppy scroll.
+       A near-opaque white pill looks the same without the per-frame repaint. */
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .hp-nav--scrolled .hp-nav__bar {
+    background: #fff;
   }
   .hp-nav__drawer {
     inset-block-start: calc(8px + 56px + 10px);

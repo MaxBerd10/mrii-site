@@ -3251,6 +3251,24 @@ a.hc-card:active {
     padding-block: 88px;
   }
 
+  .hc-section--ai {
+    padding-block: 32px 56px;
+  }
+
+  .hc-section--ai .hc-head {
+    margin-block-end: 18px;
+    gap: 12px;
+  }
+
+  .hc-section--ai .hc-head .hc-lead {
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+
+  .hc-ai-showcase {
+    margin-bottom: 20px;
+  }
+
   .hc-head {
     margin-block-end: 48px;
   }
@@ -5442,7 +5460,13 @@ a.hc-card:active {
     height: auto;
     min-height: 0;
     overflow: visible;
-    padding: 84px 0 0;
+    padding: 56px 0 0;
+  }
+
+  .hc-hero--dna .hc-shell {
+    width: 100%;
+    max-width: none;
+    margin-inline: auto;
   }
 
   .hc-hero--dna .hc-hero__dna {
@@ -5480,40 +5504,72 @@ a.hc-card:active {
     position: relative;
     order: 1;
     height: auto;
+    width: 100%;
     padding: 0 20px 18px;
+    text-align: center;
   }
 
   .hc-hero--dna .hc-hero__copy {
     position: relative;
     inset: auto;
-    width: auto;
+    width: 100%;
     max-width: none;
+    align-items: center;
     gap: 12px;
     opacity: 1;
     transform: none;
   }
 
+  .hc-hero--dna .hc-masked-text {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hc-hero--dna .hc-masked-text__visual {
+    display: inline-block;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .hc-hero--dna .hc-eyebrow {
+    justify-content: center;
+  }
+
   .hc-hero--dna .hc-display {
-    max-width: 14ch;
-    /* 8.4vw pushed the long word "shifokorlar" to within 7px of the right edge
-       on a 375px screen; a slightly softer scale restores a comfortable gutter. */
-    font-size: clamp(1.7rem, 7.6vw, 2.5rem);
-    line-height: 1.06;
+    width: 100%;
+    max-width: none;
+    text-align: center;
+    text-wrap: normal;
+  }
+
+  .hc-hero--dna .hc-display em {
+    white-space: normal;
   }
 
   .hc-hero--dna .hc-lead {
-    max-width: none;
+    max-width: 34ch;
+    margin-inline: auto;
     font-size: 0.94rem;
     line-height: 1.5;
     color: #55677a;
     text-shadow: none;
+    text-align: center;
   }
 
   .hc-hero--dna .hc-hero__cta {
     flex-direction: column;
     align-items: stretch;
+    width: 100%;
+    max-width: 360px;
+    margin-inline: auto;
     gap: 10px;
     margin-block-start: 6px;
+  }
+
+  .hc-hero--dna .hc-trust--hero {
+    width: 100%;
+    max-width: none;
+    margin-inline: auto;
   }
 
   .hc-hero--dna .hc-btn {
@@ -5521,6 +5577,11 @@ a.hc-card:active {
     min-height: 48px;
     padding-inline: 18px;
     font-size: 0.92rem;
+  }
+
+  .hc-hero--dna .hc-display {
+    font-size: clamp(1.7rem, 7.6vw, 2.5rem);
+    line-height: 1.08;
   }
 
   .hc-hero--dna .hc-hero__cue {
@@ -5610,21 +5671,20 @@ a.hc-card:active {
    content (the comparison and FAQ) intentionally keeps its scan-friendly
    alignment above. */
 @media (max-width: 760px) {
-  .home-care .hc-hero--dna .hc-hero__stage {
-    text-align: center;
+  .home-care .hc-section--ai {
+    padding-block-start: 28px;
   }
 
-  .home-care .hc-hero--dna .hc-hero__copy {
-    align-items: center;
+  .home-care .hc-section--ai .hc-head {
+    margin-block-end: 16px;
   }
 
-  .home-care .hc-hero--dna .hc-display,
-  .home-care .hc-hero--dna .hc-lead {
-    margin-inline: auto;
+  .home-care .hc-ai-showcase {
+    margin-bottom: 18px;
   }
 
-  .home-care .hc-hero--dna .hc-eyebrow {
-    justify-content: center;
+  .home-care .hc-ai-showcase__card {
+    padding: 20px 18px;
   }
 
   .home-care .hc-hero--dna .hc-hero__feature {

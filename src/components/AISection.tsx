@@ -19,7 +19,6 @@ const AI_HERO_IMAGES: Record<string, string> = {
 export default function AISection() {
   const { t, lang } = useLanguage()
   const { home } = useCms()
-  const platform = t.homeCare.aiPlatform
   const copy = AISHIFOKOR_COPY[lang]
   const products = home?.aiProducts?.length
     ? home.aiProducts.map((prod) => ({
@@ -43,14 +42,6 @@ export default function AISection() {
   return (
     <section id="ai" className="section section--muted">
       <div className="container-main">
-        <Reveal variants={blurUp}>
-          <a className="ai-platform-strip" href={AISHIFOKOR_URL}>
-            <strong>{platform.brand}</strong>
-            <span>{platform.title}</span>
-            <em>{platform.cta} →</em>
-          </a>
-        </Reveal>
-
         <Reveal variants={blurUp}>
           <div className="ai-spline-wrap">
             <ClinicalAiHero

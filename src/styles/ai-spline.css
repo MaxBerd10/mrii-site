@@ -1,6 +1,6 @@
 /* Spline AI stage — side-by-side layout (do not rely on Tailwind md:) */
 .ai-spline-wrap {
-  margin: 0 0 20px;
+  margin: 0;
 }
 
 .spline-ai-stage {
@@ -118,7 +118,7 @@
 
 @media (max-width: 760px) {
   .ai-spline-wrap {
-    margin-bottom: 20px;
+    margin-bottom: 0;
   }
 
   .spline-ai-stage {
@@ -159,12 +159,27 @@
   padding-block: clamp(8px, 1.2vw, 16px) clamp(28px, 4vw, 48px);
 }
 
-#ai .section-head {
-  margin-bottom: 16px;
+@media (max-width: 760px) {
+  /* Beat `.page-shell { padding-top: 64px }` from base.css (same specificity, loads later). */
+  .page-shell.page-shell--ai {
+    padding-top: 70px;
+  }
+
+  .page-shell.page-shell--ai #ai.section {
+    padding-block: 0 24px;
+  }
+
+  #ai .ai-spline-wrap {
+    margin-bottom: 0;
+  }
+
+  #ai .clinical-ai-hero {
+    padding: 16px 16px 18px;
+  }
 }
 
-#ai .ai-spline-wrap {
-  margin-bottom: 18px;
+#ai .section-head {
+  margin-bottom: 16px;
 }
 
 /* Real FJSTI spaces keep every AI product grounded in a clinical workflow. */
@@ -230,43 +245,6 @@
   #ai .product-tab__thumb img {
     transition: none;
   }
-}
-
-/* —— AiShifokor strip (quiet) —— */
-.ai-platform-strip {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 8px 16px;
-  margin: 0 0 22px;
-  padding: 14px 0;
-  border-block: 1px solid color-mix(in srgb, var(--text, #0b1f33) 12%, transparent);
-  color: inherit;
-  text-decoration: none;
-}
-.ai-platform-strip:hover { opacity: 0.85; }
-.ai-platform-strip strong {
-  font-size: 1.25rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--text, #0b1f33);
-}
-.ai-platform-strip span {
-  flex: 1 1 12rem;
-  color: var(--text-soft);
-  font-size: 14px;
-  line-height: 1.4;
-}
-.ai-platform-strip em {
-  margin-inline-start: auto;
-  color: var(--brand, #0ea5e9);
-  font-style: normal;
-  font-size: 13px;
-  font-weight: 700;
-}
-@media (max-width: 560px) {
-  .ai-platform-strip { flex-direction: column; align-items: flex-start; gap: 4px; }
-  .ai-platform-strip em { margin-inline-start: 0; }
 }
 
 /* —— Clinical AI hero —— */
