@@ -108,6 +108,7 @@ export default function Nav() {
   const closeMenus = () => {
     setOpen(null)
     setMobileOpen(false)
+    document.body.style.removeProperty('overflow')
   }
 
   const isActive = (href: string) => {

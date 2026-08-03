@@ -9,7 +9,12 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { resetScrollTriggersOnRouteChange, unlockPageScroll } from '../lib/scrollRoute'
+import {
+  resetScrollTriggersOnRouteChange,
+  scrollToPageTop,
+  scrollToPageTopAfterLayout,
+  unlockPageScroll,
+} from '../lib/scrollRoute'
 
 /** Emblem turn duration while the new route mounts under an opaque veil. */
 export const PAGE_SPIN_MS = 720
@@ -89,18 +94,23 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
     window.history.pushState(null, '', nextFull)
     setRouteEnter(true)
     setPath(nextPath)
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    scrollToPageTopAfterLayout()
   }, [])
 
   const finishTransition = useCallback(() => {
     setBusy(false)
     unlockPageScroll()
-    schedule(() => focusPageLandmark(), 16)
+    scrollToPageTopAfterLayout()
+    schedule(() => {
+      scrollToPageTop()
+      focusPageLandmark()
+    }, 32)
   }, [schedule])
 
   const runTransition = useCallback(
     (nextPath: string, nextFull: string, { push = true }: { push?: boolean } = {}) => {
       clearTimers()
+      unlockPageScroll()
       setBusy(true)
 
       const total = spinDurationMs()
@@ -110,7 +120,7 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
         else {
           setRouteEnter(true)
           setPath(nextPath)
-          window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+          scrollToPageTopAfterLayout()
         }
       }, ROUTE_COMMIT_MS)
 
@@ -153,8 +163,10 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
       // and the logo look broken once the reader had scrolled down. There is no
       // route change here, so this skips the logo spin.
       if (nextFull === currentFull) {
+        unlockPageScroll()
         const reduceMotion = prefersReducedMotion()
-        window.scrollTo({ top: 0, left: 0, behavior: reduceMotion ? 'auto' : 'smooth' })
+        if (reduceMotion) scrollToPageTop()
+        else window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
         return
       }
 
@@ -167,8 +179,13 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual'
     }
-    window.scrollTo(0, 0)
+    scrollToPageTop()
   }, [])
+
+  useLayoutEffect(() => {
+    unlockPageScroll()
+    scrollToPageTop()
+  }, [path])
 
   useEffect(() => {
     const onClick = (event: MouseEvent) => {

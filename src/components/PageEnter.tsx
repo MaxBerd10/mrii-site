@@ -1,14 +1,16 @@
 import type { ReactNode } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { EASE_OUT } from '../lib/animations'
+import { useMobileLayout } from '../hooks/useMobileLayout'
 import { usePageNav } from './PageTransition'
 
 /** Route content entrance after page-loader spin — only on in-app navigation. */
 export default function PageEnter({ path, children }: { path: string; children: ReactNode }) {
   const reduce = useReducedMotion()
+  const isMobile = useMobileLayout()
   const { routeEnter, busy } = usePageNav()
 
-  if (reduce || !routeEnter) {
+  if (reduce || !routeEnter || isMobile) {
     return <div className="page-enter">{children}</div>
   }
 

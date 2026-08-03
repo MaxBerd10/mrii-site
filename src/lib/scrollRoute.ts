@@ -12,12 +12,30 @@ export function unlockPageScroll() {
   document.documentElement.style.removeProperty('position')
 }
 
+/** Hard reset — iOS Safari sometimes ignores window.scrollTo alone. */
+export function scrollToPageTop() {
+  window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  document.documentElement.scrollTop = 0
+  document.body.scrollTop = 0
+}
+
+/** Repeat after layout so route swaps cannot land mid-page. */
+export function scrollToPageTopAfterLayout() {
+  scrollToPageTop()
+  requestAnimationFrame(() => {
+    scrollToPageTop()
+    requestAnimationFrame(scrollToPageTop)
+  })
+}
+
 /** Drop homepage ScrollTrigger instances when leaving a route. */
 export function resetScrollTriggersOnRouteChange() {
   ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
   requestAnimationFrame(() => {
     unlockPageScroll()
     ScrollTrigger.refresh()
+    scrollToPageTop()
+    requestAnimationFrame(scrollToPageTop)
   })
 }
 
@@ -27,7 +45,7 @@ export function useScrollToTopOnRoute(routeKey: string) {
 
   useEffect(() => {
     if (!routeEnter) return
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    scrollToPageTopAfterLayout()
   }, [routeKey, routeEnter])
 }
 

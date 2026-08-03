@@ -24,9 +24,11 @@ import ClinicGalleryPage from './pages/ClinicGalleryPage'
 import ClinicTourPage from './pages/ClinicTourPage'
 import { PageTransitionProvider, usePageNav } from './components/PageTransition'
 import PageEnter from './components/PageEnter'
+import { useScrollToTopOnRoute } from './lib/scrollRoute'
 
 function AppRoutes() {
   const { path, busy } = usePageNav()
+  useScrollToTopOnRoute(path)
 
   const isClinicServices = path === '/clinic/services'
   const isClinicDiagnostics = path === '/clinic/diagnostics'
