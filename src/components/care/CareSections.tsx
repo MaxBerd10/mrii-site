@@ -1,7 +1,6 @@
 import { useMemo, type CSSProperties } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
-import { specialtyDetails } from '../../data/specialtyDetails'
-import { getClinicSpecialtyImage } from '../../data/specialtyImages'
+import { buildClinicSpecialties } from '../../data/clinicSpecialties'
 import { doctorProfiles } from '../../data/doctors'
 import { AISHIFOKOR_URL } from '../../data/aiPlatform'
 import { Check, Reveal, SectionHead, Star, useReveal } from './careUi'
@@ -273,18 +272,10 @@ export function CareServices() {
   const { t } = useLanguage()
   const c = t.homeDark.services
 
-  const specialties = useMemo(() => {
-    const slugs = specialtyDetails.map((d) => d.slug)
-    return t.clinic.specialties.map((s, i) => {
-      const slug = slugs[i] ?? `specialty-${i}`
-      return {
-        slug,
-        name: s.name,
-        count: s.count,
-        image: getClinicSpecialtyImage(slug),
-      }
-    })
-  }, [t.clinic.specialties])
+  const specialties = useMemo(
+    () => buildClinicSpecialties(t.clinic.specialties),
+    [t.clinic.specialties],
+  )
 
   return (
     <section className="hc-section hc-section--tint hc-section--services" aria-labelledby="hc-services-title">

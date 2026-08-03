@@ -5,8 +5,7 @@ import { useCms } from '../cms/CmsContext'
 import SectionHeader from './ui/SectionHeader'
 import Reveal from './ui/Reveal'
 import { staggerContainer, fadeUpSmall, blurUp } from '../lib/animations'
-import { specialtyDetails } from '../data/specialtyDetails'
-import { CLINIC_SPECIALTY_CATEGORIES, getClinicSpecialtyImage } from '../data/specialtyImages'
+import { buildClinicSpecialties } from '../data/clinicSpecialties'
 import '../styles/clinic-catalog.css'
 import '../styles/home-patient.css'
 
@@ -21,8 +20,6 @@ const FEATURED_SLUGS = [
   'therapy',
 ] as const
 
-const SPECIALTY_CATEGORIES = CLINIC_SPECIALTY_CATEGORIES
-
 const CATEGORY_META: Record<ClinicCategory, { color: string }> = {
   therapy: { color: '#0EA5E9' },
   surgery: { color: '#6366F1' },
@@ -36,25 +33,7 @@ export default function HomeSpecialties() {
   const { home } = useCms()
 
   const specialties = useMemo(() => {
-    const base = home?.specialties?.length
-      ? home.specialties.map((sp, i) => ({
-          slug: sp.slug,
-          name: sp.name,
-          desc: sp.desc,
-          count: sp.count,
-          image: sp.image || getClinicSpecialtyImage(sp.slug),
-          category: SPECIALTY_CATEGORIES[i] ?? 'therapy',
-        }))
-      : t.clinic.specialties.map((sp, i) => {
-          const slug = specialtyDetails[i]?.slug ?? `specialty-${i}`
-          return {
-          slug,
-          name: sp.name,
-          desc: sp.desc,
-          count: sp.count,
-          image: getClinicSpecialtyImage(slug),
-          category: SPECIALTY_CATEGORIES[i] ?? 'therapy',
-        }})
+    const base = buildClinicSpecialties(t.clinic.specialties, home?.specialties)
 
     const featured = FEATURED_SLUGS.map((slug) => base.find((s) => s.slug === slug)).filter(
       Boolean,

@@ -5743,4 +5743,90 @@ a.hc-card:active {
   .home-care .hc-ai-showcase__actions {
     justify-content: center;
   }
+
+  /* Phones: native scroll thread — drop sticky theater and scroll-linked repaints. */
+  html.is-home-care {
+    scroll-behavior: auto;
+  }
+
+  .hc-orbit {
+    height: auto;
+  }
+
+  .hc-orbit__sticky {
+    position: relative;
+    height: auto;
+  }
+
+  .hc-harmony-gallery,
+  .hc-harmony-gallery.is-static {
+    height: auto;
+  }
+
+  .hc-harmony-gallery.is-static .hc-harmony-gallery__sticky {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding: clamp(40px, 8vw, 56px) var(--hc-gutter) 48px;
+  }
+
+  .hc-harmony-gallery.is-static .hc-dna-scene {
+    position: relative;
+    inset: auto;
+    min-height: 260px;
+  }
+
+  .hc-harmony-gallery.is-static .hc-dna-hologram {
+    position: relative;
+    inset: auto;
+    translate: none;
+    margin: 0 auto;
+    width: min(320px, 82vw);
+    will-change: auto;
+  }
+
+  .hc-harmony-gallery.is-static .hc-harmony-gallery__intro,
+  .hc-harmony-gallery.is-static .hc-harmony-gallery__details {
+    position: relative;
+    inset: auto;
+    width: auto;
+  }
+
+  .hc-harmony-gallery.is-static .hc-harmony-gallery__shade,
+  .hc-harmony-gallery.is-static .hc-harmony-gallery__cue {
+    display: none;
+  }
+
+  .hc-orbit.is-static .hc-orbit__reveal {
+    position: relative;
+    inset: auto;
+    opacity: 1;
+    transform: none;
+    text-align: center;
+    margin-top: 18px;
+  }
+
+  :is(
+    .hc-section--harmony,
+    .hc-section--compare,
+    .hc-section--path,
+    .hc-section--services,
+    .hc-section--voices
+  )::after {
+    display: none;
+  }
+
+  .hc-dna-scene::before,
+  .hc-dna-scene__beam {
+    animation: none !important;
+    filter: none;
+  }
+
+  .hc-orbit__card,
+  .hc-hero--dna .hc-hero__team img {
+    will-change: auto;
+  }
 }

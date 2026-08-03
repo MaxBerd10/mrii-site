@@ -658,13 +658,13 @@ const uz = {
     universityNote: 'Asosiy oliy taʼlim — FJSTI universitetida.',
     universityLink: 'Universitet saytiga oʻtish →',
     universityHref: 'https://fjsti.uz',
-    stats: [['12', 'yoʻnalish'], ['Rotatsiya', 'ordinatura'], ['CME', 'shifokorlar']],
+    stats: [['11', 'yoʻnalish'], ['Rotatsiya', 'ordinatura'], ['CME', 'shifokorlar']],
     programsLabel: 'Klinik dasturlar',
     tracks: [
       {
         audience: 'Ordinatura rotatsiyasi', color: '#0EA5E9', icon: '🩺', cta: 'Soʻrov yuborish',
         programs: [
-          { name: 'Klinik rotatsiya (kafedralar)', duration: 'Modulli', spots: '12 yoʻnalish' },
+          { name: 'Klinik rotatsiya (kafedralar)', duration: 'Modulli', spots: '11 yoʻnalish' },
           { name: 'Amaliyot bazasi', duration: 'Semester', spots: 'Talabalar' },
           { name: 'Klinik mentorlik', duration: 'Davomiy', spots: 'Shifokor-mentorlar' },
         ],
@@ -1318,7 +1318,7 @@ const ru: Translations = {
         { v: '87%', l: 'время на документы' },
       ],
       headMetrics: [
-        { v: '12', l: 'направлений' },
+        { v: '11', l: 'направлений' },
         { v: '34', l: 'врачей' },
         { v: '1 звонок', l: 'запись по телефону' },
       ],
@@ -1700,11 +1700,11 @@ const ru: Translations = {
     universityNote: 'Основное высшее образование — в университете FJSTI.',
     universityLink: 'Перейти на сайт университета →',
     universityHref: 'https://fjsti.uz',
-    stats: [['12', 'направлений'], ['Ротация', 'ординатура'], ['CME', 'врачам']],
+    stats: [['11', 'направлений'], ['Ротация', 'ординатура'], ['CME', 'врачам']],
     programsLabel: 'Клинические программы',
     tracks: [
       { audience: 'Ротация ординаторов', color: '#0EA5E9', icon: '🩺', cta: 'Отправить запрос', programs: [
-        { name: 'Клиническая ротация (кафедры)', duration: 'Модульно', spots: '12 направлений' },
+        { name: 'Клиническая ротация (кафедры)', duration: 'Модульно', spots: '11 направлений' },
         { name: 'База практики', duration: 'Семестр', spots: 'Студенты' },
         { name: 'Клиническое наставничество', duration: 'Постоянно', spots: 'Врачи-наставники' },
       ]},
@@ -2233,7 +2233,7 @@ const en: Translations = {
         { v: '87%', l: 'documentation time' },
       ],
       headMetrics: [
-        { v: '12', l: 'departments' },
+        { v: '11', l: 'departments' },
         { v: '34', l: 'physicians' },
         { v: '1 call', l: 'phone booking' },
       ],
@@ -2615,7 +2615,7 @@ const en: Translations = {
     universityNote: 'Degree education is provided by FJSTI University.',
     universityLink: 'Go to the university website →',
     universityHref: 'https://fjsti.uz',
-    stats: [['12', 'departments'], ['Rotation', 'residency'], ['CME', 'physicians']],
+    stats: [['11', 'departments'], ['Rotation', 'residency'], ['CME', 'physicians']],
     programsLabel: 'Clinical programs',
     tracks: [
       { audience: 'Residency rotations', color: '#0EA5E9', icon: '🩺', cta: 'Send request', programs: [
@@ -2963,7 +2963,7 @@ const kaa: Translations = {
         { v: '87%', l: 'hújjet waqtı' },
       ],
       headMetrics: [
-        { v: '12', l: 'baǵdar' },
+        { v: '11', l: 'baǵdar' },
         { v: '34', l: 'shıpaker' },
         { v: '1 qońıraq', l: 'telefon arqalı jazılıw' },
       ],

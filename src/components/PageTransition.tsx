@@ -9,6 +9,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
+import { resetScrollTriggersOnRouteChange, unlockPageScroll } from '../lib/scrollRoute'
 
 /** Emblem turn duration while the new route mounts under an opaque veil. */
 export const PAGE_SPIN_MS = 720
@@ -93,6 +94,7 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
 
   const finishTransition = useCallback(() => {
     setBusy(false)
+    unlockPageScroll()
     schedule(() => focusPageLandmark(), 16)
   }, [schedule])
 
@@ -187,6 +189,7 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
       setRouteEnter(true)
       setPath(normalizePath(window.location.pathname))
       setBusy(false)
+      unlockPageScroll()
       // Back/forward: browser restores scroll — do not force top.
     }
 
@@ -199,15 +202,24 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
   }, [navigate, runTransition])
 
   // Lock page scroll while the transition veil is up — keyboard PageDown
-  // otherwise still moves the outgoing page underneath.
+  // otherwise still moves the outgoing page underneath. Always clear on exit:
+  // restoring the previous inline value resurrected `hidden` from the mobile
+  // menu and left new routes unscrollable until a hard refresh.
   useEffect(() => {
-    if (!busy) return
-    const previous = document.body.style.overflow
+    if (!busy) {
+      unlockPageScroll()
+      return
+    }
     document.body.style.overflow = 'hidden'
     return () => {
-      document.body.style.overflow = previous
+      unlockPageScroll()
     }
   }, [busy])
+
+  useEffect(() => {
+    resetScrollTriggersOnRouteChange()
+    unlockPageScroll()
+  }, [path])
 
   useEffect(() => () => clearTimers(), [clearTimers])
 

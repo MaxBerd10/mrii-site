@@ -4,8 +4,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
 import { usePageNav } from './PageTransition'
 import { staggerContainer, fadeUpSmall } from '../lib/animations'
-import { specialtyDetails } from '../data/specialtyDetails'
-import { CLINIC_SPECIALTY_CATEGORIES, getClinicSpecialtyImage } from '../data/specialtyImages'
+import { buildClinicSpecialties } from '../data/clinicSpecialties'
 import '../styles/clinic-catalog.css'
 
 /**
@@ -23,8 +22,6 @@ import '../styles/clinic-catalog.css'
 type ClinicCategory = 'all' | 'therapy' | 'surgery' | 'women' | 'diagnostics' | 'emergency'
 type QuickActionKind = 'doctor' | 'price' | 'calendar'
 type ClinicView = 'overview' | 'services' | 'diagnostics'
-
-const SPECIALTY_CATEGORIES = CLINIC_SPECIALTY_CATEGORIES
 
 const CATEGORY_META: Record<Exclude<ClinicCategory, 'all'>, { color: string }> = {
   therapy: { color: '#087CA7' },
@@ -97,28 +94,10 @@ export default function Clinic({ view = 'overview' }: { view?: ClinicView }) {
     setQuery('')
   }, [view])
 
-  const specialties = useMemo(() => {
-    const base = home?.specialties?.length
-      ? home.specialties.map((sp, i) => ({
-          slug: sp.slug,
-          name: sp.name,
-          desc: sp.desc,
-          count: sp.count,
-          image: sp.image || getClinicSpecialtyImage(sp.slug),
-          category: (SPECIALTY_CATEGORIES[i] ?? 'therapy') as Exclude<ClinicCategory, 'all'>,
-        }))
-      : t.clinic.specialties.map((sp, i) => {
-          const slug = specialtyDetails[i]?.slug ?? `specialty-${i}`
-          return {
-          slug,
-          name: sp.name,
-          desc: sp.desc,
-          count: sp.count,
-          image: getClinicSpecialtyImage(slug),
-          category: (SPECIALTY_CATEGORIES[i] ?? 'therapy') as Exclude<ClinicCategory, 'all'>,
-        }})
-    return base
-  }, [home, t.clinic.specialties])
+  const specialties = useMemo(
+    () => buildClinicSpecialties(t.clinic.specialties, home?.specialties),
+    [home, t.clinic.specialties],
+  )
 
   const filters = useMemo(() => {
     const counts = {

@@ -9,7 +9,9 @@ import {
   type MotionValue,
 } from 'motion/react'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { CLINIC_SPECIALTY_COUNT } from '../../data/clinicContact'
 import { doctorProfiles } from '../../data/doctors'
+import { useMobileLayout } from '../../hooks/useMobileLayout'
 import { MaskedText } from './careUi'
 
 const CARD_W = 76
@@ -22,8 +24,44 @@ type Doctor = {
   photo: string
 }
 
+function ringPosition(index: number, total: number, size: { w: number; h: number }) {
+  const isPhone = size.w < 768
+  const ringRadius = isPhone
+    ? Math.min(size.w * 0.38, size.h * 0.3)
+    : Math.min(Math.min(size.w, size.h) * 0.33, 320)
+  const ringAngle = (index / total) * 360 - 90
+  const ringRad = (ringAngle * Math.PI) / 180
+  return {
+    ringX: Math.cos(ringRad) * ringRadius,
+    ringY: Math.sin(ringRad) * ringRadius,
+  }
+}
+
+function StaticOrbitCard({
+  doctor,
+  index,
+  total,
+  size,
+}: {
+  doctor: Doctor
+  index: number
+  total: number
+  size: { w: number; h: number }
+}) {
+  const { ringX, ringY } = ringPosition(index, total, size)
+  return (
+    <a
+      className="hc-orbit__card"
+      href={`/doctors/${doctor.slug}`}
+      style={{ transform: `translate(${ringX}px, ${ringY}px)` }}
+    >
+      <CardFace doctor={doctor} />
+    </a>
+  )
+}
+
 /**
- * One portrait on the ring.
+ * One portrait on the ring (scroll-driven desktop only).
  *
  * Each card owns its own `useTransform` calls rather than the parent computing
  * every position on a state update. That keeps the whole morph on the
@@ -37,32 +75,15 @@ function OrbitCard({
   total,
   progress,
   size,
-  reduce,
 }: {
   doctor: Doctor
   index: number
   total: number
   progress: MotionValue<number>
   size: { w: number; h: number }
-  reduce: boolean | null
 }) {
   const isMobile = size.w < 768
-
-  // --- Ring: portraits evenly spaced, each turned to face outward. The phone
-  // ring runs wider relative to the screen so the heading keeps a clear hole.
-  const ringRadius = isMobile
-    ? Math.min(size.w * 0.38, size.h * 0.3)
-    : Math.min(Math.min(size.w, size.h) * 0.33, 320)
-  const ringAngle = (index / total) * 360 - 90
-  const ringRad = (ringAngle * Math.PI) / 180
-  const ringX = Math.cos(ringRad) * ringRadius
-  const ringY = Math.sin(ringRad) * ringRadius
-
-  // Portraits stay upright on the ring. Turning each card to face outward is
-  // what the original effect does, but it inverts everything on the lower half
-  // — and an upside-down photograph of a named doctor reads as a broken page,
-  // not as a composition. The arch tilts instead, and never past ~60°, where a
-  // face is still legible.
+  const { ringX, ringY } = ringPosition(index, total, size)
   const ringRotation = 0
 
   // --- Arch: the ring opens upward into a crown.
@@ -128,18 +149,6 @@ function OrbitCard({
   const scale = useTransform(progress, span, [1, 1.03, isMobile ? 1.05 : 1.15])
   const transform = useMotionTemplate`translate3d(${x}px, ${y}px, 0) rotate(${rotate}deg) scale(${scale})`
 
-  if (reduce) {
-    return (
-      <a
-        className="hc-orbit__card"
-        href={`/doctors/${doctor.slug}`}
-        style={{ transform: `translate(${ringX}px, ${ringY}px)` }}
-      >
-        <CardFace doctor={doctor} />
-      </a>
-    )
-  }
-
   return (
     <motion.a
       className="hc-orbit__card"
@@ -173,16 +182,10 @@ function CardFace({ doctor }: { doctor: Doctor }) {
 }
 
 /**
- * The doctors, as a ring that opens into an arch on scroll.
- *
- * Driven by the page's own scroll against a tall section with a sticky stage —
- * the idiom already used by the dark homepage's team section. Nothing captures
- * the wheel: a visitor who wants the phone number can always keep scrolling,
- * which matters more here than on a portfolio site.
+ * The doctors, as a ring that opens into an arch on scroll (desktop only).
  */
-export default function CareOrbit() {
+function CareOrbitAnimated() {
   const { t, contentLang } = useLanguage()
-  const reduce = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
   const [size, setSize] = useState({ w: 0, h: 0 })
@@ -191,9 +194,9 @@ export default function CareOrbit() {
 
   // Twenty portraits need roughly 1160px of ring to sit side by side. A phone
   // only offers ~780px of circumference, so all twenty overlap into a rosette
-  // and the heading has no hole left to sit in. Twelve fits with gaps, and the
-  // section links to the full list anyway.
-  const count = size.w > 0 && size.w < 768 ? 12 : 20
+  // and the heading has no hole left to sit in. Eleven matches clinic signage;
+  // the section links to the full doctor list anyway.
+  const count = size.w > 0 && size.w < 768 ? CLINIC_SPECIALTY_COUNT : 20
 
   const doctors: Doctor[] = doctorProfiles
     .filter((p) => p.staffKind !== 'nurse')
@@ -235,16 +238,10 @@ export default function CareOrbit() {
   }
 
   return (
-    <section
-      ref={sectionRef}
-      className={`hc-orbit${reduce ? ' is-static' : ''}`}
-      aria-labelledby="hc-orbit-title"
-    >
-      {reduce ? null : (
-        <button type="button" className="hc-orbit__skip" onClick={skipMorph}>
-          {t.homeCare.orbitSkip}
-        </button>
-      )}
+    <section ref={sectionRef} className="hc-orbit" aria-labelledby="hc-orbit-title">
+      <button type="button" className="hc-orbit__skip" onClick={skipMorph}>
+        {t.homeCare.orbitSkip}
+      </button>
       <div className="hc-orbit__sticky">
         <div className="hc-orbit__stage" ref={stageRef}>
           {size.w > 0
@@ -256,15 +253,11 @@ export default function CareOrbit() {
                   total={doctors.length}
                   progress={progress}
                   size={size}
-                  reduce={reduce}
                 />
               ))
             : null}
 
-          <motion.div
-            className="hc-orbit__center"
-            style={reduce ? undefined : { opacity: ringCopyOpacity }}
-          >
+          <motion.div className="hc-orbit__center" style={{ opacity: ringCopyOpacity }}>
             {/* The hole stays empty apart from the words. An image here was
                 tried and cut: the ring of twenty real faces is already the
                 picture, and anything in the middle either fought the portraits
@@ -282,22 +275,92 @@ export default function CareOrbit() {
             </MaskedText>
           </motion.div>
 
-          {reduce ? null : (
-            <motion.div
-              className="hc-orbit__reveal"
-              style={{ opacity: archCopyOpacity, y: archCopyY }}
-            >
-              <p className="hc-eyebrow">{t.homeCare.doctorsEyebrow}</p>
-              <p className="hc-orbit__reveal-title">{t.homeCare.orbitReveal}</p>
-              <a className="hc-btn" href="/doctors">
-                {copy.viewAll}
-              </a>
-            </motion.div>
-          )}
+          <motion.div
+            className="hc-orbit__reveal"
+            style={{ opacity: archCopyOpacity, y: archCopyY }}
+          >
+            <p className="hc-eyebrow">{t.homeCare.doctorsEyebrow}</p>
+            <p className="hc-orbit__reveal-title">{t.homeCare.orbitReveal}</p>
+            <a className="hc-btn" href="/doctors">
+              {copy.viewAll}
+            </a>
+          </motion.div>
         </div>
       </div>
     </section>
   )
+}
+
+function CareOrbitStatic() {
+  const { t, contentLang } = useLanguage()
+  const stageRef = useRef<HTMLDivElement>(null)
+  const [size, setSize] = useState({ w: 0, h: 0 })
+  const copy = t.homeDark.team
+
+  const count = size.w > 0 && size.w < 768 ? CLINIC_SPECIALTY_COUNT : 20
+  const doctors: Doctor[] = doctorProfiles
+    .filter((p) => p.staffKind !== 'nurse')
+    .slice(0, count)
+    .map((p) => ({
+      slug: p.slug,
+      name: p.content[contentLang].name,
+      specialty: p.content[contentLang].specialty,
+      photo: p.photo,
+    }))
+
+  useEffect(() => {
+    const node = stageRef.current
+    if (!node) return
+    const sync = () => setSize({ w: node.offsetWidth, h: node.offsetHeight })
+    sync()
+    const ro = new ResizeObserver(sync)
+    ro.observe(node)
+    return () => ro.disconnect()
+  }, [])
+
+  return (
+    <section className="hc-orbit is-static" aria-labelledby="hc-orbit-title">
+      <div className="hc-orbit__sticky">
+        <div className="hc-orbit__stage" ref={stageRef}>
+          {size.w > 0
+            ? doctors.map((doctor, i) => (
+                <StaticOrbitCard
+                  key={doctor.slug}
+                  doctor={doctor}
+                  index={i}
+                  total={doctors.length}
+                  size={size}
+                />
+              ))
+            : null}
+
+          <div className="hc-orbit__center">
+            <MaskedText as="h2" className="hc-title" id="hc-orbit-title">
+              {t.homeCare.orbitTitle1} <em>{t.homeCare.orbitTitleEm}</em>
+            </MaskedText>
+            <MaskedText as="p" className="hc-orbit__hint">
+              {t.homeCare.orbitHint}
+            </MaskedText>
+          </div>
+
+          <div className="hc-orbit__reveal">
+            <p className="hc-eyebrow">{t.homeCare.doctorsEyebrow}</p>
+            <p className="hc-orbit__reveal-title">{t.homeCare.orbitReveal}</p>
+            <a className="hc-btn" href="/doctors">
+              {copy.viewAll}
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default function CareOrbit() {
+  const isMobile = useMobileLayout()
+  const reduce = useReducedMotion()
+  if (reduce || isMobile) return <CareOrbitStatic />
+  return <CareOrbitAnimated />
 }
 
 export { CARD_W, CARD_H }

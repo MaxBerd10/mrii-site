@@ -134,6 +134,7 @@ export function CinematicFooter() {
     if (!wrapper) return
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const isMobile = window.matchMedia('(max-width: 760px)').matches
     const context = gsap.context(() => {
       ScrollTrigger.create({
         trigger: wrapper,
@@ -142,7 +143,7 @@ export function CinematicFooter() {
         onToggle: (self) => wrapper.classList.toggle('is-active', self.isActive),
       })
 
-      if (reduceMotion) {
+      if (reduceMotion || isMobile) {
         gsap.set([giantTextRef.current, headingRef.current, contentRef.current], {
           clearProps: 'all',
           opacity: 1,

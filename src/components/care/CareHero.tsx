@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useReducedMotion } from 'motion/react'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { useMobileLayout } from '../../hooks/useMobileLayout'
 import { MaskedText } from './careUi'
 import { FEATURE_ICONS, IconCalendar, TRUST_ICONS } from './CareHeroIcons'
 
@@ -20,6 +21,7 @@ export default function CareHero() {
   const { t } = useLanguage()
   const c = t.homeCare
   const reduce = useReducedMotion()
+  const isMobile = useMobileLayout()
   const sectionRef = useRef<HTMLElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
 
@@ -28,18 +30,20 @@ export default function CareHero() {
     const track = trackRef.current
     if (!section || !track) return
 
+    const resetMobile = () => {
+      section.style.setProperty('--hero-progress', '0')
+      section.style.setProperty('--hero-dna-opacity', '1')
+    }
+
+    if (isMobile) {
+      resetMobile()
+      return
+    }
+
     let frame = 0
 
     const render = () => {
       frame = 0
-      // The scroll-driven camera push-in only exists on the desktop hero. The
-      // mobile layout is static (transform: none), so skip the per-frame
-      // getBoundingClientRect() layout read there — it was the main scroll cost.
-      if (window.innerWidth <= 760) {
-        section.style.setProperty('--hero-progress', '0')
-        section.style.setProperty('--hero-dna-opacity', '1')
-        return
-      }
       const rect = track.getBoundingClientRect()
       const travel = Math.max(rect.height - window.innerHeight, 1)
       const progress = reduce ? 0 : Math.min(1, Math.max(0, -rect.top / travel))
@@ -61,7 +65,7 @@ export default function CareHero() {
       window.removeEventListener('resize', schedule)
       if (frame) window.cancelAnimationFrame(frame)
     }
-  }, [reduce])
+  }, [isMobile, reduce])
 
   return (
     <section ref={sectionRef} className="hc-hero hc-hero--dna" aria-labelledby="hc-hero-title">

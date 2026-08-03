@@ -2,6 +2,25 @@ import { useEffect } from 'react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { usePageNav } from '../components/PageTransition'
 
+/** Clear scroll locks left by nav drawer, page transitions, or GSAP. */
+export function unlockPageScroll() {
+  document.body.style.removeProperty('overflow')
+  document.body.style.removeProperty('position')
+  document.body.style.removeProperty('padding-right')
+  document.body.style.removeProperty('touch-action')
+  document.documentElement.style.removeProperty('overflow')
+  document.documentElement.style.removeProperty('position')
+}
+
+/** Drop homepage ScrollTrigger instances when leaving a route. */
+export function resetScrollTriggersOnRouteChange() {
+  ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+  requestAnimationFrame(() => {
+    unlockPageScroll()
+    ScrollTrigger.refresh()
+  })
+}
+
 /** Scroll to top only after in-app navigation — skip on hard refresh / first paint. */
 export function useScrollToTopOnRoute(routeKey: string) {
   const { routeEnter } = usePageNav()

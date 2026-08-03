@@ -166,7 +166,6 @@ function AppRoutes() {
     <div
       className="site-shell min-h-screen"
       style={{ backgroundColor: 'var(--background)', color: 'var(--foreground)' }}
-      inert={busy || undefined}
       aria-hidden={busy || undefined}
     >
       {!isDoctorDetail && !isDoctorPortal && !isAiLegacyRoute && <Nav />}

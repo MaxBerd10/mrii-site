@@ -57,15 +57,41 @@ export default function Nav() {
   ]
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12)
+    let frame = 0
+    let scrolled = window.scrollY > 12
+
+    const onScroll = () => {
+      if (frame) return
+      frame = window.requestAnimationFrame(() => {
+        frame = 0
+        const next = window.scrollY > 12
+        if (next === scrolled) return
+        scrolled = next
+        setScrolled(next)
+      })
+    }
+
+    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
   }, [])
 
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : ''
+    setMobileOpen(false)
+    setOpen(null)
+  }, [path])
+
+  useEffect(() => {
+    if (!mobileOpen) {
+      document.body.style.removeProperty('overflow')
+      return
+    }
+    document.body.style.overflow = 'hidden'
     return () => {
-      document.body.style.overflow = ''
+      document.body.style.removeProperty('overflow')
     }
   }, [mobileOpen])
 

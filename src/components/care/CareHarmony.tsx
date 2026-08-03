@@ -14,6 +14,7 @@ import {
   useTransform,
 } from 'motion/react'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { useMobileLayout } from '../../hooks/useMobileLayout'
 import { Check, MaskedText } from './careUi'
 
 const DNA_IMAGE = '/images/medical/dna-isolated-v2.webp'
@@ -47,17 +48,12 @@ const Cpu = () => (
 )
 
 /**
- * A scroll-led 2.5D genomic scene.
- *
- * The isolated DNA cutout is the only rotating visual. Rings, particles and
- * light live on separate layers, so no rectangular source-image plane can
- * appear. Continuous motion is paused whenever the scene is offscreen.
+ * A scroll-led 2.5D genomic scene (desktop only).
  */
-export default function CareHarmony() {
+function CareHarmonyAnimated() {
   const { t } = useLanguage()
   const c = t.homeCare.harmony
   const sectionRef = useRef<HTMLElement>(null)
-  const reduce = useReducedMotion()
   const [isIntersecting, setIsIntersecting] = useState(false)
   const [isPageVisible, setIsPageVisible] = useState(true)
 
@@ -123,7 +119,7 @@ export default function CareHarmony() {
   }
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (reduce || event.pointerType === 'touch') return
+    if (event.pointerType === 'touch') return
     const bounds = event.currentTarget.getBoundingClientRect()
     const x = (event.clientX - bounds.left) / bounds.width - 0.5
     const y = (event.clientY - bounds.top) / bounds.height - 0.5
@@ -134,14 +130,12 @@ export default function CareHarmony() {
     pointerY.set(y * 14)
   }
 
-  const isAnimating = Boolean(!reduce && isIntersecting && isPageVisible)
+  const isAnimating = Boolean(isIntersecting && isPageVisible)
 
   return (
     <section
       ref={sectionRef}
-      className={`hc-harmony-gallery${reduce ? ' is-static' : ''}${
-        isAnimating ? ' is-animating' : ''
-      }`}
+      className={`hc-harmony-gallery${isAnimating ? ' is-animating' : ''}`}
       aria-labelledby="hc-harmony-title"
     >
       <div
@@ -156,24 +150,17 @@ export default function CareHarmony() {
 
           <motion.div
             className="hc-dna-hologram"
-            style={
-              reduce
-                ? undefined
-                : {
-                    scale: dnaScale,
-                    x: dnaX,
-                    y: dnaY,
-                    opacity: dnaOpacity,
-                    rotateX,
-                    rotateY,
-                  }
-            }
+            style={{
+              scale: dnaScale,
+              x: dnaX,
+              y: dnaY,
+              opacity: dnaOpacity,
+              rotateX,
+              rotateY,
+            }}
           >
             <div className="hc-dna-hologram__shadow" />
-            <motion.div
-              className="hc-dna-hologram__parallax"
-              style={reduce ? undefined : { x: parallaxX, y: parallaxY }}
-            >
+            <motion.div className="hc-dna-hologram__parallax" style={{ x: parallaxX, y: parallaxY }}>
               <div className="hc-dna-hologram__float">
                 <div className="hc-dna-hologram__rings">
                   <i className="hc-dna-hologram__ring hc-dna-hologram__ring--one" />
@@ -230,7 +217,7 @@ export default function CareHarmony() {
 
         <motion.div
           className="hc-harmony-gallery__intro"
-          style={reduce ? undefined : { opacity: introOpacity, y: introY }}
+          style={{ opacity: introOpacity, y: introY }}
         >
           <MaskedText as="p" className="hc-harmony-gallery__eyebrow">
             {c.eyebrow}
@@ -243,7 +230,7 @@ export default function CareHarmony() {
 
         <motion.div
           className="hc-harmony-gallery__details"
-          style={reduce ? undefined : { opacity: detailOpacity, y: detailY }}
+          style={{ opacity: detailOpacity, y: detailY }}
         >
           <div className="hc-harmony-gallery__columns">
             <article>
@@ -289,4 +276,144 @@ export default function CareHarmony() {
       </div>
     </section>
   )
+}
+
+function HarmonyDnaVisual({ animate }: { animate: boolean }) {
+  return (
+    <div className="hc-dna-hologram">
+      <div className="hc-dna-hologram__shadow" />
+      <div className="hc-dna-hologram__parallax">
+        <div className="hc-dna-hologram__float">
+          <div className="hc-dna-hologram__rings">
+            <i className="hc-dna-hologram__ring hc-dna-hologram__ring--one" />
+            <i className="hc-dna-hologram__ring hc-dna-hologram__ring--two" />
+            <i className="hc-dna-hologram__ring hc-dna-hologram__ring--three" />
+          </div>
+
+          <div className="hc-dna-hologram__rotor">
+            <picture>
+              <source srcSet={DNA_IMAGE} type="image/webp" />
+              <img
+                className="hc-dna-hologram__image hc-dna-hologram__image--front"
+                src={DNA_IMAGE_FALLBACK}
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+          </div>
+
+          <div className="hc-dna-hologram__reflection" />
+          {animate ? (
+            <div className="hc-dna-hologram__particles">
+              {DNA_PARTICLES.map((particle, index) => (
+                <i
+                  key={index}
+                  style={
+                    {
+                      '--particle-x': `${particle.x}%`,
+                      '--particle-y': `${particle.y}%`,
+                      '--particle-size': `${particle.size}px`,
+                      '--particle-delay': `${particle.delay}s`,
+                      '--particle-duration': `${particle.duration}s`,
+                      '--particle-depth': index % 3,
+                    } as CSSProperties
+                  }
+                />
+              ))}
+            </div>
+          ) : null}
+        </div>
+      </div>
+
+      <span className="hc-dna-hologram__hud hc-dna-hologram__hud--top">
+        <i />
+        FJSTI · 2008
+      </span>
+      <span className="hc-dna-hologram__hud hc-dna-hologram__hud--bottom">
+        AiShifokor
+        <i />
+      </span>
+    </div>
+  )
+}
+
+function HarmonyCopyBlocks({ c }: { c: ReturnType<typeof useLanguage>['t']['homeCare']['harmony'] }) {
+  return (
+    <>
+      <div className="hc-harmony-gallery__intro">
+        <MaskedText as="p" className="hc-harmony-gallery__eyebrow">
+          {c.eyebrow}
+        </MaskedText>
+        <MaskedText as="h2" id="hc-harmony-title">
+          {c.title1} <em>{c.titleEm}</em>
+        </MaskedText>
+        <MaskedText as="p">{c.description}</MaskedText>
+      </div>
+
+      <div className="hc-harmony-gallery__details">
+        <div className="hc-harmony-gallery__columns">
+          <article>
+            <span className="hc-harmony-gallery__tag">
+              <Cpu />
+              {c.machineTag}
+            </span>
+            <h3>{c.machineLede}</h3>
+            <ul>
+              {c.machineItems.map((item) => (
+                <li key={item}>
+                  <Check />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </article>
+
+          <article>
+            <span className="hc-harmony-gallery__tag">{c.clinicalTag}</span>
+            <h3>{c.clinicalLede}</h3>
+            <ul>
+              {c.clinicalItems.map((item) => (
+                <li key={item}>
+                  <Check />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </article>
+        </div>
+
+        <p className="hc-harmony-gallery__verdict">
+          <Check />
+          {c.verdict}
+        </p>
+      </div>
+    </>
+  )
+}
+
+function CareHarmonyStatic() {
+  const { t } = useLanguage()
+  const c = t.homeCare.harmony
+
+  return (
+    <section className="hc-harmony-gallery is-static" aria-labelledby="hc-harmony-title">
+      <div className="hc-harmony-gallery__sticky">
+        <div className="hc-dna-scene" aria-hidden>
+          <div className="hc-dna-scene__grid" />
+          <HarmonyDnaVisual animate={false} />
+        </div>
+
+        <div className="hc-harmony-gallery__shade" aria-hidden />
+        <HarmonyCopyBlocks c={c} />
+      </div>
+    </section>
+  )
+}
+
+export default function CareHarmony() {
+  const isMobile = useMobileLayout()
+  const reduce = useReducedMotion()
+  if (reduce || isMobile) return <CareHarmonyStatic />
+  return <CareHarmonyAnimated />
 }

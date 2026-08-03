@@ -2,8 +2,7 @@ import { useMemo, type CSSProperties } from 'react'
 import { motion } from 'motion/react'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { useCms } from '../../cms/CmsContext'
-import { specialtyDetails } from '../../data/specialtyDetails'
-import { getClinicSpecialtyImage } from '../../data/specialtyImages'
+import { buildClinicSpecialties } from '../../data/clinicSpecialties'
 import HdHead from './HdHead'
 import { settle, settleStagger, inView } from '../../lib/homeDarkMotion'
 
@@ -33,20 +32,12 @@ export default function ServiceGrid() {
   const copy = t.homeDark.services
 
   const specialties = useMemo(() => {
-    const slugs = specialtyDetails.map((detail) => detail.slug)
-    const source = home?.specialties?.length ? home.specialties : null
+    const base = buildClinicSpecialties(t.clinic.specialties, home?.specialties)
 
-    return t.clinic.specialties.map((specialty, i) => {
-      const slug = source?.[i]?.slug ?? slugs[i] ?? `specialty-${i}`
-      return {
-        slug,
-        name: source?.[i]?.name ?? specialty.name,
-        desc: source?.[i]?.desc ?? specialty.desc,
-        count: source?.[i]?.count ?? specialty.count,
-        image: source?.[i]?.image || getClinicSpecialtyImage(slug),
-        signal: SIGNAL_BY_SLUG[slug] ?? 'var(--hd-blue)',
-      }
-    })
+    return base.map((specialty) => ({
+      ...specialty,
+      signal: SIGNAL_BY_SLUG[specialty.slug] ?? 'var(--hd-blue)',
+    }))
   }, [home, t.clinic.specialties])
 
   return (
