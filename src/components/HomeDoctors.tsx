@@ -4,7 +4,7 @@ import SectionHeader from './ui/SectionHeader'
 import Reveal from './ui/Reveal'
 import { DoctorCard, type DoctorCardDoc } from './Doctors'
 import { doctorProfiles, getSpecialtyGroup } from '../data/doctors'
-import { getDoctorTurnMedia } from '../data/doctorTurnMedia'
+import { getDoctorCardPortrait, getDoctorTurnMedia } from '../data/doctorTurnMedia'
 import { staggerContainer, blurUp } from '../lib/animations'
 import '../styles/doctor-turn.css'
 import '../styles/home-patient.css'
@@ -20,6 +20,7 @@ export default function HomeDoctors() {
     .map((p) => {
       const c = p.content[contentLang]
       const turn = getDoctorTurnMedia(p.slug)
+      const poster = turn?.poster ?? p.photo
       return {
         id: p.slug,
         slug: p.slug,
@@ -31,7 +32,8 @@ export default function HomeDoctors() {
         papers: p.papers,
         studies: p.studies,
         color: p.color,
-        photo: turn?.poster ?? p.photo,
+        photo: poster,
+        cardPhoto: getDoctorCardPortrait(p.slug, poster),
         video: turn?.video,
         staffKind: p.staffKind,
       }

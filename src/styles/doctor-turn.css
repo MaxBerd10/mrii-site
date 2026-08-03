@@ -146,11 +146,23 @@
   }
 }
 
-@media (max-width: 560px) {
-  .doctors-section .doctor-card__media {
-    height: auto;
-    min-height: 0;
-    max-height: none;
-    aspect-ratio: 4 / 5;
+@media (max-width: 760px) {
+  .doctors-section {
+    overflow-x: clip;
+  }
+
+  .doctors-section .container-main {
+    width: min(var(--container), calc(100% - (var(--gutter) * 2)));
+    margin-inline: auto;
+  }
+
+  .doctors-section .doctor-grid {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .doctor-filters-panel {
+    max-width: 100%;
+    overflow-x: clip;
   }
 }
