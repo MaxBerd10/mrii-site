@@ -9,10 +9,10 @@ import {
   type MotionValue,
 } from 'motion/react'
 import { useLanguage } from '../../i18n/LanguageContext'
-import { CLINIC_SPECIALTY_COUNT } from '../../data/clinicContact'
-import { doctorProfiles } from '../../data/doctors'
+import { getHomeFeaturedDoctors, getHomeOrbitDoctors } from '../../data/doctors'
+import { getDoctorCardPortrait } from '../../data/doctorTurnMedia'
 import { useMobileLayout } from '../../hooks/useMobileLayout'
-import { MaskedText } from './careUi'
+import { MaskedText, SectionHead } from './careUi'
 
 const CARD_W = 76
 const CARD_H = 104
@@ -196,12 +196,9 @@ function CareOrbitAnimated() {
   // only offers ~780px of circumference, so all twenty overlap into a rosette
   // and the heading has no hole left to sit in. Eleven matches clinic signage;
   // the section links to the full doctor list anyway.
-  const count = size.w > 0 && size.w < 768 ? CLINIC_SPECIALTY_COUNT : 20
+  const count = size.w > 0 && size.w < 768 ? 12 : 20
 
-  const doctors: Doctor[] = doctorProfiles
-    .filter((p) => p.staffKind !== 'nurse')
-    .slice(0, count)
-    .map((p) => ({
+  const doctors: Doctor[] = getHomeOrbitDoctors(count).map((p) => ({
       slug: p.slug,
       name: p.content[contentLang].name,
       specialty: p.content[contentLang].specialty,
@@ -291,17 +288,79 @@ function CareOrbitAnimated() {
   )
 }
 
+function CareOrbitMobile() {
+  const { t, contentLang } = useLanguage()
+  const copy = t.homeDark.team
+  const featured = getHomeFeaturedDoctors(4)
+
+  useEffect(() => {
+    featured.forEach((doc) => {
+      const img = new Image()
+      img.src = getDoctorCardPortrait(doc.slug, doc.photo)
+    })
+  }, [featured])
+
+  return (
+    <section
+      className="hc-section hc-section--tint hc-orbit hc-orbit--mobile"
+      aria-labelledby="hc-orbit-title"
+    >
+      <div className="hc-shell">
+        <SectionHead
+          eyebrow={t.homeCare.doctorsEyebrow}
+          id="hc-orbit-title"
+          title={
+            <>
+              {t.homeCare.orbitTitle1} <em>{t.homeCare.orbitTitleEm}</em>
+            </>
+          }
+          description={t.homeCare.orbitReveal}
+          action={
+            <a className="hc-more" href="/doctors">
+              {copy.viewAll} <span aria-hidden>→</span>
+            </a>
+          }
+        />
+
+        <div className="hc-docs__grid hc-orbit__mobile-grid">
+          {featured.map((doc) => {
+            const info = doc.content[contentLang]
+            return (
+              <a key={doc.slug} className="hc-doc" href={`/doctors/${doc.slug}`}>
+                <span className="hc-doc__media">
+                  <img
+                    className="hc-doc__photo"
+                    src={getDoctorCardPortrait(doc.slug, doc.photo)}
+                    alt={info.name}
+                    width={400}
+                    height={500}
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
+                  />
+                </span>
+                <span className="hc-doc__body">
+                  <span className="hc-doc__name">{info.name}</span>
+                  <span className="hc-doc__spec">{info.specialty}</span>
+                  <span className="hc-doc__exp">{info.exp}</span>
+                </span>
+              </a>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function CareOrbitStatic() {
   const { t, contentLang } = useLanguage()
   const stageRef = useRef<HTMLDivElement>(null)
   const [size, setSize] = useState({ w: 0, h: 0 })
   const copy = t.homeDark.team
 
-  const count = size.w > 0 && size.w < 768 ? CLINIC_SPECIALTY_COUNT : 20
-  const doctors: Doctor[] = doctorProfiles
-    .filter((p) => p.staffKind !== 'nurse')
-    .slice(0, count)
-    .map((p) => ({
+  const count = size.w > 0 && size.w < 768 ? 12 : 20
+  const doctors: Doctor[] = getHomeOrbitDoctors(count).map((p) => ({
       slug: p.slug,
       name: p.content[contentLang].name,
       specialty: p.content[contentLang].specialty,
@@ -359,7 +418,8 @@ function CareOrbitStatic() {
 export default function CareOrbit() {
   const isMobile = useMobileLayout()
   const reduce = useReducedMotion()
-  if (reduce || isMobile) return <CareOrbitStatic />
+  if (isMobile) return <CareOrbitMobile />
+  if (reduce) return <CareOrbitStatic />
   return <CareOrbitAnimated />
 }
 

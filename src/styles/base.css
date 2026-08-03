@@ -142,6 +142,18 @@ button { color: inherit; }
   outline-offset: 4px;
 }
 
+/* Mouse / programmatic focus (route landmark) — keep keyboard rings only. */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* PageTransition moves screen-reader focus to main h1 after in-app nav. */
+[tabindex='-1']:focus,
+[tabindex='-1']:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
 .site-shell {
   isolation: isolate;
   min-height: 100svh;

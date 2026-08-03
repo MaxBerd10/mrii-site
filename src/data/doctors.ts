@@ -219,6 +219,35 @@ for (let i = 0; i < REST.length; i++) {
   )
 }
 
+/** Not shown in homepage orbit / Jamoa grid (poster crops poorly on cards). */
+const HIDDEN_FROM_HOME_ORBIT = new Set(['yusupova-n-r'])
+
+/** Curated homepage team — Ergashev replaces Yusupova in slot 2. */
+export const HOME_FEATURED_DOCTOR_SLUGS = [
+  'karimov-a-s',
+  'ergashev-b-m',
+  'rahimova-m-t',
+  'toshmatova-g-a',
+  'nazarov-i-v',
+  'abdullayev-j-o',
+  'alimova-d-k',
+  'xolmatov-s-r',
+] as const
+
+export function getHomeFeaturedDoctors(
+  count: number = HOME_FEATURED_DOCTOR_SLUGS.length,
+): DoctorProfile[] {
+  return HOME_FEATURED_DOCTOR_SLUGS.slice(0, count)
+    .map((slug) => doctorProfiles.find((p) => p.slug === slug))
+    .filter((p): p is DoctorProfile => Boolean(p))
+}
+
+export function getHomeOrbitDoctors(max = 20): DoctorProfile[] {
+  return doctorProfiles
+    .filter((p) => p.staffKind !== 'nurse' && !HIDDEN_FROM_HOME_ORBIT.has(p.slug))
+    .slice(0, max)
+}
+
 export function getDoctorsBySpecialty(specialtyUz: string, excludeSlug?: string) {
   return doctorProfiles.filter(
     (d) => d.content.uz.specialty === specialtyUz && d.slug !== excludeSlug,

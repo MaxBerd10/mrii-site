@@ -47,3 +47,11 @@ export function getDoctorTurnMedia(slug: string): DoctorTurnMedia | undefined {
 export function getDoctorPortrait(slug: string, fallback: string): string {
   return DOCTOR_TURN_MEDIA[slug]?.poster ?? fallback
 }
+
+/** ~400×500 WebP for list/grid cards — pre-cropped 4:5, lighter than turn posters. */
+export function getDoctorCardPortrait(slug: string, fallback: string): string {
+  if (slug in DOCTOR_TURN_MEDIA) {
+    return `/images/doctors/cards/${slug}.webp`
+  }
+  return fallback
+}

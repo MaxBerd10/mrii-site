@@ -1,7 +1,8 @@
-import { useMemo, type CSSProperties } from 'react'
+import { useEffect, useMemo, type CSSProperties } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { buildClinicSpecialties } from '../../data/clinicSpecialties'
-import { doctorProfiles } from '../../data/doctors'
+import { getHomeFeaturedDoctors } from '../../data/doctors'
+import { getDoctorCardPortrait } from '../../data/doctorTurnMedia'
 import { AISHIFOKOR_URL } from '../../data/aiPlatform'
 import { Check, Reveal, SectionHead, Star, useReveal } from './careUi'
 
@@ -324,7 +325,14 @@ export function CareServices() {
 export function CareDoctors() {
   const { t, contentLang } = useLanguage()
   const c = t.homeDark.team
-  const featured = doctorProfiles.slice(0, 8)
+  const featured = getHomeFeaturedDoctors(8)
+
+  useEffect(() => {
+    featured.forEach((doc) => {
+      const img = new Image()
+      img.src = getDoctorCardPortrait(doc.slug, doc.photo)
+    })
+  }, [featured])
 
   return (
     <section className="hc-section" aria-labelledby="hc-docs-title">
@@ -350,14 +358,19 @@ export function CareDoctors() {
             const info = doc.content[contentLang]
             return (
               <Reveal key={doc.slug} delay={Math.min(i, 6) * 60}>
-                <a className="hc-doc" href={`/doctors/${doc.slug}`} style={{ height: '100%' }}>
-                  <img
-                    className="hc-doc__photo"
-                    src={doc.photo}
-                    alt={info.name}
-                    loading="lazy"
-                    decoding="async"
-                  />
+                <a className="hc-doc" href={`/doctors/${doc.slug}`}>
+                  <span className="hc-doc__media">
+                    <img
+                      className="hc-doc__photo"
+                      src={getDoctorCardPortrait(doc.slug, doc.photo)}
+                      alt={info.name}
+                      width={400}
+                      height={500}
+                      loading={i < 4 ? 'eager' : 'lazy'}
+                      decoding="async"
+                      {...(i < 2 ? { fetchPriority: 'high' as const } : {})}
+                    />
+                  </span>
                   <span className="hc-doc__body">
                     <span className="hc-doc__name">{info.name}</span>
                     <span className="hc-doc__spec">{info.specialty}</span>
