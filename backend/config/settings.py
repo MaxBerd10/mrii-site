@@ -3,13 +3,25 @@
 from pathlib import Path
 import os
 
+from django.core.exceptions import ImproperlyConfigured
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
 
+_INSECURE_SECRETS = {
+    'django-insecure-dev-only-change-me',
+    'mrii-docker-dev-change-me-please',
+}
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-dev-only-change-me')
 DEBUG = os.getenv('DJANGO_DEBUG', 'True').lower() in ('1', 'true', 'yes')
+
+# Refuse to boot in production with a shipped/placeholder secret key.
+if not DEBUG and SECRET_KEY in _INSECURE_SECRETS:
+    raise ImproperlyConfigured(
+        'DJANGO_SECRET_KEY must be set to a strong, unique value when DEBUG=False. '
+        'Generate one with: python -c "import secrets; print(secrets.token_urlsafe(50))"'
+    )
 ALLOWED_HOSTS = [
     h.strip()
     for h in os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1,testserver').split(',')
@@ -187,6 +199,15 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
     ],
+    # Scoped throttling: only views that declare a `throttle_scope` are limited,
+    # so public read APIs stay fast while the write/lookup endpoints are capped.
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.ScopedRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'inquiry_create': os.getenv('THROTTLE_INQUIRY_CREATE', '12/hour'),
+        'inquiry_advice': os.getenv('THROTTLE_INQUIRY_ADVICE', '40/hour'),
+    },
 }
 
 CMS_LANGS = ('uz', 'ru', 'en')

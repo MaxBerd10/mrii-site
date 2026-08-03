@@ -1310,19 +1310,63 @@ a.hc-card:hover {
   color: var(--hc-faint);
 }
 
+.hc-compare__cell-label {
+  display: none;
+}
+
+.hc-compare__before-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.hc-compare__before-lead {
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.hc-compare__before-detail {
+  font-size: 0.875em;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--hc-faint) 88%, var(--hc-muted));
+  overflow-wrap: anywhere;
+}
+
 .hc-compare__after {
   font-size: 0.9375rem;
   color: var(--hc-ink);
   background: linear-gradient(90deg, var(--hc-blue-wash), transparent 140%);
 }
 
-.hc-compare__after span {
-  display: inline-flex;
-  align-items: flex-start;
-  gap: 10px;
+.hc-compare__after-body {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  column-gap: 10px;
+  align-items: start;
 }
 
-.hc-compare__after svg {
+.hc-compare__after-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.hc-compare__after-lead {
+  font-weight: 650;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.hc-compare__after-detail {
+  font-size: 0.875em;
+  color: color-mix(in srgb, var(--hc-ink) 70%, var(--hc-muted));
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.hc-compare__after-body svg {
   flex: none;
   margin-block-start: 3px;
   color: var(--hc-emerald-ink);
@@ -3253,24 +3297,168 @@ a.hc-card:active {
 
   .hc-compare {
     border-radius: 28px;
+    padding-block: 18px 10px;
+    padding-inline: 6px;
   }
 
+  .hc-compare::before {
+    display: none;
+  }
+
+  /* Stack the comparison into per-row cards instead of a 3-column table that
+     scrolls sideways — the "after" column (the whole point) was hidden off-screen
+     and cells were cut mid-word. */
   .hc-compare::after {
-    content: '↔';
-    position: absolute;
-    inset-block-start: 9px;
-    inset-inline-end: 18px;
-    color: var(--hc-faint);
-    font-size: 1rem;
-    letter-spacing: 0.08em;
+    display: none;
   }
 
-  .hc-compare thead th:first-child,
+  .hc-compare__scroll {
+    overflow: visible;
+  }
+
+  .hc-compare table,
+  .hc-compare tbody,
+  .hc-compare tr {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  .hc-compare th,
+  .hc-compare td {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  .hc-compare thead {
+    display: none;
+  }
+
+  /* Each comparison is one self-contained card. */
+  .hc-compare tbody tr {
+    margin: 0 8px 12px;
+    padding: 18px 18px 16px;
+    border: 1px solid var(--hc-line-soft);
+    border-radius: 18px;
+    background: var(--hc-card);
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+  }
+
+  .hc-compare tbody tr:last-child {
+    margin-bottom: 2px;
+  }
+
   .hc-compare tbody th {
-    position: sticky;
-    inset-inline-start: 0;
-    z-index: 2;
-    background: color-mix(in srgb, var(--hc-card) 96%, var(--hc-blue-wash));
+    position: static;
+    z-index: auto;
+    margin-bottom: 14px;
+    padding: 0 4px 12px;
+    border-bottom: 1px solid var(--hc-line-soft);
+    background: none;
+    font-size: 1.02rem;
+    font-weight: 750;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* Old path (de-emphasised) — td selector beats generic table padding reset */
+  .hc-compare td.hc-compare__before {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 16px 20px 17px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--hc-bg) 88%, var(--hc-line));
+    border: 1px solid color-mix(in srgb, var(--hc-line) 70%, transparent);
+    color: var(--hc-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .hc-compare__cell-label {
+    display: block;
+    font-size: 0.64rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--hc-faint);
+  }
+
+  .hc-compare__cell-label.is-ours {
+    color: #0c8f63;
+  }
+
+  .hc-compare__before-copy,
+  .hc-compare__after-copy {
+    width: 100%;
+    max-width: 100%;
+    padding-inline-end: 2px;
+  }
+
+  .hc-compare__before-lead {
+    font-size: 0.94rem;
+    line-height: 1.42;
+    color: color-mix(in srgb, var(--hc-ink) 55%, var(--hc-muted));
+  }
+
+  .hc-compare__before-detail {
+    font-size: 0.86rem;
+    line-height: 1.48;
+    color: var(--hc-muted);
+  }
+
+  /* New path (the point — a tinted, checked panel) */
+  .hc-compare td.hc-compare__after {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    padding: 16px 20px 17px;
+    border-radius: 14px;
+    background: color-mix(in srgb, #10a97a 10%, #fff);
+    border: 1px solid color-mix(in srgb, #10a97a 18%, transparent);
+    color: var(--hc-ink);
+    font-size: 0.94rem;
+    line-height: 1.5;
+  }
+
+  .hc-compare__after-body {
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: 20px minmax(0, 1fr);
+    column-gap: 11px;
+  }
+
+  .hc-compare__after-copy {
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .hc-compare__after-lead {
+    font-size: 0.96rem;
+    line-height: 1.38;
+  }
+
+  .hc-compare__after-detail {
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: color-mix(in srgb, var(--hc-ink) 62%, var(--hc-muted));
+  }
+
+  .hc-compare__after-body svg {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    color: #0c8f63;
   }
 
   .hc-section--path .hc-shell {
@@ -5262,10 +5450,14 @@ a.hc-card:active {
     inset: auto;
     order: 2;
     width: 100%;
-    height: min(72vw, 380px);
-    min-height: 280px;
+    /* Match the collage's own proportions so it fills the full width instead of
+       shrinking to a small block inside a fixed-height box. White (not the old
+       grey) so the cut-out doctors sit flush on the page. */
+    height: auto;
+    aspect-ratio: 1800 / 1970;
+    max-height: 64vh;
     margin-block-end: 8px;
-    background: #f6f8fa;
+    background: #fff;
   }
 
   .hc-hero--dna .hc-hero__team img {
@@ -5279,13 +5471,9 @@ a.hc-card:active {
   }
 
   .hc-hero--dna .hc-hero__dna span {
-    background:
-      linear-gradient(
-        180deg,
-        #f6f8fa 0%,
-        rgba(246, 248, 250, 0.92) 8%,
-        transparent 22%
-      );
+    /* Leftover grey fade from the old darken-blend collage — not needed now the
+       image ships cut out on white. */
+    display: none;
   }
 
   .hc-hero--dna .hc-hero__stage {
@@ -5307,8 +5495,10 @@ a.hc-card:active {
 
   .hc-hero--dna .hc-display {
     max-width: 14ch;
-    font-size: clamp(1.85rem, 8.4vw, 2.55rem);
-    line-height: 1.05;
+    /* 8.4vw pushed the long word "shifokorlar" to within 7px of the right edge
+       on a 375px screen; a slightly softer scale restores a comfortable gutter. */
+    font-size: clamp(1.7rem, 7.6vw, 2.5rem);
+    line-height: 1.06;
   }
 
   .hc-hero--dna .hc-lead {
@@ -5412,5 +5602,85 @@ a.hc-card:active {
 
   .hc-hero--dna .hc-hero__copy {
     transform: none;
+  }
+}
+
+/* Phone composition: the page makes a patient-facing promise, so its opening
+   copy and section introductions read as one calm, centred column. Dense
+   content (the comparison and FAQ) intentionally keeps its scan-friendly
+   alignment above. */
+@media (max-width: 760px) {
+  .home-care .hc-hero--dna .hc-hero__stage {
+    text-align: center;
+  }
+
+  .home-care .hc-hero--dna .hc-hero__copy {
+    align-items: center;
+  }
+
+  .home-care .hc-hero--dna .hc-display,
+  .home-care .hc-hero--dna .hc-lead {
+    margin-inline: auto;
+  }
+
+  .home-care .hc-hero--dna .hc-eyebrow {
+    justify-content: center;
+  }
+
+  .home-care .hc-hero--dna .hc-hero__feature {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .home-care .hc-hero--dna .hc-hero__feature-desc {
+    grid-column: auto;
+  }
+
+  .home-care .hc-head,
+  .home-care .hc-head--split {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .home-care .hc-head > div {
+    display: grid;
+    justify-items: center;
+  }
+
+  .home-care .hc-head .hc-eyebrow {
+    justify-content: center;
+  }
+
+  .home-care .hc-head .hc-title,
+  .home-care .hc-head .hc-lead {
+    margin-inline: auto;
+  }
+
+  .home-care .hc-harmony-gallery__intro,
+  .home-care .hc-harmony-gallery__details {
+    text-align: center;
+  }
+
+  .home-care .hc-harmony-gallery__intro h2,
+  .home-care .hc-harmony-gallery__intro > p:last-child,
+  .home-care .hc-harmony-gallery__columns h3,
+  .home-care .hc-harmony-gallery__verdict {
+    margin-inline: auto;
+  }
+
+  .home-care .hc-harmony-gallery__verdict {
+    justify-content: center;
+  }
+
+  .home-care .hc-ai-showcase__card,
+  .home-care .hc-ai-feature,
+  .home-care .hc-card,
+  .home-care .hc-quote {
+    text-align: center;
+  }
+
+  .home-care .hc-ai-showcase__actions {
+    justify-content: center;
   }
 }

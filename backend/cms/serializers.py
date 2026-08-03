@@ -371,10 +371,11 @@ class InquiryCreateSerializer(serializers.Serializer):
         return attrs
 
     def create(self, validated_data):
+        import secrets
+
         from django.utils import timezone
 
         year = timezone.now().year
-        suffix = timezone.now().strftime('%H%M%S')[-6:]
         intent = validated_data['intent']
         if intent == models.Inquiry.Intent.AI:
             prefix = 'AI'
@@ -382,9 +383,14 @@ class InquiryCreateSerializer(serializers.Serializer):
             prefix = 'MAS'
         else:
             prefix = 'FJSTI'
-        request_id = f'{prefix}-{year}-{suffix}'
-        if models.Inquiry.objects.filter(request_id=request_id).exists():
-            request_id = f'{prefix}-{year}-{timezone.now().strftime("%f")[-6:]}'
+
+        # Random, non-guessable suffix. The old time-based (HHMMSS) id let anyone
+        # enumerate other patients' request ids and read their name/advice via the
+        # public advice endpoint. token_hex(4) → 8 hex chars = ~4.3B space.
+        for _ in range(6):
+            request_id = f'{prefix}-{year}-{secrets.token_hex(4).upper()}'
+            if not models.Inquiry.objects.filter(request_id=request_id).exists():
+                break
         return models.Inquiry.objects.create(request_id=request_id, **validated_data)
 
 

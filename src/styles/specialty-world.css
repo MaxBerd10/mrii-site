@@ -33,6 +33,7 @@
 }
 
 .specialty-detail__hero-copy {
+  min-width: 0;
   max-width: 680px;
 }
 
@@ -55,6 +56,7 @@
   line-height: 0.94;
   letter-spacing: -0.04em;
   text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .specialty-detail__lead {
@@ -375,6 +377,7 @@
   line-height: 0.98;
   letter-spacing: -0.04em;
   text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .specialty-detail__section-title > span {
@@ -449,6 +452,7 @@
   font-size: clamp(1.3rem, 2vw, 1.75rem);
   line-height: 1.08;
   letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
 }
 
 .specialty-detail__care-column ul {
@@ -527,6 +531,7 @@
   color: #fff;
   font-size: 1.08rem;
   letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
 }
 
 .specialty-detail__step p {
@@ -605,6 +610,7 @@
   font-size: 1.16rem;
   line-height: 1.18;
   letter-spacing: -0.025em;
+  overflow-wrap: anywhere;
 }
 
 .specialty-doctor__body h3 a {
@@ -706,6 +712,7 @@
   font-size: clamp(1.25rem, 2vw, 1.65rem);
   line-height: 1.05;
   letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
 }
 
 .specialty-detail__related-card i {
@@ -871,11 +878,11 @@
   }
 
   .specialty-detail__hero-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .specialty-detail__hero-copy h1 {
-    font-size: clamp(3.6rem, 18vw, 5.3rem);
+    font-size: clamp(3rem, 14vw, 4.25rem);
   }
 
   .specialty-detail__visual {

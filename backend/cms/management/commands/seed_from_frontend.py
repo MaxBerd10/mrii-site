@@ -1,7 +1,10 @@
 """Seed CMS from current frontend content (uz/ru/en where available)."""
 
+import os
+import secrets
 from datetime import date
 
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 
@@ -58,11 +61,33 @@ class Command(BaseCommand):
 
     def ensure_superuser(self):
         User = get_user_model()
-        if not User.objects.filter(username='admin').exists():
-            User.objects.create_superuser('admin', 'admin@mrii.local', 'admin123')
-            self.stdout.write('Created superuser admin / admin123')
-        else:
-            self.stdout.write('Superuser admin already exists')
+        username = os.getenv('DJANGO_SUPERUSER_USERNAME', 'admin')
+        email = os.getenv('DJANGO_SUPERUSER_EMAIL', 'admin@mrii.local')
+
+        if User.objects.filter(username=username).exists():
+            self.stdout.write(f'Superuser {username} already exists')
+            return
+
+        password = os.getenv('DJANGO_SUPERUSER_PASSWORD')
+        if not password:
+            if settings.DEBUG:
+                # Local/dev convenience only — never reached with DEBUG=False.
+                password = 'admin123'
+                self.stdout.write(self.style.WARNING(
+                    'DEBUG: seeded dev password "admin123". '
+                    'Set DJANGO_SUPERUSER_PASSWORD before deploying.'
+                ))
+            else:
+                # Production without an explicit password: mint a strong random
+                # one and print it once, rather than shipping a known default.
+                password = secrets.token_urlsafe(14)
+                self.stdout.write(self.style.WARNING(
+                    f'No DJANGO_SUPERUSER_PASSWORD set — generated: {password}\n'
+                    'Save it now and change it after first login.'
+                ))
+
+        User.objects.create_superuser(username, email, password)
+        self.stdout.write(self.style.SUCCESS(f'Created superuser {username}'))
 
     def seed_settings(self):
         models.SiteSettings.objects.update_or_create(

@@ -154,8 +154,8 @@ export default function PricesPage() {
                       </header>
 
                       <ul className="prices-tier__list">
-                        {visible.map((item) => (
-                          <li key={item}>{item}</li>
+                        {visible.map((item, idx) => (
+                          <li key={`${item}-${idx}`}>{item}</li>
                         ))}
                       </ul>
 
@@ -256,8 +256,8 @@ export default function PricesPage() {
                     <section key={cat} className="prices-cat">
                       <h2 className="prices-cat__title">{cat}</h2>
                       <ul className="prices-cat__list">
-                        {items.map((item) => (
-                          <li key={item.id} className="prices-cat__row">
+                        {items.map((item, idx) => (
+                          <li key={`${item.id}-${idx}`} className="prices-cat__row">
                             <div className="prices-cat__name">
                               <span>{item.name}</span>
                               {item.location ? (

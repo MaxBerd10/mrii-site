@@ -8,6 +8,41 @@ import { Check, Reveal, SectionHead, Star, useReveal } from './careUi'
 
 const STEP_ACCENTS = ['#79c8ff', '#6fa8ff', '#8f8cff', '#55d7c1', '#37d1a4']
 
+function splitCompareLine(text: string): { lead: string; detail?: string } {
+  const dash = text.includes(' — ') ? ' — ' : text.includes(' – ') ? ' – ' : null
+  if (!dash) return { lead: text }
+  const [lead, detail] = text.split(dash)
+  if (!detail?.trim()) return { lead: text }
+  return { lead: lead.trim(), detail: detail.trim() }
+}
+
+function CompareCellLabel({ children, ours }: { children: string; ours?: boolean }) {
+  return (
+    <span className={`hc-compare__cell-label${ours ? ' is-ours' : ''}`}>{children}</span>
+  )
+}
+
+function CompareBeforeText({ text }: { text: string }) {
+  return (
+    <span className="hc-compare__before-copy">
+      <span className="hc-compare__before-lead">{text}</span>
+    </span>
+  )
+}
+
+function CompareAfterText({ text }: { text: string }) {
+  const { lead, detail } = splitCompareLine(text)
+  return (
+    <span className="hc-compare__after-body">
+      <Check />
+      <span className="hc-compare__after-copy">
+        <strong className="hc-compare__after-lead">{lead}</strong>
+        {detail ? <span className="hc-compare__after-detail">{detail}</span> : null}
+      </span>
+    </span>
+  )
+}
+
 const AI_FEATURE_ICONS = [
   (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -150,12 +185,13 @@ export function CareCompare() {
                   {c.rows.map((row) => (
                     <tr key={row.label}>
                       <th scope="row">{row.label}</th>
-                      <td className="hc-compare__before">{row.before}</td>
+                      <td className="hc-compare__before">
+                        <CompareCellLabel>{c.colA}</CompareCellLabel>
+                        <CompareBeforeText text={row.before} />
+                      </td>
                       <td className="hc-compare__after">
-                        <span>
-                          <Check />
-                          {row.after}
-                        </span>
+                        <CompareCellLabel ours>{c.colB}</CompareCellLabel>
+                        <CompareAfterText text={row.after} />
                       </td>
                     </tr>
                   ))}

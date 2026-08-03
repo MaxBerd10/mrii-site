@@ -198,7 +198,7 @@ export default function CareHarmony() {
                 <div className="hc-dna-hologram__particles">
                   {DNA_PARTICLES.map((particle, index) => (
                     <i
-                      key={`${particle.x}-${particle.y}`}
+                      key={index}
                       style={
                         {
                           '--particle-x': `${particle.x}%`,

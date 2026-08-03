@@ -171,6 +171,7 @@ class InquiryCreateAPI(APIView):
     """Public POST for contact / AI demo / consult leads → Django admin."""
 
     authentication_classes = []
+    throttle_scope = 'inquiry_create'
 
     def post(self, request):
         serializer = serializers.InquiryCreateSerializer(data=request.data)
@@ -190,6 +191,7 @@ class InquiryAdviceAPI(APIView):
     """Public GET: patient checks advice by request_id (no private medical dump)."""
 
     authentication_classes = []
+    throttle_scope = 'inquiry_advice'
 
     def get(self, request, request_id: str):
         inquiry = models.Inquiry.objects.filter(request_id__iexact=request_id.strip()).first()
