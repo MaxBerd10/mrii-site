@@ -2095,7 +2095,7 @@
   .doctor-carousel__side--prev { left: 2px; }
   .doctor-carousel__side--next { right: 2px; }
   .doctor-carousel__track .doctor-card { flex-basis: min(260px, 82vw); width: min(260px, 82vw); }
-  .doctor-card__media { height: 200px; }
+  .doctor-carousel__track .doctor-card__media { height: 200px; }
   .doctor-card__cta { min-height: 44px; }
   .doctors-section__actions { width: 100%; justify-content: stretch; }
   .doctors-section__all { flex: 1; justify-content: center; }

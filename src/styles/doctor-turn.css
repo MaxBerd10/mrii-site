@@ -131,10 +131,26 @@
   }
 }
 
+@media (max-width: 680px) {
+  .doctors-section .doctor-card__media {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: 4 / 5;
+  }
+
+  .doctors-section .doctor-card__media--video .doctor-card__photo,
+  .doctors-section .doctor-card__video {
+    object-fit: cover;
+    object-position: center 12%;
+  }
+}
+
 @media (max-width: 560px) {
   .doctors-section .doctor-card__media {
-    height: 230px;
-    min-height: 230px;
-    max-height: 230px;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: 4 / 5;
   }
 }

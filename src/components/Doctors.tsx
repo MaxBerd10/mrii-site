@@ -5,10 +5,11 @@ import SectionHeader from './ui/SectionHeader'
 import { staggerContainer, fadeUp, blurUp } from '../lib/animations'
 import { doctorProfiles, getSpecialtyGroup, type SpecialtyGroup, type StaffKind } from '../data/doctors'
 import { averageRating, getDoctorReviews } from '../lib/doctorReviews'
-import { getDoctorTurnMedia } from '../data/doctorTurnMedia'
+import { getDoctorCardPortrait, getDoctorTurnMedia } from '../data/doctorTurnMedia'
 import '../styles/doctor-turn.css'
 import '../styles/doctor-filters.css'
 import { accentInk } from '../lib/accent'
+import { useMobileLayout } from '../hooks/useMobileLayout'
 
 export type DoctorCardDoc = {
   id: string
@@ -58,7 +59,7 @@ export default function Doctors() {
       studies: p.studies,
       color: p.color,
       // Prefer turn poster so list matches doctor detail page
-      photo: turn?.poster ?? p.photo,
+      photo: getDoctorCardPortrait(p.slug, turn?.poster ?? p.photo),
       video: turn?.video,
       staffKind: p.staffKind,
     }
@@ -183,10 +184,11 @@ export default function Doctors() {
             animate="show"
             key={`${staffFilter}-${groupFilter}`}
           >
-            {filtered.map((doc) => (
+            {filtered.map((doc, i) => (
               <DoctorCard
                 key={doc.id}
                 doc={doc}
+                priority={i < 2}
                 bookLabel={t.doctors.bookBtn}
                 papersLabel={t.doctors.papers}
                 studiesLabel={t.doctors.studies}
@@ -218,20 +220,24 @@ function DoctorPortrait({
   alt,
   specialty,
   video,
+  priority = false,
 }: {
   src: string
   alt: string
   specialty: string
   video?: string
+  priority?: boolean
 }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const reduceMotion = usePrefersReducedMotion()
+  const isMobile = useMobileLayout()
   const [failed, setFailed] = useState(false)
-  const useVideo = Boolean(video) && !reduceMotion && !failed
+  const useVideo = Boolean(video) && !reduceMotion && !failed && !isMobile
 
   const playVideo = () => {
     const el = videoRef.current
     if (!el || !useVideo) return
+    if (el.readyState === 0) el.load()
     const start = () => {
       el.play().catch(() => setFailed(true))
     }
@@ -274,7 +280,7 @@ function DoctorPortrait({
           className="doctor-card__photo doctor-card__video"
           muted
           playsInline
-          preload="auto"
+          preload="none"
           poster={src}
           onLoadedMetadata={() => {
             const el = videoRef.current
@@ -289,7 +295,11 @@ function DoctorPortrait({
         <img
           src={src}
           alt={alt}
-          loading="lazy"
+          width={400}
+          height={500}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding="async"
+          {...(priority ? { fetchPriority: 'high' as const } : {})}
           className="doctor-card__photo"
           draggable={false}
         />
@@ -363,6 +373,7 @@ export function DoctorCard({
   reviewsLabel,
   noReviewsLabel,
   animated = true,
+  priority = false,
 }: {
   doc: Doc
   bookLabel: string
@@ -371,6 +382,7 @@ export function DoctorCard({
   reviewsLabel: string
   noReviewsLabel: string
   animated?: boolean
+  priority?: boolean
 }) {
   const href = `/doctors/${doc.slug}`
   const body = (
@@ -380,6 +392,7 @@ export function DoctorCard({
         alt={doc.name}
         specialty={doc.specialty}
         video={doc.video}
+        priority={priority}
       />
       <div className="doctor-card__body">
         <h3 className="doctor-card__name">{doc.name}</h3>
