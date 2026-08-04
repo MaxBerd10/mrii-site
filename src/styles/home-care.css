@@ -948,10 +948,16 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
 .hc-section--ai,
 .hc-section--path,
 .hc-section--services,
-.hc-section--voices,
-.hc-section--faq {
+.hc-section--voices {
   content-visibility: auto;
   contain-intrinsic-size: auto 760px;
+}
+
+/* Closing footer copy must never stay hidden if scroll scrub stalls. */
+.home-care .motion-footer__heading,
+.home-care .motion-footer__content,
+.home-care .motion-footer__giant {
+  opacity: 1;
 }
 
 .hc-section--tint {

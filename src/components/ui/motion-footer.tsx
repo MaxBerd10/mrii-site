@@ -135,52 +135,65 @@ export function CinematicFooter() {
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const isMobile = window.matchMedia('(max-width: 760px)').matches
+
+    const revealContent = () => {
+      gsap.set([giantTextRef.current, headingRef.current, contentRef.current], {
+        opacity: 1,
+        y: 0,
+        yPercent: 0,
+        scale: 1,
+      })
+    }
+
     const context = gsap.context(() => {
       ScrollTrigger.create({
         trigger: wrapper,
         start: 'top bottom',
         end: 'bottom top',
-        onToggle: (self) => wrapper.classList.toggle('is-active', self.isActive),
+        onToggle: (self) => {
+          wrapper.classList.toggle('is-active', self.isActive)
+          if (self.isActive) revealContent()
+        },
+        onEnter: revealContent,
       })
 
       if (reduceMotion || isMobile) {
-        gsap.set([giantTextRef.current, headingRef.current, contentRef.current], {
-          clearProps: 'all',
-          opacity: 1,
-        })
+        revealContent()
         return
       }
 
       gsap.fromTo(
         giantTextRef.current,
-        { yPercent: 22, scale: 0.86, opacity: 0 },
+        { yPercent: 18, scale: 0.92 },
         {
           yPercent: 0,
           scale: 1,
-          opacity: 1,
           ease: 'power1.out',
           scrollTrigger: {
             trigger: wrapper,
             start: 'top 88%',
             end: 'bottom bottom',
             scrub: 1,
+            invalidateOnRefresh: true,
           },
         },
       )
 
       gsap.fromTo(
         [headingRef.current, contentRef.current],
-        { y: 54, opacity: 0 },
+        { y: 40 },
         {
           y: 0,
-          opacity: 1,
           stagger: 0.14,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: wrapper,
-            start: 'top 72%',
-            end: 'top 24%',
+            start: 'top 78%',
+            end: 'top 30%',
             scrub: 0.8,
+            invalidateOnRefresh: true,
+            onLeave: revealContent,
+            onEnterBack: revealContent,
           },
         },
       )
@@ -202,6 +215,12 @@ export function CinematicFooter() {
       refreshFrame = requestAnimationFrame(() => refreshScrollTriggersPreservingScroll())
     })
     observer.observe(document.body)
+
+    // If the footer is already in view on load (short viewport / deep link), show copy immediately.
+    requestAnimationFrame(() => {
+      const rect = wrapper.getBoundingClientRect()
+      if (rect.top < window.innerHeight * 0.92) revealContent()
+    })
 
     return () => {
       wrapper.classList.remove('is-active')
