@@ -79,12 +79,17 @@
   font-size: 12px;
   font-weight: 700;
 }
-.hp-nav__logo-img {
+.hp-nav__logo-img,
+.hp-nav__logo-mark {
   width: 40px;
   height: 40px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.hp-nav__logo-img {
   object-fit: contain;
   border-radius: 50%;
-  display: block;
   background: transparent;
   box-shadow: none;
 }

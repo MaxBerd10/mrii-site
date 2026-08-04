@@ -15,6 +15,7 @@ import {
   scrollToPageTopAfterLayout,
   unlockPageScroll,
 } from '../lib/scrollRoute'
+import BrandEmblem from './ui/BrandEmblem'
 
 /** Emblem turn duration while the new route mounts under an opaque veil. */
 export const PAGE_SPIN_MS = 720
@@ -291,26 +292,7 @@ function PageLoaderOverlay({ active }: { active: boolean }) {
     >
       <span className="sr-only">{active ? 'Sahifa yuklanmoqda' : ''}</span>
       <div className="page-loader__panel">
-        <span className={`page-loader__emblem-frame${active ? ' page-loader__emblem-frame--turn' : ''}`}>
-          <span className="page-loader__coin">
-            <img
-              src="/images/transition-medallion-v1.webp"
-              alt=""
-              className="page-loader__emblem page-loader__emblem--front"
-              width={192}
-              height={192}
-              decoding="async"
-            />
-            <img
-              src="/images/transition-medallion-v1.webp"
-              alt=""
-              className="page-loader__emblem page-loader__emblem--back"
-              width={192}
-              height={192}
-              decoding="async"
-            />
-          </span>
-        </span>
+        <BrandEmblem size={178} spinning={active} className="brand-emblem--overlay" />
       </div>
     </div>
   )

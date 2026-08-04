@@ -5,6 +5,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 import LanguageSwitcher from './LanguageSwitcher'
 import { usePageNav } from './PageTransition'
 import Magnetic from './ui/Magnetic'
+import BrandEmblem from './ui/BrandEmblem'
 import { EASE_OUT } from '../lib/animations'
 
 type NavChild = { label: string; href: string }
@@ -15,7 +16,7 @@ const HIGHLIGHT_SPRING = { type: 'spring', stiffness: 420, damping: 34, mass: 0.
 
 export default function Nav() {
   const { t } = useLanguage()
-  const { path } = usePageNav()
+  const { path, busy } = usePageNav()
   const reduce = useReducedMotion()
   const [open, setOpen] = useState<number | null>(null)
   const [hovered, setHovered] = useState<number | null>(null)
@@ -124,7 +125,7 @@ export default function Nav() {
     <header className={`hp-nav${scrolled ? ' hp-nav--scrolled' : ''}${mobileOpen ? ' is-menu-open' : ''}`}>
       <div className="hp-nav__bar">
         <a href="/" className="hp-nav__logo" onClick={closeMenus} aria-label={t.nav.brand}>
-          <img src="/images/fjsti-logo.png" alt="" className="hp-nav__logo-img" width={36} height={36} />
+          <BrandEmblem size={40} spinning={busy} className="hp-nav__logo-mark" />
           <span className="hp-nav__brand">{t.nav.brand}</span>
         </a>
 
