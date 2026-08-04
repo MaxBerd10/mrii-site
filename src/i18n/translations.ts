@@ -513,6 +513,8 @@ const uz = {
       title: 'Yaqindan ko‘ring',
       description: 'Qabuldan diagnostika va davolash xonalarigacha — klinikamizning real muhiti.',
       items: {
+        courtyardDay: 'Klinika hovlisi — kunduzgi ko‘rinish',
+        courtyardEvening: 'Klinika hovlisi — kechki ko‘rinish',
         courtyard: 'Klinika hududi',
         reception: 'Qabul va kutish zonasi',
         ultrasound: 'UTT diagnostikasi',
@@ -1536,6 +1538,8 @@ const ru: Translations = {
       title: 'Посмотрите ближе',
       description: 'Реальная атмосфера нашей клиники: от приёмной до диагностики и лечебных отделений.',
       items: {
+        courtyardDay: 'Двор клиники — дневной вид',
+        courtyardEvening: 'Двор клиники — вечерний вид',
         courtyard: 'Территория клиники',
         reception: 'Приёмная и зона ожидания',
         ultrasound: 'УЗИ-диагностика',
@@ -2451,6 +2455,8 @@ const en: Translations = {
       title: 'See it up close',
       description: 'A real look at our clinic — from reception to diagnostics and treatment spaces.',
       items: {
+        courtyardDay: 'Clinic courtyard — daytime view',
+        courtyardEvening: 'Clinic courtyard — evening view',
         courtyard: 'Clinic grounds',
         reception: 'Reception and waiting area',
         ultrasound: 'Ultrasound diagnostics',

@@ -5,6 +5,8 @@ import { usePageNav } from '../components/PageTransition'
 import '../styles/clinic-gallery.css'
 
 const GALLERY_IMAGES = [
+  { id: 'courtyardDay', src: '/images/clinic-gallery/courtyard-day.webp' },
+  { id: 'courtyardEvening', src: '/images/clinic-gallery/courtyard-evening.webp' },
   { id: 'courtyard', src: '/images/clinic-gallery/courtyard.webp' },
   { id: 'reception', src: '/images/clinic-gallery/reception.webp' },
   { id: 'ultrasound', src: '/images/clinic-gallery/ultrasound.webp' },
@@ -38,7 +40,7 @@ export default function ClinicGalleryPage() {
   const { routeEnter } = usePageNav()
   const reduceMotion = useReducedMotion()
   const shouldAnimate = routeEnter && !reduceMotion
-  const [activeId, setActiveId] = useState<GalleryImageId>('courtyard')
+  const [activeId, setActiveId] = useState<GalleryImageId>('courtyardDay')
   const activeIndex = GALLERY_IMAGES.findIndex((image) => image.id === activeId)
   const activeImage = GALLERY_IMAGES[activeIndex]
 

@@ -481,6 +481,15 @@
   border-radius: 24px;
   background: var(--surface);
   box-shadow: var(--shadow-card);
+  /* Long list of cards, each with a hover-video: skip rendering the ones off
+     screen so scrolling the roster stays smooth. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 480px;
+}
+/* The horizontal carousel needs every card measured for its scroll width, so it
+   opts out of the deferral. */
+.doctor-carousel__track .doctor-card {
+  content-visibility: visible;
 }
 .doctor-card--clickable {
   cursor: pointer;
