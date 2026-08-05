@@ -47,7 +47,7 @@ LANG_EN = LANG_RU
 IMG_HELP = 'Yangi rasm yuklang yoki tayyor URL qoldiring. Yuklangan rasm ustunlik qiladi.'
 VIDEO_HELP = (
     'MP4 yuklang — to‘liq sifat saqlanadi. '
-    'Yuklangan fayl «video yo‘li» dan ustun. Katta fayllar 256 MB gacha.'
+    'Yuklangan fayl «video yo‘li» dan ustun. Katta fayllar 512 MB gacha.'
 )
 AUTO_TIP = (
     'O‘zbekcha yozing, keyin yuqoridagi «Rus va inglizchani to‘ldirish» tugmasini bosing — '

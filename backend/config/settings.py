@@ -234,3 +234,9 @@ if not DEBUG:
         '1', 'true', 'yes',
     )
 
+# Admin video uploads (clinic tour, etc.) — nginx client_max_body_size bilan mos bo‘lsin
+_UPLOAD_MAX_MB = int(os.getenv('DJANGO_UPLOAD_MAX_MB', '512'))
+_UPLOAD_MAX_BYTES = _UPLOAD_MAX_MB * 1024 * 1024
+DATA_UPLOAD_MAX_MEMORY_SIZE = _UPLOAD_MAX_BYTES
+FILE_UPLOAD_MAX_MEMORY_SIZE = _UPLOAD_MAX_BYTES
+
