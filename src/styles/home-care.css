@@ -414,14 +414,13 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
   height: 100%;
   object-fit: cover;
   object-position: var(--wall-photo-position, 50% 12%);
-  transition: transform 0.7s var(--hc-ease), filter 0.52s var(--hc-ease);
+  transition: filter 0.35s var(--hc-ease);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
 .hc-doctor-wall__poster {
   z-index: 0;
-  opacity: 1;
 }
 
 .hc-doctor-wall__video {
@@ -429,10 +428,9 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.28s var(--hc-ease);
 }
 
-.hc-doctor-wall__card.is-video-playing .hc-doctor-wall__video {
+.hc-doctor-wall__video.is-playing {
   opacity: 1;
   visibility: visible;
 }
