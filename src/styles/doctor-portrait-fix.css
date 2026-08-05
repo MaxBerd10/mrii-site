@@ -1,0 +1,42 @@
+/* Portrait media containment — prevents turn-video from blowing up on scroll */
+.dp-portrait {
+  contain: layout paint;
+  width: 100%;
+  max-height: clamp(420px, 62vw, 650px);
+  isolation: isolate;
+}
+
+.dp-portrait__media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.dp-portrait__poster,
+.dp-portrait__video,
+.dp-portrait__photo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center 12%;
+}
+
+.dp-portrait__video {
+  z-index: 1;
+}
+
+@media (max-width: 1040px) {
+  .dp-portrait {
+    max-height: min(520px, 78vw);
+  }
+}
+
+@media (max-width: 720px) {
+  .dp-portrait {
+    max-height: min(460px, 92vw);
+  }
+}

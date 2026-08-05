@@ -19,6 +19,7 @@ import {
 import { DoctorTeamSection } from '../components/DoctorTeamSection'
 import { useScrollToTopOnRoute } from '../lib/scrollRoute'
 import '../styles/doctor-profile.css'
+import '../styles/doctor-portrait-fix.css'
 import '../styles/doctor-mini.css'
 import '../styles/doctor-booking-phone.css'
 
@@ -234,6 +235,27 @@ export default function DoctorPage({ slug }: { slug: string }) {
     document.title = `${match.profile.content[contentLang].name} - ${t.nav.brand}`
   }, [match, contentLang, t.nav.brand])
 
+  useEffect(() => {
+    const video = portraitVideoRef.current
+    if (!video || reduce) return
+    video.play().catch(() => undefined)
+  }, [slug, reduce])
+
+  useEffect(() => {
+    const frame = portraitVideoRef.current?.closest('.dp-portrait')
+    const video = portraitVideoRef.current
+    if (!frame || !video) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) video.pause()
+      },
+      { threshold: 0.2 },
+    )
+    observer.observe(frame)
+    return () => observer.disconnect()
+  }, [slug])
+
   if (!match) return <NotFoundPage />
 
   const { profile } = match
@@ -376,38 +398,52 @@ export default function DoctorPage({ slug }: { slug: string }) {
               </div>
             </motion.div>
 
-            <motion.figure
-              className="dp-portrait"
-              initial={reduce ? false : { opacity: 0, transform: 'translateY(18px)' }}
-              animate={{ opacity: 1, transform: 'translateY(0)' }}
-              transition={{ duration: 0.62, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {turnMedia ? (
-                <video
-                  ref={portraitVideoRef}
-                  autoPlay={!reduce}
-                  muted
-                  playsInline
-                  preload="auto"
-                  poster={turnMedia.poster}
-                  aria-label={view.name}
-                  onEnded={(event) => {
-                    const video = event.currentTarget
-                    video.currentTime = Math.max(0, video.duration - 0.06)
-                  }}
-                  onPointerEnter={() => {
-                    if (reduce) return
-                    const video = portraitVideoRef.current
-                    if (!video) return
-                    video.currentTime = 0
-                    void video.play().catch(() => undefined)
-                  }}
-                >
-                  <source src={turnMedia.video} type="video/mp4" />
-                </video>
-              ) : (
-                <img src={portrait} alt={view.name} width="650" height="760" />
-              )}
+            <figure className="dp-portrait">
+              <div className="dp-portrait__media" aria-hidden={turnMedia ? undefined : true}>
+                {turnMedia ? (
+                  <>
+                    <img
+                      className="dp-portrait__poster"
+                      src={turnMedia.poster}
+                      alt=""
+                      width={650}
+                      height={760}
+                      decoding="async"
+                    />
+                    <video
+                      ref={portraitVideoRef}
+                      className="dp-portrait__video"
+                      muted
+                      playsInline
+                      preload="metadata"
+                      poster={turnMedia.poster}
+                      aria-label={view.name}
+                      onEnded={(event) => {
+                        const video = event.currentTarget
+                        video.currentTime = Math.max(0, video.duration - 0.06)
+                      }}
+                      onPointerEnter={() => {
+                        if (reduce) return
+                        const video = portraitVideoRef.current
+                        if (!video) return
+                        video.currentTime = 0
+                        void video.play().catch(() => undefined)
+                      }}
+                    >
+                      <source src={turnMedia.video} type="video/mp4" />
+                    </video>
+                  </>
+                ) : (
+                  <img
+                    className="dp-portrait__photo"
+                    src={portrait}
+                    alt={view.name}
+                    width={650}
+                    height={760}
+                    decoding="async"
+                  />
+                )}
+              </div>
               <figcaption className="dp-portrait__chip">
                 <span className="dp-portrait__check" aria-hidden>✓</span>
                 <span>
@@ -417,7 +453,7 @@ export default function DoctorPage({ slug }: { slug: string }) {
                   <small>{dossier.ui.patientPeriod}</small>
                 </span>
               </figcaption>
-            </motion.figure>
+            </figure>
           </div>
         </div>
 
