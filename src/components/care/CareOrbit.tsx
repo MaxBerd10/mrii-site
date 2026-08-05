@@ -9,7 +9,7 @@ import {
   type MotionValue,
 } from 'motion/react'
 import { useLanguage } from '../../i18n/LanguageContext'
-import { getHomeFeaturedDoctors, getHomeDoctorWallDoctors, getDoctorWallPortraitPosition, getHomeOrbitDoctors } from '../../data/doctors'
+import { getHomeFeaturedDoctors, getHomeDoctorWallDoctors, getDoctorWallPlaybackRate, getDoctorWallPortraitPosition, getHomeOrbitDoctors } from '../../data/doctors'
 import { getDoctorCardPortrait, getDoctorTurnMedia } from '../../data/doctorTurnMedia'
 import { isSafari } from '../../lib/browser'
 import { useMobileLayout } from '../../hooks/useMobileLayout'
@@ -490,12 +490,13 @@ function CareDoctorNavigator() {
   )
 }
 
-/** One doctor card — static portrait, always visible in every browser. */
+/** One doctor card — poster always visible; turn video plays on stage hover. */
 function DoctorWallCard({
   doctor,
   isCenter,
   index,
   bookLabel,
+  motionActive,
 }: {
   doctor: {
     slug: string
@@ -504,21 +505,48 @@ function DoctorWallCard({
     exp: string
     portrait: string
     fallbackPortrait: string
+    video?: string
   }
   isCenter: boolean
   index: number
   bookLabel: string
+  motionActive: boolean
 }) {
   const [portraitSrc, setPortraitSrc] = useState(doctor.portrait)
+  const [videoPlaying, setVideoPlaying] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     setPortraitSrc(doctor.portrait)
   }, [doctor.portrait])
 
+  useEffect(() => {
+    if (!motionActive) {
+      setVideoPlaying(false)
+      return
+    }
+    const video = videoRef.current
+    if (!video || !doctor.video) return
+
+    video.playbackRate = getDoctorWallPlaybackRate(doctor.slug)
+    const start = () => {
+      video.currentTime = 0
+      video.play().catch(() => undefined)
+    }
+
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) start()
+    else {
+      video.load()
+      video.addEventListener('loadeddata', start, { once: true })
+    }
+  }, [motionActive, doctor.slug, doctor.video])
+
+  const showVideo = motionActive && Boolean(doctor.video)
+
   return (
     <a
       href={`/doctors/${doctor.slug}`}
-      className={`hc-doctor-wall__card${isCenter ? ' is-center' : ''}`}
+      className={`hc-doctor-wall__card${isCenter ? ' is-center' : ''}${videoPlaying ? ' is-video-playing' : ''}`}
       style={{
         ['--wall-order' as string]: index,
         ['--wall-photo-position' as string]: getDoctorWallPortraitPosition(doctor.slug),
@@ -536,6 +564,22 @@ function DoctorWallCard({
           if (portraitSrc !== doctor.fallbackPortrait) setPortraitSrc(doctor.fallbackPortrait)
         }}
       />
+      {showVideo ? (
+        <video
+          ref={videoRef}
+          className="hc-doctor-wall__photo hc-doctor-wall__video"
+          muted
+          playsInline
+          preload="auto"
+          aria-hidden
+          tabIndex={-1}
+          onPlaying={() => setVideoPlaying(true)}
+          onPause={() => setVideoPlaying(false)}
+          onEmptied={() => setVideoPlaying(false)}
+        >
+          <source src={doctor.video} type="video/mp4" />
+        </video>
+      ) : null}
       <span className="hc-doctor-wall__scrim" aria-hidden />
       <span className="hc-doctor-wall__meta">
         <small>{doctor.specialty}</small>
@@ -559,9 +603,14 @@ function CareDoctorWall() {
       slug: doctor.slug,
       portrait: getDoctorCardPortrait(doctor.slug, fallbackPortrait),
       fallbackPortrait,
+      video: turn?.video,
       ...doctor.content[contentLang],
     }
   })
+  const isMobile = useMobileLayout()
+  const reduce = useReducedMotion()
+  const [motionActive, setMotionActive] = useState(false)
+  const hoverOk = !isMobile && !reduce
 
   return (
     <section className="hc-section hc-section--tint hc-doctor-wall" aria-labelledby="hc-doctor-wall-title">
@@ -574,7 +623,11 @@ function CareDoctorWall() {
           <p className="hc-lead">{t.homeCare.orbitReveal}</p>
         </div>
 
-        <div className="hc-doctor-wall__stage">
+        <div
+          className={`hc-doctor-wall__stage${motionActive ? ' is-live' : ''}`}
+          onPointerEnter={() => hoverOk && setMotionActive(true)}
+          onPointerLeave={() => setMotionActive(false)}
+        >
           {doctors.map((doctor, index) => (
             <DoctorWallCard
               key={doctor.slug}
@@ -582,6 +635,7 @@ function CareDoctorWall() {
               isCenter={index === Math.floor(doctors.length / 2)}
               index={index}
               bookLabel={t.doctors.bookBtn}
+              motionActive={motionActive}
             />
           ))}
         </div>
