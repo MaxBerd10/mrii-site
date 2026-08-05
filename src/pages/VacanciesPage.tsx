@@ -10,7 +10,14 @@ import {
   type VacancyCategory,
 } from '../api/client'
 import { FALLBACK_VACANCIES } from '../data/vacanciesFallback'
+import { getDoctorCardPortrait } from '../data/doctorTurnMedia'
 import '../styles/vacancies-page.css'
+
+const HR_CONTACT_SLUG = 'nigmatova-s-a'
+const HR_CONTACT_PHOTO = getDoctorCardPortrait(
+  HR_CONTACT_SLUG,
+  '/images/doctors/cards/nigmatova-s-a.webp',
+)
 
 type FilterId = 'all' | VacancyCategory
 
@@ -219,51 +226,63 @@ export default function VacanciesPage() {
         ) : null}
         {error ? <p className="vacancies-form__error">{error}</p> : null}
 
-        <form className="vacancies-form" onSubmit={handleSubmit}>
-          <div className="vacancies-form__row">
+        <div className="vacancies-page__application-grid">
+          <aside className="vacancies-hr-card">
+            <img src={HR_CONTACT_PHOTO} alt={t.vacancies.hrPersonName} />
+            <div>
+              <p>{t.vacancies.hrLabel}</p>
+              <h3>{t.vacancies.hrPersonName}</h3>
+              <span>{t.vacancies.hrPersonRole}</span>
+            </div>
+            <small>{t.vacancies.hrNote}</small>
+          </aside>
+
+          <form className="vacancies-form" onSubmit={handleSubmit}>
+            <div className="vacancies-form__row">
+              <label>
+                {t.vacancies.nameLabel}
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  required
+                  autoComplete="name"
+                />
+              </label>
+              <label>
+                {t.vacancies.phoneLabel}
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(event) => setPhone(event.target.value)}
+                  required
+                  autoComplete="tel"
+                />
+              </label>
+            </div>
             <label>
-              {t.vacancies.nameLabel}
+              {t.vacancies.emailLabel}
               <input
-                type="text"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-                required
-                autoComplete="name"
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                autoComplete="email"
               />
             </label>
             <label>
-              {t.vacancies.phoneLabel}
-              <input
-                type="tel"
-                value={phone}
-                onChange={(event) => setPhone(event.target.value)}
-                required
-                autoComplete="tel"
+              {t.vacancies.messageLabel}
+              <textarea
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
+                placeholder={t.vacancies.messagePlaceholder}
               />
             </label>
-          </div>
-          <label>
-            {t.vacancies.emailLabel}
-            <input
-              type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              autoComplete="email"
-            />
-          </label>
-          <label>
-            {t.vacancies.messageLabel}
-            <textarea
-              value={message}
-              onChange={(event) => setMessage(event.target.value)}
-              placeholder={t.vacancies.messagePlaceholder}
-            />
-          </label>
-          <button type="submit" className="vacancies-form__submit" disabled={submitting}>
-            {submitting ? t.vacancies.submitting : t.vacancies.submit}
-          </button>
-          <p className="vacancies-form__note">{t.vacancies.formNote}</p>
-        </form>
+            <button type="submit" className="vacancies-form__submit" disabled={submitting}>
+              {submitting ? t.vacancies.submitting : t.vacancies.submit}
+            </button>
+            <p className="vacancies-form__note">{t.vacancies.formNote}</p>
+          </form>
+        </div>
       </section>
     </main>
   )
