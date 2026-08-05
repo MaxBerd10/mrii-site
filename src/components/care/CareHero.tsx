@@ -20,14 +20,14 @@ function telHref(phone: string) {
  * camera push-in without moving or tilting individual faces.
  */
 export default function CareHero() {
-  const { contentLang, t } = useLanguage()
+  const { lang, t } = useLanguage()
   const c = t.homeCare
   const { home } = useCms()
   const cms = home?.homepage
   const cmsText = (value: string | undefined, fallback: string) =>
-    cmsLocalizedText(contentLang, value, fallback)
+    cmsLocalizedText(lang, value, fallback)
   const cmsTrust =
-    contentLang === 'uz' && cms?.metrics?.every((item) => item.value && item.label)
+    lang === 'uz' && cms?.metrics?.every((item) => item.value && item.label)
       ? cms.metrics
       : c.trust
   const hero = {

@@ -1,10 +1,10 @@
-import type { ContentLang } from '../i18n/types'
+import type { Lang } from '../i18n/types'
 
-/** CMS pick() falls back to Uzbek when RU/EN fields are empty — keep i18n off uz. */
+/** CMS stores uz/ru/en only — use CMS text on uz; all other UI langs use i18n. */
 export function cmsLocalizedText(
-  contentLang: ContentLang,
+  lang: Lang,
   cmsValue: string | undefined,
   fallback: string,
 ): string {
-  return contentLang === 'uz' && cmsValue ? cmsValue : fallback
+  return lang === 'uz' && cmsValue ? cmsValue : fallback
 }
