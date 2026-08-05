@@ -25,6 +25,7 @@ class HomeAPI(APIView):
 
         settings = models.SiteSettings.load()
         hero = models.Hero.objects.first()
+        homepage = models.HomePage.load()
         research = models.ResearchSection.objects.first()
 
         specialties = models.Specialty.objects.filter(is_active=True)
@@ -56,6 +57,7 @@ class HomeAPI(APIView):
             'lang': lang,
             'settings': serializers.SiteSettingsSerializer(settings, context=c).data,
             'hero': serializers.HeroSerializer(hero, context=c).data if hero else None,
+            'homepage': serializers.HomePageSerializer(homepage, context=c).data,
             'specialties': serializers.SpecialtyListSerializer(specialties, many=True, context=c).data,
             'doctors': serializers.DoctorSerializer(doctors, many=True, context=c).data,
             'news': serializers.NewsListSerializer(news, many=True, context=c).data,

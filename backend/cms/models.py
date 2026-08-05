@@ -82,6 +82,58 @@ class Hero(TimeStampedModel):
         super().save(*args, **kwargs)
 
 
+class HomePage(TimeStampedModel):
+    """Singleton content for the public homepage's current clinical hero."""
+
+    eyebrow_uz = models.CharField('Yuqori satr (UZ)', max_length=255, blank=True)
+    eyebrow_ru = models.CharField('Yuqori satr (RU)', max_length=255, blank=True)
+    eyebrow_en = models.CharField('Yuqori satr (EN)', max_length=255, blank=True)
+    title_lead_uz = models.CharField('Sarlavha (UZ)', max_length=255, blank=True)
+    title_lead_ru = models.CharField('Sarlavha (RU)', max_length=255, blank=True)
+    title_lead_en = models.CharField('Sarlavha (EN)', max_length=255, blank=True)
+    title_em_uz = models.CharField('Ajratilgan sarlavha (UZ)', max_length=255, blank=True)
+    title_em_ru = models.CharField('Ajratilgan sarlavha (RU)', max_length=255, blank=True)
+    title_em_en = models.CharField('Ajratilgan sarlavha (EN)', max_length=255, blank=True)
+    lead_uz = models.TextField('Izoh (UZ)', blank=True)
+    lead_ru = models.TextField('Izoh (RU)', blank=True)
+    lead_en = models.TextField('Izoh (EN)', blank=True)
+    team_image = models.ImageField('Asosiy jamoa rasmi', upload_to='homepage/', blank=True, null=True)
+    team_image_url = models.CharField('Yoki rasm yo‘li/URL', max_length=512, blank=True)
+
+    metric_1_value = models.CharField('1-raqam', max_length=64, blank=True)
+    metric_1_label_uz = models.CharField('1-raqam izohi (UZ)', max_length=128, blank=True)
+    metric_1_label_ru = models.CharField('1-raqam izohi (RU)', max_length=128, blank=True)
+    metric_1_label_en = models.CharField('1-raqam izohi (EN)', max_length=128, blank=True)
+    metric_2_value = models.CharField('2-raqam', max_length=64, blank=True)
+    metric_2_label_uz = models.CharField('2-raqam izohi (UZ)', max_length=128, blank=True)
+    metric_2_label_ru = models.CharField('2-raqam izohi (RU)', max_length=128, blank=True)
+    metric_2_label_en = models.CharField('2-raqam izohi (EN)', max_length=128, blank=True)
+    metric_3_value = models.CharField('3-raqam', max_length=64, blank=True)
+    metric_3_label_uz = models.CharField('3-raqam izohi (UZ)', max_length=128, blank=True)
+    metric_3_label_ru = models.CharField('3-raqam izohi (RU)', max_length=128, blank=True)
+    metric_3_label_en = models.CharField('3-raqam izohi (EN)', max_length=128, blank=True)
+    metric_4_value = models.CharField('4-raqam', max_length=64, blank=True)
+    metric_4_label_uz = models.CharField('4-raqam izohi (UZ)', max_length=128, blank=True)
+    metric_4_label_ru = models.CharField('4-raqam izohi (RU)', max_length=128, blank=True)
+    metric_4_label_en = models.CharField('4-raqam izohi (EN)', max_length=128, blank=True)
+
+    class Meta:
+        verbose_name = 'Bosh sahifa'
+        verbose_name_plural = 'Bosh sahifa'
+
+    def __str__(self):
+        return 'Bosh sahifa — matn, rasm va raqamlar'
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        obj, _ = cls.objects.get_or_create(pk=1)
+        return obj
+
+
 class Specialty(TimeStampedModel, OrderedModel):
     slug = models.SlugField('Slug', unique=True)
     icon = models.CharField('Icon (emoji)', max_length=16, blank=True)

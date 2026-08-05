@@ -90,6 +90,7 @@ class MriiAdminSite(AdminSite):
             model_map = {
                 'sitesettings': models.SiteSettings,
                 'hero': models.Hero,
+                'homepage': models.HomePage,
                 'researchsection': models.ResearchSection,
             }
             obj = model_map[name].objects.first()
@@ -141,12 +142,12 @@ class MriiAdminSite(AdminSite):
                 'url': change_url('sitesettings'),
             },
             {
-                'title': 'Bosh ekran (Hero)',
-                'desc': 'Asosiy fon rasmi va sertifikatlar.',
+                'title': 'Bosh sahifa',
+                'desc': 'Asosiy matn, jamoa rasmi va birinchi ekrandagi raqamlar.',
                 'meta': 'Bosh sahifa',
                 'icon': 'hero',
                 'tone': 'mint',
-                'url': change_url('hero'),
+                'url': change_url('homepage'),
             },
             {
                 'title': 'AI mahsulotlar',

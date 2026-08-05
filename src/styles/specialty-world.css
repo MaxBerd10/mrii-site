@@ -575,6 +575,11 @@
   gap: clamp(18px, 2.4vw, 30px);
 }
 
+.specialty-detail__doctors.doctor-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 24px);
+}
+
 .specialty-doctor {
   min-width: 0;
 }

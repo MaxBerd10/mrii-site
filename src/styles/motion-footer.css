@@ -199,7 +199,7 @@
 
 .motion-footer__lead {
   max-width: 610px;
-  margin: 24px 0 32px;
+  margin: clamp(36px, 4.5vw, 52px) 0 32px;
   color: var(--mf-muted);
   font-size: clamp(1rem, 1.5vw, 1.18rem);
   line-height: 1.65;
@@ -440,7 +440,7 @@
   }
 
   .motion-footer__lead {
-    margin-block: 20px 26px;
+    margin-block: clamp(32px, 7vw, 44px) 26px;
     font-size: 0.94rem;
   }
 

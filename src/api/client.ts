@@ -38,6 +38,14 @@ export type CmsHome = {
     image: string
     certs: string
   } | null
+  homepage: {
+    eyebrow: string
+    title_lead: string
+    title_em: string
+    lead: string
+    team_image: string
+    metrics: Array<{ value: string; label: string }>
+  } | null
   specialties: Array<{
     slug: string
     icon: string

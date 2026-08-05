@@ -328,6 +328,43 @@ class HeroSerializer(LangContextMixin, serializers.ModelSerializer):
         return media_url(self.request, obj.image, obj.image_url)
 
 
+class HomePageSerializer(LangContextMixin, serializers.ModelSerializer):
+    eyebrow = serializers.SerializerMethodField()
+    title_lead = serializers.SerializerMethodField()
+    title_em = serializers.SerializerMethodField()
+    lead = serializers.SerializerMethodField()
+    team_image = serializers.SerializerMethodField()
+    metrics = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.HomePage
+        fields = ('eyebrow', 'title_lead', 'title_em', 'lead', 'team_image', 'metrics')
+
+    def get_eyebrow(self, obj):
+        return pick(obj, 'eyebrow', self.lang)
+
+    def get_title_lead(self, obj):
+        return pick(obj, 'title_lead', self.lang)
+
+    def get_title_em(self, obj):
+        return pick(obj, 'title_em', self.lang)
+
+    def get_lead(self, obj):
+        return pick(obj, 'lead', self.lang)
+
+    def get_team_image(self, obj):
+        return media_url(self.request, obj.team_image, obj.team_image_url)
+
+    def get_metrics(self, obj):
+        return [
+            {
+                'value': getattr(obj, f'metric_{index}_value'),
+                'label': pick(obj, f'metric_{index}_label', self.lang),
+            }
+            for index in range(1, 5)
+        ]
+
+
 class ClinicTourVideoSerializer(serializers.ModelSerializer):
     id = serializers.CharField(source='video_key')
     src = serializers.SerializerMethodField()

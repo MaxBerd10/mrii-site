@@ -1,16 +1,16 @@
 /* Doctor cards: photo-forward, compact text; equal card heights */
 
-.doctors-section .doctor-grid {
+:is(.doctors-section, .specialty-detail__team) .doctor-grid {
   align-items: stretch;
 }
 
-.doctors-section .doctor-card {
+:is(.doctors-section, .specialty-detail__team) .doctor-card {
   height: 100%;
   border-radius: 24px;
   overflow: hidden;
 }
 
-.doctors-section .doctor-card__media {
+:is(.doctors-section, .specialty-detail__team) .doctor-card__media {
   height: 280px;
   min-height: 280px;
   max-height: 280px;
@@ -21,8 +21,8 @@
   border-radius: 24px 24px 0 0;
 }
 
-.doctors-section .doctor-card__media--video .doctor-card__photo,
-.doctors-section .doctor-card__video {
+:is(.doctors-section, .specialty-detail__team) .doctor-card__media--video .doctor-card__photo,
+:is(.doctors-section, .specialty-detail__team) .doctor-card__video {
   display: block;
   width: 100%;
   height: 100%;
@@ -33,7 +33,7 @@
   border-radius: 24px 24px 0 0;
 }
 
-.doctors-section .doctor-card__body {
+:is(.doctors-section, .specialty-detail__team) .doctor-card__body {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
@@ -42,7 +42,7 @@
   min-height: 0;
 }
 
-.doctors-section .doctor-card__name {
+:is(.doctors-section, .specialty-detail__team) .doctor-card__name {
   margin: 0 0 2px;
   font-size: 13px;
   line-height: 1.25;
@@ -50,20 +50,20 @@
   min-height: 1.25em;
 }
 
-.doctors-section .doctor-card__role {
+:is(.doctors-section, .specialty-detail__team) .doctor-card__role {
   margin: 0;
   font-size: 11px;
   line-height: 1.3;
   min-height: 1.3em;
 }
 
-.doctors-section .doctor-card__exp {
+:is(.doctors-section, .specialty-detail__team) .doctor-card__exp {
   margin: 3px 0 6px;
   font-size: 10px;
   min-height: 1.2em;
 }
 
-.doctors-section .doctor-card__rating {
+:is(.doctors-section, .specialty-detail__team) .doctor-card__rating {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -72,39 +72,39 @@
   margin-bottom: 8px;
 }
 
-.doctors-section .doctor-card__stars span {
+:is(.doctors-section, .specialty-detail__team) .doctor-card__stars span {
   font-size: 11px;
 }
 
-.doctors-section .doctor-card__rating-meta {
+:is(.doctors-section, .specialty-detail__team) .doctor-card__rating-meta {
   font-size: 10px;
   line-height: 1.2;
   white-space: nowrap;
 }
 
-.doctors-section .doctor-card__review-btn {
+:is(.doctors-section, .specialty-detail__team) .doctor-card__review-btn {
   font-size: 10px;
 }
 
-.doctors-section .doctor-card__stats {
+:is(.doctors-section, .specialty-detail__team) .doctor-card__stats {
   gap: 6px;
   margin-bottom: 10px;
 }
 
-.doctors-section .doctor-card__stat {
+:is(.doctors-section, .specialty-detail__team) .doctor-card__stat {
   padding: 7px 8px;
   border-radius: 12px;
 }
 
-.doctors-section .doctor-card__stat strong {
+:is(.doctors-section, .specialty-detail__team) .doctor-card__stat strong {
   font-size: 14px;
 }
 
-.doctors-section .doctor-card__stat span {
+:is(.doctors-section, .specialty-detail__team) .doctor-card__stat span {
   font-size: 8px;
 }
 
-.doctors-section .doctor-card__cta {
+:is(.doctors-section, .specialty-detail__team) .doctor-card__cta {
   display: grid;
   place-items: center;
   min-height: 36px;
@@ -112,11 +112,84 @@
   font-size: 11px;
 }
 
-.doctors-section .doctor-card__badge {
+:is(.doctors-section, .specialty-detail__team) .doctor-card__badge {
   top: 10px;
   left: 10px;
   padding: 5px 8px;
   font-size: 8px;
+}
+
+.specialty-detail__team .doctor-card--profile {
+  height: auto;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  content-visibility: visible;
+}
+
+.specialty-detail__team .doctor-card--profile .doctor-card__media {
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  aspect-ratio: 4 / 4.5;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #eaf0f2;
+  box-shadow: 0 18px 40px rgba(7, 23, 39, 0.09);
+  transition:
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.specialty-detail__team .doctor-card--profile:hover .doctor-card__media,
+.specialty-detail__team .doctor-card--profile:focus-visible .doctor-card__media {
+  transform: translateY(-5px) scale(1.015);
+  box-shadow: 0 24px 48px rgba(7, 23, 39, 0.12);
+}
+
+.specialty-detail__team .doctor-card--profile .doctor-card__media--video .doctor-card__photo,
+.specialty-detail__team .doctor-card--profile .doctor-card__video,
+.specialty-detail__team .doctor-card--profile .doctor-card__media img {
+  border-radius: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.specialty-detail__team .doctor-card--profile:hover .doctor-card__photo,
+.specialty-detail__team .doctor-card--profile:hover .doctor-card__video,
+.specialty-detail__team .doctor-card--profile:focus-visible .doctor-card__photo,
+.specialty-detail__team .doctor-card--profile:focus-visible .doctor-card__video {
+  transform: scale(1.025);
+}
+
+.specialty-detail__team .doctor-card--profile .doctor-card__media::after {
+  display: none;
+  content: none;
+  animation: none;
+}
+
+.specialty-detail__team .doctor-card--profile .doctor-card__badge {
+  display: none;
+}
+
+.specialty-detail__team .doctor-card--profile .doctor-card__name--below {
+  margin: 0;
+  padding: 20px 2px 0;
+  color: #071727;
+  font-size: 1.16rem;
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  text-align: left;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .doctors-section__preview {
@@ -124,7 +197,7 @@
 }
 
 @media (max-width: 900px) {
-  .doctors-section .doctor-card__media {
+  :is(.doctors-section, .specialty-detail__team) .doctor-card__media {
     height: 250px;
     min-height: 250px;
     max-height: 250px;
@@ -132,15 +205,19 @@
 }
 
 @media (max-width: 680px) {
-  .doctors-section .doctor-card__media {
+  :is(.doctors-section, .specialty-detail__team) .doctor-card__media {
     height: auto;
     min-height: 0;
     max-height: none;
     aspect-ratio: 4 / 5;
   }
 
-  .doctors-section .doctor-card__media--video .doctor-card__photo,
-  .doctors-section .doctor-card__video {
+  .specialty-detail__team .doctor-card--profile .doctor-card__media {
+    aspect-ratio: 4 / 4.5;
+  }
+
+  :is(.doctors-section, .specialty-detail__team) .doctor-card__media--video .doctor-card__photo,
+  :is(.doctors-section, .specialty-detail__team) .doctor-card__video {
     object-fit: cover;
     object-position: center 12%;
   }
@@ -151,12 +228,12 @@
     overflow-x: clip;
   }
 
-  .doctors-section .container-main {
+  :is(.doctors-section, .specialty-detail__team) .container-main {
     width: min(var(--container), calc(100% - (var(--gutter) * 2)));
     margin-inline: auto;
   }
 
-  .doctors-section .doctor-grid {
+  :is(.doctors-section, .specialty-detail__team) .doctor-grid {
     width: 100%;
     max-width: 100%;
   }

@@ -380,55 +380,72 @@ export function DoctorCard({
   noReviewsLabel,
   animated = true,
   priority = false,
+  variant = 'full',
 }: {
   doc: Doc
-  bookLabel: string
-  papersLabel: string
-  studiesLabel: string
-  reviewsLabel: string
-  noReviewsLabel: string
+  bookLabel?: string
+  papersLabel?: string
+  studiesLabel?: string
+  reviewsLabel?: string
+  noReviewsLabel?: string
   animated?: boolean
   priority?: boolean
+  variant?: 'full' | 'profile'
 }) {
   const href = `/doctors/${doc.slug}`
-  const body = (
-    <>
-      <DoctorPortrait
-        src={doc.photo}
-        cardSrc={doc.cardPhoto}
-        alt={doc.name}
-        specialty={doc.specialty}
-        video={doc.video}
-        priority={priority}
-      />
-      <div className="doctor-card__body">
-        <h3 className="doctor-card__name">{doc.name}</h3>
-        <p className="doctor-card__role">{doc.role}</p>
-        <p className="doctor-card__exp">{doc.exp}</p>
-        <DoctorCardRating
-          doctorId={doc.slug}
-          accent={doc.color}
-          reviewsLabel={reviewsLabel}
-          noReviewsLabel={noReviewsLabel}
+  const body =
+    variant === 'profile' ? (
+      <>
+        <DoctorPortrait
+          src={doc.photo}
+          cardSrc={doc.cardPhoto}
+          alt={doc.name}
+          specialty={doc.specialty}
+          video={doc.video}
+          priority={priority}
         />
-        <div className="doctor-card__stats">
-          <div className="doctor-card__stat">
-            <strong style={{ color: accentInk(doc.color) }}>{doc.papers}</strong>
-            <span>{papersLabel}</span>
+        <h3 className="doctor-card__name doctor-card__name--below">{doc.name}</h3>
+      </>
+    ) : (
+      <>
+        <DoctorPortrait
+          src={doc.photo}
+          cardSrc={doc.cardPhoto}
+          alt={doc.name}
+          specialty={doc.specialty}
+          video={doc.video}
+          priority={priority}
+        />
+        <div className="doctor-card__body">
+          <h3 className="doctor-card__name">{doc.name}</h3>
+          <p className="doctor-card__role">{doc.role}</p>
+          <p className="doctor-card__exp">{doc.exp}</p>
+          <DoctorCardRating
+            doctorId={doc.slug}
+            accent={doc.color}
+            reviewsLabel={reviewsLabel!}
+            noReviewsLabel={noReviewsLabel!}
+          />
+          <div className="doctor-card__stats">
+            <div className="doctor-card__stat">
+              <strong style={{ color: accentInk(doc.color) }}>{doc.papers}</strong>
+              <span>{papersLabel}</span>
+            </div>
+            <div className="doctor-card__stat">
+              <strong style={{ color: accentInk(doc.color) }}>{doc.studies}</strong>
+              <span>{studiesLabel}</span>
+            </div>
           </div>
-          <div className="doctor-card__stat">
-            <strong style={{ color: accentInk(doc.color) }}>{doc.studies}</strong>
-            <span>{studiesLabel}</span>
-          </div>
+          <span className="doctor-card__cta">{bookLabel}</span>
         </div>
-        <span className="doctor-card__cta">{bookLabel}</span>
-      </div>
-    </>
-  )
+      </>
+    )
+
+  const className = `doctor-card doctor-card--link${variant === 'profile' ? ' doctor-card--profile' : ''}`
 
   if (!animated) {
     return (
-      <a href={href} className="doctor-card doctor-card--link">
+      <a href={href} className={className}>
         {body}
       </a>
     )
@@ -437,10 +454,14 @@ export function DoctorCard({
   return (
     <motion.a
       href={href}
-      className="doctor-card doctor-card--link"
+      className={className}
       variants={fadeUp}
-      whileHover={{ y: -7, transition: { type: 'spring', stiffness: 260, damping: 20 } }}
-      style={{ height: '100%' }}
+      whileHover={
+        variant === 'profile'
+          ? undefined
+          : { y: -7, transition: { type: 'spring', stiffness: 260, damping: 20 } }
+      }
+      style={{ height: variant === 'profile' ? 'auto' : '100%' }}
     >
       {body}
     </motion.a>

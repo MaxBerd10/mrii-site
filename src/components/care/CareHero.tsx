@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useReducedMotion } from 'motion/react'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { useCms } from '../../cms/CmsContext'
 import { useMobileLayout } from '../../hooks/useMobileLayout'
 import { MaskedText } from './careUi'
 import { FEATURE_ICONS, IconCalendar, TRUST_ICONS } from './CareHeroIcons'
@@ -20,6 +21,16 @@ function telHref(phone: string) {
 export default function CareHero() {
   const { t } = useLanguage()
   const c = t.homeCare
+  const { home } = useCms()
+  const cms = home?.homepage
+  const hero = {
+    eyebrow: cms?.eyebrow || c.eyebrow,
+    titleLead: cms?.title_lead || c.titleLead,
+    titleEm: cms?.title_em || c.titleEm,
+    lead: cms?.lead || c.lead,
+    image: cms?.team_image || '/images/medical/fjsti-real-team-collage-flat-smooth-white-v3.webp',
+    trust: cms?.metrics?.every((item) => item.value && item.label) ? cms.metrics : c.trust,
+  }
   const reduce = useReducedMotion()
   const isMobile = useMobileLayout()
   const sectionRef = useRef<HTMLElement>(null)
@@ -96,7 +107,7 @@ export default function CareHero() {
 
           <div className="hc-hero__dna hc-hero__team">
             <img
-              src="/images/medical/fjsti-real-team-collage-flat-smooth-white-v3.webp"
+              src={hero.image}
               alt={c.imageAlt}
               width={1800}
               height={1970}
@@ -110,13 +121,13 @@ export default function CareHero() {
           <div className="hc-shell hc-hero__stage">
             <div className="hc-hero__copy">
               <MaskedText as="p" className="hc-eyebrow">
-                {c.eyebrow}
+                {hero.eyebrow}
               </MaskedText>
               <MaskedText as="h1" id="hc-hero-title" className="hc-display">
-                {c.titleLead} <em>{c.titleEm}</em>
+                {hero.titleLead} <em>{hero.titleEm}</em>
               </MaskedText>
               <MaskedText as="p" className="hc-lead">
-                {c.lead}
+                {hero.lead}
               </MaskedText>
 
               <div className="hc-hero__cta">
@@ -143,7 +154,7 @@ export default function CareHero() {
               </div>
 
               <dl className="hc-trust hc-trust--hero">
-                {c.trust.map((item, index) => {
+                {hero.trust.map((item, index) => {
                   const Icon = TRUST_ICONS[index] ?? TRUST_ICONS[0]
                   return (
                     <div key={item.label} className="hc-trust__item">

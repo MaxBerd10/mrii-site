@@ -189,6 +189,55 @@ class HeroAdmin(AutoTranslateAdmin):
         return False
 
 
+@admin.register(models.HomePage, site=mrii_admin_site)
+class HomePageAdmin(AutoTranslateAdmin):
+    fieldsets = (
+        ('Bosh sahifa matni — o‘zbekcha', {
+            'description': f'{LANG_UZ} {AUTO_TIP}',
+            'fields': ('eyebrow_uz', 'title_lead_uz', 'title_em_uz', 'lead_uz'),
+        }),
+        ('Bosh sahifa matni — Русский', {
+            'classes': ('collapse',),
+            'description': LANG_RU,
+            'fields': ('eyebrow_ru', 'title_lead_ru', 'title_em_ru', 'lead_ru'),
+        }),
+        ('Bosh sahifa matni — English', {
+            'classes': ('collapse',),
+            'description': LANG_EN,
+            'fields': ('eyebrow_en', 'title_lead_en', 'title_em_en', 'lead_en'),
+        }),
+        ('Asosiy rasm', {
+            'description': IMG_HELP + ' Bu rasm bosh sahifadagi shifokorlar kollaji o‘rnida chiqadi.',
+            'fields': ('team_image', 'team_image_url'),
+        }),
+        ('Bosh sahifa raqamlari', {
+            'description': 'Bu 4 ta raqam bosh sahifaning birinchi ekranida ko‘rinadi. Masalan: 11+, 100+, 2008, ISO 9001.',
+            'fields': (
+                ('metric_1_value', 'metric_1_label_uz'),
+                ('metric_2_value', 'metric_2_label_uz'),
+                ('metric_3_value', 'metric_3_label_uz'),
+                ('metric_4_value', 'metric_4_label_uz'),
+            ),
+        }),
+        ('Raqamlar — Русский / English', {
+            'classes': ('collapse',),
+            'description': 'Raqamlar o‘zgarmaydi; faqat izohlarini to‘ldiring.',
+            'fields': (
+                ('metric_1_label_ru', 'metric_1_label_en'),
+                ('metric_2_label_ru', 'metric_2_label_en'),
+                ('metric_3_label_ru', 'metric_3_label_en'),
+                ('metric_4_label_ru', 'metric_4_label_en'),
+            ),
+        }),
+    )
+
+    def has_add_permission(self, request):
+        return not models.HomePage.objects.exists()
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
 @admin.register(models.Specialty, site=mrii_admin_site)
 class SpecialtyAdmin(AutoTranslateAdmin):
     list_display = ('name_uz', 'slug', 'doctor_count', 'order', 'is_active', 'preview')
