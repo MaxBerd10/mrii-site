@@ -3,7 +3,7 @@ import type { ContentLang, Lang } from './types'
 import { toContentLang } from './types'
 import { translations, type Translations } from './translations'
 
-const STORAGE_KEY = 'mrii-lang'
+const STORAGE_KEY = 'fjsti-lang'
 
 type LanguageContextValue = {
   lang: Lang

@@ -4,7 +4,7 @@ from django.apps import AppConfig
 class CmsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'cms'
-    verbose_name = 'MRII Kontent'
+    verbose_name = 'FJSTI Kontent'
 
     def ready(self):
         from django.db.models.signals import pre_save

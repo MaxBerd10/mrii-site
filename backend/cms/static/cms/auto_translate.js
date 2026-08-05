@@ -1,5 +1,5 @@
 /**
- * MRII Admin — fill RU/EN fields from UZ inputs (visible in the form).
+ * FJSTI Admin — fill RU/EN fields from UZ inputs (visible in the form).
  */
 (function () {
   function csrfToken() {

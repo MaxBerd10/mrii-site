@@ -1,4 +1,4 @@
-# MRII site (agent notes)
+# FJSTI site (agent notes)
 
 React + Vite + Tailwind CSS frontend + Django CMS in `backend/`.
 

@@ -32,7 +32,7 @@ SPECIALTY_IMAGES = {
 
 
 class Command(BaseCommand):
-    help = 'Seed CMS database with MRII frontend content'
+    help = 'Seed CMS database with FJSTI frontend content'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -93,16 +93,16 @@ class Command(BaseCommand):
             defaults={
                 'phone': '+998 (71) 234-56-78',
                 'hours': 'Du–Sha 08:00–20:00',
-                'institute_name': 'Medical Research & Innovation Institute (MRII)',
+                'institute_name': "FJSTI ko'p tarmoqli klinikasi",
                 'badge_uz': 'TIBBIY INSTITUT',
                 'badge_ru': 'МЕДИЦИНСКИЙ ИНСТИТУТ',
                 'badge_en': 'MEDICAL INSTITUTE',
                 'slogan_uz': 'Kelajak tibbiyoti — sunʼiy intellekt bilan bugun.',
                 'slogan_ru': 'Медицина будущего — с искусственным интеллектом уже сегодня.',
                 'slogan_en': 'The future of medicine — powered by AI, here today.',
-                'copyright_uz': '© 2026 MRII. Barcha huquqlar himoyalangan.',
-                'copyright_ru': '© 2026 MRII. Все права защищены.',
-                'copyright_en': '© 2026 MRII. All rights reserved.',
+                'copyright_uz': "© 2026 Farg'ona Jamoat Salomatligi Tibbiyot Instituti. Barcha huquqlar himoyalangan.",
+                'copyright_ru': '© 2026 Ферганский медицинский институт общественного здоровья. Все права защищены.',
+                'copyright_en': '© 2026 Ferghana Medical Institute of Public Health. All rights reserved.',
                 'license_uz': 'Litsenziya LO-77-01-024876',
                 'license_ru': 'Лицензия LO-77-01-024876',
                 'license_en': 'License LO-77-01-024876',
@@ -255,15 +255,15 @@ class Command(BaseCommand):
                 'published_at': date(2025, 7, 12),
                 'category_uz': 'Tadqiqotlar', 'category_ru': 'Исследования', 'category_en': 'Research',
                 'category_color': '#6366F1',
-                'title_uz': 'MRII CAR-T terapiyasi bo\'yicha birinchi tadqiqotni boshladi',
-                'title_ru': 'MRII начал первое исследование CAR-T терапии',
-                'title_en': 'MRII launched its first CAR-T therapy study',
+                'title_uz': 'FJSTI CAR-T terapiyasi bo\'yicha birinchi tadqiqotni boshladi',
+                'title_ru': 'FJSTI начал первое исследование CAR-T терапии',
+                'title_en': 'FJSTI launched its first CAR-T therapy study',
                 'excerpt_uz': 'I-bosqich bo\'limi xalqaro ko\'p markazli tadqiqotda birinchi bemorlarni qabul qilmoqda.',
                 'excerpt_ru': 'Отделение I фазы набирает первых пациентов в международное исследование.',
                 'excerpt_en': 'The Phase I unit is enrolling first patients in an international study.',
-                'lead_uz': 'MRII I-bosqich bo‘limi CAR-T terapiyasi bo‘yicha xalqaro tadqiqotda birinchi bemorlarni qabul qilishni boshladi.',
-                'lead_ru': 'Отделение I фазы MRII начало набор первых пациентов в исследование CAR-T.',
-                'lead_en': 'MRII’s Phase I unit has started enrolling patients in a CAR-T therapy study.',
+                'lead_uz': 'FJSTI I-bosqich bo‘limi CAR-T terapiyasi bo‘yicha xalqaro tadqiqotda birinchi bemorlarni qabul qilishni boshladi.',
+                'lead_ru': 'Отделение I фазы FJSTI начало набор первых пациентов в исследование CAR-T.',
+                'lead_en': 'FJSTI’s Phase I unit has started enrolling patients in a CAR-T therapy study.',
                 'body_uz': 'Yangi dastur onkohematologik kasalliklarni davolashda immunoterapiyani kengaytiradi.|Birinchi bemorlar to‘liq diagnostika va 24/7 kuzatuv ostida.|Kelgusi oyda markaz qo‘shimcha bemorlarni jalb etadi.',
                 'body_ru': 'Новая программа расширяет иммунотерапию.|Первые пациенты принимаются с полным мониторингом.|Центр планирует расширить набор.',
                 'body_en': 'The program expands immunotherapy.|First patients receive full monitoring.|Enrollment will expand next month.',
@@ -296,12 +296,12 @@ class Command(BaseCommand):
                 'title_uz': 'Ordinatura 2025–2027: 8 ixtisoslikda 48 o\'rin',
                 'title_ru': 'Ординатура 2025–2027: 48 мест по 8 специальностям',
                 'title_en': 'Residency 2025–2027: 48 seats across 8 specialties',
-                'excerpt_uz': 'MRII akademiyasi ilmiy yo\'nalish bilan klinik ordinaturaga ariza qabul qilmoqda.',
-                'excerpt_ru': 'Академия MRII принимает заявки на клиническую ординатуру.',
-                'excerpt_en': 'MRII Academy is accepting applications for clinical residency.',
-                'lead_uz': 'MRII akademiyasi ordinatura dasturiga arizalarni qabul qilmoqda.',
-                'lead_ru': 'Академия MRII открыла приём в ординатуру.',
-                'lead_en': 'MRII Academy opened residency applications.',
+                'excerpt_uz': 'FJSTI akademiyasi ilmiy yo\'nalish bilan klinik ordinaturaga ariza qabul qilmoqda.',
+                'excerpt_ru': 'Академия FJSTI принимает заявки на клиническую ординатуру.',
+                'excerpt_en': 'FJSTI Academy is accepting applications for clinical residency.',
+                'lead_uz': 'FJSTI akademiyasi ordinatura dasturiga arizalarni qabul qilmoqda.',
+                'lead_ru': 'Академия FJSTI открыла приём в ординатуру.',
+                'lead_en': 'FJSTI Academy opened residency applications.',
                 'body_uz': 'Dastur klinik amaliyot va ilmiy yo‘nalishni birlashtiradi.|8 ixtisoslikda jami 48 o‘rin.|Ariza topshirish onlayn va oflayn mavjud.',
                 'body_ru': 'Программа объединяет практику и науку.|48 мест по 8 специальностям.|Подача заявок онлайн и офлайн.',
                 'body_en': 'The program combines practice and research.|48 seats across 8 specialties.|Apply online or on site.',
@@ -448,9 +448,9 @@ class Command(BaseCommand):
                 'description_uz': 'I–IV bosqichli tadqiqotlar — homiylar, bemorlar va CRO uchun.',
                 'description_ru': 'Исследования I–IV фазы — для спонсоров, пациентов и CRO.',
                 'description_en': 'Phase I–IV trials — for sponsors, patients and CROs.',
-                'why_title_uz': 'Nima uchun MRII tanlanadi',
-                'why_title_ru': 'Почему выбирают MRII',
-                'why_title_en': 'Why choose MRII',
+                'why_title_uz': 'Nima uchun FJSTI tanlanadi',
+                'why_title_ru': 'Почему выбирают FJSTI',
+                'why_title_en': 'Why choose FJSTI',
                 'why_items_uz': (
                     "O'z I-bosqich bo'limi izolyatsiyalangan bokslar bilan|"
                     "Tez start: arizadan birinchi bemorgacha — 6 hafta|"
@@ -556,9 +556,9 @@ class Command(BaseCommand):
         models.Testimonial.objects.all().delete()
         testimonials = [
             (
-                'MRII mintaqadagi eng ishonchli tadqiqot markazlaridan biri. Muddatlar doimo bajariladi.',
-                'MRII — один из самых надёжных исследовательских центров региона.',
-                'MRII is one of the most reliable research centers in the region.',
+                'FJSTI mintaqadagi eng ishonchli tadqiqot markazlaridan biri. Muddatlar doimo bajariladi.',
+                'FJSTI — один из самых надёжных исследовательских центров региона.',
+                'FJSTI is one of the most reliable research centers in the region.',
                 'Elena Kovaleva', 'Clinical Operations Director, Roche',
             ),
             (
@@ -568,9 +568,9 @@ class Command(BaseCommand):
                 'Dmitriy Volkov', 'Bosh shifokor / Главный врач / Chief physician',
             ),
             (
-                'MRII dagi GCP-trening eng yaxshisi.',
-                'GCP-тренинг в MRII — один из лучших.',
-                'GCP training at MRII is among the best.',
+                'FJSTI dagi GCP-trening eng yaxshisi.',
+                'GCP-тренинг в FJSTI — один из лучших.',
+                'GCP training at FJSTI is among the best.',
                 'Anna Petrova', 'Clinical Research Coordinator',
             ),
         ]

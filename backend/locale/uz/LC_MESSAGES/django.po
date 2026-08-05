@@ -1,4 +1,4 @@
-# MRII CMS — to‘liq o‘zbekcha Django Admin tarjimalari
+# FJSTI CMS — to‘liq o‘zbekcha Django Admin tarjimalari
 msgid ""
 msgstr ""
 "Project-Id-Version: mrii-cms\n"
@@ -428,7 +428,7 @@ msgid "Log in again"
 msgstr "Qayta kirish"
 
 msgid "Thanks for spending some quality time with the web site today."
-msgstr "MRII CMS dan foydalanganingiz uchun rahmat."
+msgstr "FJSTI CMS dan foydalanganingiz uchun rahmat."
 
 msgid "username"
 msgstr "Login"

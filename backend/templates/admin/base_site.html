@@ -1,7 +1,7 @@
 {% extends "admin/base.html" %}
 {% load static i18n %}
 
-{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | MRII CMS{% endblock %}
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | FJSTI CMS{% endblock %}
 
 {% block extrastyle %}
   {{ block.super }}
@@ -10,9 +10,9 @@
 
 {% block branding %}
   <a class="mrii-brand" href="{% url 'admin:index' %}">
-    <span class="mrii-brand__mark" aria-hidden="true">M</span>
+    <span class="mrii-brand__mark" aria-hidden="true">F</span>
     <span class="mrii-brand__text">
-      <strong>MRII</strong>
+      <strong>FJSTI</strong>
       <small>Kontent boshqaruvi</small>
     </span>
   </a>

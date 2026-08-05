@@ -1,4 +1,4 @@
-# MRII CMS (Django Admin + API)
+# FJSTI CMS (Django Admin + API)
 
 Клиент контентни **Django Admin** orqali boshqaradi (uz / ru / en + rasmlar). React frontend ma’lumotni `VITE_API_URL` orqali o’qiydi; API ishlamasa sayt static fallback da qoladi.
 
@@ -17,7 +17,7 @@ python manage.py runserver 8000
 
 - Admin: http://127.0.0.1:8000/admin/  
   Default: `admin` / `admin123` (seed `--superuser` dan keyin — prod da almashtiring)
-- Admin UI: maxsus MRII dizayn — bosh panelda kartochkalar, o’zbekcha yo’riqnoma, til bo’yicha fieldsetlar
+- Admin UI: maxsus FJSTI dizayn — bosh panelda kartochkalar, o’zbekcha yo’riqnoma, til bo’yicha fieldsetlar
 - Interfeys tili: **to’liq o’zbekcha** (`locale/uz/` + `LANGUAGE_CODE=uz`)
 - API home: http://127.0.0.1:8000/api/home/?lang=uz
 

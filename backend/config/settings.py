@@ -1,4 +1,4 @@
-"""Django settings for MRII CMS backend."""
+"""Django settings for FJSTI CMS backend."""
 
 from pathlib import Path
 import os

@@ -1,4 +1,4 @@
-# MRII — Medical Research & Innovation Institute
+# FJSTI — Fargʻona Jamoat Salomatligi Tibbiyot Instituti
 
 Sayt (React + Vite) + CMS (Django Admin/API).
 

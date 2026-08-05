@@ -4,8 +4,8 @@ from django.urls import path, reverse
 
 
 class MriiAdminSite(AdminSite):
-    site_header = 'MRII CMS'
-    site_title = 'MRII CMS'
+    site_header = 'FJSTI CMS'
+    site_title = 'FJSTI CMS'
     index_title = 'Bosh sahifa'
     # Django default `/` — bu loyihada backend emas, frontend (Vite) sayt
     site_url = None
@@ -75,7 +75,7 @@ class MriiAdminSite(AdminSite):
         })
 
     def app_index(self, request, app_label, extra_context=None):
-        """«MRII Kontent» breadcrumb /admin/cms/ — bo‘sh sahifa o‘rniga bosh dashboard."""
+        """«FJSTI Kontent» breadcrumb /admin/cms/ — bo‘sh sahifa o‘rniga bosh dashboard."""
         from django.shortcuts import redirect
 
         return redirect('admin:index')
