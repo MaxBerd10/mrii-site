@@ -8,6 +8,7 @@ import { AISHIFOKOR_COPY } from '../data/aiShifokorCopy'
 import { ClinicalAiHero } from './ui/clinical-ai-hero'
 import '../styles/ai-spline.css'
 import { accentInk } from '../lib/accent'
+import { useCmsContent } from '../lib/cmsLocalized'
 
 const AI_HERO_IMAGES: Record<string, string> = {
   'doctor-assistant': '/images/ai/doctor-assistant-hero-v3.webp',
@@ -19,8 +20,9 @@ const AI_HERO_IMAGES: Record<string, string> = {
 export default function AISection() {
   const { t, lang } = useLanguage()
   const { home } = useCms()
+  const preferCms = useCmsContent(lang)
   const copy = AISHIFOKOR_COPY[lang]
-  const products = home?.aiProducts?.length
+  const products = preferCms && home?.aiProducts?.length
     ? home.aiProducts.map((prod) => ({
         id: prod.id || prod.slug,
         name: prod.name,

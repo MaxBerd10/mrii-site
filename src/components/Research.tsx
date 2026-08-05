@@ -5,6 +5,7 @@ import { useCms } from '../cms/CmsContext'
 import Reveal from './ui/Reveal'
 import { staggerContainer, rise3d, blurUp } from '../lib/animations'
 import { media } from '../data/media'
+import { useCmsContent } from '../lib/cmsLocalized'
 import '../styles/research-page.css'
 
 const PREVIEW_COUNT = 4
@@ -43,7 +44,8 @@ export default function Research() {
       window.history.replaceState(null, '', `${window.location.pathname}${nextHash}`)
     }
   }
-  const cms = home?.research
+  const cmsRaw = home?.research
+  const cms = useCmsContent(lang) ? cmsRaw : null
 
   const whyItems = cms?.whyItems?.length ? cms.whyItems : t.research.whyItems
   const studies = cms?.studies?.length ? cms.studies : t.research.studies

@@ -5,6 +5,7 @@ import { useCms } from '../cms/CmsContext'
 import { usePageNav } from './PageTransition'
 import { staggerContainer, fadeUpSmall } from '../lib/animations'
 import { buildClinicSpecialties } from '../data/clinicSpecialties'
+import { useCmsContent } from '../lib/cmsLocalized'
 import '../styles/clinic-catalog.css'
 
 /**
@@ -80,6 +81,7 @@ function Arrow() {
 export default function Clinic({ view = 'overview' }: { view?: ClinicView }) {
   const { t, lang } = useLanguage()
   const { home } = useCms()
+  const preferCms = useCmsContent(lang)
   const { routeEnter } = usePageNav()
   const reduceMotion = useReducedMotion()
   const [filter, setFilter] = useState<ClinicCategory>(
@@ -98,8 +100,12 @@ export default function Clinic({ view = 'overview' }: { view?: ClinicView }) {
   }, [view])
 
   const specialties = useMemo(
-    () => buildClinicSpecialties(t.clinic.specialties, home?.specialties),
-    [home, t.clinic.specialties],
+    () =>
+      buildClinicSpecialties(
+        t.clinic.specialties,
+        preferCms ? home?.specialties : null,
+      ),
+    [home, preferCms, t.clinic.specialties],
   )
 
   const filters = useMemo(() => {

@@ -8,3 +8,7 @@ export function cmsLocalizedText(
 ): string {
   return lang === 'uz' && cmsValue ? cmsValue : fallback
 }
+
+export function useCmsContent(lang: Lang): boolean {
+  return lang === 'uz'
+}

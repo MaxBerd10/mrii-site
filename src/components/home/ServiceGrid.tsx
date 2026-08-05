@@ -3,6 +3,7 @@ import { motion } from 'motion/react'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { useCms } from '../../cms/CmsContext'
 import { buildClinicSpecialties } from '../../data/clinicSpecialties'
+import { useCmsContent } from '../../lib/cmsLocalized'
 import HdHead from './HdHead'
 import { settle, settleStagger, inView } from '../../lib/homeDarkMotion'
 
@@ -29,16 +30,20 @@ const SIGNAL_BY_SLUG: Record<string, string> = {
 export default function ServiceGrid() {
   const { t, lang } = useLanguage()
   const { home } = useCms()
+  const preferCms = useCmsContent(lang)
   const copy = t.homeDark.services
 
   const specialties = useMemo(() => {
-    const base = buildClinicSpecialties(t.clinic.specialties, home?.specialties)
+    const base = buildClinicSpecialties(
+      t.clinic.specialties,
+      preferCms ? home?.specialties : null,
+    )
 
     return base.map((specialty) => ({
       ...specialty,
       signal: SIGNAL_BY_SLUG[specialty.slug] ?? 'var(--hd-blue)',
     }))
-  }, [home, t.clinic.specialties])
+  }, [home, preferCms, t.clinic.specialties])
 
   return (
     <section className="hd-section hd-services" aria-labelledby="hd-services-title">

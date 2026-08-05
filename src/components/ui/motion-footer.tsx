@@ -6,6 +6,7 @@ import { useLanguage } from '../../i18n/LanguageContext'
 import { CLINIC_PHONE_TEL } from '../../data/clinicContact'
 import { refreshScrollTriggersPreservingScroll } from '../../lib/scrollRoute'
 import { cn } from '../../lib/utils'
+import { cmsLocalizedText, useCmsContent } from '../../lib/cmsLocalized'
 import '../../styles/motion-footer.css'
 
 if (typeof window !== 'undefined') {
@@ -109,17 +110,18 @@ function MarqueeItem({ items }: { items: string[] }) {
 }
 
 export function CinematicFooter() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const { home } = useCms()
+  const preferCms = useCmsContent(lang)
+  const settings = preferCms ? home?.settings : null
   const wrapperRef = useRef<HTMLDivElement>(null)
   const giantTextRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
-  const settings = home?.settings
   const phone = settings?.phone || t.topBar.phone
-  const copyright = settings?.copyright || t.footer.copyright
-  const license = settings?.license || t.footer.license
+  const copyright = cmsLocalizedText(lang, settings?.copyright, t.footer.copyright)
+  const license = cmsLocalizedText(lang, settings?.license, t.footer.license)
   const phoneHref = `tel:${CLINIC_PHONE_TEL}`
   const marqueeItems = [
     t.nav.clinic,

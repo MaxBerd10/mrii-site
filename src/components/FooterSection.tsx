@@ -12,6 +12,7 @@ import {
 } from '../data/contactCopy'
 import { CLINIC_PHONE_DISPLAY, CLINIC_PHONE_TEL, CLINIC_TELEGRAM_URL } from '../data/clinicContact'
 import { getFooterNav } from '../data/footerNav'
+import { cmsLocalizedText, useCmsContent } from '../lib/cmsLocalized'
 import {
   IconClock,
   IconGlobe,
@@ -48,8 +49,9 @@ const SOCIALS = [
 export default function FooterSection() {
   const { t, lang } = useLanguage()
   const { home } = useCms()
-  const copyright = home?.settings?.copyright || t.footer.copyright
-  const license = home?.settings?.license || t.footer.license
+  const settings = useCmsContent(lang) ? home?.settings : null
+  const copyright = cmsLocalizedText(lang, settings?.copyright, t.footer.copyright)
+  const license = cmsLocalizedText(lang, settings?.license, t.footer.license)
   const copy = CONTACT_COPY[lang]
   const footerCols = getFooterNav(lang)
   const phoneDisplay = CLINIC_PHONE_DISPLAY

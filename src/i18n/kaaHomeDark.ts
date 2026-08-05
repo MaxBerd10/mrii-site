@@ -1,0 +1,234 @@
+/** Karakalpak homepage / care-system sections (homeDark). */
+export const kaaHomeDark = {
+  readout: {
+    channel: 'KN.01 · Institut',
+    live: 'Onlayn',
+    title: 'Sanlarda',
+    note: 'Maǵlıwmatlar instituttıń jıllıq esabatınan alınǵan.',
+  },
+  ai: {
+    channel: 'KN.02 · Jasalma intellekt',
+    title1: 'Mashina kóredi.',
+    titleEm: 'Sheshimdi shıpaker qabıl etedi.',
+    description:
+      'Tórt AI sistema klinikamızda hár kúni isleydi — súwret oqıydı, ólshaydi hám hújjet tayarlaydı. Juwmaqlawshı diagnoz hár da shıpakerde qaladı.',
+    metricLabel: 'Nátiyje',
+    featuresLabel: 'Múmkinshilikler',
+    cta: 'Sheshim haqqında',
+    viewAll: 'Barlıq AI sheshimler',
+  },
+  orbit: {
+    channel: 'KN.03 · Institut',
+    title1: 'Barlıq medicina',
+    titleEm: 'bir aylanada',
+    description:
+      'On bir baǵdar, júzlerce shıpaker, mıńlab tahlil — barlıǵı bir institut atrofında baylanǵan.',
+    cards: [
+      { label: 'Shıpaker hám ilimgerler', value: '100+' },
+      { label: 'Jıllıq nawqaslar', value: '50 000+' },
+      { label: 'Klinikalıq izertlewler', value: '150+' },
+      { label: 'Klinika baǵdarları', value: '11' },
+    ],
+    organs: [
+      'Otorinolaringologiya', 'Gastroenterologiya', 'Pulmonologiya', 'Revmatologiya',
+      'Kardiologiya', 'Laboratoriya', 'Reanimatsiya', 'Ginekologiya', 'Nevrologiya',
+      'Jarrohlik', 'Terapiya',
+    ],
+  },
+  compare: {
+    channel: 'KN.04 · Salıstırıw',
+    title1: 'Parq',
+    titleEm: 'qayerde kórinedi',
+    description: 'Nawqas ushın bul tezlik hám anıqlıqta seziledi.',
+    colA: 'Adetdegi jol',
+    colB: 'FJSTI klinikası',
+    rows: [
+      {
+        label: 'Qabılǵa jazılıw',
+        before: 'Saytta forma, juwap kútiledi',
+        after: 'Bir qońıraq — shıpaker hám waqıt darhal tastıyıqlanadı',
+      },
+      {
+        label: 'Diagnostika',
+        before: 'Turli markazlar, qayta keliwler',
+        after: 'MRT, KT, laboratoriya — bir binada',
+      },
+      {
+        label: 'Súwret oqıw',
+        before: 'Juwap bir neche saattan keyin',
+        after: 'Tezirek aldın-ala talqılaw — radiolog tastıyıqlaydı',
+      },
+      {
+        label: 'Hújjetlestiriw',
+        before: 'Shıpaker jazıw menen band',
+        after: 'Qaralama tayın — shıpaker tekseredi hám qol qoyadı',
+      },
+      {
+        label: 'Medicinalıq kartа',
+        before: 'Qag’azlar bólinip ketedi',
+        after: 'Barlıq baǵdarlar ushın birlikte jazıw',
+      },
+      {
+        label: 'Emlewden keyin',
+        before: 'Nawqas ózi esletiwi kerek',
+        after: 'Rejalashtırılǵan baqlaw hám reabilitatsiya',
+      },
+    ],
+  },
+  path: {
+    channel: 'KN.05 · Nawqas jolı',
+    title1: 'Qabıldan',
+    titleEm: 'sawlanıwǵa shekem',
+    description: 'Bes basqısh. Hár birinde kim jawapkerligi anıq.',
+    steps: [
+      {
+        num: '01',
+        title: 'Telefon arqalı jazılıw',
+        meta: 'Bir qońıraq',
+        desc: 'Belgilengen nomerge qońıraq etiń — bemar xızmeti mos shıpakerni tabıp, qulay waqıttı belgileydi.',
+      },
+      {
+        num: '02',
+        title: 'Diagnostika',
+        meta: 'Bir keliw',
+        desc: 'MRT, KT, UTT hám laboratoriya bir markazda. Nátiyjeler shıpaker kóriw ushın tayarlanadı.',
+      },
+      {
+        num: '03',
+        title: 'Shıpaker juwmağı',
+        meta: 'Konsilium',
+        desc: 'Mutaxassis AI talqılawın hám barlıq tekseriwlerdi kóriydi. Diagnozdi tek shıpaker qoyadı.',
+      },
+      {
+        num: '04',
+        title: 'Emlew jobası',
+        meta: 'Jeke',
+        desc: 'Xalıqaralıq protokollarga tiykarlanǵan jeke joba. Hár bir basqısh siz benen kelisedi.',
+      },
+      {
+        num: '05',
+        title: 'Baqlaw',
+        meta: 'Uzaq muddat',
+        desc: 'Reabilitatsiya, nazorat tekseriwleri hám shıpaker menen baylanıs emlewden keyin de dawam etedi.',
+      },
+    ],
+  },
+  services: {
+    channel: 'KN.06 · Klinika',
+    title1: 'On bir baǵdar,',
+    titleEm: 'bir bina',
+    description: 'Baǵdardı tańlań — shıpakerler, bahalar hám telefon arqalı jazılıw.',
+    viewAll: 'Barlıq baǵdarlar',
+    doctorsLabel: 'shıpaker',
+  },
+  team: {
+    channel: 'KN.07 · Jamaat',
+    title1: 'Bir institut,',
+    titleEm: 'júz júrek',
+    description: 'Súyriń — sizdi qabıl etetuǵın jamaat bir-birinen jılanadı.',
+    viewAll: 'Barlıq shıpakerler',
+    groupHint: 'Klinikamız jamaatı',
+    papersLabel: 'basılım',
+  },
+  voices: {
+    channel: 'KN.08 · Pikirler',
+    title1: 'Biz benen',
+    titleEm: 'islegenler',
+    description: 'Homıylar, koordinatorlar hám shıpakerler bahası.',
+    prev: 'Aldınǵı pikir',
+    next: 'Keyingi pikir',
+    goTo: 'pikirge ótiw',
+  },
+  partners: {
+    channel: 'KN.09 · Hamkorlar',
+    title: 'Klinikalıq izertlewler boyınsha hamkorlarımız',
+  },
+  faq: {
+    channel: 'KN.10 · Sorawlar',
+    title1: 'Kóp berilatuǵın',
+    titleEm: 'sorawlar',
+    description: 'Juwap taba almadıńız ba — qońıraq etiń, koordinator járdem beredi.',
+    items: [
+      {
+        q: 'Qabılǵa qalay jazılamın?',
+        a: 'Belgilengen nomerge qońıraq etiń — bemar xızmeti mos shıpakerni tańlab, qulay waqıttı belgileydi. Qońıraqlar dúysenbi–shanba, 09:00–18:00 aralıǵında qabıl etiledi.',
+      },
+      {
+        q: 'Jońaltırıw kerek pe?',
+        a: 'Joq. On bir baǵdardıń qaysı birine de tiykarlanıp jazıla alasız. Qaysı mutaxassis kerek ekenin bilmeseńiz, terapevtten baslań — ol sizdi kerekli shıpakerge jońaltıradı.',
+      },
+      {
+        q: 'AI meniń diagnozımı qoyadı ma?',
+        a: 'Joq. AI sistemaları shıpakerge járdem beredi: súwretlerdi aldın-ala talqılaydı, ólshemlerdi avtomatlastıradı hám hújjet qaralamasın tayarlaydı. Diagnoz hám emlew jobası boyınsha sheshimdi tek shıpaker qabıl etedi.',
+      },
+      {
+        q: 'Baha aldın bilse boladı ma?',
+        a: 'Awa. Barlıq xızmet bahaları sayttıń «Bahalar» bóliminde ashıq e’lon etilgen. Qosımsha tekseriw kerek bolsa, shıpaker aldın aytadı.',
+      },
+      {
+        q: 'Klinikalıq izertlewde qatnasa alaman ba?',
+        a: 'Institutta I–IV basqısh izertlewler ótkeriledi hám olardıń bir qismi házir nawqas qabıl etedi. Joriy izertlewler dizimin «Izertlewler» bóliminde kóriń — qatnasıw hár da erkin hám tegin.',
+      },
+      {
+        q: 'Basqa memleketten kelsem she?',
+        a: 'Institut 40 dan artıq memleket nawqasın qabıl etedi. Xalıqaralıq bólim taklifnama, medicina vizası, aýdımshi hám turar jay masalaların sheshedi. Keliwden aldın telemedicina arqalı maslahat ala alasız.',
+      },
+    ],
+  },
+  cta: {
+    channel: 'KN.11 · Jazılıw',
+    title1: 'Densawlıq boyınsha keyingi qadamdı',
+    titleEm: 'búgin qoyıń',
+    description: 'Qońıraq etiń — koordinator 15 minut ishinde juwap beredi.',
+    book: 'Qabılǵa jazılıw',
+    talk: 'AI járdemshi menen sóylesiw',
+    phoneLabel: 'Yamasa qońıraq etiń',
+  },
+  footer: {
+    newsletterTitle: 'Institut jańalıqları',
+    newsletterDesc: 'Jańa baǵdarlar, izertlewler hám CME kursları — ayda bir ret.',
+    emailLabel: 'Elektron pochta',
+    emailPlaceholder: 'siz@pochta.uz',
+    subscribe: 'Jazılıw',
+    subscribed: 'Jazılıw tastıyıqlandı',
+    emailInvalid: 'Elektron pochta mánzilin tekseriń — masalan, siz@pochta.uz',
+    contactTitle: 'Baylanıs',
+    followTitle: 'Social tarmaqlar',
+    address: 'Farg’ona q., Yangi Turon kóshesi, 2-a úy',
+  },
+} 
+
+export const kaaClinicSpecialties = [
+  { icon: '👂', name: 'Otorinolaringologiya', count: 5, desc: 'Qulaq, burun hám tómaq keselleri' },
+  { icon: '🔬', name: 'Gastroenterologiya', count: 5, desc: 'Asqazan-ishak keselleri, endoskopiya' },
+  { icon: '🫁', name: 'Pulmonologiya', count: 4, desc: 'Dem alıw jollari hám ópke keselleri' },
+  { icon: '🦴', name: 'Revmatologiya', count: 4, desc: 'Bógin hám autoimmun keseller' },
+  { icon: '🫀', name: 'Kardiologiya', count: 8, desc: 'Júrek-qan tomir tizimi keselleri' },
+  { icon: '🧪', name: 'Laboratoriya', count: 12, desc: 'Klinikalıq tahlillar hám laboratoriya diagnostikası' },
+  { icon: '🏥', name: 'Reanimatsiya', count: 6, desc: 'Intensiv terapiya hám shoshılınsh járdem' },
+  { icon: '🌸', name: 'Ginekologiya', count: 7, desc: 'Hayallar densawlıǵı, reproduktiv medicina' },
+  { icon: '🧠', name: 'Nevrologiya', count: 6, desc: 'Bas awrısı, insult, epilepsiya' },
+  { icon: '⚕️', name: 'Jarrohlik', count: 10, desc: 'Ulıwma hám laparoskopik jarrohlik' },
+  { icon: '🩺', name: 'Terapiya', count: 12, desc: 'Birinshi medicina járdemi hám profilaktika' },
+] 
+
+export const kaaPartnersTestimonials = [
+  {
+    quote: 'Farg’ona Jámiyet Salamatlıǵı Medicina Institutı aymaqtıǵı isenimli izertlew markazlarından biri. Múddetler hár da orınlanadı.',
+    author: 'Elena Kovaleva',
+    role: 'Clinical Operations Director, Roche',
+    color: '#0EA5E9',
+  },
+  {
+    quote: 'AiShifokor hújjetlestiriw waqtın 87% qısqarttı. Shıpakerler nawqaslarga nazar aylantıradı.',
+    author: 'Dmitriy Volkov',
+    role: 'Bas shıpaker',
+    color: '#10B981',
+  },
+  {
+    quote: 'FJSTI dagı GCP-trening eng jaqsılarından. Amaliy keysler oqıtıwdı óte paydalı etedi.',
+    author: 'Anna Petrova',
+    role: 'Clinical Research Coordinator',
+    color: '#6366F1',
+  },
+]

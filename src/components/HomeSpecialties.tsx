@@ -6,6 +6,7 @@ import SectionHeader from './ui/SectionHeader'
 import Reveal from './ui/Reveal'
 import { staggerContainer, fadeUpSmall, blurUp } from '../lib/animations'
 import { buildClinicSpecialties } from '../data/clinicSpecialties'
+import { useCmsContent } from '../lib/cmsLocalized'
 import '../styles/clinic-catalog.css'
 import '../styles/home-patient.css'
 
@@ -31,15 +32,19 @@ const CATEGORY_META: Record<ClinicCategory, { color: string }> = {
 export default function HomeSpecialties() {
   const { t, lang } = useLanguage()
   const { home } = useCms()
+  const preferCms = useCmsContent(lang)
 
   const specialties = useMemo(() => {
-    const base = buildClinicSpecialties(t.clinic.specialties, home?.specialties)
+    const base = buildClinicSpecialties(
+      t.clinic.specialties,
+      preferCms ? home?.specialties : null,
+    )
 
     const featured = FEATURED_SLUGS.map((slug) => base.find((s) => s.slug === slug)).filter(
       Boolean,
     ) as typeof base
     return featured.length ? featured : base.slice(0, 6)
-  }, [home, t.clinic.specialties])
+  }, [home, preferCms, t.clinic.specialties])
 
   const categoryLabel = (cat: ClinicCategory) => t.clinic.filters[cat]
 
