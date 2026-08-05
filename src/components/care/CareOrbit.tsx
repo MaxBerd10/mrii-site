@@ -496,13 +496,12 @@ function primeWallVideo(el: HTMLVideoElement | null, slug: string) {
   const showFirstFrame = () => {
     el.pause()
     el.currentTime = 0.001
-    el.classList.remove('is-playing')
   }
   if (el.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) showFirstFrame()
   else el.addEventListener('loadeddata', showFirstFrame, { once: true })
 }
 
-/** One doctor card — poster always visible; turn video overlays on play. */
+/** One doctor card — turn poster matches video framing (no crop jump on hover). */
 function DoctorWallCard({
   doctor,
   isCenter,
@@ -540,36 +539,48 @@ function DoctorWallCard({
         ['--wall-portrait' as string]: `url("${portraitSrc}")`,
       }}
     >
-      <img
-        src={portraitSrc}
-        alt={doctor.name}
-        className="hc-doctor-wall__photo hc-doctor-wall__poster"
-        loading="eager"
-        decoding={isSafari() ? 'sync' : 'async'}
-        fetchPriority="high"
-        onError={() => {
-          if (portraitSrc !== doctor.fallbackPortrait) setPortraitSrc(doctor.fallbackPortrait)
-        }}
-      />
       {doctor.video ? (
-        <video
-          ref={(element) => {
-            registerVideo(doctor.slug, element)
-            primeWallVideo(element, doctor.slug)
+        <>
+          <img
+            src={portraitSrc}
+            alt=""
+            aria-hidden
+            className="hc-doctor-wall__photo hc-doctor-wall__poster"
+            loading="eager"
+            decoding={isSafari() ? 'sync' : 'async'}
+            onError={() => {
+              if (portraitSrc !== doctor.fallbackPortrait) setPortraitSrc(doctor.fallbackPortrait)
+            }}
+          />
+          <video
+            ref={(element) => {
+              registerVideo(doctor.slug, element)
+              primeWallVideo(element, doctor.slug)
+            }}
+            className="hc-doctor-wall__photo hc-doctor-wall__video"
+            muted
+            playsInline
+            preload="auto"
+            poster={portraitSrc}
+            aria-label={doctor.name}
+            onLoadedData={(event) => primeWallVideo(event.currentTarget, doctor.slug)}
+          >
+            <source src={doctor.video} type="video/mp4" />
+          </video>
+        </>
+      ) : (
+        <img
+          src={portraitSrc}
+          alt={doctor.name}
+          className="hc-doctor-wall__photo hc-doctor-wall__poster"
+          loading="eager"
+          decoding={isSafari() ? 'sync' : 'async'}
+          fetchPriority="high"
+          onError={() => {
+            if (portraitSrc !== doctor.fallbackPortrait) setPortraitSrc(doctor.fallbackPortrait)
           }}
-          className="hc-doctor-wall__photo hc-doctor-wall__video"
-          muted
-          playsInline
-          preload="none"
-          aria-hidden
-          tabIndex={-1}
-          onPlaying={(event) => event.currentTarget.classList.add('is-playing')}
-          onPause={(event) => event.currentTarget.classList.remove('is-playing')}
-          onLoadedData={(event) => primeWallVideo(event.currentTarget, doctor.slug)}
-        >
-          <source src={doctor.video} type="video/mp4" />
-        </video>
-      ) : null}
+        />
+      )}
       <span className="hc-doctor-wall__scrim" aria-hidden />
       <span className="hc-doctor-wall__meta">
         <small>{doctor.specialty}</small>
@@ -588,11 +599,11 @@ function CareDoctorWall() {
   const { t, contentLang } = useLanguage()
   const doctors = getHomeDoctorWallDoctors(7).map((doctor) => {
     const turn = getDoctorTurnMedia(doctor.slug)
-    const fallbackPortrait = turn?.poster ?? doctor.photo
+    const portrait = turn?.poster ?? doctor.photo
     return {
       slug: doctor.slug,
-      portrait: getDoctorCardPortrait(doctor.slug, fallbackPortrait),
-      fallbackPortrait,
+      portrait,
+      fallbackPortrait: portrait,
       video: turn?.video,
       ...doctor.content[contentLang],
     }
