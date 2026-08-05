@@ -7,6 +7,7 @@ import { MaskedText } from './careUi'
 import { FEATURE_ICONS, IconCalendar, TRUST_ICONS } from './CareHeroIcons'
 
 import { CLINIC_PHONE_TEL } from '../../data/clinicContact'
+import { cmsLocalizedText } from '../../lib/cmsLocalized'
 
 function telHref(phone: string) {
   const digits = phone.replace(/[^\d+]/g, '')
@@ -19,17 +20,23 @@ function telHref(phone: string) {
  * camera push-in without moving or tilting individual faces.
  */
 export default function CareHero() {
-  const { t } = useLanguage()
+  const { contentLang, t } = useLanguage()
   const c = t.homeCare
   const { home } = useCms()
   const cms = home?.homepage
+  const cmsText = (value: string | undefined, fallback: string) =>
+    cmsLocalizedText(contentLang, value, fallback)
+  const cmsTrust =
+    contentLang === 'uz' && cms?.metrics?.every((item) => item.value && item.label)
+      ? cms.metrics
+      : c.trust
   const hero = {
-    eyebrow: cms?.eyebrow || c.eyebrow,
-    titleLead: cms?.title_lead || c.titleLead,
-    titleEm: cms?.title_em || c.titleEm,
-    lead: cms?.lead || c.lead,
+    eyebrow: cmsText(cms?.eyebrow, c.eyebrow),
+    titleLead: cmsText(cms?.title_lead, c.titleLead),
+    titleEm: cmsText(cms?.title_em, c.titleEm),
+    lead: cmsText(cms?.lead, c.lead),
     image: cms?.team_image || '/images/medical/fjsti-real-team-collage-flat-smooth-white-v3.webp',
-    trust: cms?.metrics?.every((item) => item.value && item.label) ? cms.metrics : c.trust,
+    trust: cmsTrust,
   }
   const reduce = useReducedMotion()
   const isMobile = useMobileLayout()

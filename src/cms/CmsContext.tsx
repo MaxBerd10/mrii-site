@@ -33,6 +33,7 @@ export function CmsProvider({ children }: { children: ReactNode }) {
       return
     }
     let cancelled = false
+    setHome(null)
     setLoading(true)
     fetchHome(lang).then((data) => {
       if (!cancelled) {
