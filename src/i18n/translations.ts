@@ -1,6 +1,6 @@
 import type { Lang } from './types'
 import { CLINIC_PHONE_DISPLAY, CLINIC_PHONE_TEL, CLINIC_TELEGRAM_URL } from '../data/clinicContact'
-import { kaaClinicSpecialties, kaaHomeDark, kaaPartnersTestimonials } from './kaaHomeDark'
+import { kaaClinicSpecialties, kaaClinicGallery, kaaClinicTour, kaaHomeDark, kaaPartnersTestimonials } from './kaaHomeDark'
 
 export type Translations = typeof uz
 
@@ -3162,6 +3162,8 @@ const kaa: Translations = {
       emergency: 'Shoshılınsh',
     },
     specialties: [...kaaClinicSpecialties],
+    gallery: kaaClinicGallery,
+    tour: kaaClinicTour,
   },
   partners: {
     ...uz.partners,
