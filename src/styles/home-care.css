@@ -91,6 +91,10 @@
 /* The care world follows the site theme as a quieter night clinic: the
    composition stays identical, while paper whites become deep blue surfaces
    and the signal colours lift enough to remain legible. */
+html.is-home-care {
+  scroll-behavior: auto !important;
+}
+
 html.is-home-care[data-theme='dark'] {
   background: #07131f;
   color-scheme: dark;
@@ -374,6 +378,7 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
   flex: 1 1 0;
   align-self: stretch;
   min-width: 0;
+  min-height: clamp(320px, 38vw, 480px);
   overflow: hidden;
   border-radius: calc(var(--hc-r-md) - 2px);
   background: var(--hc-blue-wash);
@@ -384,13 +389,22 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
   transition: box-shadow 0.25s var(--hc-ease), filter 0.25s var(--hc-ease);
 }
 
+/* Safari flex: absolute children need an in-flow sizing box. */
+.hc-doctor-wall__card::before {
+  content: '';
+  display: block;
+  width: 100%;
+  min-height: clamp(320px, 38vw, 480px);
+  pointer-events: none;
+}
+
 .hc-doctor-wall__card.is-center {
   flex-grow: 1.72;
   box-shadow: var(--hc-shadow-lg);
 }
 
 .hc-doctor-wall__stage:hover .hc-doctor-wall__card {
-  filter: saturate(1.04) contrast(1.03);
+  filter: none;
 }
 
 .hc-doctor-wall__photo {
@@ -401,11 +415,17 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
   object-fit: cover;
   object-position: var(--wall-photo-position, 50% 12%);
   transition: transform 0.7s var(--hc-ease), filter 0.52s var(--hc-ease);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
-.hc-doctor-wall__video {
-  object-fit: cover;
-  object-position: var(--wall-photo-position, 50% 12%);
+.hc-doctor-wall__poster {
+  z-index: 0;
+  opacity: 1;
+}
+
+.hc-doctor-wall__stage:hover .hc-doctor-wall__photo {
+  filter: saturate(1.04) contrast(1.03);
 }
 
 .hc-doctor-wall__scrim {
@@ -494,6 +514,49 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
   .hc-doctor-wall__card,
   .hc-doctor-wall__photo,
   .hc-doctor-wall__meta { transition: none; }
+}
+
+/* Safari — flex + compositor bugs leave blank portrait strips without these rules. */
+html.is-safari .hc-doctor-wall__stage {
+  transform: translateZ(0);
+}
+
+html.is-safari .hc-doctor-wall__card {
+  flex: 1 1 0%;
+  width: 0;
+  isolation: auto;
+  background-color: var(--hc-blue-wash);
+  background-image: var(--wall-portrait);
+  background-size: cover;
+  background-position: var(--wall-photo-position, 50% 12%);
+  background-repeat: no-repeat;
+}
+
+html.is-safari .hc-doctor-wall__card.is-center {
+  flex: 1.72 1 0%;
+}
+
+html.is-safari .hc-doctor-wall__stage:hover .hc-doctor-wall__card {
+  filter: none;
+}
+
+html.is-safari .hc-doctor-wall__photo {
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
+@media (max-width: 720px) {
+  html.is-safari .hc-doctor-wall__card {
+    flex: 0 0 76px;
+    width: 76px;
+  }
+
+  html.is-safari .hc-doctor-wall__card.is-center {
+    flex: 0 0 230px;
+    width: 230px;
+  }
 }
 
 /* ======================================================================
@@ -626,6 +689,7 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
   --hero-y: 0;
   position: relative;
   isolation: isolate;
+  overflow: hidden;
   overflow: clip;
   background: #050b13;
   color: #f7fbff;
@@ -639,7 +703,9 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
 .hc-hero__sticky {
   position: sticky;
   inset-block-start: 0;
+  height: 100vh;
   height: 100svh;
+  height: 100dvh;
   min-height: 640px;
   overflow: hidden;
 }
@@ -1253,6 +1319,7 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
 .hc-word-mask {
   display: inline-block;
   margin: -0.2em;
+  overflow: hidden;
   overflow: clip;
   contain: paint;
   vertical-align: top;
@@ -1299,13 +1366,7 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
    (sticky table column) and the DNA scene (scroll-pinned) are intentionally left
    out so nothing sticky breaks. `auto` intrinsic size locks in the real height
    after first render, so the scrollbar never jumps. */
-.hc-section--ai,
-.hc-section--path,
-.hc-section--services,
-.hc-section--voices {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 760px;
-}
+/* content-visibility removed — caused half-painted sections in Safari/Firefox. */
 
 /* Closing footer copy must never stay hidden if scroll scrub stalls. */
 .home-care .motion-footer__heading,
@@ -5449,13 +5510,15 @@ a.hc-card:active {
 }
 
 .hc-hero--dna .hc-hero__track {
-  height: max(128svh, 900px);
+  height: max(108svh, 820px);
 }
 
 .hc-hero--dna .hc-hero__sticky {
   position: sticky;
   inset-block-start: 0;
+  height: 100vh;
   height: 100svh;
+  height: 100dvh;
   min-height: 0;
   padding: 0;
   overflow: hidden;
@@ -5515,6 +5578,27 @@ a.hc-card:active {
   will-change: transform;
   -webkit-mask-image: none;
   mask-image: none;
+}
+
+/* Fallback when sticky viewport math clips the team on Safari. */
+html.is-safari .hc-hero--dna .hc-hero__track {
+  height: max(100svh, 780px);
+}
+
+html.is-safari .hc-hero--dna .hc-hero__dna {
+  inset: 5% -2% -2% 39%;
+}
+
+html.is-safari .hc-hero--dna .hc-hero__team img {
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+@supports (-webkit-touch-callout: none) {
+  .hc-hero--dna .hc-hero__dna {
+    inset: 5% -2% -2% 39%;
+  }
 }
 
 .hc-hero--dna .hc-hero__dna span {
@@ -5898,7 +5982,7 @@ a.hc-card:active {
 }
 
 .hc-hero--dna .hc-hero__track {
-  height: max(128svh, 900px);
+  height: max(108svh, 820px);
 }
 
 @media (max-width: 900px) {
@@ -6228,11 +6312,6 @@ a.hc-card:active {
 
   .home-care .hc-ai-showcase__actions {
     justify-content: center;
-  }
-
-  /* Phones: native scroll thread — drop sticky theater and scroll-linked repaints. */
-  html.is-home-care {
-    scroll-behavior: auto;
   }
 
   .hc-orbit {

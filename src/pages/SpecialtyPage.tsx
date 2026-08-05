@@ -10,16 +10,14 @@ import {
   getSpecialtyWorld,
   specialtyWorldLabels,
 } from '../data/specialtyWorld'
-import { getSpecialtyGroup } from '../data/doctors'
-import { getDoctorCardPortrait, getDoctorTurnMedia } from '../data/doctorTurnMedia'
-import { DoctorCard } from '../components/Doctors'
+import { DoctorTeamSection } from '../components/DoctorTeamSection'
 import { staggerContainer, fadeUpSmall, EASE_OUT } from '../lib/animations'
 import SectionBackLink from '../components/ui/SectionBackLink'
 import Magnetic from '../components/ui/Magnetic'
 import NotFoundPage from './NotFoundPage'
 import { useScrollToTopOnRoute } from '../lib/scrollRoute'
 import '../styles/specialty-world.css'
-import '../styles/doctor-turn.css'
+import '../styles/doctor-mini.css'
 
 /**
  * THESIS: A specialty page is a clear care plan, not an AI control room.
@@ -155,32 +153,6 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
   }, [view?.name, t.nav.brand])
 
   const doctors = useMemo(() => getSpecialtyDoctors(slug), [slug])
-
-  const doctorCards = useMemo(
-    () =>
-      doctors.map((profile) => {
-        const content = profile.content[contentLang]
-        const turn = getDoctorTurnMedia(profile.slug)
-        const poster = turn?.poster ?? profile.photo
-        return {
-          id: profile.slug,
-          slug: profile.slug,
-          name: content.name,
-          role: content.role,
-          specialty: content.specialty,
-          specialtyGroup: getSpecialtyGroup(profile),
-          exp: content.exp,
-          papers: profile.papers,
-          studies: profile.studies,
-          color: profile.color,
-          photo: poster,
-          cardPhoto: getDoctorCardPortrait(profile.slug, poster),
-          video: turn?.video,
-          staffKind: profile.staffKind,
-        }
-      }),
-    [doctors, contentLang],
-  )
 
   useEffect(() => {
     const sectionIds: ActiveSection[] = [
@@ -415,36 +387,26 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
 
       <section id="specialty-doctors" className="specialty-detail__section specialty-detail__team">
         <div className="container-main">
-          <div className="specialty-detail__team-head">
-            <SectionTitle
-              eyebrow={`${doctorCount} ${t.clinic.doctorsCount}`}
-              title={worldLabels.team}
-              description={labels.teamText}
-            />
-            <a href="/doctors" className="specialty-detail__all-doctors">
-              {t.clinic.specialists}
-              <Arrow />
-            </a>
-          </div>
-
-          {doctors.length === 0 ? (
-            <div className="specialty-detail__empty">
-              <p>{worldLabels.teamEmpty}</p>
-              <a href="/contacts">{t.clinic.bookBtn}</a>
-            </div>
-          ) : (
-            <motion.div
-              className="specialty-detail__doctors doctor-grid"
-              variants={staggerContainer(0.08)}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.16 }}
-            >
-              {doctorCards.map((doc, index) => (
-                <DoctorCard key={doc.id} doc={doc} priority={index < 2} variant="profile" />
-              ))}
-            </motion.div>
-          )}
+          <DoctorTeamSection
+            eyebrow={view.name}
+            title={worldLabels.team}
+            description={labels.teamNote}
+            hoursLabel={labels.hoursShort}
+            doctors={doctors}
+            contentLang={contentLang}
+            action={
+              <a href="/doctors" className="specialty-detail__all-doctors">
+                {t.clinic.specialists}
+                <Arrow />
+              </a>
+            }
+            empty={
+              <div className="specialty-detail__empty">
+                <p>{worldLabels.teamEmpty}</p>
+                <a href="/contacts">{t.clinic.bookBtn}</a>
+              </div>
+            }
+          />
         </div>
       </section>
 

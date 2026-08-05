@@ -558,7 +558,6 @@
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  margin-bottom: clamp(38px, 5vw, 64px);
   color: #071727;
   text-decoration: none;
   font-size: 0.84rem;
@@ -569,15 +568,8 @@
   color: var(--sw-accent);
 }
 
-.specialty-detail__doctors {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(18px, 2.4vw, 30px);
-}
-
-.specialty-detail__doctors.doctor-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(14px, 2vw, 24px);
+.specialty-detail__team .dp-shelf {
+  margin-top: clamp(20px, 3vw, 32px);
 }
 
 .specialty-doctor {

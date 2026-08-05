@@ -9,8 +9,9 @@ import {
   type MotionValue,
 } from 'motion/react'
 import { useLanguage } from '../../i18n/LanguageContext'
-import { getHomeFeaturedDoctors, getHomeDoctorWallDoctors, getDoctorWallPlaybackRate, getDoctorWallPortraitPosition, getHomeOrbitDoctors } from '../../data/doctors'
+import { getHomeFeaturedDoctors, getHomeDoctorWallDoctors, getDoctorWallPortraitPosition, getHomeOrbitDoctors } from '../../data/doctors'
 import { getDoctorCardPortrait, getDoctorTurnMedia } from '../../data/doctorTurnMedia'
+import { isSafari } from '../../lib/browser'
 import { useMobileLayout } from '../../hooks/useMobileLayout'
 import { MaskedText, SectionHead } from './careUi'
 
@@ -489,15 +490,63 @@ function CareDoctorNavigator() {
   )
 }
 
-function primeWallVideo(el: HTMLVideoElement | null, slug: string) {
-  if (!el) return
-  el.playbackRate = getDoctorWallPlaybackRate(slug)
-  const showFirstFrame = () => {
-    el.pause()
-    el.currentTime = 0.001
+/** One doctor card — static portrait, always visible in every browser. */
+function DoctorWallCard({
+  doctor,
+  isCenter,
+  index,
+  bookLabel,
+}: {
+  doctor: {
+    slug: string
+    name: string
+    specialty: string
+    exp: string
+    portrait: string
+    fallbackPortrait: string
   }
-  if (el.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) showFirstFrame()
-  else el.addEventListener('loadeddata', showFirstFrame, { once: true })
+  isCenter: boolean
+  index: number
+  bookLabel: string
+}) {
+  const [portraitSrc, setPortraitSrc] = useState(doctor.portrait)
+
+  useEffect(() => {
+    setPortraitSrc(doctor.portrait)
+  }, [doctor.portrait])
+
+  return (
+    <a
+      href={`/doctors/${doctor.slug}`}
+      className={`hc-doctor-wall__card${isCenter ? ' is-center' : ''}`}
+      style={{
+        ['--wall-order' as string]: index,
+        ['--wall-photo-position' as string]: getDoctorWallPortraitPosition(doctor.slug),
+        ['--wall-portrait' as string]: `url("${portraitSrc}")`,
+      }}
+    >
+      <img
+        src={portraitSrc}
+        alt={doctor.name}
+        className="hc-doctor-wall__photo hc-doctor-wall__poster"
+        loading="eager"
+        decoding={isSafari() ? 'sync' : 'async'}
+        fetchPriority="high"
+        onError={() => {
+          if (portraitSrc !== doctor.fallbackPortrait) setPortraitSrc(doctor.fallbackPortrait)
+        }}
+      />
+      <span className="hc-doctor-wall__scrim" aria-hidden />
+      <span className="hc-doctor-wall__meta">
+        <small>{doctor.specialty}</small>
+        <strong>{doctor.name}</strong>
+        <em>{doctor.exp}</em>
+        <b>
+          {bookLabel} <span aria-hidden>→</span>
+        </b>
+      </span>
+    </a>
+  )
 }
 
 /** A living staff wall: one portrait expands while the rest yield around it. */
@@ -505,30 +554,14 @@ function CareDoctorWall() {
   const { t, contentLang } = useLanguage()
   const doctors = getHomeDoctorWallDoctors(7).map((doctor) => {
     const turn = getDoctorTurnMedia(doctor.slug)
+    const fallbackPortrait = turn?.poster ?? doctor.photo
     return {
       slug: doctor.slug,
-      photo: turn?.poster ?? doctor.photo,
-      video: turn?.video,
+      portrait: getDoctorCardPortrait(doctor.slug, fallbackPortrait),
+      fallbackPortrait,
       ...doctor.content[contentLang],
     }
   })
-  const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({})
-
-  const playAll = () => {
-    Object.entries(videoRefs.current).forEach(([slug, video]) => {
-      if (!video) return
-      video.playbackRate = getDoctorWallPlaybackRate(slug)
-      video.currentTime = 0
-      video.play().catch(() => undefined)
-    })
-  }
-
-  const resetAll = () => {
-    Object.entries(videoRefs.current).forEach(([slug, video]) => {
-      if (!video) return
-      primeWallVideo(video, slug)
-    })
-  }
 
   return (
     <section className="hc-section hc-section--tint hc-doctor-wall" aria-labelledby="hc-doctor-wall-title">
@@ -541,48 +574,16 @@ function CareDoctorWall() {
           <p className="hc-lead">{t.homeCare.orbitReveal}</p>
         </div>
 
-        <div className="hc-doctor-wall__stage" onPointerEnter={playAll} onPointerLeave={resetAll}>
-          {doctors.map((doctor, index) => {
-            const isCenter = index === Math.floor(doctors.length / 2)
-            return (
-              <a
-                key={doctor.slug}
-                href={`/doctors/${doctor.slug}`}
-                className={`hc-doctor-wall__card${isCenter ? ' is-center' : ''}`}
-                style={{
-                  ['--wall-order' as string]: index,
-                  ['--wall-photo-position' as string]: getDoctorWallPortraitPosition(doctor.slug),
-                }}
-              >
-                {doctor.video ? (
-                  <video
-                    ref={(element) => {
-                      videoRefs.current[doctor.slug] = element
-                      primeWallVideo(element, doctor.slug)
-                    }}
-                    className="hc-doctor-wall__photo hc-doctor-wall__video"
-                    muted
-                    playsInline
-                    preload="auto"
-                    poster={doctor.photo}
-                    aria-label={doctor.name}
-                    onLoadedData={(event) => primeWallVideo(event.currentTarget, doctor.slug)}
-                  >
-                    <source src={doctor.video} type="video/mp4" />
-                  </video>
-                ) : (
-                  <img src={doctor.photo} alt={doctor.name} className="hc-doctor-wall__photo" />
-                )}
-                <span className="hc-doctor-wall__scrim" aria-hidden />
-                <span className="hc-doctor-wall__meta">
-                  <small>{doctor.specialty}</small>
-                  <strong>{doctor.name}</strong>
-                  <em>{doctor.exp}</em>
-                  <b>{t.doctors.bookBtn} <span aria-hidden>→</span></b>
-                </span>
-              </a>
-            )
-          })}
+        <div className="hc-doctor-wall__stage">
+          {doctors.map((doctor, index) => (
+            <DoctorWallCard
+              key={doctor.slug}
+              doctor={doctor}
+              isCenter={index === Math.floor(doctors.length / 2)}
+              index={index}
+              bookLabel={t.doctors.bookBtn}
+            />
+          ))}
         </div>
 
         <div className="hc-doctor-wall__foot">

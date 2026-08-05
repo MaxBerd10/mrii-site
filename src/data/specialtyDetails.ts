@@ -285,6 +285,8 @@ export const specialtyPageLabels: Record<ContentLang, {
   available: string
   related: string
   teamText: string
+  teamNote: string
+  hoursShort: string
   closingTitle: string
   closingText: string
 }> = {
@@ -300,6 +302,8 @@ export const specialtyPageLabels: Record<ContentLang, {
     available: 'Telefon orqali yozilish',
     related: 'Boshqa klinik yo’nalishlar',
     teamText: 'Mutaxassis profilini ko’ring va sizga mos shifokorni tanlang.',
+    teamNote: 'Vaqt to’g’ri kelmasa — hamkasblari ham shu klinik kuzatuv kartasini ko’radi.',
+    hoursShort: '09:00–18:00 · Du–Sha',
     closingTitle: 'Keyingi qadam — qabulga qo’ng’iroq qiling',
     closingText: 'Belgilangan raqamga qo’ng’iroq qiling — bemor xizmatimiz mos shifokor va vaqtni tayinlaydi.',
   },
@@ -315,6 +319,8 @@ export const specialtyPageLabels: Record<ContentLang, {
     available: 'Запись по телефону',
     related: 'Другие направления клиники',
     teamText: 'Посмотрите профили специалистов и выберите подходящего врача.',
+    teamNote: 'Если время не подходит, коллеги увидят ту же клиническую карту наблюдения.',
+    hoursShort: '09:00–18:00 · Пн–Сб',
     closingTitle: 'Следующий шаг — позвонить для записи',
     closingText: 'Позвоните по указанному номеру — пациентский сервис подберёт врача и время визита.',
   },
@@ -330,6 +336,8 @@ export const specialtyPageLabels: Record<ContentLang, {
     available: 'Book by phone',
     related: 'Other clinical specialties',
     teamText: 'Review specialist profiles and choose the right doctor for you.',
+    teamNote: 'If the time does not work, colleagues can see the same clinical follow-up record.',
+    hoursShort: '09:00–18:00 · Mon–Sat',
     closingTitle: 'Your next step is to call and book',
     closingText: 'Call the clinic number — patient service will match a doctor and set your visit time.',
   },

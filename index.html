@@ -17,13 +17,22 @@
     <script>
       // Prevent native hash scroll on load (legacy bookmarks).
       (function () {
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
+        window.scrollTo(0, 0)
+        document.documentElement.scrollTop = 0
+        document.body.scrollTop = 0
         if (!location.hash || location.hash === '#') return
         document.documentElement.classList.add('no-smooth-scroll')
-        if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
         try {
           sessionStorage.setItem('fjsti-hash', location.hash)
         } catch (_) {}
         history.replaceState(null, '', location.pathname + location.search)
+      })()
+      ;(function () {
+        var ua = navigator.userAgent
+        if (/Safari/.test(ua) && !/Chrome|Chromium|CriOS|FxiOS|Edg|OPR|OPiOS/.test(ua)) {
+          document.documentElement.classList.add('is-safari')
+        }
       })()
     </script>
   </head>

@@ -28,6 +28,26 @@ export function scrollToPageTopAfterLayout() {
   })
 }
 
+/** Some browsers restore scroll mid-homepage on bfcache return. */
+export function bindHomepageScrollGuard() {
+  if (typeof window === 'undefined') return () => {}
+
+  const scrollToTopQuietly = () => {
+    scrollToPageTop()
+  }
+
+  const onPageShow = (event: PageTransitionEvent) => {
+    if (!event.persisted) return
+    scrollToTopQuietly()
+  }
+
+  window.addEventListener('pageshow', onPageShow)
+
+  return () => {
+    window.removeEventListener('pageshow', onPageShow)
+  }
+}
+
 /** Drop homepage ScrollTrigger instances when leaving a route. */
 export function resetScrollTriggersOnRouteChange() {
   ScrollTrigger.getAll().forEach((trigger) => trigger.kill())

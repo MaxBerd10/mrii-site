@@ -7,14 +7,19 @@ import DoctorReviews from '../components/DoctorReviews'
 import NotFoundPage from './NotFoundPage'
 import {
   doctorPageLabels,
-  doctorProfiles,
   getDoctorBySlug,
   getDoctorsBySpecialty,
 } from '../data/doctors'
 import { getDoctorDossier } from '../data/doctorDossier'
 import { getDoctorPortrait, getDoctorTurnMedia } from '../data/doctorTurnMedia'
+import {
+  getSpecialtyColleagues,
+  getSpecialtySlugForDoctor,
+} from '../data/specialtyWorld'
+import { DoctorTeamSection } from '../components/DoctorTeamSection'
 import { useScrollToTopOnRoute } from '../lib/scrollRoute'
 import '../styles/doctor-profile.css'
+import '../styles/doctor-mini.css'
 import '../styles/doctor-booking-phone.css'
 
 type ProfileUi = {
@@ -237,15 +242,10 @@ export default function DoctorPage({ slug }: { slug: string }) {
   const portrait = getDoctorPortrait(profile.slug, profile.photo)
   const turnMedia = getDoctorTurnMedia(profile.slug)
   const title = splitName(view.name)
-  const sameSpecialty = getDoctorsBySpecialty(profile.content.uz.specialty, slug)
-  const relatedSafe = [
-    ...sameSpecialty,
-    ...doctorProfiles.filter(
-      (doctor) =>
-        doctor.slug !== slug &&
-        !sameSpecialty.some((sameDoctor) => sameDoctor.slug === doctor.slug),
-    ),
-  ].slice(0, 5)
+  const specialtySlug = getSpecialtySlugForDoctor(profile)
+  const relatedDoctors = specialtySlug
+    ? getSpecialtyColleagues(specialtySlug, slug)
+    : getDoctorsBySpecialty(profile.content.uz.specialty, slug)
   const aboutText = view.about.startsWith(view.name)
     ? view.about.slice(view.name.length).replace(/^\s*[—–-]\s*/, '')
     : view.about
@@ -640,26 +640,15 @@ export default function DoctorPage({ slug }: { slug: string }) {
       </section>
 
       <section className="dp-shell dp-related">
-        <header className="dp-section-head">
-          <p className="dp-chan">{view.specialty}</p>
-          <h2>{ui.related}</h2>
-          <span>{ui.relatedDescription}</span>
-        </header>
-        <div className="dp-shelf">
-          {relatedSafe.map((doctor) => {
-            const content = doctor.content[contentLang]
-            return (
-              <a key={doctor.slug} href={`/doctors/${doctor.slug}`} className="dp-mini">
-                <img src={getDoctorPortrait(doctor.slug, doctor.photo)} alt={content.name} loading="lazy" />
-                <span className="dp-mini__body">
-                  <strong>{content.name}</strong>
-                  <span>{content.role} · {content.exp}</span>
-                  <em>{ui.hoursShort}</em>
-                </span>
-              </a>
-            )
-          })}
-        </div>
+        <DoctorTeamSection
+          embedded
+          eyebrow={view.specialty}
+          title={ui.related}
+          description={ui.relatedDescription}
+          hoursLabel={ui.hoursShort}
+          doctors={relatedDoctors}
+          contentLang={contentLang}
+        />
       </section>
 
       <section className="dp-close">

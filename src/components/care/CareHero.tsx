@@ -120,13 +120,13 @@ export default function CareHero() {
 
           <div className="hc-shell hc-hero__stage">
             <div className="hc-hero__copy">
-              <MaskedText as="p" className="hc-eyebrow">
+              <MaskedText as="p" className="hc-eyebrow" immediate>
                 {hero.eyebrow}
               </MaskedText>
-              <MaskedText as="h1" id="hc-hero-title" className="hc-display">
+              <MaskedText as="h1" id="hc-hero-title" className="hc-display" immediate>
                 {hero.titleLead} <em>{hero.titleEm}</em>
               </MaskedText>
-              <MaskedText as="p" className="hc-lead">
+              <MaskedText as="p" className="hc-lead" immediate>
                 {hero.lead}
               </MaskedText>
 

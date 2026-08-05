@@ -11,6 +11,7 @@ import {
   CareVoices,
 } from '../components/care/CareSections'
 import CinematicFooter from '../components/ui/motion-footer'
+import { bindHomepageScrollGuard, scrollToPageTopAfterLayout } from '../lib/scrollRoute'
 import '../styles/home-care.css'
 
 /**
@@ -35,7 +36,12 @@ import '../styles/home-care.css'
 export default function HomeCarePage() {
   useLayoutEffect(() => {
     document.documentElement.classList.add('is-home-care')
-    return () => document.documentElement.classList.remove('is-home-care')
+    scrollToPageTopAfterLayout()
+    const releaseScrollGuard = bindHomepageScrollGuard()
+    return () => {
+      document.documentElement.classList.remove('is-home-care')
+      releaseScrollGuard()
+    }
   }, [])
 
   return (

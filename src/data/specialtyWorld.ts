@@ -308,6 +308,28 @@ export function getSpecialtyDoctors(slug: string): DoctorProfile[] {
   return doctorProfiles.filter((d) => names.includes(d.content.uz.specialty))
 }
 
+/** Map a doctor's uz specialty label to a clinic slug when possible. */
+export function getSpecialtySlugForDoctor(profile: DoctorProfile): string | null {
+  const specialtyUz = profile.content.uz.specialty
+  for (const [slug, world] of Object.entries(specialtyWorlds)) {
+    const aliases: Record<string, string[]> = {
+      gynecology: ['Ginekologiya', 'Akusherlik'],
+      surgery: ['Jarrohlik', 'Travmatologiya'],
+    }
+    const names = aliases[slug] ?? [world.doctorSpecialtyUz]
+    if (names.includes(specialtyUz)) return slug
+  }
+  return null
+}
+
+/** Same colleague list as the clinic specialty page (optionally excluding one doctor). */
+export function getSpecialtyColleagues(
+  specialtySlug: string,
+  excludeSlug?: string,
+): DoctorProfile[] {
+  return getSpecialtyDoctors(specialtySlug).filter((d) => d.slug !== excludeSlug)
+}
+
 export const specialtyWorldLabels: Record<
   ContentLang,
   {
@@ -328,7 +350,7 @@ export const specialtyWorldLabels: Record<
 > = {
   uz: {
     enter: 'Bo’limga kirish',
-    team: 'Shu yo’nalish shifokorlari',
+    team: 'Shu yo’nalishdagi shifokorlar',
     teamEmpty: 'Bu yo’nalish uchun shifokorlar tez orada qo’shiladi.',
     seeDoctor: 'Profil',
     book: 'Qabulga yozilish',

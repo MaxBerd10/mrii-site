@@ -8,6 +8,7 @@ import {
   type CSSProperties,
   type ReactElement,
   type ReactNode,
+  type RefObject,
 } from 'react'
 
 /**
@@ -18,49 +19,80 @@ import {
  * flips a single class is both lighter and easier to keep consistent than a
  * variant per section.
  */
-export function useReveal<T extends HTMLElement>(threshold = 0.18) {
-  const ref = useRef<T>(null)
+function useInViewReveal(
+  threshold: number,
+  rootMargin: string,
+  options?: { immediate?: boolean; fallbackMs?: number },
+) {
+  const immediate = options?.immediate ?? false
+  const fallbackMs = options?.fallbackMs ?? 900
+  const ref = useRef<HTMLElement>(null)
   const [seen, setSeen] = useState(
-    () => typeof document !== 'undefined' && document.hidden,
+    () =>
+      immediate ||
+      (typeof document !== 'undefined' && document.hidden),
   )
 
   useEffect(() => {
     const node = ref.current
     if (!node || seen) return
 
-    // Browsers pause observers in hidden tabs; a page opened in the background
-    // would otherwise stay blank until it is focused.
-    if (typeof IntersectionObserver === 'undefined') {
+    let observer: IntersectionObserver | null = null
+    let cancelled = false
+    let fallbackId = 0
+
+    const reveal = () => {
+      if (cancelled) return
       setSeen(true)
-      return
+      observer?.disconnect()
+      observer = null
+      if (fallbackId) window.clearTimeout(fallbackId)
     }
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setSeen(true)
-          io.disconnect()
-        }
-      },
-      { threshold, rootMargin: '0px 0px -8% 0px' },
-    )
+    const observe = () => {
+      if (cancelled || observer) return
 
-    io.observe(node)
+      if (typeof IntersectionObserver === 'undefined') {
+        reveal()
+        return
+      }
 
-    const revealWhenHidden = () => {
-      if (!document.hidden) return
-      setSeen(true)
-      io.disconnect()
+      observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) reveal()
+        },
+        { threshold, rootMargin },
+      )
+      observer.observe(node)
+
+      // Sticky ancestors break IO in Safari/Firefox — never leave copy invisible.
+      fallbackId = window.setTimeout(reveal, fallbackMs)
     }
-    document.addEventListener('visibilitychange', revealWhenHidden)
+
+    const resumeWhenVisible = () => {
+      if (!document.hidden) observe()
+    }
+
+    document.addEventListener('visibilitychange', resumeWhenVisible)
+    requestAnimationFrame(() => requestAnimationFrame(observe))
 
     return () => {
-      document.removeEventListener('visibilitychange', revealWhenHidden)
-      io.disconnect()
+      cancelled = true
+      document.removeEventListener('visibilitychange', resumeWhenVisible)
+      observer?.disconnect()
+      if (fallbackId) window.clearTimeout(fallbackId)
     }
-  }, [seen, threshold])
+  }, [seen, threshold, rootMargin, fallbackMs])
 
   return { ref, seen }
+}
+
+export function useReveal<T extends HTMLElement>(
+  threshold = 0.18,
+  options?: { immediate?: boolean },
+) {
+  const { ref, seen } = useInViewReveal(threshold, '0px 0px -4% 0px', options)
+  return { ref: ref as RefObject<T>, seen }
 }
 
 type MaskedTextTag = 'h1' | 'h2' | 'p' | 'span'
@@ -72,6 +104,8 @@ type MaskedTextProps = {
   id?: string
   style?: CSSProperties
   threshold?: number
+  /** Skip IO — for above-the-fold copy inside sticky heroes. */
+  immediate?: boolean
 }
 
 function textContent(node: ReactNode): string {
@@ -119,62 +153,6 @@ function maskedWords(node: ReactNode, counter: { value: number }, path = 'text')
   return node
 }
 
-function useMaskedTextReveal(threshold: number) {
-  const ref = useRef<HTMLElement>(null)
-  // A hidden tab pauses both rAF and observers, so copy that mounts in the
-  // background would stay masked even after the reader switches to it. Match
-  // `useReveal` and show it outright rather than risk an invisible headline.
-  const [seen, setSeen] = useState(
-    () => typeof document !== 'undefined' && document.hidden,
-  )
-
-  useEffect(() => {
-    const node = ref.current
-    if (!node || seen) return
-
-    let observer: IntersectionObserver | null = null
-    let cancelled = false
-
-    const observe = () => {
-      if (cancelled || observer) return
-
-      if (typeof IntersectionObserver === 'undefined') {
-        setSeen(true)
-        return
-      }
-
-      observer = new IntersectionObserver(
-        ([entry]) => {
-          if (!entry.isIntersecting) return
-          setSeen(true)
-          observer?.disconnect()
-        },
-        { threshold, rootMargin: '0px 0px -6% 0px' },
-      )
-      observer.observe(node)
-    }
-
-    // Observe right away. Fonts load with `display: swap`, so the copy paints in
-    // the fallback face immediately and swaps in place — waiting on
-    // `document.fonts.ready` here was the main cause of the hero text arriving
-    // late on first load.
-    const resumeWhenVisible = () => {
-      if (!document.hidden) observe()
-    }
-
-    document.addEventListener('visibilitychange', resumeWhenVisible)
-    observe()
-
-    return () => {
-      cancelled = true
-      document.removeEventListener('visibilitychange', resumeWhenVisible)
-      observer?.disconnect()
-    }
-  }, [seen, threshold])
-
-  return { ref, seen }
-}
-
 /**
  * Cuberto-inspired masked word reveal.
  *
@@ -187,9 +165,10 @@ export function MaskedText({
   className = '',
   id,
   style,
-  threshold = 0.16,
+  threshold = 0.12,
+  immediate = false,
 }: MaskedTextProps) {
-  const { ref, seen } = useMaskedTextReveal(threshold)
+  const { ref, seen } = useInViewReveal(threshold, '0px 0px -4% 0px', { immediate })
   const counter = { value: 0 }
 
   return (
