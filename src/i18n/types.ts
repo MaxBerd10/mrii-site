@@ -8,14 +8,14 @@ export function toContentLang(lang: Lang): ContentLang {
 }
 
 export const LANG_LABELS: Record<Lang, string> = {
-  uz: "O'ZB",
+  uz: "O’ZB",
   ru: 'РУС',
   en: 'ENG',
   kaa: 'QARA',
 }
 
 export const LANG_NAMES: Record<Lang, string> = {
-  uz: "O'zbek",
+  uz: "O’zbek",
   ru: 'Русский',
   en: 'English',
   kaa: 'Qaraqalpaq',

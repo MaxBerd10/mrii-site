@@ -1,20 +1,17 @@
-import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
-import SectionHeader from './ui/SectionHeader'
 import Reveal from './ui/Reveal'
-import { DoctorCard, type DoctorCardDoc } from './Doctors'
-import { doctorProfiles, getSpecialtyGroup } from '../data/doctors'
+import ImageGallery, { type ImageGalleryDoctor } from './ui/image-gallery'
+import { doctorProfiles } from '../data/doctors'
 import { getDoctorCardPortrait, getDoctorTurnMedia } from '../data/doctorTurnMedia'
-import { staggerContainer, blurUp } from '../lib/animations'
-import '../styles/doctor-turn.css'
+import { blurUp } from '../lib/animations'
 import '../styles/home-patient.css'
 
-const HOME_COUNT = 6
+const HOME_COUNT = 7
 
 export default function HomeDoctors() {
   const { contentLang, t } = useLanguage()
 
-  const doctors: DoctorCardDoc[] = doctorProfiles
+  const doctors: ImageGalleryDoctor[] = doctorProfiles
     .filter((p) => p.staffKind !== 'nurse')
     .slice(0, HOME_COUNT)
     .map((p) => {
@@ -23,19 +20,12 @@ export default function HomeDoctors() {
       const poster = turn?.poster ?? p.photo
       return {
         id: p.slug,
-        slug: p.slug,
         name: c.name,
         role: c.role,
         specialty: c.specialty,
-        specialtyGroup: getSpecialtyGroup(p),
-        exp: c.exp,
-        papers: p.papers,
-        studies: p.studies,
-        color: p.color,
-        photo: poster,
-        cardPhoto: getDoctorCardPortrait(p.slug, poster),
-        video: turn?.video,
-        staffKind: p.staffKind,
+        experience: c.exp,
+        image: getDoctorCardPortrait(p.slug, poster),
+        href: `/doctors/${p.slug}`,
       }
     })
 
@@ -43,42 +33,17 @@ export default function HomeDoctors() {
     <section id="home-doctors" className="section section--muted home-doctors">
       <div className="container-main">
         <Reveal variants={blurUp}>
-          <SectionHeader
-            label={t.home.doctors.label}
+          <ImageGallery
+            doctors={doctors}
             title={
               <>
                 {t.home.doctors.title1} <em>{t.home.doctors.titleEm}</em>
               </>
             }
             description={t.home.doctors.description}
-            accent="#0EA5E9"
-            action={
-              <a href="/doctors" className="home-section__more">
-                {t.home.doctors.viewAll} →
-              </a>
-            }
+            viewAllLabel={t.home.doctors.viewAll}
           />
         </Reveal>
-
-        <motion.div
-          className="doctor-grid doctor-grid--home"
-          variants={staggerContainer(0.08)}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.12 }}
-        >
-          {doctors.map((doc) => (
-            <DoctorCard
-              key={doc.id}
-              doc={doc}
-              bookLabel={t.doctors.bookBtn}
-              papersLabel={t.doctors.papers}
-              studiesLabel={t.doctors.studies}
-              reviewsLabel={t.doctors.reviews}
-              noReviewsLabel={t.doctors.writeReview}
-            />
-          ))}
-        </motion.div>
       </div>
     </section>
   )

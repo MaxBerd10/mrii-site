@@ -19,12 +19,12 @@ export const aiProducts: AIProductDetail[] = [
     content: {
       uz: {
         overview: 'AiShifokor qabulda shifokorga real vaqtda yordam beradi: anamnezni tahlil qiladi, protokol shakllantiradi, klinik tavsiyalar beradi va ICD kodlashni tezlashtiradi.',
-        audience: 'Klinikalar, ambulatoriya va ko‘p tarmoqli markazlar uchun.',
+        audience: 'Klinikalar, ambulatoriya va ko’p tarmoqli markazlar uchun.',
         outcomes: ['Hujjatlashtirish vaqtini 87% gacha qisqartirish', 'Yagona klinik protokol sifati', 'MIS bilan tez integratsiya', 'Shifokor e’tiborini bemorga qaytarish'],
-        workflow: ['Qabulda suhbat va anamnez yig‘ish', 'AI protokol va tavsiyalar', 'ICD-10/11 kodlash', 'MIS ga avtomatik uzatish'],
+        workflow: ['Qabulda suhbat va anamnez yig’ish', 'AI protokol va tavsiyalar', 'ICD-10/11 kodlash', 'MIS ga avtomatik uzatish'],
         cases: [
           { title: 'Kardiologiya qabuli', result: 'Bir bemor hujjati 12 daqiqadan 2 daqiqaga tushdi.' },
-          { title: 'Terapiya bo‘limi', result: 'Kunlik qabul hajmi 18% oshdi, sifat saqlanib qoldi.' },
+          { title: 'Terapiya bo’limi', result: 'Kunlik qabul hajmi 18% oshdi, sifat saqlanib qoldi.' },
         ],
       },
       ru: {
@@ -54,11 +54,11 @@ export const aiProducts: AIProductDetail[] = [
     content: {
       uz: {
         overview: 'AI Radiology rentgen, KT va MRT tasvirlarini avtomatik tahlil qiladi, shubhali topilmalarni prioritetlaydi va radiologga ikkinchi fikr beradi.',
-        audience: 'Diagnostika markazlari va radiologiya bo‘limlari uchun.',
+        audience: 'Diagnostika markazlari va radiologiya bo’limlari uchun.',
         outcomes: ['94% erta aniqlash sezuvchanligi', '4 soniyadan kam tahlil', 'DICOM/PACS integratsiya', 'Navbatni aqlli tartiblash'],
         workflow: ['Tasvirni PACS dan olish', 'AI tahlil va highlight', 'Radiolog tasdiqlashi', 'Xulosani klinikasiga uzatish'],
         cases: [
-          { title: 'Ko‘krak qafasi KT', result: 'Shubhali tugunlar 3× tezroq ajratildi.' },
+          { title: 'Ko’krak qafasi KT', result: 'Shubhali tugunlar 3× tezroq ajratildi.' },
           { title: 'Miya MRT', result: 'Kechnavbatli holatlar avtomatik prioritetlandi.' },
         ],
       },
@@ -88,13 +88,13 @@ export const aiProducts: AIProductDetail[] = [
     slug: 'ultrasound',
     content: {
       uz: {
-        overview: 'AI Ultrasound UTT paytida organlarni real vaqtda segmentatsiya qiladi, o‘lchovlarni avtomatlashtiradi va protokol tayyorlashni soddalashtiradi.',
+        overview: 'AI Ultrasound UTT paytida organlarni real vaqtda segmentatsiya qiladi, o’lchovlarni avtomatlashtiradi va protokol tayyorlashni soddalashtiradi.',
         audience: 'UTT kabinetlari va ambulator diagnostika uchun.',
-        outcomes: ['Diagnostikani 3× tezlashtirish', 'Avto-o‘lchov aniqligi', 'Standartlashgan protokol', 'Yangi shifokorlar uchun yordam'],
-        workflow: ['Skanerlashni boshlash', 'Real vaqt segmentatsiya', 'Avto-o‘lchov va belgilar', 'Tayyor protokolni saqlash'],
+        outcomes: ['Diagnostikani 3× tezlashtirish', 'Avto-o’lchov aniqligi', 'Standartlashgan protokol', 'Yangi shifokorlar uchun yordam'],
+        workflow: ['Skanerlashni boshlash', 'Real vaqt segmentatsiya', 'Avto-o’lchov va belgilar', 'Tayyor protokolni saqlash'],
         cases: [
-          { title: 'Qalqonsimon bez UTT', result: 'Tugun o‘lchovi va protokol 60% tezroq.' },
-          { title: 'Qorin bo‘shlig‘i UTT', result: 'Yangi mutaxassislar xatosi kamaydi.' },
+          { title: 'Qalqonsimon bez UTT', result: 'Tugun o’lchovi va protokol 60% tezroq.' },
+          { title: 'Qorin bo’shlig’i UTT', result: 'Yangi mutaxassislar xatosi kamaydi.' },
         ],
       },
       ru: {
@@ -126,10 +126,10 @@ export const aiProducts: AIProductDetail[] = [
         overview: 'AI Clinical Research klinik tadqiqotlarni avtomatlashtiradi: bemor skreeningi, eCRF, nojoiya hodisalar monitoringi va CTMS integratsiyasi.',
         audience: 'Sponsorlar, CRO va tadqiqot markazlari uchun.',
         outcomes: ['Skreening vaqtini 40% kamaytirish', 'Toza eCRF ma’lumotlari', 'Tezroq start-up', 'Farmakonazor signalari'],
-        workflow: ['Inkluziya mezonlarini yuklash', 'AI bemor tanlash', 'eCRF to‘ldirish', 'Monitoring va CTMS sync'],
+        workflow: ['Inkluziya mezonlarini yuklash', 'AI bemor tanlash', 'eCRF to’ldirish', 'Monitoring va CTMS sync'],
         cases: [
           { title: 'I–II bosqich tadqiqot', result: 'Birinchi bemorgacha vaqt 6 haftadan 4 haftaga tushdi.' },
-          { title: 'Ko‘p markazli KT', result: 'Ma’lumot xatolari 35% kamaydi.' },
+          { title: 'Ko’p markazli KT', result: 'Ma’lumot xatolari 35% kamaydi.' },
         ],
       },
       ru: {
@@ -189,17 +189,17 @@ export const aiPageLabels: Record<ContentLang, {
     cases: 'Keyslar',
     related: 'Boshqa AI mahsulotlar',
     demoTitle: 'Demoni buyurtma qilish',
-    demoDesc: '15 daqiqa ichida AI jamoamiz siz bilan bog‘lanadi va moslashuv rejasini tayyorlaydi.',
+    demoDesc: '15 daqiqa ichida AI jamoamiz siz bilan bog’lanadi va moslashuv rejasini tayyorlaydi.',
     clinicField: 'Klinika / tashkilot',
     nameField: 'Ismingiz',
     phoneField: 'Telefon',
     emailField: 'Email',
     messageField: 'Izoh',
     submitting: 'Yuborilmoqda...',
-    submitError: 'Yuborishda xatolik. Qayta urinib ko‘ring yoki qo‘ng‘iroq qiling.',
-    successTitle: 'Demo so‘rovi qabul qilindi',
-    successDesc: 'Fargʻona Jamoat Salomatligi Tibbiyot Instituti AI jamoasi ma’lumotlarni ko‘rib chiqib, demo vaqtini tasdiqlash uchun bog‘lanadi.',
-    requestNumber: 'So‘rov raqami',
+    submitError: 'Yuborishda xatolik. Qayta urinib ko’ring yoki qo’ng’iroq qiling.',
+    successTitle: 'Demo so’rovi qabul qilindi',
+    successDesc: 'Farg’ona Jamoat Salomatligi Tibbiyot Instituti AI jamoasi ma’lumotlarni ko’rib chiqib, demo vaqtini tasdiqlash uchun bog’lanadi.',
+    requestNumber: 'So’rov raqami',
     productLabel: 'Mahsulot',
     close: 'Yopish',
     moreProducts: 'Barcha AI yechimlar',

@@ -66,26 +66,26 @@ const profileUi: Record<ContentLang, ProfileUi> = {
     book: 'Qabulga yozilish',
     booking: 'Yozilish',
     schedule: 'Telefon orqali yozilish',
-    phoneBookingTitle: 'Bitta qo‘ng‘iroq — vaqt tasdiqlanadi',
+    phoneBookingTitle: 'Bitta qo’ng’iroq — vaqt tasdiqlanadi',
     phoneBookingLead:
-      'Onlayn jadval yo‘q. Registratura telefon orqali ishlaydi: shifokor, kun va vaqtni birga kelishamiz.',
+      'Onlayn jadval yo’q. Registratura telefon orqali ishlaydi: shifokor, kun va vaqtni birga kelishamiz.',
     phoneSteps: [
-      'Belgilangan raqamga qo‘ng‘iroq qiling yoki qayta qo‘ng‘iroq so‘rang.',
+      'Belgilangan raqamga qo’ng’iroq qiling yoki qayta qo’ng’iroq so’rang.',
       'Mutaxassislik va shikoyatingizni ayting — mos shifokor tanlanadi.',
       'Qulay kun va vaqt tasdiqlanadi, qabulga kelishingiz mumkin.',
     ],
     doctor: 'Shifokor',
-    direction: 'Yo‘nalish',
+    direction: 'Yo’nalish',
     hours: 'Ish vaqti',
     price: 'Birinchi qabul narxi',
-    callToBook: 'Qo‘ng‘iroq qilish',
+    callToBook: 'Qo’ng’iroq qilish',
     contactsCta: 'Aloqa va manzil',
     bookingNote: 'Ish vaqti: Dushanba–Shanba, 09:00–18:00.',
     about: 'Mutaxassis haqida',
-    aboutTitle: 'Sog‘liqni erta asrash — kech davolashdan samaraliroq.',
-    focus: 'Yordam yo‘nalishlari',
+    aboutTitle: 'Sog’liqni erta asrash — kech davolashdan samaraliroq.',
+    focus: 'Yordam yo’nalishlari',
     visitCard: 'Qabul kartasi',
-    career: 'Kasbiy yo‘l',
+    career: 'Kasbiy yo’l',
     careerDescription: 'Tayyorgarlikdan yetakchi mutaxassislikkacha — ish joylari va mas’uliyat doirasi.',
     education: 'Ta’lim va malaka',
     educationTitle: 'Hujjatlar bilan tasdiqlangan',
@@ -97,11 +97,11 @@ const profileUi: Record<ContentLang, ProfileUi> = {
     studies: 'Tadqiqot',
     reviews: 'Bemorlar fikri',
     reviewsTitle: '128 ta tasdiqlangan sharh',
-    related: 'Shu yo‘nalishdagi boshqa shifokorlar',
-    relatedDescription: 'Vaqt to‘g‘ri kelmasa — hamkasblari ham shu klinik kuzatuv kartasini ko‘radi.',
+    related: 'Shu yo’nalishdagi boshqa shifokorlar',
+    relatedDescription: 'Vaqt to’g’ri kelmasa — hamkasblari ham shu klinik kuzatuv kartasini ko’radi.',
     coordinatorTitle: 'Qaysi shifokorga yozilishni bilmayapsizmi?',
-    coordinatorText: 'Klinika koordinatori shikoyatingizni tinglab, to‘g‘ri mutaxassisga yo‘naltiradi.',
-    callback: 'Qayta qo‘ng‘iroq so‘rash',
+    coordinatorText: 'Klinika koordinatori shikoyatingizni tinglab, to’g’ri mutaxassisga yo’naltiradi.',
+    callback: 'Qayta qo’ng’iroq so’rash',
     footnote: 'Shifokor profilidagi kasbiy ma’lumotlar CMS orqali yangilanadi.',
   },
   ru: {
@@ -252,7 +252,7 @@ export default function DoctorPage({ slug }: { slug: string }) {
   const localeReviewText: Record<ContentLang, [string, string, string]> = {
     uz: [
       'Natijalarni birinchi marta tushunarli qilib izohlab berdilar. Davolash rejasini yozib berdilar, uyda ham adashmadim.',
-      'Har bir savolimga shoshilmasdan javob berdilar. Kuzatuv rejasi aniq va juda qulay bo‘ldi.',
+      'Har bir savolimga shoshilmasdan javob berdilar. Kuzatuv rejasi aniq va juda qulay bo’ldi.',
       'Qabul biroz kechikdi, lekin shifokor yetarli vaqt ajratdi va barcha savollarimga javob berdi.',
     ],
     ru: [
@@ -497,7 +497,7 @@ export default function DoctorPage({ slug }: { slug: string }) {
           </p>
           <p>
             {contentLang === 'uz'
-              ? 'Har bir bemor uchun tekshiruv natijalari bitta kuzatuv kartasiga yig‘iladi — shu karta keyingi qabul va davolash rejasining asosi bo‘lib qoladi.'
+              ? 'Har bir bemor uchun tekshiruv natijalari bitta kuzatuv kartasiga yig’iladi — shu karta keyingi qabul va davolash rejasining asosi bo’lib qoladi.'
               : contentLang === 'ru'
                 ? 'Результаты обследований собираются в единую карту наблюдения — она становится основой следующих приёмов и плана лечения.'
                 : 'Every result is collected in one follow-up record, which becomes the basis for future visits and the care plan.'}

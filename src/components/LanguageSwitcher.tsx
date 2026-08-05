@@ -4,7 +4,7 @@ import { LANG_LABELS, type Lang } from '../i18n/types'
 
 const langs: Lang[] = ['uz', 'ru', 'en', 'kaa']
 const languageAria: Record<Lang, string> = {
-  uz: 'Tilni o‘zgartirish',
+  uz: 'Tilni o’zgartirish',
   ru: 'Изменить язык',
   en: 'Change language',
   kaa: 'Tildi ózgertiw',

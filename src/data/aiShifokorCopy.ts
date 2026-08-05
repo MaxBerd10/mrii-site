@@ -48,15 +48,15 @@ export const AISHIFOKOR_COPY: Record<Lang, AiShifokorCopy> = {
       },
       {
         title: 'Global bilimlar bazasi',
-        desc: 'Dunyo bo‘ylab eng so‘nggi tibbiy tadqiqotlar va maqolalarni bir zumda tahlil qiling.',
+        desc: 'Dunyo bo’ylab eng so’nggi tibbiy tadqiqotlar va maqolalarni bir zumda tahlil qiling.',
       },
       {
         title: 'EKG tahlili',
         desc: 'EKG tasvirlarini yuklang va sun’iy intellekt yordamida aniq xulosa va tahlil oling.',
       },
       {
-        title: 'Dorilar o‘zaro ta’siri',
-        desc: 'Bir vaqtning o‘zida bir nechta dori vositalarini qabul qilishda xavfsizlikni tekshiring.',
+        title: 'Dorilar o’zaro ta’siri',
+        desc: 'Bir vaqtning o’zida bir nechta dori vositalarini qabul qilishda xavfsizlikni tekshiring.',
       },
       {
         title: 'Xavf skoring',
@@ -65,15 +65,15 @@ export const AISHIFOKOR_COPY: Record<Lang, AiShifokorCopy> = {
     ],
     flowTitle: 'Ishlash tizimi oddiy va samarali',
     flowSubtitle:
-      '3 qadam · taxminan 15–25 daqiqa · 12+ virtual mutaxassis · O‘zbekiston SSV protokollari.',
+      '3 qadam · taxminan 15–25 daqiqa · 12+ virtual mutaxassis · O’zbekiston SSV protokollari.',
     steps: [
       {
         title: 'Ma’lumotlarni kiriting',
         desc:
-          'Bemorning shikoyatlari, anamnezi, obyektiv ko‘rik va laboratoriya natijalarini kiriting. EKG, rentgen yoki boshqa tasvirlarni yuklashingiz mumkin.',
+          'Bemorning shikoyatlari, anamnezi, obyektiv ko’rik va laboratoriya natijalarini kiriting. EKG, rentgen yoki boshqa tasvirlarni yuklashingiz mumkin.',
         bullets: [
           'Shikoyatlar, anamnez, allergiya va dori-darmonlar',
-          'Vital ko‘rsatkichlar (AB, puls, harorat, SpO₂)',
+          'Vital ko’rsatkichlar (AB, puls, harorat, SpO₂)',
           'Laboratoriya va instrumental tahlillar',
           'Ixtiyoriy: EKG, rentgen, KT/MRT rasmlari',
         ],
@@ -82,7 +82,7 @@ export const AISHIFOKOR_COPY: Record<Lang, AiShifokorCopy> = {
       {
         title: 'AI tahlili',
         desc:
-          'Tizim ma’lumotlarni o‘rganadi, differensial tashxis ro‘yxatini shakllantiradi va holatga mos 5–6 mutaxassisni taklif qiladi.',
+          'Tizim ma’lumotlarni o’rganadi, differensial tashxis ro’yxatini shakllantiradi va holatga mos 5–6 mutaxassisni taklif qiladi.',
         bullets: [
           'Differensial tashxis va ehtimollik baholash',
           'Konsilium uchun mutaxassislar jamoasi',
@@ -97,16 +97,16 @@ export const AISHIFOKOR_COPY: Record<Lang, AiShifokorCopy> = {
           'Virtual konsilium yakuniy konsensusga keladi. Davolash rejasi, dori tavsiyalari va prognozni PDF/Wordda yuklab oling.',
         bullets: [
           'Konsensus tashxisi va asoslari',
-          'Davolash rejasi va dori-darmonlar (O‘zbekistonda mavjud)',
-          'Qo‘shimcha tekshiruvlar va kuzatuv rejasi',
+          'Davolash rejasi va dori-darmonlar (O’zbekistonda mavjud)',
+          'Qo’shimcha tekshiruvlar va kuzatuv rejasi',
           'PDF/Word hisobot',
         ],
         duration: 'Yakuniy',
       },
     ],
-    bannerTitle: 'Tibbiy amaliyotingizni bugun o‘zgartiring',
+    bannerTitle: 'Tibbiy amaliyotingizni bugun o’zgartiring',
     bannerSubtitle:
-      'AiShifokor platformasi bilan ishlashni boshlang va har bir bemorga yuqori aniqlikdagi tashxis qo‘ying.',
+      'AiShifokor platformasi bilan ishlashni boshlang va har bir bemorga yuqori aniqlikdagi tashxis qo’ying.',
     bannerCta: 'Tizimga kirish',
     homeCards: [
       {
@@ -407,14 +407,14 @@ export const AISHIFOKOR_COPY: Record<Lang, AiShifokorCopy> = {
     ],
     flowTitle: 'Islew sistemasi ápiwayı hám nátiyjeli',
     flowSubtitle:
-      '3 qádem · shama menen 15–25 minut · 12+ virtual qánige · O‘zbekstan SSV protokolları.',
+      '3 qádem · shama menen 15–25 minut · 12+ virtual qánige · O’zbekstan SSV protokolları.',
     steps: [
       {
-        title: 'Mag‘lıwmatlardı kirgiziń',
+        title: 'Mag’lıwmatlardı kirgiziń',
         desc:
-          'Bemardıń shag‘ımları, anamnezi, obyektiv qarawı hám laboratoriya juwmakların kirgiziń. EKG, rentgen yamasa basqa súwretler júklewińiz múmkin.',
+          'Bemardıń shag’ımları, anamnezi, obyektiv qarawı hám laboratoriya juwmakların kirgiziń. EKG, rentgen yamasa basqa súwretler júklewińiz múmkin.',
         bullets: [
-          'Shag‘ımlar, anamnez, allergiya hám dárilar',
+          'Shag’ımlar, anamnez, allergiya hám dárilar',
           'Witaldıq korsetkishler (AB, puls, ısıqlıq, SpO₂)',
           'Laboratoriya hám instrumental tallawlar',
           'Erikli: EKG, rentgen, KT/MRT súwretleri',
@@ -424,7 +424,7 @@ export const AISHIFOKOR_COPY: Record<Lang, AiShifokorCopy> = {
       {
         title: 'AI tallawı',
         desc:
-          'Sistema mag‘lıwmatlardı úyrenedi, differensial tashxis dizimin dúzedi hám jaǵdayǵa sáykes 5–6 qánige usınadı.',
+          'Sistema mag’lıwmatlardı úyrenedi, differensial tashxis dizimin dúzedi hám jaǵdayǵa sáykes 5–6 qánige usınadı.',
         bullets: [
           'Differensial tashxis hám itimallıq',
           'Konsilium ushın qánigeler toparı',
@@ -439,7 +439,7 @@ export const AISHIFOKOR_COPY: Record<Lang, AiShifokorCopy> = {
           'Virtual konsilium juwmaqlawshı konsensusqa keledi. Emlew rejesi, dári usınısları hám prognozdı PDF/Word’da júklep alıń.',
         bullets: [
           'Konsensus tashxis hám tiykarları',
-          'Emlew rejesi hám O‘zbekstanda bar dárilar',
+          'Emlew rejesi hám O’zbekstanda bar dárilar',
           'Qosımsha tekseriwler hám baqlaw rejesi',
           'PDF/Word esabatı',
         ],
@@ -449,7 +449,7 @@ export const AISHIFOKOR_COPY: Record<Lang, AiShifokorCopy> = {
     bannerTitle: 'Meditsinalıq ámeliyatıńızdı bugin ózgeriztiriń',
     bannerSubtitle:
       'AiShifokor platformasi menen islewdi baslań hám hár bir bemarǵa joqarı anıqlıqta tashxis qoyıń.',
-    bannerCta: 'Sistemag‘a kirisiw',
+    bannerCta: 'Sistemag’a kirisiw',
     homeCards: [
       {
         key: 'consilium',

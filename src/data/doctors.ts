@@ -56,85 +56,235 @@ function profile(
 }
 
 export const doctorProfiles: DoctorProfile[] = [
-  profile(0, 'karimov-a-s', {
-    name: 'Dr. Karimov A.S.', role: 'Terapevt', specialty: 'Terapiya', exp: '18 yil tajriba',
-    about: 'Umumiy terapiya bo‘yicha tajribali mutaxassis. Surunkali kasalliklarni kuzatish, profilaktika va bemorga tushunarli davolash rejasini tuzishga e’tibor qaratadi.',
-    education: ['Toshkent tibbiyot akademiyasi', 'Klinik ordinatura — terapiya'],
-    focuses: ['Gipertoniya', 'Diabet monitoring', 'Profilaktik ko‘riklar'],
-    languages: ["O‘zbek", 'Русский'],
+  profile(0, 'satvoldiyev-d-u', {
+    name: 'Dr. Satvoldiyev D.U.',
+    role: 'Kardiologiya bo’limi vrachi',
+    specialty: 'Kardiologiya',
+    exp: '5 yil tajriba',
+    about:
+      'Satvoldiyev Doniyor Umarovich — Farg’ona shahar 2-sonli shifoxonasining xo’jalik hisobidagi kardiologiya bo’limi vrachi (2021 yil 5 yanvardan). O’sh davlat tibbiyot instituti va kardiologiya ordinaturasi bitiruvchisi; yurak-qon tomir kasalliklarini diagnostika va davolash bilan shug’ullanadi.',
+    education: [
+      '2010 — O’sh davlat tibbiyot instituti (kunduzgi), «Davolash ishi»',
+      'ADMI — kardiologiya ordinaturasi',
+    ],
+    focuses: [
+      'Kardiologiya',
+      'Yurak-qon tomir kasalliklari',
+      'Statsionar kuzatuv',
+      'Klinik diagnostika',
+    ],
+    languages: ["O’zbek", 'Русский'],
   }, {
-    name: 'Др. Каримов А.С.', role: 'Терапевт', specialty: 'Терапия', exp: '18 лет опыта',
-    about: 'Опытный терапевт. Ведёт хронические заболевания, профилактику и понятные планы лечения.',
-    education: ['Ташкентская медицинская академия', 'Клиническая ординатура — терапия'],
-    focuses: ['Гипертония', 'Мониторинг диабета', 'Профилактические осмотры'],
+    name: 'Др. Сатволдиев Д.У.',
+    role: 'Врач кардиологического отделения',
+    specialty: 'Кардиология',
+    exp: '5 лет опыта',
+    about:
+      'Сатволдиев Донийор Умарович — врач бюджетного кардиологического отделения городской больницы №2 г. Ферганы (с 5 января 2021 г.). Окончил Osh ГМИ и ординатуру по кардиологии; занимается диагностикой и лечением сердечно-сосудистых заболеваний.',
+    education: [
+      '2010 — Osh государственный медицинский институт (дневное), «Лечебное дело»',
+      'ADMI — ординатура по кардиологии',
+    ],
+    focuses: [
+      'Кардиология',
+      'Сердечно-сосудистые заболевания',
+      'Стационарное наблюдение',
+      'Клиническая диагностика',
+    ],
     languages: ['Узбекский', 'Русский'],
   }, {
-    name: 'Dr. Karimov A.S.', role: 'General practitioner', specialty: 'Therapy', exp: '18 years experience',
-    about: 'Experienced physician focused on chronic care, prevention, and clear treatment plans.',
-    education: ['Tashkent Medical Academy', 'Residency — Internal medicine'],
-    focuses: ['Hypertension', 'Diabetes monitoring', 'Preventive checkups'],
+    name: 'Dr. Satvoldiyev D.U.',
+    role: 'Cardiology department physician',
+    specialty: 'Cardiology',
+    exp: '5 years experience',
+    about:
+      'Satvoldiyev Doniyor Umarovich — physician at the budget-funded cardiology department of Fergana City Hospital No. 2 (since 5 January 2021). Graduate of Osh State Medical Institute and cardiology residency; focuses on cardiovascular diagnosis and treatment.',
+    education: [
+      '2010 — Osh State Medical Institute (full-time), General Medicine',
+      'ADMI — cardiology residency',
+    ],
+    focuses: [
+      'Cardiology',
+      'Cardiovascular disease',
+      'Inpatient care',
+      'Clinical diagnostics',
+    ],
     languages: ['Uzbek', 'Russian'],
-  }, 24, 4),
+  }, 20, 4),
 
-  profile(1, 'yusupova-n-r', {
-    name: 'Dr. Yusupova N.R.', role: 'Pediatr', specialty: 'Pediatriya', exp: '14 yil tajriba',
-    about: 'Bolalar salomatligi, emlash va o‘sish monitoringi bo‘yicha ishlaydi. Ota-onalar bilan ochiq muloqotni muhim deb biladi.',
-    education: ['Samarqand davlat tibbiyot instituti', 'Pediatriya ordinaturasi'],
-    focuses: ['Bolalar infeksiyalari', 'O‘sish nazorati', 'Emlash'],
-    languages: ["O‘zbek", 'Русский', 'English'],
+  profile(1, 'aliyeva-z-v', {
+    name: 'Dr. Aliyeva Z.V.',
+    role: 'Akusher-ginekolog · stajyor o’qituvchi',
+    specialty: 'Akusherlik',
+    exp: '7 yil tajriba',
+    about:
+      'Aliyeva Zarnigor Valijon qizi — FJSTI ko’p tarmoqli klinikasida akusher-ginekolog (2026 yil 1 apreldan). Akusher-ginekologiya kafedrasi stajyor o’qituvchisi; RIOMSM Farg’ona filialida akusher-ginekolog. Endokrinologiya va akusher-ginekologiya bo’yicha klinik ordinatura tajribasiga ega.',
+    education: [
+      '2019 — Andijon davlat tibbiyot instituti, umumiy amaliyot shifokori',
+      '2020–2022 — ADTI klinik ordinatura, endokrinologiya',
+      '2023–2025 — RIOMSM, akusher-ginekologiya klinik ordinaturasi',
+    ],
+    focuses: [
+      'Akusher-ginekologiya',
+      'Ona va bola salomatligi',
+      'Klinik ordinatura',
+      'Stajyor o’qituvchilik',
+    ],
+    languages: ["O’zbek", 'Русский', 'Deutsch'],
   }, {
-    name: 'Др. Юсупова Н.Р.', role: 'Педиатр', specialty: 'Педиатрия', exp: '14 лет опыта',
-    about: 'Занимается здоровьем детей, вакцинацией и мониторингом роста.',
-    education: ['Самаркандский мединститут', 'Ординатура — педиатрия'],
-    focuses: ['Детские инфекции', 'Контроль роста', 'Вакцинация'],
+    name: 'Др. Алиева З.В.',
+    role: 'Акушер-гинеколог · стажёр-преподаватель',
+    specialty: 'Акушерство',
+    exp: '7 лет опыта',
+    about:
+      'Алиева Зарнигор Валижон кизи — акушер-гинеколог многопрофильной клиники FJSTI (с 1 апреля 2026 г.). Стажёр-преподаватель кафедры акушерства и гинекологии; врач филиала RIOMSM в Фергане. Клиническая ординатура по эндокринологии и акушерству-гинекологии.',
+    education: [
+      '2019 — Андижанский государственный медицинский институт, врач общей практики',
+      '2020–2022 — ADTI, клиническая ординатура, эндокринология',
+      '2023–2025 — RIOMSM, клиническая ординатура, акушерство-гинекология',
+    ],
+    focuses: [
+      'Акушерство-гинекология',
+      'Здоровье матери и ребёнка',
+      'Клиническая ординатура',
+      'Педагогическая практика',
+    ],
+    languages: ['Узбекский', 'Русский', 'Deutsch'],
+  }, {
+    name: 'Dr. Aliyeva Z.V.',
+    role: 'OB-GYN · trainee lecturer',
+    specialty: 'Obstetrics',
+    exp: '7 years experience',
+    about:
+      'Aliyeva Zarnigor Valijon qizi — obstetrician-gynecologist at the FJSTI multidisciplinary clinic (since 1 April 2026). Trainee lecturer at the Obstetrics and Gynecology department; OB-GYN at the RIOMSM Fergana branch. Clinical residency in endocrinology and obstetrics-gynecology.',
+    education: [
+      '2019 — Andijan State Medical Institute, general practitioner',
+      '2020–2022 — ADTI clinical residency, endocrinology',
+      '2023–2025 — RIOMSM clinical residency, obstetrics-gynecology',
+    ],
+    focuses: [
+      'Obstetrics and gynecology',
+      'Maternal and child health',
+      'Clinical residency',
+      'Trainee teaching',
+    ],
+    languages: ['Uzbek', 'Russian', 'German'],
+  }, 12, 2, 'professor'),
+
+  profile(2, 'mamatalieva-z-a', {
+    name: 'Dr. Mamatalieva Z.A.',
+    role: 'PhD · nevrologiya va psixiatriya kafedrasi assistenti',
+    specialty: 'Nevrologiya',
+    exp: 'PhD · 11 yil tajriba',
+    about:
+      'Mamatalieva Janona Alimjanovna — PhD, FJSTI «Nevrologiya va psixiatriya» kafedrasi assistenti (2025 yil oktyabrdan). FJSTI klinikasida nevrolog (2026 yil apreldan). Yevropa nevrologlar akademiyasi (EAN RRFS) rezidenti (2026 yildan). Nevrolog, tadqiqotchi-pedagog.',
+    education: [
+      '2009–2015 — Kemerovo davlat tibbiyot akademiyasi',
+      '2017–2020 — ADTI, magistratura',
+      '2025–2026 — FJSTI, bazaviy doktorantura',
+      'PhD — ilmiy daraja',
+    ],
+    focuses: [
+      'Nevrologiya',
+      'Psixiatriya',
+      'Ilmiy-tadqiqot',
+      'Klinik amaliyot',
+    ],
+    languages: ["O’zbek", 'Русский', 'English'],
+  }, {
+    name: 'Др. Маматалиева Ж.А.',
+    role: 'PhD · ассистент кафедры «Неврология и психиатрия»',
+    specialty: 'Неврология',
+    exp: 'PhD · 11 лет опыта',
+    about:
+      'Мамatalieva Жanona Alimzhanovna — PhD, ассистент кафедры «Неврология и психиатрия» FJSTI (с октября 2025 г.). Врач-невролог клиники (с апреля 2026 г.). Резидент EAN RRFS Европейской академии неврологов (с января 2026 г.). Невrolog, исследователь-педагог.',
+    education: [
+      '2009–2015 — Кемеровская государственная медицинская академия',
+      '2017–2020 — ADTI, магистратура',
+      '2025–2026 — Ферганский медицинский институт общественного здоровья, базовая докторантура',
+      'PhD — учёная степень',
+    ],
+    focuses: [
+      'Неврология',
+      'Психиатрия',
+      'Научные исследования',
+      'Клиническая практика',
+    ],
     languages: ['Узбекский', 'Русский', 'English'],
   }, {
-    name: 'Dr. Yusupova N.R.', role: 'Pediatrician', specialty: 'Pediatrics', exp: '14 years experience',
-    about: 'Works with child health, vaccination, and growth monitoring.',
-    education: ['Samarkand Medical Institute', 'Residency — Pediatrics'],
-    focuses: ['Childhood infections', 'Growth tracking', 'Vaccination'],
+    name: 'Dr. Mamatalieva Z.A.',
+    role: 'PhD · assistant, Neurology & Psychiatry department',
+    specialty: 'Neurology',
+    exp: 'PhD · 11 years experience',
+    about:
+      'Mamatalieva Zhanona Alimzhanovna — PhD, assistant at the FJSTI Neurology and Psychiatry department (since October 2025). Neurologist at the FJSTI clinic (since April 2026). EAN RRFS resident of the European Academy of Neurology (since January 2026). Neurologist, researcher-educator.',
+    education: [
+      '2009–2015 — Kemerovo State Medical Academy',
+      '2017–2020 — ADTI, master’s degree',
+      '2025–2026 — Fergana Public Health Medical Institute, basic doctorate',
+      'PhD',
+    ],
+    focuses: [
+      'Neurology',
+      'Psychiatry',
+      'Research',
+      'Clinical practice',
+    ],
     languages: ['Uzbek', 'Russian', 'English'],
-  }, 19, 3),
+  }, 32, 8, 'professor'),
 
-  profile(2, 'rahimova-m-t', {
-    name: 'Dr. Rahimova M.T.', role: 'Ginekolog', specialty: 'Ginekologiya', exp: '16 yil tajriba',
-    about: 'Ayollar salomatligi, profilaktika va zamonaviy diagnostika yondashuvlariga asoslanadi.',
-    education: ['Andijon davlat tibbiyot instituti', 'Ginekologiya ordinaturasi'],
-    focuses: ['Profilaktik ko‘rik', 'Homiladorlik kuzatuvi', 'Ultratovush'],
-    languages: ["O‘zbek", 'Русский'],
+  profile(3, 'abdullayeva-t-y', {
+    name: 'Dr. Abdullayeva T.Y.',
+    role: 'Oila shifokori',
+    specialty: 'Terapiya',
+    exp: '2 yil amaliyot',
+    about:
+      'Abdullayeva Tatyana Yusupovna — Farg’ona shahar 6-sonli oilaviy poliklinikasining oila shifokori (2024 yil 2 oktyabrdan). «Davolash ishi» yo’nalishida oliy ta’lim olmoqda; birlamchi tibbiy-yordam va oila bemorlarini kuzatish bilan shug’ullanadi.',
+    education: [
+      'Oliy ta’lim (kunduzgi) — «Davolash ishi» (o’qish davom etmoqda)',
+    ],
+    focuses: [
+      'Oila shifokorligi',
+      'Birlamchi tibbiy yordam',
+      'Profilaktik ko’riklar',
+      'Surunkali kasalliklarni kuzatish',
+    ],
+    languages: ['Русский', 'English'],
   }, {
-    name: 'Др. Рахимова М.Т.', role: 'Гинеколог', specialty: 'Гинекология', exp: '16 лет опыта',
-    about: 'Специализируется на женском здоровье, профилактике и современной диагностике.',
-    education: ['Андижанский мединститут', 'Ординатура — гинекология'],
-    focuses: ['Профилактика', 'Ведение беременности', 'УЗИ'],
-    languages: ['Узбекский', 'Русский'],
+    name: 'Др. Абдуллаева Т.Ю.',
+    role: 'Семейный врач',
+    specialty: 'Терапия',
+    exp: '2 года практики',
+    about:
+      'Абдуллаева Татьяна Юсуповна — семейный врач поликлиники №6 г. Ферганы (с 2 октября 2024 г.). Получает высшее образование по специальности «Лечебное дело»; ведёт первичный приём и наблюдение семей.',
+    education: [
+      'Высшее образование (дневное) — «Лечебное дело» (обучение продолжается)',
+    ],
+    focuses: [
+      'Семейная медицина',
+      'Первичная медико-санитарная помощь',
+      'Профилактические осмотры',
+      'Наблюдение хронических заболеваний',
+    ],
+    languages: ['Русский', 'English'],
   }, {
-    name: 'Dr. Rahimova M.T.', role: 'Gynecologist', specialty: 'Gynecology', exp: '16 years experience',
-    about: 'Focuses on women’s health, prevention, and modern diagnostics.',
-    education: ['Andijan Medical Institute', 'Residency — Gynecology'],
-    focuses: ['Preventive care', 'Pregnancy follow-up', 'Ultrasound'],
-    languages: ['Uzbek', 'Russian'],
-  }, 28, 5),
-
-  profile(3, 'toshmatova-g-a', {
-    name: 'Dr. Toshmatova G.A.', role: 'Kardiolog', specialty: 'Kardiologiya', exp: '20 yil tajriba',
-    about: 'Yurak-qon tomir kasalliklarini erta aniqlash va uzoq muddatli kuzatuv bo‘yicha ishlaydi.',
-    education: ['Toshkent tibbiyot akademiyasi', 'Kardiologiya ordinaturasi'],
-    focuses: ['EKG', 'Arterial gipertenziya', 'Reabilitatsiya'],
-    languages: ["O‘zbek", 'Русский', 'English'],
-  }, {
-    name: 'Др. Тошматова Г.А.', role: 'Кардиолог', specialty: 'Кардиология', exp: '20 лет опыта',
-    about: 'Работает с ранней диагностикой и долгосрочным наблюдением сердечно-сосудистых заболеваний.',
-    education: ['Ташкентская медицинская академия', 'Ординатура — кардиология'],
-    focuses: ['ЭКГ', 'Артериальная гипертензия', 'Реабилитация'],
-    languages: ['Узбекский', 'Русский', 'English'],
-  }, {
-    name: 'Dr. Toshmatova G.A.', role: 'Cardiologist', specialty: 'Cardiology', exp: '20 years experience',
-    about: 'Specializes in early detection and long-term follow-up of cardiovascular disease.',
-    education: ['Tashkent Medical Academy', 'Residency — Cardiology'],
-    focuses: ['ECG', 'Hypertension', 'Cardiac rehab'],
-    languages: ['Uzbek', 'Russian', 'English'],
-  }, 41, 8),
+    name: 'Dr. Abdullayeva T.Y.',
+    role: 'Family physician',
+    specialty: 'Therapy',
+    exp: '2 years practice',
+    about:
+      'Abdullayeva Tatyana Yusupovna — family physician at Fergana City Polyclinic No. 6 (since 2 October 2024). Pursuing a General Medicine degree; provides primary care and family follow-up.',
+    education: [
+      'Higher education (full-time) — General Medicine (in progress)',
+    ],
+    focuses: [
+      'Family medicine',
+      'Primary care',
+      'Preventive checkups',
+      'Chronic disease follow-up',
+    ],
+    languages: ['Russian', 'English'],
+  }, 8, 1),
 ]
 
 // Generate remaining profiles from photo index + generic templates so all 20 have pages
@@ -153,26 +303,15 @@ const REST: Array<{
   staffKind?: StaffKind
 }> = [
   { slug: 'alimova-d-k', uzName: 'Dr. Alimova D.K.', ruName: 'Др. Алимова Д.К.', roleUz: 'Nevrolog', roleRu: 'Невролог', roleEn: 'Neurologist', specUz: 'Nevrologiya', specRu: 'Неврология', specEn: 'Neurology', papers: 17, studies: 2 },
-  { slug: 'ergashev-b-m', uzName: 'Dr. Ergashev B.M.', ruName: 'Др. Эргашев Б.М.', roleUz: 'Jarroh', roleRu: 'Хирург', roleEn: 'Surgeon', specUz: 'Jarrohlik', specRu: 'Хирургия', specEn: 'Surgery', papers: 35, studies: 6 },
-  { slug: 'saidova-l-h', uzName: 'Dr. Saidova L.H.', ruName: 'Др. Саидова Л.Х.', roleUz: 'Endokrinolog', roleRu: 'Эндокринолог', roleEn: 'Endocrinologist', specUz: 'Endokrinologiya', specRu: 'Эндокринология', specEn: 'Endocrinology', papers: 22, studies: 4 },
-  { slug: 'nazarov-i-v', uzName: 'Dr. Nazarov I.V.', ruName: 'Др. Назаров И.В.', roleUz: 'Travmatolog', roleRu: 'Травматолог', roleEn: 'Traumatologist', specUz: 'Travmatologiya', specRu: 'Травматология', specEn: 'Traumatology', papers: 18, studies: 3 },
-  { slug: 'usmonov-q-a', uzName: 'Prof. Usmonov Q.A.', ruName: 'Проф. Усмонов К.А.', roleUz: 'Onkolog', roleRu: 'Онколог', roleEn: 'Oncologist', specUz: 'Onkologiya', specRu: 'Онкология', specEn: 'Oncology', papers: 64, studies: 11, staffKind: 'professor' },
-  { slug: 'xolmatov-s-r', uzName: 'Prof. Xolmatov S.R.', ruName: 'Проф. Холматов С.Р.', roleUz: 'Kardiolog', roleRu: 'Кардиолог', roleEn: 'Cardiologist', specUz: 'Kardiologiya', specRu: 'Кардиология', specEn: 'Cardiology', papers: 72, studies: 14, staffKind: 'professor' },
-  { slug: 'ismoilova-z-b', uzName: 'Dr. Ismoilova Z.B.', ruName: 'Др. Исмоилова З.Б.', roleUz: 'Terapevt', roleRu: 'Терапевт', roleEn: 'General practitioner', specUz: 'Terapiya', specRu: 'Терапия', specEn: 'Therapy', papers: 15, studies: 2 },
-  { slug: 'abdullayev-j-o', uzName: 'Dr. Abdullayev J.O.', ruName: 'Др. Абдуллаев Ж.О.', roleUz: 'Urolog', roleRu: 'Уролог', roleEn: 'Urologist', specUz: 'Urologiya', specRu: 'Урология', specEn: 'Urology', papers: 26, studies: 5 },
-  { slug: 'qodirova-m-s', uzName: 'Dr. Qodirova M.S.', ruName: 'Др. Кодирова М.С.', roleUz: 'Oftalmolog', roleRu: 'Офтальмолог', roleEn: 'Ophthalmologist', specUz: 'Oftalmologiya', specRu: 'Офтальмология', specEn: 'Ophthalmology', papers: 12, studies: 2 },
+  { slug: 'xojaeva-g-a', uzName: 'Dr. Xo’jaeva G.A.', ruName: 'Др. Ходжаева Г.А.', roleUz: 'UTT vrachi · Terapiya (UASh) kafedrasi assistenti', roleRu: 'Врач УЗД · ассистент кафедры терапии (UASh)', roleEn: 'Ultrasound physician · Therapy (UASh) assistant', specUz: 'Ultratovush diagnostikasi', specRu: 'УЗ-диагностика', specEn: 'Ultrasound diagnostics', papers: 10, studies: 2 },
   { slug: 'mirzayeva-a-n', uzName: 'Dr. Mirzayeva A.N.', ruName: 'Др. Мирзаева А.Н.', roleUz: 'Dermatolog', roleRu: 'Дерматолог', roleEn: 'Dermatologist', specUz: 'Dermatologiya', specRu: 'Дерматология', specEn: 'Dermatology', papers: 11, studies: 1 },
   { slug: 'hamidova-f-t', uzName: 'Dr. Hamidova F.T.', ruName: 'Др. Хамидова Ф.Т.', roleUz: 'LOR', roleRu: 'ЛОР', roleEn: 'ENT', specUz: 'Otorinolaringologiya', specRu: 'Оториноларингология', specEn: 'Otolaryngology', papers: 16, studies: 3 },
   { slug: 'sobirova-n-m', uzName: 'Dr. Sobirova N.M.', ruName: 'Др. Собирова Н.М.', roleUz: 'Akusher-ginekolog', roleRu: 'Акушер-гинеколог', roleEn: 'OB-GYN', specUz: 'Akusherlik', specRu: 'Акушерство', specEn: 'Obstetrics', papers: 33, studies: 7 },
-  { slug: 'jorayeva-s-a', uzName: 'Dr. Joʻrayeva S.A.', ruName: 'Др. Жураева С.А.', roleUz: 'Pediatr', roleRu: 'Педиатр', roleEn: 'Pediatrician', specUz: 'Pediatriya', specRu: 'Педиатрия', specEn: 'Pediatrics', papers: 9, studies: 1 },
+  { slug: 'jorayeva-s-a', uzName: 'Dr. Jo’rayeva S.A.', ruName: 'Др. Жураева С.А.', roleUz: 'Pediatr', roleRu: 'Педиатр', roleEn: 'Pediatrician', specUz: 'Pediatriya', specRu: 'Педиатрия', specEn: 'Pediatrics', papers: 9, studies: 1 },
   { slug: 'rasulova-d-i', uzName: 'Dr. Rasulova D.I.', ruName: 'Др. Расулова Д.И.', roleUz: 'Nevrolog', roleRu: 'Невролог', roleEn: 'Neurologist', specUz: 'Nevrologiya', specRu: 'Неврология', specEn: 'Neurology', papers: 14, studies: 2 },
-  { slug: 'toxtayeva-h-r', uzName: 'Dr. Toʻxtayeva H.R.', ruName: 'Др. Тухтаева Х.Р.', roleUz: 'Terapevt', roleRu: 'Терапевт', roleEn: 'General practitioner', specUz: 'Terapiya', specRu: 'Терапия', specEn: 'Therapy', papers: 20, studies: 3 },
+  { slug: 'toxtayeva-h-r', uzName: 'Dr. To’xtayeva H.R.', ruName: 'Др. Тухтаева Х.Р.', roleUz: 'Terapevt', roleRu: 'Терапевт', roleEn: 'General practitioner', specUz: 'Terapiya', specRu: 'Терапия', specEn: 'Therapy', papers: 20, studies: 3 },
   { slug: 'karimova-o-b', uzName: 'Dr. Karimova O.B.', ruName: 'Др. Каримова О.Б.', roleUz: 'Endokrinolog', roleRu: 'Эндокринолог', roleEn: 'Endocrinologist', specUz: 'Endokrinologiya', specRu: 'Эндокринология', specEn: 'Endocrinology', papers: 21, studies: 4 },
-  { slug: 'hasanov-a-m', uzName: 'Dr. Hasanov A.M.', ruName: 'Др. Хасанов А.М.', roleUz: 'Anesteziolog', roleRu: 'Анестезиолог', roleEn: 'Anesthesiologist', specUz: 'Anesteziologiya', specRu: 'Анестезиология', specEn: 'Anesthesiology', papers: 18, studies: 3 },
-  { slug: 'rahmonov-d-k', uzName: 'Dr. Rahmonov D.K.', ruName: 'Др. Рахмонов Д.К.', roleUz: 'Gastroenterolog', roleRu: 'Гастроэнтеролог', roleEn: 'Gastroenterologist', specUz: 'Gastroenterologiya', specRu: 'Гастроэнтерология', specEn: 'Gastroenterology', papers: 23, studies: 4 },
-  { slug: 'sultanova-g-m', uzName: 'Dr. Sultanova G.M.', ruName: 'Др. Султанова Г.М.', roleUz: 'Revmatolog', roleRu: 'Ревматолог', roleEn: 'Rheumatologist', specUz: 'Revmatologiya', specRu: 'Ревматология', specEn: 'Rheumatology', papers: 16, studies: 2 },
   { slug: 'yusupov-b-t', uzName: 'Dr. Yusupov B.T.', ruName: 'Др. Юсупов Б.Т.', roleUz: 'Pulmonolog', roleRu: 'Пульмонолог', roleEn: 'Pulmonologist', specUz: 'Pulmonologiya', specRu: 'Пульмонология', specEn: 'Pulmonology', papers: 31, studies: 6 },
-  { slug: 'azimova-n-k', uzName: 'Dr. Azimova N.K.', ruName: 'Др. Азимова Н.К.', roleUz: 'Infeksionist', roleRu: 'Инфекционист', roleEn: 'Infectious disease specialist', specUz: 'Infeksion kasalliklar', specRu: 'Инфекционные болезни', specEn: 'Infectious diseases', papers: 19, studies: 3 },
   { slug: 'nigmatova-s-a', uzName: 'Hamshira Nigmatova S.A.', ruName: 'Медсестра Нигматова С.А.', roleUz: 'Reanimatsiya hamshirasi', roleRu: 'Медсестра реанимации', roleEn: 'ICU nurse', specUz: 'Reanimatsiya', specRu: 'Реанимация', specEn: 'Intensive care', papers: 4, studies: 0, staffKind: 'nurse' },
   { slug: 'boboyeva-m-r', uzName: 'Hamshira Boboyeva M.R.', ruName: 'Медсестра Бобоева М.Р.', roleUz: 'Procedura hamshirasi', roleRu: 'Процедурная медсестра', roleEn: 'Procedure nurse', specUz: 'Procedura', specRu: 'Процедурный кабинет', specEn: 'Procedures', papers: 3, studies: 0, staffKind: 'nurse' },
   { slug: 'sharipova-d-a', uzName: 'Hamshira Sharipova D.A.', ruName: 'Медсестра Шарипова Д.А.', roleUz: 'Operatsion hamshira', roleRu: 'Операционная медсестра', roleEn: 'Operating nurse', specUz: 'Jarrohlik', specRu: 'Хирургия', specEn: 'Surgery', papers: 5, studies: 0, staffKind: 'nurse' },
@@ -180,8 +319,6 @@ const REST: Array<{
   { slug: 'tursunov-a-r', uzName: 'Prof. Tursunov A.R.', ruName: 'Проф. Турсунов А.Р.', roleUz: 'Jarroh', roleRu: 'Хирург', roleEn: 'Surgeon', specUz: 'Jarrohlik', specRu: 'Хирургия', specEn: 'Surgery', papers: 48, studies: 9, staffKind: 'professor' },
   { slug: 'soliyev-m-h', uzName: 'Dr. Soliyev M.H.', ruName: 'Др. Солиев М.Х.', roleUz: 'Anesteziolog', roleRu: 'Анестезиолог', roleEn: 'Anesthesiologist', specUz: 'Anesteziologiya', specRu: 'Анестезиология', specEn: 'Anesthesiology', papers: 27, studies: 5 },
   { slug: 'xolmatov-a-s', uzName: 'Dr. Xolmatov A.S.', ruName: 'Др. Холматов А.С.', roleUz: 'Ortoped', roleRu: 'Ортопед', roleEn: 'Orthopedist', specUz: 'Ortopediya', specRu: 'Ортопедия', specEn: 'Orthopedics', papers: 21, studies: 4 },
-  { slug: 'ganiyeva-z-m', uzName: 'Hamshira Ganiyeva Z.M.', ruName: 'Медсестра Ганиева З.М.', roleUz: 'Pediatriya hamshirasi', roleRu: 'Детская медсестра', roleEn: 'Pediatric nurse', specUz: 'Pediatriya', specRu: 'Педиатрия', specEn: 'Pediatrics', papers: 4, studies: 0, staffKind: 'nurse' },
-  { slug: 'qosimov-r-b', uzName: 'Dr. Qosimov R.B.', ruName: 'Др. Косимов Р.Б.', roleUz: 'Kardiolog', roleRu: 'Кардиолог', roleEn: 'Cardiologist', specUz: 'Kardiologiya', specRu: 'Кардиология', specEn: 'Cardiology', papers: 29, studies: 6 },
 ]
 
 for (let i = 0; i < REST.length; i++) {
@@ -193,10 +330,10 @@ for (let i = 0; i < REST.length; i++) {
       role: r.roleUz,
       specialty: r.specUz,
       exp: `${10 + (i % 12)} yil tajriba`,
-      about: `${r.uzName} — ${r.specUz.toLowerCase()} yo‘nalishida bemorlarga klinik yordam ko‘rsatadi. Aniq diagnostika, individual yondashuv va doimiy kuzatuvga e’tibor beradi.`,
-      education: ['Tibbiyot oliy ta’lim muassasasi', `${r.specUz} bo‘yicha klinik tayyorgarlik`],
+      about: `${r.uzName} — ${r.specUz.toLowerCase()} yo’nalishida bemorlarga klinik yordam ko’rsatadi. Aniq diagnostika, individual yondashuv va doimiy kuzatuvga e’tibor beradi.`,
+      education: ['Tibbiyot oliy ta’lim muassasasi', `${r.specUz} bo’yicha klinik tayyorgarlik`],
       focuses: ['Diagnostika', 'Davolash rejasi', 'Kuzatuv'],
-      languages: ["O‘zbek", 'Русский'],
+      languages: ["O’zbek", 'Русский'],
     }, {
       name: r.ruName,
       role: r.roleRu,
@@ -219,19 +356,803 @@ for (let i = 0; i < REST.length; i++) {
   )
 }
 
-/** Not shown in homepage orbit / Jamoa grid (poster crops poorly on cards). */
-const HIDDEN_FROM_HOME_ORBIT = new Set(['yusupova-n-r'])
+{
+  const xojaevaIndex = doctorProfiles.findIndex((p) => p.slug === 'xojaeva-g-a')
+  if (xojaevaIndex >= 0) {
+    doctorProfiles[xojaevaIndex] = profile(5, 'xojaeva-g-a', {
+      name: 'Dr. Xo’jaeva G.A.',
+      role: 'UTT vrachi · Terapiya (UASh) kafedrasi assistenti',
+      specialty: 'Ultratovush diagnostikasi',
+      exp: '32 yil tajriba',
+      about:
+        'Xo’jaeva Gulnora Abdubannonovna — Farg’ona jamoat salomatligi tibbiyot instituti ko’p tarmoqli klinikasida ultratovush diagnostikasi vrachi (2025 yildan) va Terapiya yo’nalishidagi fanlar (UASh) kafedrasi assistenti (2020 yildan). 1994 yilda Andijon davlat tibbiyot institutini tamomlagan; terapevt, o’qituvchi, tibbiyot kolleji bo’lim boshlig’i va direktori sifatida uzoq yillik amaliy tajribaga ega.',
+      education: [
+        '1994 — Andijon davlat tibbiyot instituti (kunduzgi), «Davolash ishi»',
+        '1994–1995 — Farg’ona tibbiy-sanitariya qismi internaturasi',
+      ],
+      focuses: [
+        'Ultratovush diagnostikasi',
+        'Terapiya (UASh)',
+        'Ichki kasalliklar',
+        'Ambulator va klinik yordam',
+      ],
+      languages: ['O’zbek', 'Русский'],
+    }, {
+      name: 'Др. Ходжаева Г.А.',
+      role: 'Врач УЗД · ассистент кафедры терапии (UASh)',
+      specialty: 'УЗ-диагностика',
+      exp: '32 года опыта',
+      about:
+        'Ходжаева Гулнора Абдубанноновна — врач ультразвуковой диагностики многопрофильной клиники FJSTI (с 2025 г.) и ассистент кафедры терапии (UASh) института (с 2020 г.). Окончила Андижанский государственный медицинский институт в 1994 г.; имеет многолетний опыт работы терапевтом, преподавателем, зав. отделением и директором медицинского колледжа.',
+      education: [
+        '1994 — Андижанский государственный медицинский институт (дневное), «Лечебное дело»',
+        '1994–1995 — Интернатура, Ферганский медико-санитарный отряд',
+      ],
+      focuses: [
+        'УЗ-диагностика',
+        'Терапия (UASh)',
+        'Внутренние болезни',
+        'Амбулаторная и клиническая помощь',
+      ],
+      languages: ['Узбекский', 'Русский'],
+    }, {
+      name: 'Dr. Xo’jaeva G.A.',
+      role: 'Ultrasound physician · Therapy (UASh) department assistant',
+      specialty: 'Ultrasound diagnostics',
+      exp: '32 years experience',
+      about:
+        'Xo’jaeva Gulnora Abdubannonovna — ultrasound diagnostics physician at the FJSTI multi-specialty clinic (since 2025) and assistant at the Therapy (UASh) department (since 2020). Graduated from Andijan State Medical Institute in 1994; long clinical experience as a therapist, lecturer, department head, and medical college director.',
+      education: [
+        '1994 — Andijan State Medical Institute (full-time), General Medicine',
+        '1994–1995 — Internship, Fergana medical-sanitary unit',
+      ],
+      focuses: [
+        'Ultrasound diagnostics',
+        'Therapy (UASh)',
+        'Internal medicine',
+        'Outpatient and clinical care',
+      ],
+      languages: ['Uzbek', 'Russian'],
+    }, 10, 2)
+  }
+}
 
-/** Curated homepage team — Ergashev replaces Yusupova in slot 2. */
+doctorProfiles.push(
+  profile(33, 'xaydaraliyev-s-a', {
+    name: 'Dr. Xaydaraliyev S.A.',
+    role: 'Qabul-diagnostika bo’limi mudiri · urolog · UTT shifokor',
+    specialty: 'Urologiya',
+    exp: '15 yil tajriba',
+    about:
+      'Xaydaraliyev Suxrobjon Abdulnasirovich — ko’p tarmoqli klinikaning Qabul-diagnostika bo’limi mudiri. Urolog shifokor, bolalar urolog-andrologi va ultratovush diagnostikasi shifokori. Umumiy tibbiy ish staji — 15 yil; urologiya bo’yicha — 15 yil.',
+    education: [
+      '2010 — I.K. Axunbayev nomidagi Qirg’iz davlat tibbiyot akademiyasi, «Davolash ishi»',
+      '2011–2012 — Qirg’iz DTQTM va MO Janubiy filiali (O’sh), «Urologiya» internaturasi',
+      '2017–2019 — Qirg’iz DTQTM va MO Janubiy filiali (O’sh), «Urologiya» ordinaturasi',
+      '2019 — Omsk, «Akademiya dopolnitelnogo obrazovaniya», «Ultratovush diagnostikasi»',
+      '2019 — «Professional» NKT, «Bolalar urologiyasi-andrologiyasi»',
+      '2025 — Moskva RUKTA, «Ultratovush diagnostikasi» malakasini tasdiqlash',
+      '2025 — Moskva Urologiya ilmiy-tadqiqot instituti, urologiya malaka oshirish kursi',
+    ],
+    focuses: [
+      'Urologiya',
+      'Bolalar urologiyasi-andrologiyasi',
+      'Ultratovush diagnostikasi',
+      'Qabul-diagnostika bo’limi',
+    ],
+    languages: ["O’zbek", 'Русский'],
+  }, {
+    name: 'Др. Хайдаралиев С.А.',
+    role: 'Зав. приёмно-диагностическим отделением · уролог · врач УЗД',
+    specialty: 'Урология',
+    exp: '15 лет опыта',
+    about:
+      'Хайдаралиев Сухробжон Абдулнасирович — заведующий приёмно-диагностическим отделением многопрофильной клиники. Врач-уролог, детский уролог-андролог и врач ультразвуковой диагностики. Общий медицинский стаж — 15 лет; в урологии — 15 лет.',
+    education: [
+      '2010 — Кырgyzская государственная медицинская академия им. И.К. Ахунбаева, «Лечебное дело»',
+      '2011–2012 — Интернатура «Урология», южный филиал КГМИППВ (г. Ош)',
+      '2017–2019 — Ординатура «Урология», южный филиал КГМИППВ (г. Ош)',
+      '2019 — Омск, «Академия дополнительного образования», «УЗ-диагностика»',
+      '2019 — НОУ «Professional», «Детская урология-андрология»',
+      '2025 — Москва, РМАНПО, подтверждение квалификации «УЗ-диагностика»',
+      '2025 — Московский НИИ урологии, курсы повышения квалификации по урологии',
+    ],
+    focuses: [
+      'Урология',
+      'Детская урология-андрология',
+      'УЗ-диагностика',
+      'Приёмно-диагностическое отделение',
+    ],
+    languages: ['Узбекский', 'Русский'],
+  }, {
+    name: 'Dr. Khaydaraliyev S.A.',
+    role: 'Head of admission & diagnostics · urologist · ultrasound physician',
+    specialty: 'Urology',
+    exp: '15 years experience',
+    about:
+      'Khaydaraliyev Suxrobjon Abdulnasirovich — head of the admission and diagnostics department. Urologist, pediatric urologist-andrologist, and ultrasound diagnostics physician. Total medical experience — 15 years; in urology — 15 years.',
+    education: [
+      '2010 — I.K. Akhunbaev Kyrgyz State Medical Academy, General Medicine',
+      '2011–2012 — Urology internship, Kyrgyz CME southern branch (Osh)',
+      '2017–2019 — Urology residency, Kyrgyz CME southern branch (Osh)',
+      '2019 — Omsk Academy of Additional Education, Ultrasound diagnostics',
+      '2019 — Professional NCO, Pediatric urology and andrology',
+      '2025 — Moscow RMANPO, Ultrasound diagnostics credential renewal',
+      '2025 — Moscow Research Institute of Urology, advanced urology course',
+    ],
+    focuses: [
+      'Urology',
+      'Pediatric urology and andrology',
+      'Ultrasound diagnostics',
+      'Admission and diagnostics department',
+    ],
+    languages: ['Uzbek', 'Russian'],
+  }, 29, 6),
+)
+
+doctorProfiles.push(
+  profile(34, 'azimova-g-r', {
+    name: 'Dr. Azimova G.R.',
+    role: 'Umumiy xirurgiya kafedrasi katta o’qituvchisi · PhD',
+    specialty: 'Jarrohlik',
+    exp: '17 yil tajriba',
+    about:
+      'Azimova Gulnoza Ravshanovna — FJSTI Umumiy xirurgiya kafedrasi katta o’qituvchisi, PhD. 2008 yilda Andijon davlat tibbiyot institutini tamomlagan. Birlamchi tibbiy yordam, akusher-ginekologiya va xirurgiya yo’nalishlarida amaliy ish tajribasi; hozir klinik va o’quv faoliyatini birlashtiradi.',
+    education: [
+      '2008 — Andijon davlat tibbiyot instituti (kunduzgi), «Davolash ishi»',
+      '2018–2019 — R.F. Omsk tibbiyot akademiyasi, xirurgiya ordinaturasi',
+      '2019 — TTA, xirurgiya ordinaturasi',
+      'PhD — ilmiy daraja',
+    ],
+    focuses: [
+      'Umumiy xirurgiya',
+      'Klinik amaliyot',
+      'O’quv-metodik ish',
+      'Akusher-ginekologiya tajribasi',
+    ],
+    languages: ["O’zbek", 'Русский'],
+  }, {
+    name: 'Др. Азимова Г.Р.',
+    role: 'Старший преподаватель кафедры общей хирургии · PhD',
+    specialty: 'Хирургия',
+    exp: '17 лет опыта',
+    about:
+      'Азимова Гульноза Равшановна — старший преподаватель кафедры общей хирургии FJSTI, PhD. Окончила Андижанский государственный медицинский институт в 2008 году. Опыт работы в первичном звене, акушерстве-гинекологии и хирургии; совмещает клиническую и учебную деятельность.',
+    education: [
+      '2008 — Андижанский государственный медицинский институт (дневное), «Лечебное дело»',
+      '2018–2019 — Омская медицинская академия (РФ), ординатура по хирургии',
+      '2019 — ТТА, ординатура по хирургии',
+      'PhD — учёная степень',
+    ],
+    focuses: [
+      'Общая хирургия',
+      'Клиническая практика',
+      'Учебно-методическая работа',
+      'Опыт в акушерстве-гинекологии',
+    ],
+    languages: ['Узбекский', 'Русский'],
+  }, {
+    name: 'Dr. Azimova G.R.',
+    role: 'Senior lecturer, General Surgery · PhD',
+    specialty: 'Surgery',
+    exp: '17 years experience',
+    about:
+      'Azimova Gulnoza Ravshanovna — senior lecturer at the FJSTI General Surgery department, PhD. Graduated from Andijan State Medical Institute in 2008. Experience in primary care, obstetrics-gynecology, and surgery; combines clinical and academic work.',
+    education: [
+      '2008 — Andijan State Medical Institute (full-time), General Medicine',
+      '2018–2019 — Omsk Medical Academy (Russia), surgery residency',
+      '2019 — TTA, surgery residency',
+      'PhD',
+    ],
+    focuses: [
+      'General surgery',
+      'Clinical practice',
+      'Academic teaching',
+      'Obstetrics-gynecology background',
+    ],
+    languages: ['Uzbek', 'Russian'],
+  }, 32, 8, 'professor'),
+)
+
+doctorProfiles.push(
+  profile(35, 'ruzmatov-z-s', {
+    name: 'Dr. Ruzmatov Z.S.',
+    role: 'Nevrologiya bo’limi vrachi',
+    specialty: 'Nevrologiya',
+    exp: '15 yil tajriba',
+    about:
+      'Ruzmatov Zuxriddin Sirojiddinovich — Farg’ona shahar 2-sonli shifoxonasining nevrologiya bo’limi vrachi (2020 yildan). Nevropatolog va nevrolog sifatida amaliy tajriba; bemorlarga nevrologik diagnostika va davolash bo’yicha yordam ko’rsatadi.',
+    education: [
+      '2011 — Andijon davlat tibbiyot instituti, «Davolash ishi»',
+      '2011–2013 — Toshkent vrachlar malakasini oshirish instituti, ordinatura',
+    ],
+    focuses: [
+      'Nevrologiya',
+      'Nevropatologiya',
+      'Nevrologik diagnostika',
+      'Ambulator va statsionar yordam',
+    ],
+    languages: ["O’zbek", 'Русский', 'English'],
+  }, {
+    name: 'Др. Рузматов З.С.',
+    role: 'Врач неврологического отделения',
+    specialty: 'Неврология',
+    exp: '15 лет опыта',
+    about:
+      'Рузматов Зухриддин Сирожиддинович — врач неврологического отделения Ферганской городской больницы №2 (с 2020 г.). Практический опыт невропатолога и невролога; диагностика и лечение неврологических заболеваний.',
+    education: [
+      '2011 — Андижанский государственный медицинский институт, «Лечебное дело»',
+      '2011–2013 — Институт повышения квалификации врачей (Ташкент), ординатура',
+    ],
+    focuses: [
+      'Неврология',
+      'Невропатология',
+      'Неврологическая диагностика',
+      'Амбулаторная и стационарная помощь',
+    ],
+    languages: ['Узбекский', 'Русский', 'English'],
+  }, {
+    name: 'Dr. Ruzmatov Z.S.',
+    role: 'Neurology department physician',
+    specialty: 'Neurology',
+    exp: '15 years experience',
+    about:
+      'Ruzmatov Zukhriddin Sirozhiddinovich — neurologist at Fergana City Hospital No. 2 neurology department (since 2020). Experience as neuropathologist and neurologist; neurological diagnostics and treatment.',
+    education: [
+      '2011 — Andijan State Medical Institute, General Medicine',
+      '2011–2013 — Tashkent Institute for Advanced Medical Training, residency',
+    ],
+    focuses: [
+      'Neurology',
+      'Neuropathology',
+      'Neurological diagnostics',
+      'Outpatient and inpatient care',
+    ],
+    languages: ['Uzbek', 'Russian', 'English'],
+  }, 18, 3),
+)
+
+doctorProfiles.push(
+  profile(36, 'kojoeva-f-o', {
+    name: 'Dr. Kojoeva F.O.',
+    role: 'Qabul-diagnostika bo’limi nevrologi · klinik ordinatur',
+    specialty: 'Nevrologiya',
+    exp: 'Klinik ordinatur · 2 yil amaliyot',
+    about:
+      'Kojoeva Farangiz Omurbekovna — FJSTI ko’p tarmoqli klinikasining Qabul-diagnostika bo’limida nevrolog (2026 yildan). Nevrologiya kafedrasida klinik ordinatur o’quvchisi; Farg’ona shahar 8-sonli oilaviy poliklinikasida oila shifokori (2024 yil 17 dekabr dan).',
+    education: [
+      '2019–2025 — FJSTI, «Davolash ishi»',
+      'Farg’ona jamoat salomatligi instituti, «Davolash ishi»',
+      '2025 yildan — FJSTI nevrologiya kafedrasi, klinik ordinatura',
+    ],
+    focuses: [
+      'Nevrologiya',
+      'Qabul-diagnostika',
+      'Oila shifokorligi',
+      'Klinik ordinatura',
+    ],
+    languages: ["O’zbek", 'Русский', 'English', 'Qirg’izcha'],
+  }, {
+    name: 'Др. Кожоева Ф.О.',
+    role: 'Невролог отделения приёма-диагностики · клин. ординатор',
+    specialty: 'Неврология',
+    exp: 'Клин. ординатура · 2 года практики',
+    about:
+      'Кожоева Фарангиз Омурбековна — невролог отделения приёма-диагностики клиники FJSTI (с 2026 г.). Клинический ординатор кафедры неврологии; семейный врач поликлиники №8 г. Ферганы (с 17 декабря 2024 г.).',
+    education: [
+      '2019–2025 — FJSTI, «Лечебное дело»',
+      'Ферганский институт общественного здоровья, «Лечебное дело»',
+      'С 2025 г. — клиническая ординатура, кафедра неврологии FJSTI',
+    ],
+    focuses: [
+      'Неврология',
+      'Приёмно-диагностическое отделение',
+      'Семейная медицина',
+      'Клиническая ординатура',
+    ],
+    languages: ['Узбекский', 'Русский', 'English', 'Киргизский'],
+  }, {
+    name: 'Dr. Kojoeva F.O.',
+    role: 'Neurologist, admission & diagnostics · clinical resident',
+    specialty: 'Neurology',
+    exp: 'Clinical residency · 2 years practice',
+    about:
+      'Kojoeva Farangiz Omurbekovna — neurologist at the FJSTI admission and diagnostics department (since 2026). Clinical resident at the neurology department; family physician at Fergana City Polyclinic No. 8 (since 17 December 2024).',
+    education: [
+      '2019–2025 — FJSTI, General Medicine',
+      'Fergana Public Health Institute, General Medicine',
+      'Since 2025 — clinical residency, FJSTI Neurology department',
+    ],
+    focuses: [
+      'Neurology',
+      'Admission and diagnostics',
+      'Family medicine',
+      'Clinical residency',
+    ],
+    languages: ['Uzbek', 'Russian', 'English', 'Kyrgyz'],
+  }, 12, 1),
+)
+doctorProfiles.push(
+  profile(37, 'nosirov-m-m', {
+    name: 'Dr. Nosirov M.M.',
+    role: 'Nevrologiya bo’limi mudiri · stajyor o’qituvchi',
+    specialty: 'Nevrologiya',
+    exp: '5 yil tajriba',
+    about:
+      'Nosirov Muhammadali Maqsudali o’gli — FJSTI ko’p tarmoqli klinikasining nevrologiya bo’limi mudiri (2025 yildan). Asab kasalliklari bo’limida nevrolog; «Nevrologiya va psixiatriya» kafedrasi stajyor o’qituvchisi (2026 yil fevraldan). ADTI pediatriya fakulteti va nevrologiya klinik ordinaturasi bitiruvchisi.',
+    education: [
+      '2015–2021 — Andijon davlat tibbiyot instituti, Pediatriya fakulteti',
+      '2021–2023 — ADTI, Nevrologiya kafedrasi, klinik ordinatura',
+    ],
+    focuses: [
+      'Nevrologiya',
+      'Asab kasalliklari',
+      'Qabul-diagnostika',
+      'Nevrologiya va psixiatriya',
+    ],
+    languages: ["O’zbek", 'Русский', 'English'],
+  }, {
+    name: 'Др. Носиров М.М.',
+    role: 'Зав. отделением неврологии · стажёр-преподаватель',
+    specialty: 'Неврология',
+    exp: '5 лет опыта',
+    about:
+      'Носиров Мухаммадали, сын Максудали — заведующий отделением неврологии клиники FJSTI (с 2025 г.). Невролог отделения нервных болезней; стажёр-преподаватель кафедры «Неврология и психиатрия» (с февраля 2026 г.). Окончил педиатрический факультет ADTI и клиническую ординатуру по неврологии.',
+    education: [
+      '2015–2021 — Андижанский государственный медицинский институт, педиатрический факультет',
+      '2021–2023 — ADTI, кафедра неврологии, клиническая ординатура',
+    ],
+    focuses: [
+      'Неврология',
+      'Болезни нервной системы',
+      'Приёмно-диагностическое отделение',
+      'Неврология и психиатрия',
+    ],
+    languages: ['Узбекский', 'Русский', 'English'],
+  }, {
+    name: 'Dr. Nosirov M.M.',
+    role: 'Head of Neurology · trainee lecturer',
+    specialty: 'Neurology',
+    exp: '5 years experience',
+    about:
+      'Nosirov Muhammadali Maqsudali — head of the neurology department at FJSTI clinic (since 2025). Neurologist in the nervous diseases department; trainee lecturer at the Neurology and Psychiatry department (since February 2026). Graduate of ADTI pediatrics faculty and neurology clinical residency.',
+    education: [
+      '2015–2021 — Andijan State Medical Institute, Pediatrics faculty',
+      '2021–2023 — ADTI, Neurology department, clinical residency',
+    ],
+    focuses: [
+      'Neurology',
+      'Nervous system diseases',
+      'Admission and diagnostics',
+      'Neurology and psychiatry',
+    ],
+    languages: ['Uzbek', 'Russian', 'English'],
+  }, 14, 3, 'professor'),
+)
+doctorProfiles.push(
+  profile(38, 'bobojonov-s-s', {
+    name: 'Dr. Bobojonov S.S.',
+    role: 'Terapiya yo’nalishidagi fanlar kafedrasi assistenti · kardiolog',
+    specialty: 'Kardiologiya',
+    exp: '9 yil tajriba',
+    about:
+      'Bobojonov Sardorbek Solijon o’g’li — Farg’ona jamoat salomatligi tibbiyot instituti «Terapiya yo’nalishidagi fanlar» kafedrasi assistenti (2023 yil 4 sentyabrdan). Kardiolog-mutaxassis; ADTI kardiorrevmatologiya klinik ordinaturasi bitiruvchisi. Ilgari ichki kasalliklar kafedrasi assistenti va xalqaro bo’lim boshlig’i lavozimlarida ishlagan.',
+    education: [
+      '2019 — Andijon davlat tibbiyot oliygohi',
+      '2017–2019 — ADTI klinikasi, «Kardiorrevmatologiya» klinik ordinaturasi',
+    ],
+    focuses: [
+      'Kardiologiya',
+      'Terapiya',
+      'Kardiorrevmatologiya',
+      'Ichki kasalliklar',
+    ],
+    languages: ["O’zbek", 'Русский', 'English'],
+  }, {
+    name: 'Др. Бобожонов S.S.',
+    role: 'Ассистент кафедры терапии · кардиолог',
+    specialty: 'Кардиология',
+    exp: '9 лет опыта',
+    about:
+      'Бобожонов Сардорбек Солижон огли — ассистент кафедры «Дисциплины терапевтического профиля» Ферганского института общественного здоровья (с 4 сентября 2023 г.). Кардиолог; окончил клиническую ординатуру по кардиоревматологии ADTI. Ранее — ассистент кафедры внутренних болезней и руководитель международного отдела.',
+    education: [
+      '2019 — Андижанский государственный медицинский университет',
+      '2017–2019 — Клиника ADTI, клиническая ординатура «Кардиоревматология»',
+    ],
+    focuses: [
+      'Кардиология',
+      'Терапия',
+      'Кардиоревматология',
+      'Внутренние болезни',
+    ],
+    languages: ['Узбекский', 'Русский', 'English'],
+  }, {
+    name: 'Dr. Bobojonov S.S.',
+    role: 'Assistant professor, Therapy · cardiologist',
+    specialty: 'Cardiology',
+    exp: '9 years experience',
+    about:
+      'Bobojonov Sardorbek Solijon o’g’li — assistant at the Fergana Public Health Institute Therapy Sciences department (since 4 September 2023). Cardiologist; graduate of ADTI cardioreumatology clinical residency. Former assistant at internal medicine department and head of the international office.',
+    education: [
+      '2019 — Andijan State Medical University',
+      '2017–2019 — ADTI clinic, Cardioreumatology clinical residency',
+    ],
+    focuses: [
+      'Cardiology',
+      'Therapy',
+      'Cardioreumatology',
+      'Internal medicine',
+    ],
+    languages: ['Uzbek', 'Russian', 'English'],
+  }, 24, 5, 'professor'),
+)
+doctorProfiles.push(
+  profile(39, 'shamsutdinova-g-b', {
+    name: 'Dr. Shamsutdinova G.B.',
+    role: 'Terapiya (UASH) kafedra mudiri · PhD · kardiorevmatolog',
+    specialty: 'Kardiologiya',
+    exp: '11 yil tajriba',
+    about:
+      'Shamsutdinova Guzel Baxodirovna — FJSTI «Terapiya yo’nalishidagi fanlar (UASH)» kafedrasi mudiri (2025 yil 13 yanvardan), PhD, kardiorevmatolog. Andijon DTMI va magistratura bitiruvchisi; ichki kasalliklar bo’yicha qayta tayyorlash va klinik amaliyot tajribasiga ega.',
+    education: [
+      '2015 — Andijon davlat tibbiyot instituti',
+      '2015–2018 — ADTI, magistratura',
+      '2019–2020 — Toshkent vrachlar malakasini oshirish instituti, «Ichki kasalliklar» qayta tayyorlash',
+      'PhD — ilmiy daraja',
+    ],
+    focuses: [
+      'Kardiorevmatologiya',
+      'Terapiya',
+      'Ichki kasalliklar',
+      'UASH',
+    ],
+    languages: ["O’zbek", 'Русский', 'English'],
+  }, {
+    name: 'Др. Шамсутдинова Г.Б.',
+    role: 'Зав. кафедрой терапии (UASH) · PhD · кардиоревматолог',
+    specialty: 'Кардиология',
+    exp: '11 лет опыта',
+    about:
+      'Шамсутдинова Гузель Баходировна — заведующая кафедрой «Дисциплины терапевтического профиля (UASH)» FJSTI (с 13 января 2025 г.), PhD, кардиоревматолог. Окончила ADTI и магистратуру; переподготовка по внутренним болезням и клинический опыт.',
+    education: [
+      '2015 — Андижанский государственный медицинский институт',
+      '2015–2018 — ADTI, магистратура',
+      '2019–2020 — Институт повышения квалификации (Ташкент), переподготовка «Внутренние болезни»',
+      'PhD — учёная степень',
+    ],
+    focuses: [
+      'Кардиоревматология',
+      'Терапия',
+      'Внутренние болезни',
+      'UASH',
+    ],
+    languages: ['Узбекский', 'Русский', 'English'],
+  }, {
+    name: 'Dr. Shamsutdinova G.B.',
+    role: 'Head of Therapy (UASH) department · PhD · cardioreumatologist',
+    specialty: 'Cardiology',
+    exp: '11 years experience',
+    about:
+      'Shamsutdinova Guzel Baxodirovna — head of the FJSTI Therapy Sciences (UASH) department (since 13 January 2025), PhD, cardioreumatologist. ADTI and master’s graduate; retraining in internal medicine and clinical experience.',
+    education: [
+      '2015 — Andijan State Medical Institute',
+      '2015–2018 — ADTI, master’s degree',
+      '2019–2020 — Tashkent CME Institute, Internal Medicine retraining',
+      'PhD',
+    ],
+    focuses: [
+      'Cardioreumatology',
+      'Therapy',
+      'Internal medicine',
+      'UASH',
+    ],
+    languages: ['Uzbek', 'Russian', 'English'],
+  }, 28, 6, 'professor'),
+)
+doctorProfiles.push(
+  profile(40, 'isaqjonova-m-n', {
+    name: 'Dr. Isaqjonova M.N.',
+    role: 'Stajyor o’qituvchi · endokrinolog',
+    specialty: 'Endokrinologiya',
+    exp: '5 yil tajriba',
+    about:
+      'Isaqjonova Mohinur Nodirjon qizi — Farg’ona jamoat salomatligi tibbiyot instituti stajyor o’qituvchisi (2025 yil 9 dekabrdan), endokrinolog. TTA Termiz filiali endokrinologiya klinik ordinaturasi bitiruvchisi; Surxondaryo endokrinologiya dispanseri va Farg’ona shahar 4-oilaviy poliklinikasida amaliy tajribaga ega.',
+    education: [
+      '2015–2021 — Toshkent tibbiyot akademiyasi, Davolash fakulteti (kunduzgi)',
+      '2022–2024 — TTA Termiz filiali, endokrinologiya klinik ordinaturasi',
+    ],
+    focuses: [
+      'Endokrinologiya',
+      'Diabet va metabolik kasalliklar',
+      'Stajyor o’qituvchilik',
+      'Ambulator endokrinologiya',
+    ],
+    languages: ["O’zbek", 'Русский', 'English'],
+  }, {
+    name: 'Др. Исакжонова М.Н.',
+    role: 'Стажёр-преподаватель · эндокринолог',
+    specialty: 'Эндокринология',
+    exp: '5 лет опыта',
+    about:
+      'Исакжонова Мохинур Нодиржон кизи — стажёр-преподаватель FJSTI (с 9 декабря 2025 г.), эндокринолог. Окончила клиническую ординатуру по эндокринологии филиала TTA в Termiz; практика в эндокринологическом диспансере и поликлинике №4 г. Ферганы.',
+    education: [
+      '2015–2021 — Ташкентская медицинская академия, лечебный факультет (дневное)',
+      '2022–2024 — Филиал TTA (Termiz), клиническая ординатура, эндокринология',
+    ],
+    focuses: [
+      'Эндокринология',
+      'Диабет и метаболические заболевания',
+      'Педагогическая практика',
+      'Амбулаторная эндокринология',
+    ],
+    languages: ['Узбекский', 'Русский', 'English'],
+  }, {
+    name: 'Dr. Isaqjonova M.N.',
+    role: 'Trainee lecturer · endocrinologist',
+    specialty: 'Endocrinology',
+    exp: '5 years experience',
+    about:
+      'Isaqjonova Mohinur Nodirjon qizi — trainee lecturer at FJSTI (since 9 December 2025), endocrinologist. Graduate of TTA Termiz branch endocrinology clinical residency; experience at Surkhandarya endocrinology dispensary and Fergana City Polyclinic No. 4.',
+    education: [
+      '2015–2021 — Tashkent Medical Academy, General Medicine faculty (full-time)',
+      '2022–2024 — TTA Termiz branch, endocrinology clinical residency',
+    ],
+    focuses: [
+      'Endocrinology',
+      'Diabetes and metabolic disorders',
+      'Trainee teaching',
+      'Outpatient endocrinology',
+    ],
+    languages: ['Uzbek', 'Russian', 'English'],
+  }, 14, 3, 'professor'),
+)
+
+doctorProfiles.push(
+  profile(41, 'xalilov-n-a', {
+    name: 'Dr. Xalilov N.A.',
+    role: 'Terapevt',
+    specialty: 'Terapiya',
+    exp: '2 yil tajriba',
+    about:
+      'Xalilov Nurillo Abdug’ani o’g’li — Andijon davlat tibbiyot instituti «Davolash ishi» fakulteti (2015–2021) va terapiya yo’nalishlarida magistratura (2021–2024) bitiruvchisi. Ichki kasalliklarni diagnostika va davolash bilan shug’ullanadi.',
+    education: [
+      '2015–2021 — Andijon davlat tibbiyot instituti, «Davolash ishi» fakulteti',
+      '2021–2024 — Andijon DTMI, terapiya (yo’nalishlar bo’yicha) magistraturasi',
+    ],
+    focuses: [
+      'Terapiya',
+      'Ichki kasalliklar',
+      'Klinik diagnostika',
+      'Ambulator yordam',
+    ],
+    languages: ["O’zbek"],
+  }, {
+    name: 'Др. Халилов Н.А.',
+    role: 'Терапевт',
+    specialty: 'Терапия',
+    exp: '2 года опыта',
+    about:
+      'Халилов Нурилло Абдугани оглы — выпускник Андижанского государственного медицинского института, факультет «Лечебное дело» (2015–2021), магистратура по терапии (2021–2024). Занимается диагностикой и лечением внутренних заболеваний.',
+    education: [
+      '2015–2021 — Андижанский государственный медицинский институт, факультет «Лечебное дело»',
+      '2021–2024 — Андижанский ГМИ, магистратура по терапии (по направлениям)',
+    ],
+    focuses: [
+      'Терапия',
+      'Внутренние болезни',
+      'Клиническая диагностика',
+      'Амбулаторная помощь',
+    ],
+    languages: ['Узбекский'],
+  }, {
+    name: 'Dr. Xalilov N.A.',
+    role: 'General practitioner',
+    specialty: 'Therapy',
+    exp: '2 years experience',
+    about:
+      'Xalilov Nurillo Abdug’ani o’g’li — graduate of Andijan State Medical Institute, General Medicine faculty (2015–2021), and Therapy master’s programme (2021–2024). Focuses on diagnosis and treatment of internal medicine conditions.',
+    education: [
+      '2015–2021 — Andijan State Medical Institute, General Medicine faculty',
+      '2021–2024 — Andijan SMI, Therapy master’s (by specialisations)',
+    ],
+    focuses: [
+      'Therapy',
+      'Internal medicine',
+      'Clinical diagnostics',
+      'Outpatient care',
+    ],
+    languages: ['Uzbek'],
+  }, 8, 2),
+)
+
+doctorProfiles.push(
+  profile(42, 'davlatov-s-q', {
+    name: 'Dr. Davlatov S.Q.',
+    role: 'Terapiya (UASh) kafedrasi assistenti',
+    specialty: 'Kardiologiya',
+    exp: '6 yil tajriba',
+    about:
+      'Davlatov Shohjaxonbek Qurbonbek o’g’li — Farg’ona jamoat salomatligi tibbiyot instituti Terapiya yo’nalishidagi fanlar (UASh) kafedrasi assistenti (2023 yil 4 sentyabrdan). Andijon DTMI (2020) va Toshkent tibbiyot akademiyasi kardiologiya magistraturasi (2020–2023) bitiruvchisi; Yozyovon tuman oilaviy poliklinikasi va tez tibbiy yordam stantsiyasida amaliy tajribaga ega.',
+    education: [
+      '2020 — Andijon davlat tibbiyot instituti, umumiy amaliyot shifokori',
+      '2020–2023 — Toshkent tibbiyot akademiyasi, kardiologiya magistraturasi',
+    ],
+    focuses: [
+      'Kardiologiya',
+      'Terapiya (UASh)',
+      'Tez tibbiy yordam',
+      'Umumiy amaliyot shifokorligi',
+    ],
+    languages: ["O’zbek", 'English'],
+  }, {
+    name: 'Др. Давлатов Ш.К.',
+    role: 'Ассистент кафедры терапии (UASh)',
+    specialty: 'Кардиология',
+    exp: '6 лет опыта',
+    about:
+      'Давлатов Шохжахонбек Курбонбек оглы — ассистент кафедры терапии (UASh) FJSTI (с 4 сентября 2023 г.). Окончил Андижанский ГМИ (2020) и магистратуру по кардиологии TTA (2020–2023); практика в сельской поликлинике Yozyovon и на станции скорой помощи Ташкента.',
+    education: [
+      '2020 — Андижанский государственный медицинский институт, врач общей практики',
+      '2020–2023 — Ташкентская медицинская академия, магистратура по кардиологии',
+    ],
+    focuses: [
+      'Кардиология',
+      'Терапия (UASh)',
+      'Скорая медицинская помощь',
+      'Общая врачебная практика',
+    ],
+    languages: ['Узбекский', 'English'],
+  }, {
+    name: 'Dr. Davlatov S.Q.',
+    role: 'Assistant, Therapy (UASh) department',
+    specialty: 'Cardiology',
+    exp: '6 years experience',
+    about:
+      'Davlatov Shohjaxonbek Qurbonbek o’g’li — assistant at the FJSTI Therapy (UASh) department (since 4 September 2023). Graduate of Andijan SMI (2020) and TTA cardiology master’s programme (2020–2023); experience at Yozyovon rural polyclinic and Tashkent emergency ambulance service.',
+    education: [
+      '2020 — Andijan State Medical Institute, general practice physician',
+      '2020–2023 — Tashkent Medical Academy, cardiology master’s',
+    ],
+    focuses: [
+      'Cardiology',
+      'Therapy (UASh)',
+      'Emergency medical care',
+      'General practice',
+    ],
+    languages: ['Uzbek', 'English'],
+  }, 12, 3),
+)
+
+doctorProfiles.push(
+  profile(43, 'gayratjonova-f-g', {
+    name: 'Dr. Gayratjonova F.G.',
+    role: 'Terapiya (UASh) kafedrasi o’qituvchi stajyori',
+    specialty: 'Terapiya',
+    exp: '4 yil tajriba',
+    about:
+      'Gayratjonova Fotima Gofurjon qizi — Farg’ona jamoat salomatligi tibbiyot instituti Terapiya yo’nalishidagi fanlar (UASh) kafedrasi o’qituvchi stajyori (2025 yil 10 oktyabrdan). 2022 yilda TTA ni «Umumiy amaliyot shifokori» mutaxassisligi bo’yicha bitirgan; Toshkent pediatriya instituti terapiya fakulteti talabasi; Farg’ona shahar 1-sonli oilaviy poliklinikasida amaliy tajribaga ega.',
+    education: [
+      '2022 — Toshkent tibbiyot akademiyasi, umumiy amaliyot shifokori',
+      '2022–hozir — Toshkent pediatriya instituti, terapiya fakulteti (talaba)',
+    ],
+    focuses: [
+      'Terapiya (UASh)',
+      'Umumiy amaliyot shifokorligi',
+      'O’qituvchi stajyorlik',
+      'Ambulator yordam',
+    ],
+    languages: ['Русский', 'English'],
+  }, {
+    name: 'Др. Гайратжонова Ф.Г.',
+    role: 'Стажёр-преподаватель кафедры терапии (UASh)',
+    specialty: 'Терапия',
+    exp: '4 года опыта',
+    about:
+      'Гайратжонова Фотима Гофуржон кизи — стажёр-преподаватель кафедры терапии (UASh) FJSTI (с 10 октября 2025 г.). Окончила TTA по специальности «Врач общей практики» (2022); студентка факультета терапии Ташкентского педиатрического института; практика в поликлинике №1 г. Ферганы.',
+    education: [
+      '2022 — Ташкентская медицинская академия, врач общей практики',
+      '2022–н.в. — Ташкентский педиатрический институт, факультет терапии (студентка)',
+    ],
+    focuses: [
+      'Терапия (UASh)',
+      'Общая врачебная практика',
+      'Педагогическая стажировка',
+      'Амбулаторная помощь',
+    ],
+    languages: ['Русский', 'English'],
+  }, {
+    name: 'Dr. Gayratjonova F.G.',
+    role: 'Trainee lecturer, Therapy (UASh) department',
+    specialty: 'Therapy',
+    exp: '4 years experience',
+    about:
+      'Gayratjonova Fotima Gofurjon qizi — trainee lecturer at the FJSTI Therapy (UASh) department (since 10 October 2025). TTA graduate in general practice (2022); student at Tashkent Pediatric Institute therapy faculty; experience at Fergana City Polyclinic No. 1.',
+    education: [
+      '2022 — Tashkent Medical Academy, general practice physician',
+      '2022–present — Tashkent Pediatric Institute, therapy faculty (student)',
+    ],
+    focuses: [
+      'Therapy (UASh)',
+      'General practice',
+      'Trainee teaching',
+      'Outpatient care',
+    ],
+    languages: ['Russian', 'English'],
+  }, 6, 1),
+)
+
+doctorProfiles.push(
+  profile(44, 'mominov-j-z', {
+    name: 'Dr. Mominov J.Z.',
+    role: 'Terapiya yo’nalishidagi fanlar kafedrasi assistenti',
+    specialty: 'Terapiya',
+    exp: '5 yil tajriba',
+    about:
+      'Mominov Jahongir Zokirjon o’g’li — Farg’ona jamoat salomatligi tibbiyot instituti Terapiya yo’nalishidagi fanlar kafedrasi assistenti (2025 yildan). Andijon davlat tibbiyot instituti «Davolash ishi» (2015–2021) va terapiya magistraturasi (2021–2024) bitiruvchisi; 2021–2025 yillarda Andijon shahar 6-sonli oilaviy poliklinikasida oila shifokori sifatida ishlagan.',
+    education: [
+      '2015–2021 — Andijon davlat tibbiyot instituti, «Davolash ishi» fakulteti',
+      '2021–2024 — Andijon DTMI, terapiya (yo’nalishlar bo’yicha) magistraturasi',
+    ],
+    focuses: [
+      'Terapiya',
+      'Oila shifokorligi',
+      'Ichki kasalliklar',
+      'Ambulator yordam',
+    ],
+    languages: ["O’zbek", 'Русский'],
+  }, {
+    name: 'Др. Моминов Ж.З.',
+    role: 'Ассистент кафедры терапии',
+    specialty: 'Терапия',
+    exp: '5 лет опыта',
+    about:
+      'Моминов Жахонгир Зокиржон оглы — ассистент кафедры терапии FJSTI (с 2025 г.). Окончил Андижанский ГМИ «Лечебное дело» (2015–2021) и магистратуру по терапии (2021–2024); в 2021–2025 гг. работал семейным врачом в поликлинике №6 г. Андижана.',
+    education: [
+      '2015–2021 — Андижанский государственный медицинский институт, факультет «Лечебное дело»',
+      '2021–2024 — Андижанский ГМИ, магистратура по терапии (по направлениям)',
+    ],
+    focuses: [
+      'Терапия',
+      'Семейная медицина',
+      'Внутренние болезни',
+      'Амбулаторная помощь',
+    ],
+    languages: ['Узбекский', 'Русский'],
+  }, {
+    name: 'Dr. Mominov J.Z.',
+    role: 'Assistant, Therapy department',
+    specialty: 'Therapy',
+    exp: '5 years experience',
+    about:
+      'Mominov Jahongir Zokirjon o’g’li — assistant at the FJSTI Therapy department (since 2025). Graduate of Andijan SMI General Medicine (2015–2021) and therapy master’s (2021–2024); family physician at Andijan City Polyclinic No. 6 (2021–2025).',
+    education: [
+      '2015–2021 — Andijan State Medical Institute, General Medicine faculty',
+      '2021–2024 — Andijan SMI, Therapy master’s (by specialisations)',
+    ],
+    focuses: [
+      'Therapy',
+      'Family medicine',
+      'Internal medicine',
+      'Outpatient care',
+    ],
+    languages: ['Uzbek', 'Russian'],
+  }, 10, 2),
+)
+
+
+/** Not shown in homepage doctor wall — Soliyev is center-only; Aliyeva card style mismatches the row. */
+const HIDDEN_FROM_HOME_ORBIT = new Set(['soliyev-m-h', 'aliyeva-z-v'])
+
+/** Curated homepage team — Nosirov replaces Ergashev in slot 2. */
 export const HOME_FEATURED_DOCTOR_SLUGS = [
-  'karimov-a-s',
-  'ergashev-b-m',
-  'rahimova-m-t',
-  'toshmatova-g-a',
-  'nazarov-i-v',
-  'abdullayev-j-o',
+  'satvoldiyev-d-u',
+  'nosirov-m-m',
+  'mamatalieva-z-a',
+  'abdullayeva-t-y',
+  'ruzmatov-z-s',
+  'xalilov-n-a',
   'alimova-d-k',
-  'xolmatov-s-r',
+  'bobojonov-s-s',
 ] as const
 
 export function getHomeFeaturedDoctors(
@@ -246,6 +1167,52 @@ export function getHomeOrbitDoctors(max = 20): DoctorProfile[] {
   return doctorProfiles
     .filter((p) => p.staffKind !== 'nurse' && !HIDDEN_FROM_HOME_ORBIT.has(p.slug))
     .slice(0, max)
+}
+
+/** Center portrait in the “Har bir yo’nalishda o’z mutaxassisi” doctor wall. */
+export const HOME_DOCTOR_WALL_CENTER_SLUG = 'soliyev-m-h' as const
+/** Pinned to the right edge of the doctor wall row. */
+export const HOME_DOCTOR_WALL_RIGHT_SLUG = 'jorayeva-s-a' as const
+
+/** Fine-tune face alignment in the narrow wall columns (y-axis anchor). */
+const DOCTOR_WALL_PORTRAIT_POSITION: Record<string, string> = {
+  'satvoldiyev-d-u': '50% 10%',
+  'mamatalieva-z-a': '50% 12%',
+  'abdullayeva-t-y': '50% 14%',
+  'soliyev-m-h': '50% 8%',
+  'alimova-d-k': '50% 12%',
+  'xojaeva-g-a': '50% 18%',
+  'jorayeva-s-a': '50% 10%',
+}
+
+export function getDoctorWallPortraitPosition(slug: string): string {
+  return DOCTOR_WALL_PORTRAIT_POSITION[slug] ?? '50% 12%'
+}
+
+/** Turn-video speed in the doctor wall hover row (1 = normal). */
+const DOCTOR_WALL_PLAYBACK_RATE: Record<string, number> = {
+  'soliyev-m-h': 0.55,
+}
+
+export function getDoctorWallPlaybackRate(slug: string): number {
+  return DOCTOR_WALL_PLAYBACK_RATE[slug] ?? 1
+}
+
+export function getHomeDoctorWallDoctors(count = 7): DoctorProfile[] {
+  const pool = getHomeOrbitDoctors(doctorProfiles.length)
+  const centerIndex = Math.floor(count / 2)
+  const center = doctorProfiles.find((p) => p.slug === HOME_DOCTOR_WALL_CENTER_SLUG)
+  const pinnedRight = doctorProfiles.find((p) => p.slug === HOME_DOCTOR_WALL_RIGHT_SLUG)
+  if (!center) return pool.slice(0, count)
+
+  const excluded = new Set<string>([HOME_DOCTOR_WALL_CENTER_SLUG])
+  if (pinnedRight) excluded.add(HOME_DOCTOR_WALL_RIGHT_SLUG)
+  const rest = pool.filter((p) => !excluded.has(p.slug))
+  const sideCount = count - 1 - (pinnedRight ? 1 : 0)
+  const left = rest.slice(0, centerIndex)
+  const right = rest.slice(centerIndex, centerIndex + (sideCount - left.length))
+  if (pinnedRight) right.push(pinnedRight)
+  return [...left, center, ...right].slice(0, count)
 }
 
 export function getDoctorsBySpecialty(specialtyUz: string, excludeSlug?: string) {
@@ -313,7 +1280,8 @@ export function getSpecialtyGroup(profile: DoctorProfile): SpecialtyGroup {
 }
 
 export function getDoctorBySlug(slug: string) {
-  const index = doctorProfiles.findIndex((d) => d.slug === slug)
+  const resolved = ({ 'qosimov-r-b': 'xaydaraliyev-s-a', 'ganiyeva-z-m': 'azimova-g-r', 'nazarov-i-v': 'ruzmatov-z-s', 'saidova-l-h': 'kojoeva-f-o', 'ergashev-b-m': 'nosirov-m-m', 'xolmatov-s-r': 'bobojonov-s-s', 'rahimova-m-t': 'mamatalieva-z-a', 'toshmatova-g-a': 'abdullayeva-t-y', 'azimova-n-k': 'shamsutdinova-g-b', 'yusupova-n-r': 'aliyeva-z-v', 'ismoilova-z-b': 'isaqjonova-m-n', 'karimov-a-s': 'satvoldiyev-d-u', 'abdullayev-j-o': 'xalilov-n-a', 'rahmonov-d-k': 'davlatov-s-q', 'sultanova-g-m': 'gayratjonova-f-g', 'hasanov-a-m': 'mominov-j-z', 'usmonov-q-a': 'aliyeva-z-v', 'qodirova-m-s': 'xojaeva-g-a' } as Record<string, string>)[slug] ?? slug
+  const index = doctorProfiles.findIndex((d) => d.slug === resolved)
   if (index < 0) return null
   return { profile: doctorProfiles[index], index }
 }
@@ -364,7 +1332,7 @@ export const doctorPageLabels: Record<
     back: 'Barcha shifokorlar',
     about: 'Haqida',
     education: 'Ta’lim',
-    focuses: 'Yo‘nalishlar',
+    focuses: 'Yo’nalishlar',
     languages: 'Tillar',
     book: 'Qabulga yozilish',
     papers: 'Maqolalar',
@@ -372,7 +1340,7 @@ export const doctorPageLabels: Record<
     experience: 'Tajriba',
     related: 'Boshqa mutaxassislar',
     relatedSame: 'Boshqa {specialty} shifokorlari',
-    relatedEmpty: 'Hozircha shu yo‘nalishda boshqa shifokor yo‘q.',
+    relatedEmpty: 'Hozircha shu yo’nalishda boshqa shifokor yo’q.',
     reviews: 'Bemorlar sharhlari',
     booking: {
       title: 'Shifokorga yozilish',
@@ -384,8 +1352,8 @@ export const doctorPageLabels: Record<
       lastName: 'Familiya',
       firstName: 'Ism',
       middleName: 'Otasining ismi',
-      noMiddleName: 'Otasining ismi yo‘q',
-      birthDate: 'Tug‘ilgan sana',
+      noMiddleName: 'Otasining ismi yo’q',
+      birthDate: 'Tug’ilgan sana',
       phone: 'Telefon',
       comment: 'Izoh',
       privacy: '«Yozilish» tugmasini bosib, siz',
@@ -394,7 +1362,7 @@ export const doctorPageLabels: Record<
       submitting: 'Yuborilmoqda…',
       close: 'Yopish',
       successTitle: 'Ariza qabul qilindi',
-      successDesc: 'Koordinator tez orada telefon orqali bog‘lanib, qabulni tasdiqlaydi.',
+      successDesc: 'Koordinator tez orada telefon orqali bog’lanib, qabulni tasdiqlaydi.',
       successClose: 'Yopish',
       requestNumber: 'Ariza raqami',
     },

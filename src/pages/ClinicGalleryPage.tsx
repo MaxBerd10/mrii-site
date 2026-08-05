@@ -85,7 +85,7 @@ export default function ClinicGalleryPage() {
       <section className="clinic-gallery-page__selector" aria-label={t.clinic.gallery.title}>
         <div className="clinic-gallery-page__selector-copy">
           <span>{t.clinic.gallery.label}</span>
-          <h2>Klinikani bo‘limma-bo‘lim ko‘ring</h2>
+          <h2>Klinikani bo’limma-bo’lim ko’ring</h2>
         </div>
         <div className="clinic-gallery-page__image-list">
           {GALLERY_IMAGES.map((image, index) => {

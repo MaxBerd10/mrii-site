@@ -105,16 +105,16 @@ export const daCopy: Record<
   uz: {
     eyebrow: 'AiShifokor',
     title: 'AiShifokor',
-    lead: 'Shikoyatingizni yozing — AI darhol dastlabki tahlil beradi, so‘ng shifokor tasdiqlaydi.',
+    lead: 'Shikoyatingizni yozing — AI darhol dastlabki tahlil beradi, so’ng shifokor tasdiqlaydi.',
     freeBadge: 'AI tahlil · Shifokor nazorati',
     disclaimer: 'AI dastlabki maslahat beradi. Yakuniy tashxis faqat shifokor qabulida.',
     modePatient: 'Bemor',
     modePhysician: 'Shifokor',
     backAi: 'AI yechimlar',
-    intakeLead: 'Anketani to‘ldiring — AiShifokor darhol dastlabki tahlil chiqaradi, so‘ng shifokor tasdiqlaydi.',
+    intakeLead: 'Anketani to’ldiring — AiShifokor darhol dastlabki tahlil chiqaradi, so’ng shifokor tasdiqlaydi.',
     intakeAiIdle: 'AI tayyor. Shikoyatni yozing va «AI tahlil» ni bosing.',
     intakeAiListening: 'Ma’lumot qabul qilinmoqda…',
-    intakeAiWorking: 'AI tahlil qilmoqda: anamnez, risklar, yo‘nalish…',
+    intakeAiWorking: 'AI tahlil qilmoqda: anamnez, risklar, yo’nalish…',
     intakeAiReady: 'Dastlabki AI tahlil tayyor',
     intakeAiLabel: 'AiShifokor',
     intakeAiSteps: 'Keyingi qadamlar',
@@ -129,14 +129,14 @@ export const daCopy: Record<
     intakeHistory: 'Kasallik tarixi',
     intakeHistoryPh: 'Surunkali kasalliklar, operatsiyalar, doimiy dorilar…',
     intakeAllergies: 'Allergiya',
-    intakeAllergiesPh: 'Dori yoki ovqat allergiyasi yo‘q bo‘lsa — «Yo‘q»',
+    intakeAllergiesPh: 'Dori yoki ovqat allergiyasi yo’q bo’lsa — «Yo’q»',
     intakeComplaints: 'Shikoyatlar',
     intakeComplaintsPh: 'Nima bezovta qilayotganini, qachondan, qanday kechayotganini yozing…',
     intakeSubmit: 'AI tahlil + shifokorga yuborish',
     intakeSubmitting: 'AI ishlamoqda…',
-    intakeError: 'Yuborilmadi. Qayta urinib ko‘ring yoki qo‘ng‘iroq qiling.',
+    intakeError: 'Yuborilmadi. Qayta urinib ko’ring yoki qo’ng’iroq qiling.',
     intakeSuccessEyebrow: 'AI + shifokor',
-    intakeSuccessTitle: 'AI tahlil chiqdi, so‘rov shifokorga ketdi',
+    intakeSuccessTitle: 'AI tahlil chiqdi, so’rov shifokorga ketdi',
     intakeSuccessDesc:
       'Pastda AI dastlabki maslahati. Shifokor tasdiqlagach, murojaat raqami bilan yakuniy javobni olasiz.',
     intakeRequestLabel: 'Murojaat raqami',
@@ -146,11 +146,11 @@ export const daCopy: Record<
     lookupPh: 'MAS-2026-…',
     lookupSubmit: 'Tekshirish',
     lookupBusy: 'Qidirilmoqda…',
-    lookupPending: 'Hali javob yozilmagan. Birozdan keyin qayta tekshiring yoki qo‘ng‘iroqni kuting.',
+    lookupPending: 'Hali javob yozilmagan. Birozdan keyin qayta tekshiring yoki qo’ng’iroqni kuting.',
     lookupAdviceLabel: 'Shifokor maslahati',
     lookupNotFound: 'Bunday murojaat topilmadi. Raqamni tekshiring.',
-    lookupEmpty: 'Hozircha CMS o‘chiq — javob tekshiruvi ishlamaydi.',
-    lookupError: 'Tekshirishda xatolik. Keyinroq urinib ko‘ring.',
+    lookupEmpty: 'Hozircha CMS o’chiq — javob tekshiruvi ishlamaydi.',
+    lookupError: 'Tekshirishda xatolik. Keyinroq urinib ko’ring.',
     physicianPick: 'Tayyor ssenariy',
     physicianOr: 'yoki shikoyatni yozing',
     physicianCustomPh: 'Bemor shikoyati, anamnez qisqacha…',
@@ -163,19 +163,19 @@ export const daCopy: Record<
     physicianCopy: 'Nusxa olish',
     physicianCopied: 'Nusxa olindi',
     physicianReset: 'Yangi ssenariy',
-    leadTitle: 'O‘z klinikangizga o‘rnatmoqchimisiz?',
-    leadDesc: 'Yuqoridagi bemor anketasi shu klinika uchun. Boshqa klinika / MIS ulash uchun alohida so‘rov.',
+    leadTitle: 'O’z klinikangizga o’rnatmoqchimisiz?',
+    leadDesc: 'Yuqoridagi bemor anketasi shu klinika uchun. Boshqa klinika / MIS ulash uchun alohida so’rov.',
     leadBadge: 'Klinikalar uchun (ixtiyoriy)',
     leadName: 'Ism',
     leadPhone: 'Telefon',
     leadEmail: 'Email',
     leadClinic: 'Klinika / tashkilot nomi',
     leadMessage: 'Nima kerak?',
-    leadSubmit: 'Klinikaga so‘rov',
+    leadSubmit: 'Klinikaga so’rov',
     leadSubmitting: 'Yuborilmoqda…',
     leadError: 'Yuborishda xatolik.',
-    leadSuccessTitle: 'So‘rov qabul qilindi',
-    leadSuccessDesc: 'Klinikangiz bo‘yicha bog‘lanamiz.',
+    leadSuccessTitle: 'So’rov qabul qilindi',
+    leadSuccessDesc: 'Klinikangiz bo’yicha bog’lanamiz.',
     leadClose: 'Yopish',
     related: 'Boshqa AI mahsulotlar',
   },
@@ -338,8 +338,8 @@ export const daCopy: Record<
 export const patientComplaints: PatientComplaint[] = [
   {
     id: 'chest',
-    label: { uz: 'Ko‘krak og‘rig‘i', ru: 'Боль в груди', en: 'Chest pain' },
-    keywords: ['ko‘krak', 'kokrak', 'chest', 'груд', 'yurak', 'сердц', 'heart'],
+    label: { uz: 'Ko’krak og’rig’i', ru: 'Боль в груди', en: 'Chest pain' },
+    keywords: ['ko’krak', 'kokrak', 'chest', 'груд', 'yurak', 'сердц', 'heart'],
     followUps: [
       {
         id: 'exertion',
@@ -361,24 +361,24 @@ export const patientComplaints: PatientComplaint[] = [
     specialtySlug: 'cardiology',
     specialtyName: { uz: 'Kardiologiya', ru: 'Кардиология', en: 'Cardiology' },
     advice: {
-      uz: 'Kardiolog ko‘rigiga yoziling. Kuchli og‘riq, sovuq ter yoki hushsizlik bo‘lsa — zudlik bilan shoshilinch yordam.',
+      uz: 'Kardiolog ko’rigiga yoziling. Kuchli og’riq, sovuq ter yoki hushsizlik bo’lsa — zudlik bilan shoshilinch yordam.',
       ru: 'Запишитесь к кардиологу. При сильной боли, холодном поте или обмороке — срочная помощь.',
       en: 'Book cardiology. Severe pain, cold sweat, or fainting needs urgent care.',
     },
     urgency: {
-      uz: 'Agar og‘riq kuchli yoki chap qo‘lga tarqalsa — kutmang.',
+      uz: 'Agar og’riq kuchli yoki chap qo’lga tarqalsa — kutmang.',
       ru: 'Если боль сильная или отдаёт в левую руку — не ждите.',
       en: 'If pain is severe or radiates to the left arm — do not wait.',
     },
   },
   {
     id: 'head',
-    label: { uz: 'Bosh og‘rig‘i / aylanish', ru: 'Головная боль / головокружение', en: 'Headache / dizziness' },
+    label: { uz: 'Bosh og’rig’i / aylanish', ru: 'Головная боль / головокружение', en: 'Headache / dizziness' },
     keywords: ['bosh', 'head', 'голово', 'aylan', 'migren', 'мигрен'],
     followUps: [
       {
         id: 'sudden',
-        label: { uz: 'To‘satdan, kuchli', ru: 'Внезапно, сильно', en: 'Sudden and severe' },
+        label: { uz: 'To’satdan, kuchli', ru: 'Внезапно, сильно', en: 'Sudden and severe' },
       },
       {
         id: 'chronic',
@@ -386,25 +386,25 @@ export const patientComplaints: PatientComplaint[] = [
       },
       {
         id: 'vision',
-        label: { uz: 'Ko‘rish buzilishi bilan', ru: 'С нарушением зрения', en: 'With vision changes' },
+        label: { uz: 'Ko’rish buzilishi bilan', ru: 'С нарушением зрения', en: 'With vision changes' },
       },
     ],
     specialtySlug: 'neurology',
     specialtyName: { uz: 'Nevrologiya', ru: 'Неврология', en: 'Neurology' },
     advice: {
-      uz: 'Nevrolog konsultatsiyasi tavsiya etiladi. To‘satdan «eng kuchli» og‘riq bo‘lsa — shoshilinch yordam.',
+      uz: 'Nevrolog konsultatsiyasi tavsiya etiladi. To’satdan «eng kuchli» og’riq bo’lsa — shoshilinch yordam.',
       ru: 'Рекомендуется невролог. При внезапной «самой сильной» боли — срочная помощь.',
       en: 'See neurology. Sudden “worst ever” headache needs urgent care.',
     },
     urgency: {
-      uz: 'Nutq buzilishi yoki kuchsizlik bo‘lsa — darhol yordam.',
+      uz: 'Nutq buzilishi yoki kuchsizlik bo’lsa — darhol yordam.',
       ru: 'При нарушении речи или слабости — немедленно.',
       en: 'Speech trouble or weakness — seek care immediately.',
     },
   },
   {
     id: 'belly',
-    label: { uz: 'Qorin og‘rig‘i', ru: 'Боль в животе', en: 'Abdominal pain' },
+    label: { uz: 'Qorin og’rig’i', ru: 'Боль в животе', en: 'Abdominal pain' },
     keywords: ['qorin', 'живот', 'belly', 'stomach', 'oshqozon', 'желуд'],
     followUps: [
       {
@@ -413,22 +413,22 @@ export const patientComplaints: PatientComplaint[] = [
       },
       {
         id: 'right',
-        label: { uz: 'O‘ng pastki qism', ru: 'Правый низ', en: 'Lower right' },
+        label: { uz: 'O’ng pastki qism', ru: 'Правый низ', en: 'Lower right' },
       },
       {
         id: 'diarrhea',
-        label: { uz: 'Diareya / ko‘ngil aynishi', ru: 'Диарея / тошнота', en: 'Diarrhea / nausea' },
+        label: { uz: 'Diareya / ko’ngil aynishi', ru: 'Диарея / тошнота', en: 'Diarrhea / nausea' },
       },
     ],
     specialtySlug: 'gastroenterology',
     specialtyName: { uz: 'Gastroenterologiya', ru: 'Гастроэнтерология', en: 'Gastroenterology' },
     advice: {
-      uz: 'Gastroenterolog yoki terapiya qabuli. O‘tkir kuchli og‘riqda — shoshilinch baholash.',
+      uz: 'Gastroenterolog yoki terapiya qabuli. O’tkir kuchli og’riqda — shoshilinch baholash.',
       ru: 'Гастроэнтеролог или терапевт. При острой сильной боли — срочная оценка.',
       en: 'Gastroenterology or therapy. Severe acute pain needs urgent assessment.',
     },
     urgency: {
-      uz: 'Qon ketishi yoki yuqori isitma bo‘lsa — kutmang.',
+      uz: 'Qon ketishi yoki yuqori isitma bo’lsa — kutmang.',
       ru: 'При кровотечении или высокой температуре — не ждите.',
       en: 'Bleeding or high fever — do not wait.',
     },
@@ -444,7 +444,7 @@ export const patientComplaints: PatientComplaint[] = [
       },
       {
         id: 'weight',
-        label: { uz: 'Vazn o‘zgarishi', ru: 'Изменение веса', en: 'Weight change' },
+        label: { uz: 'Vazn o’zgarishi', ru: 'Изменение веса', en: 'Weight change' },
       },
       {
         id: 'known',
@@ -454,7 +454,7 @@ export const patientComplaints: PatientComplaint[] = [
     specialtySlug: 'endocrinology',
     specialtyName: { uz: 'Endokrinologiya', ru: 'Эндокринология', en: 'Endocrinology' },
     advice: {
-      uz: 'Endokrinolog ko‘rigi va qon tahlili (glyukoza / HbA1c) maqsadga muvofiq.',
+      uz: 'Endokrinolog ko’rigi va qon tahlili (glyukoza / HbA1c) maqsadga muvofiq.',
       ru: 'Консультация эндокринолога и анализы глюкозы / HbA1c.',
       en: 'Endocrinology visit plus glucose / HbA1c labs is appropriate.',
     },
@@ -475,7 +475,7 @@ export const patientComplaints: PatientComplaint[] = [
       },
       {
         id: 'cough',
-        label: { uz: 'Yo‘tal / tomoq', ru: 'Кашель / горло', en: 'Cough / sore throat' },
+        label: { uz: 'Yo’tal / tomoq', ru: 'Кашель / горло', en: 'Cough / sore throat' },
       },
       {
         id: 'long',
@@ -485,12 +485,12 @@ export const patientComplaints: PatientComplaint[] = [
     specialtySlug: 'therapy',
     specialtyName: { uz: 'Terapiya', ru: 'Терапия', en: 'Internal medicine' },
     advice: {
-      uz: 'Avval terapevt qabuli — keyin kerak bo‘lsa mutaxassisga yo‘naltiriladi.',
+      uz: 'Avval terapevt qabuli — keyin kerak bo’lsa mutaxassisga yo’naltiriladi.',
       ru: 'Сначала терапевт — при необходимости направит к узкому специалисту.',
       en: 'Start with internal medicine; they can refer if needed.',
     },
     urgency: {
-      uz: 'Nafas qiyinlashishi yoki yuqori isitma — tezroq ko‘rsatiling.',
+      uz: 'Nafas qiyinlashishi yoki yuqori isitma — tezroq ko’rsatiling.',
       ru: 'Затруднённое дыхание или высокая температура — обратитесь скорее.',
       en: 'Breathing trouble or high fever — seek care sooner.',
     },
@@ -510,13 +510,13 @@ export const patientComplaints: PatientComplaint[] = [
       },
       {
         id: 'appetite',
-        label: { uz: 'Ishtaha yo‘qolgan', ru: 'Нет аппетита', en: 'Poor appetite' },
+        label: { uz: 'Ishtaha yo’qolgan', ru: 'Нет аппетита', en: 'Poor appetite' },
       },
     ],
     specialtySlug: 'pediatrics',
     specialtyName: { uz: 'Pediatriya', ru: 'Педиатрия', en: 'Pediatrics' },
     advice: {
-      uz: 'Pediatr ko‘rigiga yoziling. Chaqaloqlarda isitma — tezroq baholash.',
+      uz: 'Pediatr ko’rigiga yoziling. Chaqaloqlarda isitma — tezroq baholash.',
       ru: 'Запишитесь к педиатру. Температура у младенцев — ранняя оценка.',
       en: 'Book pediatrics. Fever in infants needs earlier assessment.',
     },
@@ -537,17 +537,17 @@ export const physicianScenarios: PhysicianScenario[] = [
       en: 'Cardiology visit',
     },
     complaint: {
-      uz: '52 y.e., erkak. 2 haftadan beri jismoniy yuklama paytida ko‘krakda siquvchi og‘riq, chap qo‘lga tarqaladi. Nafas qisishi bor.',
+      uz: '52 y.e., erkak. 2 haftadan beri jismoniy yuklama paytida ko’krakda siquvchi og’riq, chap qo’lga tarqaladi. Nafas qisishi bor.',
       ru: '52 г., муж. 2 недели — давящая боль в груди при нагрузке, иррадиация в левую руку, одышка.',
       en: '52M. 2 weeks of exertional pressing chest pain radiating to left arm, with dyspnea.',
     },
     subjective: {
-      uz: 'Shikoyat: yuklamada ko‘krak siquvi, chap qo‘lga irradiatsiya, NQ. Anamnez: AG 8 yil, chekuvchi (15 pak/yil). Allergiya yo‘q.',
+      uz: 'Shikoyat: yuklamada ko’krak siquvi, chap qo’lga irradiatsiya, NQ. Anamnez: AG 8 yil, chekuvchi (15 pak/yil). Allergiya yo’q.',
       ru: 'Жалобы: давящая боль при нагрузке, иррадиация влево, одышка. Анамнез: АГ 8 лет, курение 15 пачко-лет. Аллергий нет.',
       en: 'CC: exertional pressing pain → L arm, dyspnea. Hx: HTN 8y, 15 pack-years. NKDA.',
     },
     objective: {
-      uz: 'AH 148/92, Puls 88, SpO2 97%. Yurak tonlari ritmik, shovqin yo‘q. O‘pka: vezikulyar. ECG: ST depressiya yo‘q (demo).',
+      uz: 'AH 148/92, Puls 88, SpO2 97%. Yurak tonlari ritmik, shovqin yo’q. O’pka: vezikulyar. ECG: ST depressiya yo’q (demo).',
       ru: 'АД 148/92, пульс 88, SpO2 97%. Тоны ритмичные, шумов нет. Лёгкие: везикулярное. ЭКГ: без ST-депрессии (демо).',
       en: 'BP 148/92, HR 88, SpO2 97%. Heart regular, no murmur. Lungs clear. ECG: no ST depression (demo).',
     },
@@ -565,32 +565,32 @@ export const physicianScenarios: PhysicianScenario[] = [
   {
     id: 'therapy',
     title: {
-      uz: 'Terapiya — O‘RQ',
+      uz: 'Terapiya — O’RQ',
       ru: 'Терапия — ОРВИ',
       en: 'Therapy — URI',
     },
     complaint: {
-      uz: '34 y.e., ayol. 3 kundan beri tomoq og‘rig‘i, isitma 38.1, quruq yo‘tal. Hushyor, suyuqlik ichadi.',
+      uz: '34 y.e., ayol. 3 kundan beri tomoq og’rig’i, isitma 38.1, quruq yo’tal. Hushyor, suyuqlik ichadi.',
       ru: '34 г., жен. 3 дня — боль в горле, t° 38.1, сухой кашель. В сознании, пьёт жидкость.',
       en: '34F. 3 days sore throat, fever 38.1, dry cough. Alert, taking fluids.',
     },
     subjective: {
-      uz: 'Shikoyat: tomoq, isitma, quruq yo‘tal. Anamnez: surunkali kasallik yo‘q. Allergiya: penisillinga toshma (bolalikda).',
+      uz: 'Shikoyat: tomoq, isitma, quruq yo’tal. Anamnez: surunkali kasallik yo’q. Allergiya: penisillinga toshma (bolalikda).',
       ru: 'Жалобы: горло, лихорадка, сухой кашель. Хр. болезней нет. Аллергия: сыпь на пенициллин в детстве.',
       en: 'CC: sore throat, fever, dry cough. No chronic illness. Allergy: childhood penicillin rash.',
     },
     objective: {
-      uz: 'T 38.0, AH 118/76, Puls 92, SpO2 98%. Tomoq giperemiyasi, yiring yo‘q. O‘pka: xirillash yo‘q. Quloq: normal.',
+      uz: 'T 38.0, AH 118/76, Puls 92, SpO2 98%. Tomoq giperemiyasi, yiring yo’q. O’pka: xirillash yo’q. Quloq: normal.',
       ru: 'T 38.0, АД 118/76, пульс 92, SpO2 98%. Гиперемия зева, налёта нет. Лёгкие без хрипов. Уши: норма.',
       en: 'T 38.0, BP 118/76, HR 92, SpO2 98%. Pharynx erythematous, no exudate. Lungs clear. Ears normal.',
     },
     plan: {
-      uz: '1) Simptomatik: suyuqlik, antipiretik. 2) Antibiotik hozircha yo‘q (virus ehtimoli). 3) Ogohlantirish belgilari. 4) 48–72 soatda qayta aloqa.',
+      uz: '1) Simptomatik: suyuqlik, antipiretik. 2) Antibiotik hozircha yo’q (virus ehtimoli). 3) Ogohlantirish belgilari. 4) 48–72 soatda qayta aloqa.',
       ru: '1) Симптоматически: жидкость, антипиретик. 2) Антибиотик пока не показан. 3) Красные флаги. 4) Связь через 48–72 ч.',
       en: '1) Supportive care + antipyretic. 2) No antibiotic yet. 3) Red-flag advice. 4) Recheck in 48–72h.',
     },
     icd: [
-      { code: 'J06.9', label: { uz: 'O‘tkir yuqori nafas yo‘li infeksiyasi', ru: 'ОРВИ неуточнённая', en: 'Acute URI, unspecified' } },
+      { code: 'J06.9', label: { uz: 'O’tkir yuqori nafas yo’li infeksiyasi', ru: 'ОРВИ неуточнённая', en: 'Acute URI, unspecified' } },
       { code: 'R50.9', label: { uz: 'Isitma, aniqlanmagan', ru: 'Лихорадка неуточнённая', en: 'Fever, unspecified' } },
     ],
   },
@@ -602,12 +602,12 @@ export const physicianScenarios: PhysicianScenario[] = [
       en: 'Endocrinology — glucose control',
     },
     complaint: {
-      uz: '47 y.e., erkak. 2-tip diabet. So‘nggi 1 oyda chanqoqlik, tungi siyish, charchoq. Uy glyukozasi 12–14 mmol/l.',
+      uz: '47 y.e., erkak. 2-tip diabet. So’nggi 1 oyda chanqoqlik, tungi siyish, charchoq. Uy glyukozasi 12–14 mmol/l.',
       ru: '47 г., муж. СД2. Месяц — жажда, никтурия, усталость. Домашняя глюкоза 12–14 ммоль/л.',
       en: '47M with T2DM. 1 month thirst, nocturia, fatigue. Home glucose 12–14 mmol/L.',
     },
     subjective: {
-      uz: 'Shikoyat: polidipsiya, poliuriya, charchoq. Dori: metformin 1000 mg ×2. Dieta qisman. Allergiya yo‘q.',
+      uz: 'Shikoyat: polidipsiya, poliuriya, charchoq. Dori: metformin 1000 mg ×2. Dieta qisman. Allergiya yo’q.',
       ru: 'Жалобы: полидипсия, полиурия, усталость. Терапия: метформин 1000×2. Диета частичная. Аллергий нет.',
       en: 'CC: polydipsia, polyuria, fatigue. Meds: metformin 1000 BID. Partial diet. NKDA.',
     },
@@ -617,7 +617,7 @@ export const physicianScenarios: PhysicianScenario[] = [
       en: 'BP 136/84, BMI 31. Foot sensation intact. Demo labs: glu 13.2, HbA1c 9.1%.',
     },
     plan: {
-      uz: '1) HbA1c / lipid / kreatinin. 2) Metformin dozasi / qo‘shimcha preparat muhokamasi. 3) Ovqatlanish va harakat. 4) Gipoglikemiya o‘qitish. 5) 2–4 haftada nazorat.',
+      uz: '1) HbA1c / lipid / kreatinin. 2) Metformin dozasi / qo’shimcha preparat muhokamasi. 3) Ovqatlanish va harakat. 4) Gipoglikemiya o’qitish. 5) 2–4 haftada nazorat.',
       ru: '1) HbA1c / липиды / креатинин. 2) Обсудить дозу метформина / add-on. 3) Питание и активность. 4) Обучение гипогликемии. 5) Контроль 2–4 нед.',
       en: '1) HbA1c / lipids / creatinine. 2) Titrate metformin / discuss add-on. 3) Diet + activity. 4) Hypoglycemia education. 5) Follow-up 2–4 weeks.',
     },
@@ -667,7 +667,7 @@ export function protocolFromCustom(
     },
     objective: related.objective,
     plan: {
-      uz: `${related.plan.uz}\n\nYo‘nalish eslatmasi: ${base.specialtyName.uz}.`,
+      uz: `${related.plan.uz}\n\nYo’nalish eslatmasi: ${base.specialtyName.uz}.`,
       ru: `${related.plan.ru}\n\nНаправление: ${base.specialtyName.ru}.`,
       en: `${related.plan.en}\n\nSpecialty cue: ${base.specialtyName.en}.`,
     },
@@ -713,9 +713,9 @@ export function buildPatientAiAnalysis(
             'If red flags appear — seek urgent care',
           ]
         : [
-            `Tavsiya etilgan yo‘nalish: ${specialtyName}`,
+            `Tavsiya etilgan yo’nalish: ${specialtyName}`,
             'Murojaat raqamini saqlang — shifokor tasdiqlaydi',
-            'Qizil bayroqlar bo‘lsa — kutmang, shoshilinch yordam',
+            'Qizil bayroqlar bo’lsa — kutmang, shoshilinch yordam',
           ]
 
   const icd = draft.icd.map((row) => ({ code: row.code, label: row.label[lang] }))

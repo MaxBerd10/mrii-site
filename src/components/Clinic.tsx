@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react'
-import { motion } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
 import { usePageNav } from './PageTransition'
@@ -81,11 +81,14 @@ export default function Clinic({ view = 'overview' }: { view?: ClinicView }) {
   const { t, lang } = useLanguage()
   const { home } = useCms()
   const { routeEnter } = usePageNav()
+  const reduceMotion = useReducedMotion()
   const [filter, setFilter] = useState<ClinicCategory>(
     view === 'diagnostics' ? 'diagnostics' : 'all',
   )
   const [query, setQuery] = useState('')
+  const [courtyardTime, setCourtyardTime] = useState<'day' | 'evening'>('day')
   const isFocusedView = view !== 'overview'
+  const isEvening = courtyardTime === 'evening'
   const focusedTitle =
     view === 'diagnostics' ? t.nav.children.diagnostics : t.nav.children.services
 
@@ -165,11 +168,67 @@ export default function Clinic({ view = 'overview' }: { view?: ClinicView }) {
     <section id="clinic" className="clinic-section clinic-section--catalog">
       <div className="container-main clinic-catalog-page">
         <div className="clinic-opening">
-          <header className="clinic-intro">
-            <span className="clinic-intro__label">
-              <span className="clinic-intro__dot" aria-hidden />
-              {t.clinic.label}
-            </span>
+          {!isFocusedView ? (
+            <section className={`clinic-courtyard${isEvening ? ' is-evening' : ''}`} aria-label={t.clinic.gallery.title}>
+              <div className="clinic-courtyard__scene">
+                <motion.img
+                  className="clinic-courtyard__image"
+                  src="/images/clinic-gallery/courtyard-day.webp"
+                  alt={t.clinic.gallery.items.courtyardDay}
+                  fetchPriority="high"
+                  decoding="async"
+                  initial={false}
+                  animate={{ opacity: isEvening ? 0 : 1, scale: isEvening ? 1.025 : 1 }}
+                  transition={reduceMotion ? { duration: 0 } : { duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                />
+                <motion.img
+                  className="clinic-courtyard__image"
+                  src="/images/clinic-gallery/courtyard-evening.webp"
+                  alt={t.clinic.gallery.items.courtyardEvening}
+                  loading="eager"
+                  decoding="async"
+                  initial={false}
+                  animate={{ opacity: isEvening ? 1 : 0, scale: isEvening ? 1 : 1.025 }}
+                  transition={reduceMotion ? { duration: 0 } : { duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                />
+                <span className="clinic-courtyard__lights" aria-hidden />
+                <div className="clinic-courtyard__shade" aria-hidden />
+                <div className="clinic-courtyard__controls">
+                  <div>
+                    <span>{t.clinic.gallery.label}</span>
+                    <strong>{isEvening ? t.clinic.gallery.items.courtyardEvening : t.clinic.gallery.items.courtyardDay}</strong>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setCourtyardTime((current) => (current === 'day' ? 'evening' : 'day'))}
+                    aria-pressed={isEvening}
+                  >
+                    <i aria-hidden>{isEvening ? '☀' : '☾'}</i>
+                    {isEvening ? t.clinic.gallery.items.courtyardDay : t.clinic.gallery.items.courtyardEvening}
+                  </button>
+                </div>
+              </div>
+            </section>
+          ) : null}
+
+          <header className={`clinic-intro${isFocusedView ? ' clinic-intro--focused' : ''}`}>
+            {isFocusedView ? (
+              <div className="clinic-intro__meta">
+                <a href="/clinic" className="clinic-intro__back">
+                  <span aria-hidden>←</span>
+                  {t.nav.clinic}
+                </a>
+                <span className="clinic-intro__label">
+                  <span className="clinic-intro__dot" aria-hidden />
+                  {t.clinic.label}
+                </span>
+              </div>
+            ) : (
+              <span className="clinic-intro__label">
+                <span className="clinic-intro__dot" aria-hidden />
+                {t.clinic.label}
+              </span>
+            )}
             <h1 className="clinic-intro__title">
               {isFocusedView ? (
                 focusedTitle
@@ -188,10 +247,79 @@ export default function Clinic({ view = 'overview' }: { view?: ClinicView }) {
             </a>
           </header>
 
-          <div className="clinic-finder">
-            <label className="clinic-search">
-              <span className="clinic-search__label">{t.clinic.searchLabel}</span>
-              <span className="clinic-search__field">
+          {!isFocusedView ? (
+            <div className="clinic-portal">
+              <a href="/clinic/services" className="clinic-portal__primary">
+                <span className="clinic-portal__eyebrow">{t.clinic.catalogTitle}</span>
+                <strong className="clinic-portal__count">
+                  {specialties.length}
+                  <small>{t.clinic.resultsLabel}</small>
+                </strong>
+                <p className="clinic-portal__desc">{t.clinic.catalogDescription}</p>
+                <span className="clinic-portal__cats" aria-hidden>
+                  {filters
+                    .filter((item) => item.id !== 'all' && item.count > 0)
+                    .map((item) => (
+                      <span key={item.id} className="clinic-portal__cat">
+                        <span className="clinic-portal__cat-dot" style={{ background: item.color ?? undefined }} />
+                        {item.label}
+                      </span>
+                    ))}
+                </span>
+                <span className="clinic-portal__cta">
+                  {t.nav.children.services}
+                  <Arrow />
+                </span>
+              </a>
+
+              <nav className="clinic-quick-actions clinic-quick-actions--portal" aria-label={t.clinic.label}>
+                {quickActions.map((action) => (
+                  <a key={action.href} href={action.href} className="clinic-quick-action">
+                    <span className="clinic-quick-action__icon">
+                      <QuickActionIcon kind={action.kind} />
+                    </span>
+                    <span>
+                      <strong>{action.title}</strong>
+                      <small>{action.description}</small>
+                    </span>
+                    <Arrow />
+                  </a>
+                ))}
+              </nav>
+            </div>
+          ) : null}
+        </div>
+
+        {isFocusedView ? (
+          <>
+            <div className="clinic-results-head">
+              <h2>{t.clinic.catalogTitle}</h2>
+              <span className="clinic-results-count" aria-live="polite">
+                <strong>{filtered.length}</strong> {t.clinic.resultsLabel}
+              </span>
+            </div>
+
+            <div className="clinic-catalog-controls">
+              <div className="clinic-toolbar" role="tablist" aria-label={t.clinic.catalogTitle}>
+                {filters.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={filter === item.id}
+                    className={`clinic-toolbar__btn${filter === item.id ? ' is-active' : ''}`}
+                    onClick={() => setFilter(item.id)}
+                  >
+                    {item.color ? (
+                      <span className="clinic-toolbar__dot" style={{ background: item.color }} aria-hidden />
+                    ) : null}
+                    <span className="clinic-toolbar__text">{item.label}</span>
+                    <span className="clinic-toolbar__count">{item.count}</span>
+                  </button>
+                ))}
+              </div>
+
+              <label className="clinic-catalog-search">
                 <SearchIcon />
                 <input
                   type="search"
@@ -199,62 +327,17 @@ export default function Clinic({ view = 'overview' }: { view?: ClinicView }) {
                   onChange={(event) => setQuery(event.target.value)}
                   placeholder={t.clinic.searchPlaceholder}
                   autoComplete="off"
+                  aria-label={t.clinic.searchLabel}
                 />
                 {query ? (
                   <button type="button" onClick={() => setQuery('')} aria-label={t.clinic.clearSearch}>
                     ×
                   </button>
                 ) : null}
-              </span>
-            </label>
+              </label>
+            </div>
 
-            <nav className="clinic-quick-actions" aria-label={t.clinic.label}>
-              {quickActions.map((action) => (
-                <a key={action.href} href={action.href} className="clinic-quick-action">
-                  <span className="clinic-quick-action__icon">
-                    <QuickActionIcon kind={action.kind} />
-                  </span>
-                  <span>
-                    <strong>{action.title}</strong>
-                    <small>{action.description}</small>
-                  </span>
-                  <Arrow />
-                </a>
-              ))}
-            </nav>
-          </div>
-        </div>
-
-        <div className="clinic-results-head">
-          <div>
-            <h2>{t.clinic.catalogTitle}</h2>
-            {!isFocusedView ? <p>{t.clinic.catalogDescription}</p> : null}
-          </div>
-          <span className="clinic-results-count" aria-live="polite">
-            <strong>{filtered.length}</strong> {t.clinic.resultsLabel}
-          </span>
-        </div>
-
-        <div className="clinic-toolbar" role="tablist" aria-label={t.clinic.catalogTitle}>
-          {filters.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              role="tab"
-              aria-selected={filter === item.id}
-              className={`clinic-toolbar__btn${filter === item.id ? ' is-active' : ''}`}
-              onClick={() => setFilter(item.id)}
-            >
-              {item.color ? (
-                <span className="clinic-toolbar__dot" style={{ background: item.color }} aria-hidden />
-              ) : null}
-              <span className="clinic-toolbar__text">{item.label}</span>
-              <span className="clinic-toolbar__count">{item.count}</span>
-            </button>
-          ))}
-        </div>
-
-        {filtered.length ? (
+            {filtered.length ? (
           <motion.div
             key={`${filter}-${lang}`}
             className="clinic-catalog"
@@ -309,6 +392,8 @@ export default function Clinic({ view = 'overview' }: { view?: ClinicView }) {
             </button>
           </div>
         )}
+          </>
+        ) : null}
       </div>
     </section>
   )

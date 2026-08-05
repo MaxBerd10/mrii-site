@@ -15,11 +15,11 @@ export const newsArticles: NewsArticle[] = [
     slug: 'car-t-therapy-study',
     content: {
       uz: {
-        lead: 'Fargʻona Jamoat Salomatligi Tibbiyot Instituti I-bosqich bo‘limi CAR-T terapiyasi bo‘yicha xalqaro ko‘p markazli tadqiqotda birinchi bemorlarni qabul qilishni boshladi.',
+        lead: 'Farg’ona Jamoat Salomatligi Tibbiyot Instituti I-bosqich bo’limi CAR-T terapiyasi bo’yicha xalqaro ko’p markazli tadqiqotda birinchi bemorlarni qabul qilishni boshladi.',
         body: [
           'Yangi dastur onkohematologik kasalliklarni davolashda shaxsiylashtirilgan immunoterapiyani kengaytirishga qaratilgan. Tadqiqot protokoli xalqaro GCP standartlari asosida ishlab chiqilgan va multidisiplinar konsilium tomonidan tasdiqlangan.',
-          'Birinchi bemorlar to‘liq diagnostika, laboratoriya monitoringi va 24/7 klinik kuzatuv ostida qabul qilinmoqda. Fargʻona Jamoat Salomatligi Tibbiyot Instituti jamoasi sponsorlar, CRO hamkorlari va klinik laboratoriyalar bilan yagona raqamli tizim orqali ishlaydi.',
-          'Kelgusi oyda markaz qo‘shimcha bemorlarni jalb etishni rejalashtirmoqda. Tadqiqot natijalari kelajakda mintaqada CAR-T yo‘nalishini rivojlantirish uchun asos bo‘ladi.',
+          'Birinchi bemorlar to’liq diagnostika, laboratoriya monitoringi va 24/7 klinik kuzatuv ostida qabul qilinmoqda. Farg’ona Jamoat Salomatligi Tibbiyot Instituti jamoasi sponsorlar, CRO hamkorlari va klinik laboratoriyalar bilan yagona raqamli tizim orqali ishlaydi.',
+          'Kelgusi oyda markaz qo’shimcha bemorlarni jalb etishni rejalashtirmoqda. Tadqiqot natijalari kelajakda mintaqada CAR-T yo’nalishini rivojlantirish uchun asos bo’ladi.',
         ],
       },
       ru: {
@@ -34,7 +34,7 @@ export const newsArticles: NewsArticle[] = [
         lead: 'Ferghana Medical Institute of Public Health’s Phase I unit has started enrolling the first patients in an international multi-center CAR-T therapy study.',
         body: [
           'The new program expands personalized immunotherapy for oncohematologic diseases. The protocol follows international GCP standards and was approved by a multidisciplinary board.',
-          'First patients are admitted with full diagnostics, laboratory monitoring, and 24/7 clinical observation. Fargʻona Jamoat Salomatligi Tibbiyot Instituti collaborates with sponsors and CRO partners through one digital system.',
+          'First patients are admitted with full diagnostics, laboratory monitoring, and 24/7 clinical observation. Farg’ona Jamoat Salomatligi Tibbiyot Instituti collaborates with sponsors and CRO partners through one digital system.',
           'The center plans to expand enrollment next month. Study outcomes will support future CAR-T development in the region.',
         ],
       },
@@ -44,10 +44,10 @@ export const newsArticles: NewsArticle[] = [
     slug: 'ai-radiology-certified',
     content: {
       uz: {
-        lead: 'AI Radiology tizimi klinik qo‘llash uchun sertifikatlandi: ko‘krak qafasi KT avtomatik tahlili 94% aniqlik bilan tasdiqlandi.',
+        lead: 'AI Radiology tizimi klinik qo’llash uchun sertifikatlandi: ko’krak qafasi KT avtomatik tahlili 94% aniqlik bilan tasdiqlandi.',
         body: [
-          'Yechim radiologlarga shubhali topilmalarni tezroq ajratish, prioritetlash va ikkinchi fikr olishda yordam beradi. Model minglab klinik tasvirlar asosida o‘qitilgan va ichki validatsiyadan o‘tgan.',
-          'Fargʻona Jamoat Salomatligi Tibbiyot Instituti diagnostika markazida tizim mavjud ish jarayoniga integratsiya qilinadi: skanerlash, tahlil, xulosa va davolovchi shifokorga uzatish yagona zanjirda qoladi.',
+          'Yechim radiologlarga shubhali topilmalarni tezroq ajratish, prioritetlash va ikkinchi fikr olishda yordam beradi. Model minglab klinik tasvirlar asosida o’qitilgan va ichki validatsiyadan o’tgan.',
+          'Farg’ona Jamoat Salomatligi Tibbiyot Instituti diagnostika markazida tizim mavjud ish jarayoniga integratsiya qilinadi: skanerlash, tahlil, xulosa va davolovchi shifokorga uzatish yagona zanjirda qoladi.',
           'Keyingi bosqichda jamoa boshqa anatomik sohalar uchun modelni kengaytirishni rejalashtirmoqda. Maqsad — diagnostika tezligi va sifatini bir vaqtda oshirish.',
         ],
       },
@@ -73,11 +73,11 @@ export const newsArticles: NewsArticle[] = [
     slug: 'residency-2025-2027',
     content: {
       uz: {
-        lead: 'Fargʻona Jamoat Salomatligi Tibbiyot Instituti akademiyasi 2025–2027 o‘quv davriga ordinaturaga ariza qabul qilmoqda: 8 ixtisoslikda jami 48 o‘rin ochiq.',
+        lead: 'Farg’ona Jamoat Salomatligi Tibbiyot Instituti akademiyasi 2025–2027 o’quv davriga ordinaturaga ariza qabul qilmoqda: 8 ixtisoslikda jami 48 o’rin ochiq.',
         body: [
-          'Dastur klinik amaliyotni ilmiy yo‘nalish bilan birlashtiradi. Ordinatorlar real bemorlar bilan ishlash, konsiliumlarda qatnashish va tadqiqot loyihalariga qo‘shilish imkoniyatiga ega.',
-          'O‘qitish moduli GCP treninglar, simulyatsion mashg‘ulotlar va mentorlik sessiyalarini o‘z ichiga oladi. Har bir yo‘nalish bo‘yicha individual o‘quv yo‘li tuziladi.',
-          'Ariza topshirish muddati ochiq. Nomzodlar akademiya portalidan hujjatlar paketini yuborishi va suhbat bosqichiga o‘tishi mumkin.',
+          'Dastur klinik amaliyotni ilmiy yo’nalish bilan birlashtiradi. Ordinatorlar real bemorlar bilan ishlash, konsiliumlarda qatnashish va tadqiqot loyihalariga qo’shilish imkoniyatiga ega.',
+          'O’qitish moduli GCP treninglar, simulyatsion mashg’ulotlar va mentorlik sessiyalarini o’z ichiga oladi. Har bir yo’nalish bo’yicha individual o’quv yo’li tuziladi.',
+          'Ariza topshirish muddati ochiq. Nomzodlar akademiya portalidan hujjatlar paketini yuborishi va suhbat bosqichiga o’tishi mumkin.',
         ],
       },
       ru: {
@@ -89,7 +89,7 @@ export const newsArticles: NewsArticle[] = [
         ],
       },
       en: {
-        lead: 'Fargʻona Jamoat Salomatligi Tibbiyot Instituti Academy is accepting residency applications for 2025–2027: 48 seats across 8 specialties.',
+        lead: 'Farg’ona Jamoat Salomatligi Tibbiyot Instituti Academy is accepting residency applications for 2025–2027: 48 seats across 8 specialties.',
         body: [
           'The program combines clinical practice with a research track. Residents work with real patients, join consiliums, and contribute to research projects.',
           'Training includes GCP modules, simulation sessions, and mentorship. Each specialty follows an individualized learning pathway.',
@@ -108,7 +108,7 @@ export const newsPageLabels: Record<ContentLang, {
   uz: {
     back: 'Barcha yangiliklar',
     related: 'Boshqa yangiliklar',
-    readMore: 'O‘qish',
+    readMore: 'O’qish',
   },
   ru: {
     back: 'Все новости',

@@ -30,7 +30,7 @@ export const specialtyWorlds: Record<string, SpecialtyWorldTheme> = {
     aiProductSlug: 'doctor-assistant',
     aiMetric: '85%',
     aiInsight: {
-      uz: 'AI endoskopik kadrlarda burun va tomoq o‘zgarishlarini ajratadi — LOR shifokoriga tez xulosa beradi.',
+      uz: 'AI endoskopik kadrlarda burun va tomoq o’zgarishlarini ajratadi — LOR shifokoriga tez xulosa beradi.',
       ru: 'ИИ выделяет изменения носа и горла на эндоскопических кадрах — быстрое заключение для ЛОР-врача.',
       en: 'AI highlights nasal and throat changes on endoscopy frames — quick summary for the ENT physician.',
     },
@@ -60,7 +60,7 @@ export const specialtyWorlds: Record<string, SpecialtyWorldTheme> = {
     aiProductSlug: 'radiology',
     aiMetric: '4s',
     aiInsight: {
-      uz: 'AI MRT/KT kesimlarida erta o‘zgarishlarni ajratadi — nevrolog qaroriga tayyor xulosa beradi.',
+      uz: 'AI MRT/KT kesimlarida erta o’zgarishlarni ajratadi — nevrolog qaroriga tayyor xulosa beradi.',
       ru: 'ИИ выделяет ранние изменения на МРТ/КТ — готовое заключение для невролога.',
       en: 'AI highlights early MRI/CT changes — ready summary for the neurologist.',
     },
@@ -90,7 +90,7 @@ export const specialtyWorlds: Record<string, SpecialtyWorldTheme> = {
     aiProductSlug: 'ultrasound',
     aiMetric: '3×',
     aiInsight: {
-      uz: 'AI endoskopiya/UTT kadrlarda organ chegaralarini belgilaydi va o‘lchovlarni avtomatlashtiradi.',
+      uz: 'AI endoskopiya/UTT kadrlarda organ chegaralarini belgilaydi va o’lchovlarni avtomatlashtiradi.',
       ru: 'ИИ размечает органы на эндоскопии/УЗИ и автоматизирует измерения.',
       en: 'AI outlines organs on endoscopy/ultrasound and automates measurements.',
     },
@@ -120,7 +120,7 @@ export const specialtyWorlds: Record<string, SpecialtyWorldTheme> = {
     aiProductSlug: 'radiology',
     aiMetric: '91%',
     aiInsight: {
-      uz: 'AI buyrak/siydik yo‘llari tasvirida tosh va tugunlarni ajratib ko‘rsatadi.',
+      uz: 'AI buyrak/siydik yo’llari tasvirida tosh va tugunlarni ajratib ko’rsatadi.',
       ru: 'ИИ выделяет камни и узлы на снимках почек и мочевых путей.',
       en: 'AI highlights stones and nodules on kidney and urinary tract imaging.',
     },
@@ -135,7 +135,7 @@ export const specialtyWorlds: Record<string, SpecialtyWorldTheme> = {
     aiProductSlug: 'radiology',
     aiMetric: '89%',
     aiInsight: {
-      uz: 'AI KT o‘pkada o‘zgarishlarni belgilaydi — nafas yo‘llari kasalliklarini erta aniqlashga yordam beradi.',
+      uz: 'AI KT o’pkada o’zgarishlarni belgilaydi — nafas yo’llari kasalliklarini erta aniqlashga yordam beradi.',
       ru: 'ИИ отмечает изменения в лёгких на КТ — помогает раннему выявлению заболеваний дыхательных путей.',
       en: 'AI marks lung changes on CT — helps early detection of respiratory conditions.',
     },
@@ -150,7 +150,7 @@ export const specialtyWorlds: Record<string, SpecialtyWorldTheme> = {
     aiProductSlug: 'doctor-assistant',
     aiMetric: '1.5×',
     aiInsight: {
-      uz: 'AI bo‘g‘im va tiklanish dinamikasini kuzatadi — davolash rejasini individual moslashtiradi.',
+      uz: 'AI bo’g’im va tiklanish dinamikasini kuzatadi — davolash rejasini individual moslashtiradi.',
       ru: 'ИИ отслеживает динамику суставов и восстановления — персонализирует план лечения.',
       en: 'AI tracks joint and recovery dynamics — personalizes the treatment plan.',
     },
@@ -165,7 +165,7 @@ export const specialtyWorlds: Record<string, SpecialtyWorldTheme> = {
     aiProductSlug: 'doctor-assistant',
     aiMetric: '2×',
     aiInsight: {
-      uz: 'AI lab natijalaridagi trendlarni tahlil qiladi — shifokorga prioritetli ko‘rsatkichlarni chiqaradi.',
+      uz: 'AI lab natijalaridagi trendlarni tahlil qiladi — shifokorga prioritetli ko’rsatkichlarni chiqaradi.',
       ru: 'ИИ анализирует тренды лабораторных результатов — выводит приоритетные показатели врачу.',
       en: 'AI analyzes lab result trends — surfaces priority markers for the physician.',
     },
@@ -180,7 +180,7 @@ export const specialtyWorlds: Record<string, SpecialtyWorldTheme> = {
     aiProductSlug: 'doctor-assistant',
     aiMetric: '24/7',
     aiInsight: {
-      uz: 'AI vital ko‘rsatkichlarni kuzatadi — kritik holatlarda tez ogohlantirish beradi.',
+      uz: 'AI vital ko’rsatkichlarni kuzatadi — kritik holatlarda tez ogohlantirish beradi.',
       ru: 'ИИ мониторит витальные показатели — быстро предупреждает в критических состояниях.',
       en: 'AI monitors vital signs — alerts quickly in critical conditions.',
     },
@@ -195,7 +195,7 @@ export const specialtyWorlds: Record<string, SpecialtyWorldTheme> = {
     aiProductSlug: 'ultrasound',
     aiMetric: '3×',
     aiInsight: {
-      uz: 'AI UTT da folikul/organ o‘lchovlarini real vaqtda yuritadi — protokol tayyor.',
+      uz: 'AI UTT da folikul/organ o’lchovlarini real vaqtda yuritadi — protokol tayyor.',
       ru: 'ИИ ведёт измерения фолликулов/органов на УЗИ в реальном времени — протокол готов.',
       en: 'AI runs follicle/organ measurements on ultrasound in real time — protocol ready.',
     },
@@ -225,7 +225,7 @@ export const specialtyWorlds: Record<string, SpecialtyWorldTheme> = {
     aiProductSlug: 'radiology',
     aiMetric: '96%',
     aiInsight: {
-      uz: 'AI preoperativ tasvirlarda anatomik orientirlarni belgilaydi — jarrohlik rejasini qo‘llab-quvvatlaydi.',
+      uz: 'AI preoperativ tasvirlarda anatomik orientirlarni belgilaydi — jarrohlik rejasini qo’llab-quvvatlaydi.',
       ru: 'ИИ отмечает анатомические ориентиры на предоперационных снимках — помогает плану операции.',
       en: 'AI marks anatomical landmarks on pre-op imaging — supports surgical planning.',
     },
@@ -270,7 +270,7 @@ export const specialtyWorlds: Record<string, SpecialtyWorldTheme> = {
     aiProductSlug: 'clinical-research',
     aiMetric: '12×',
     aiInsight: {
-      uz: 'AI konsilium uchun topilmalarni jamlaydi — davolash yo‘lini va tadqiqot mosligini tekshiradi.',
+      uz: 'AI konsilium uchun topilmalarni jamlaydi — davolash yo’lini va tadqiqot mosligini tekshiradi.',
       ru: 'ИИ собирает находки для консилиума — проверяет путь лечения и соответствие исследованиям.',
       en: 'AI assembles findings for tumor board — checks pathway fit and trial matching.',
     },
@@ -289,7 +289,7 @@ export function getSpecialtyWorld(slug: string): SpecialtyWorldTheme {
       aiProductSlug: 'doctor-assistant',
       aiMetric: 'AI',
       aiInsight: {
-        uz: 'AI klinik yordamchi ushbu yo‘nalishda protokol va diagnostikaga yordam beradi.',
+        uz: 'AI klinik yordamchi ushbu yo’nalishda protokol va diagnostikaga yordam beradi.',
         ru: 'ИИ-помощник поддерживает протоколы и диагностику в этом направлении.',
         en: 'AI assistant supports protocols and diagnostics in this specialty.',
       },
@@ -327,13 +327,13 @@ export const specialtyWorldLabels: Record<
   }
 > = {
   uz: {
-    enter: 'Bo‘limga kirish',
-    team: 'Shu yo‘nalish shifokorlari',
-    teamEmpty: 'Bu yo‘nalish uchun shifokorlar tez orada qo‘shiladi.',
+    enter: 'Bo’limga kirish',
+    team: 'Shu yo’nalish shifokorlari',
+    teamEmpty: 'Bu yo’nalish uchun shifokorlar tez orada qo’shiladi.',
     seeDoctor: 'Profil',
     book: 'Qabulga yozilish',
     careTitle: 'Bu muhitda nima kutadi',
-    ambientHint: 'Siz {name} bo‘limidasiz',
+    ambientHint: 'Siz {name} bo’limidasiz',
     aiLive: 'AI Live',
     aiTitle: 'Klinik AI yordamchi',
     aiScan: 'Model skanerlamoqda…',

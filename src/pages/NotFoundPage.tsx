@@ -10,7 +10,7 @@ const COPY: Record<
   uz: {
     code: '404',
     title: 'Sahifa topilmadi',
-    text: 'Bu manzil mavjud emas yoki ko‘chirib yuborilgan. Bosh sahifaga qayting yoki klinikani ko‘ring.',
+    text: 'Bu manzil mavjud emas yoki ko’chirib yuborilgan. Bosh sahifaga qayting yoki klinikani ko’ring.',
     home: 'Bosh sahifa',
     clinic: 'Klinika',
   },

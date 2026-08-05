@@ -1,4 +1,4 @@
-/** Official clinic contact from FJSTI ko‘p tarmoqli klinikasi signage. */
+/** Official clinic contact from FJSTI ko’p tarmoqli klinikasi signage. */
 export const CLINIC_PHONE_DISPLAY = '+998 73 245-58-20'
 /** Local number without area prefix — for in-region call buttons. */
 export const CLINIC_PHONE_LOCAL = '245-58-20'

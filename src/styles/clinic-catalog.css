@@ -32,6 +32,125 @@
   margin-bottom: clamp(36px, 4.5vw, 56px);
 }
 
+.clinic-opening:has(.clinic-intro--focused) {
+  gap: 0;
+  margin-bottom: clamp(24px, 2.5vw, 34px);
+}
+
+/* The courtyard answers the first emotional question — what does the clinic
+   feel like? It is intentionally a quiet paired observation, not a carousel. */
+.clinic-courtyard {
+  height: clamp(430px, 55vw, 680px);
+}
+
+.clinic-courtyard__scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #0c2637;
+  isolation: isolate;
+}
+
+.clinic-courtyard__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.clinic-courtyard__image:first-child { object-position: center 56%; }
+
+.clinic-courtyard__shade {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(3, 16, 27, .52), transparent 62%),
+    linear-gradient(0deg, rgba(3, 16, 27, .76), transparent 58%);
+  pointer-events: none;
+}
+
+.clinic-courtyard__lights {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  opacity: 0;
+  background:
+    radial-gradient(circle at 18% 77%, rgba(255, 190, 77, .28), transparent 8%),
+    radial-gradient(circle at 48% 53%, rgba(255, 198, 91, .23), transparent 9%),
+    radial-gradient(circle at 80% 54%, rgba(255, 190, 77, .2), transparent 10%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  transition: opacity 900ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.clinic-courtyard.is-evening .clinic-courtyard__lights { opacity: 1; }
+
+.clinic-courtyard__controls {
+  position: absolute;
+  z-index: 3;
+  right: clamp(20px, 3.4vw, 46px);
+  bottom: clamp(20px, 3.4vw, 42px);
+  left: clamp(20px, 3.4vw, 46px);
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.clinic-courtyard__controls > div > span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(202, 231, 245, .76);
+  font-size: .7rem;
+  font-weight: 760;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.clinic-courtyard__controls strong {
+  display: block;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2.5vw, 2.3rem);
+  font-weight: 680;
+  line-height: 1.25;
+}
+
+.clinic-courtyard__controls button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 42px;
+  max-width: min(46%, 280px);
+  padding: 11px 16px;
+  border: 1px solid rgba(255, 255, 255, .36);
+  border-radius: 999px;
+  color: #fff;
+  cursor: pointer;
+  background: rgba(5, 21, 33, .54);
+  box-shadow: 0 16px 34px rgba(2, 11, 18, .3);
+  backdrop-filter: blur(14px);
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 720;
+  line-height: 1.2;
+  text-align: left;
+  transition: background 180ms var(--ease), border-color 180ms var(--ease), transform 180ms var(--ease);
+}
+
+.clinic-courtyard__controls button:hover {
+  border-color: rgba(255, 225, 160, .72);
+  background: rgba(106, 72, 24, .56);
+  transform: translateY(-2px);
+}
+
+.clinic-courtyard__controls button:active { transform: scale(.97); }
+.clinic-courtyard__controls button i { color: #ffdb8a; font-size: 1.15rem; font-style: normal; }
+
 .clinic-intro {
   display: grid;
   grid-template-areas:
@@ -144,9 +263,13 @@
   grid-template-columns: minmax(0, 1.35fr) minmax(480px, 1fr);
   align-items: stretch;
   overflow: hidden;
-  border-radius: 16px;
-  background: #071727;
-  box-shadow: 0 24px 60px rgba(7, 23, 39, 0.16);
+  border-radius: 20px;
+  /* Deep clinical navy with a faint teal light, echoing the courtyard evening
+     scene above — not a flat black slab. */
+  background:
+    radial-gradient(120% 140% at 8% 0%, rgba(22, 124, 166, 0.28), transparent 55%),
+    linear-gradient(150deg, #0a2033 0%, #071727 60%, #061320 100%);
+  box-shadow: 0 24px 60px rgba(7, 23, 39, 0.18);
 }
 
 .clinic-search {
@@ -296,18 +419,247 @@
   transform: translateX(3px);
 }
 
+/* Overview portal — the /clinic environment page's lead into the catalog ----- */
+
+.clinic-portal {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(440px, 1fr);
+  align-items: stretch;
+  overflow: hidden;
+  border-radius: 20px;
+  background:
+    radial-gradient(120% 140% at 8% 0%, rgba(22, 124, 166, 0.28), transparent 55%),
+    linear-gradient(150deg, #0a2033 0%, #071727 60%, #061320 100%);
+  box-shadow: 0 24px 60px rgba(7, 23, 39, 0.18);
+}
+
+.clinic-portal__primary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  min-height: 230px;
+  padding: clamp(28px, 4vw, 48px);
+  color: #fff;
+  text-decoration: none;
+  transition: background 200ms var(--ease);
+}
+
+.clinic-portal__primary:hover {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.clinic-portal__eyebrow {
+  color: #8fd6f2;
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.clinic-portal__count {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5vw, 3.9rem);
+  font-weight: 720;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.clinic-portal__count small {
+  font-family: var(--font-body, inherit);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: rgba(226, 240, 247, 0.66);
+}
+
+.clinic-portal__desc {
+  max-width: 36ch;
+  margin: 4px 0 0;
+  color: rgba(226, 240, 247, 0.74);
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  line-height: 1.5;
+}
+
+.clinic-portal__cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.clinic-portal__cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(233, 244, 250, 0.85);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.clinic-portal__cat-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.clinic-portal__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 720;
+}
+
+.clinic-portal__cta svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 180ms var(--ease);
+}
+
+.clinic-portal__primary:hover .clinic-portal__cta svg {
+  transform: translateX(4px);
+}
+
+.clinic-portal__primary:focus-visible {
+  outline: 3px solid rgba(105, 203, 245, 0.5);
+  outline-offset: -6px;
+}
+
+/* Compact search sits beside the "Klinik yo'nalishlar" catalog header -------- */
+
+.clinic-catalog-search {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  width: min(360px, 100%);
+  min-height: 48px;
+  padding-inline: 15px 8px;
+  border-radius: 12px;
+  color: #597080;
+  background: #fff;
+  border: 1px solid #e2e9ed;
+  box-shadow: 0 6px 18px rgba(7, 23, 39, 0.05);
+  transition: border-color 160ms var(--ease), box-shadow 160ms var(--ease);
+}
+
+.clinic-catalog-search:focus-within {
+  border-color: #69cbf5;
+  box-shadow: 0 0 0 4px rgba(105, 203, 245, 0.18);
+}
+
+.clinic-catalog-search > svg {
+  width: 20px;
+  height: 20px;
+  color: #267da6;
+}
+
+.clinic-catalog-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: #071727;
+  background: transparent;
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+.clinic-catalog-search input::placeholder {
+  color: #718493;
+  opacity: 1;
+}
+
+.clinic-catalog-search input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.clinic-catalog-search button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  color: #526575;
+  background: #edf2f5;
+  cursor: pointer;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.clinic-catalog-search:focus-within button:focus-visible {
+  outline: 2px solid rgba(49, 135, 177, 0.5);
+  outline-offset: 2px;
+}
+
+/* Back link on the focused services / diagnostics views --------------------- */
+
+.clinic-intro__back {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #607482;
+  font-size: 0.82rem;
+  font-weight: 650;
+  text-decoration: none;
+  transition: color 160ms var(--ease), gap 160ms var(--ease);
+}
+
+.clinic-intro__back span {
+  transition: transform 160ms var(--ease);
+}
+
+.clinic-intro__back:hover {
+  color: #126d96;
+}
+
+.clinic-intro__back:hover span {
+  transform: translateX(-3px);
+}
+
+.clinic-intro--focused {
+  grid-template-areas:
+    'meta cta'
+    'title cta'
+    'desc desc';
+  row-gap: 8px;
+}
+
+.clinic-intro__meta {
+  grid-area: meta;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.clinic-intro--focused .clinic-intro__label {
+  flex: none;
+}
+
 /* Catalog controls ---------------------------------------------------------- */
 
 .clinic-results-head {
   display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 28px;
-  margin-bottom: 18px;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 16px;
 }
 
 .clinic-results-head h2 {
-  margin: 0 0 6px;
+  margin: 0;
   color: #071727;
   font-family: var(--font-display);
   font-size: clamp(1.35rem, 2vw, 1.75rem);
@@ -326,7 +678,6 @@
 
 .clinic-results-count {
   flex: none;
-  padding-bottom: 4px;
   color: #607482;
   font-size: 0.83rem;
 }
@@ -334,6 +685,40 @@
 .clinic-results-count strong {
   color: #071727;
   font-size: 1rem;
+}
+
+/* Filters and the catalog search share one control bar. The chips keep their
+   natural width on a single row and the search grows to fill the rest, so the
+   bar reads as one filled unit with no stranded gaps. */
+.clinic-catalog-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: clamp(26px, 3vw, 38px);
+}
+
+.clinic-catalog-controls .clinic-toolbar {
+  flex: 0 1 auto;
+  flex-wrap: nowrap;
+  min-width: 0;
+  margin-bottom: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.clinic-catalog-controls .clinic-toolbar::-webkit-scrollbar {
+  display: none;
+}
+
+.clinic-catalog-controls .clinic-toolbar__btn {
+  flex: none;
+}
+
+.clinic-catalog-controls .clinic-catalog-search {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 220px;
+  max-width: 460px;
 }
 
 .clinic-toolbar {
@@ -348,24 +733,26 @@
   align-items: center;
   gap: 9px;
   min-height: 42px;
-  padding: 0 14px;
-  border: 0;
-  border-radius: 10px;
+  padding: 0 15px;
+  border: 1px solid #e2e9ed;
+  border-radius: 999px;
   color: #5a6d7c;
-  background: #e6ecef;
+  background: #fff;
   cursor: pointer;
   font-size: 0.82rem;
   font-weight: 660;
-  transition: color 160ms var(--ease), background 160ms var(--ease), transform 160ms var(--ease);
+  transition: color 160ms var(--ease), background 160ms var(--ease), border-color 160ms var(--ease);
 }
 
 .clinic-toolbar__btn:hover {
   color: #071727;
-  background: #dce5e9;
+  border-color: #c7d4da;
+  background: #f5f8fa;
 }
 
 .clinic-toolbar__btn.is-active {
   color: #fff;
+  border-color: #0d5275;
   background: #0d5275;
 }
 
@@ -412,18 +799,23 @@
   display: block;
   min-height: 286px;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 18px;
   color: inherit;
-  background: color-mix(in srgb, var(--clinic-cat) 7%, #fff);
-  box-shadow: 0 16px 40px rgba(7, 23, 39, 0.08);
+  background: #fff;
+  border: 1px solid color-mix(in srgb, var(--clinic-cat) 15%, #e7edf1);
+  box-shadow: 0 10px 26px rgba(7, 23, 39, 0.05);
   text-decoration: none;
   isolation: isolate;
-  transition: transform 220ms var(--ease), box-shadow 220ms var(--ease);
+  transition:
+    transform 240ms var(--ease),
+    box-shadow 240ms var(--ease),
+    border-color 240ms var(--ease);
 }
 
 .clinic-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 24px 48px rgba(7, 23, 39, 0.13);
+  border-color: color-mix(in srgb, var(--clinic-cat) 42%, transparent);
+  box-shadow: 0 24px 50px rgba(7, 23, 39, 0.13);
 }
 
 .clinic-card__body {
@@ -480,15 +872,21 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 12px;
   margin-top: auto;
   padding-top: 24px;
 }
 
 .clinic-card__meta > span:first-child {
-  color: #566c7a;
-  font-size: 0.76rem;
-  font-weight: 680;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 11px;
+  border-radius: 999px;
+  color: var(--clinic-cat);
+  background: color-mix(in srgb, var(--clinic-cat) 11%, #fff);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.01em;
 }
 
 .clinic-card__link {
@@ -521,12 +919,18 @@
 
 .clinic-card__media span {
   position: absolute;
-  width: 190px;
-  height: 190px;
-  right: -34px;
-  top: 42px;
+  width: 208px;
+  height: 208px;
+  right: -40px;
+  top: 40px;
   border-radius: 50%;
-  background: color-mix(in srgb, var(--clinic-cat) 15%, #fff);
+  /* Soft "petri-dish" glow behind the organ render rather than a flat disc. */
+  background: radial-gradient(
+    circle at 42% 42%,
+    color-mix(in srgb, var(--clinic-cat) 22%, #fff) 0%,
+    color-mix(in srgb, var(--clinic-cat) 9%, #fff) 55%,
+    transparent 78%
+  );
 }
 
 .clinic-card__media img {
@@ -701,16 +1105,32 @@
 /* Responsive --------------------------------------------------------------- */
 
 @media (max-width: 1120px) {
-  .clinic-finder {
+  .clinic-finder,
+  .clinic-portal {
     grid-template-columns: minmax(0, 1fr) minmax(390px, 0.8fr);
   }
 
   .clinic-catalog {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  /* Not enough width to keep chips and search on one line without cramping the
+     search — stack the search full-width beneath the chip row instead. */
+  .clinic-catalog-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .clinic-catalog-controls .clinic-catalog-search {
+    order: -1;
+    max-width: none;
+  }
 }
 
 @media (max-width: 820px) {
+  .clinic-courtyard { height: clamp(400px, 72vw, 530px); }
+
   .clinic-photo-gallery__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: repeat(4, 180px);
@@ -736,6 +1156,15 @@
     align-items: stretch;
   }
 
+  .clinic-intro--focused {
+    grid-template-areas:
+      'meta'
+      'title'
+      'desc'
+      'cta';
+    row-gap: 10px;
+  }
+
   .clinic-intro__title {
     max-width: none;
   }
@@ -745,11 +1174,13 @@
     justify-self: stretch;
   }
 
-  .clinic-finder {
+  .clinic-finder,
+  .clinic-portal {
     grid-template-columns: 1fr;
   }
 
-  .clinic-search {
+  .clinic-search,
+  .clinic-portal__primary {
     min-height: 0;
   }
 
@@ -819,16 +1250,22 @@
   }
 
   .clinic-results-head {
-    align-items: flex-start;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
   .clinic-results-head p {
     display: none;
   }
 
-  .clinic-results-count {
-    padding-top: 6px;
+  .clinic-catalog-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .clinic-catalog-controls .clinic-catalog-search {
+    order: -1;
+    width: 100%;
   }
 
   .clinic-toolbar {

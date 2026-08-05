@@ -1147,6 +1147,22 @@ html.is-home-dark[data-theme='dark'] .lang-menu__item--active {
   --hd-signal-ink: var(--hd-violet-lt);
 }
 
+/* Homepage directory: portraits expand on hover instead of forming a scroll ring. */
+.hd-team--gallery {
+  padding-block: var(--hd-section);
+}
+
+.hd-team__gallery {
+  --ink: var(--hd-ink);
+  --muted: var(--hd-mute);
+  --brand-ink: var(--hd-blue);
+}
+
+.hd-team__gallery em {
+  color: var(--hd-violet-lt);
+  font-style: normal;
+}
+
 /* === Group portrait variant ============================================
    The team assembles from the sides as the reader scrolls. Uses a tall
    section (200vh) with a sticky pin so the assembly happens over real scroll

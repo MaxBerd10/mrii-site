@@ -40,22 +40,22 @@ export const ADMISSIONS_PHONES = [
 
 export const EDUCATION_COPY: Record<Lang, EducationCopy> = {
   uz: {
-    eyebrow: 'Taʼlim',
+    eyebrow: 'Ta’lim',
     title1: 'Ordinatura va',
     titleEm: 'malaka oshirish',
     description:
-      'FJSTI klinik bazasi shifokorlar uchun uchta yoʻnalishni bir joyda taklif etadi: klinik ordinatura, malaka oshirish kurslari va tadqiqot amaliyoti.',
-    universityNote: 'Asosiy oliy taʼlim — universitetimizda.',
-    universityLink: 'fjsti.uz saytiga oʻtish →',
+      'FJSTI klinik bazasi shifokorlar uchun uchta yo’nalishni bir joyda taklif etadi: klinik ordinatura, malaka oshirish kurslari va tadqiqot amaliyoti.',
+    universityNote: 'Asosiy oliy ta’lim — universitetimizda.',
+    universityLink: 'fjsti.uz saytiga o’tish →',
 
     ordinaturaTitle: 'Klinik ordinatura (rezidentura)',
     ordinaturaIntro:
-      'Faqat oliy tibbiy maʼlumotga ega vrachlar tanlov asosida qabul qilinadi. Ikkinchi mutaxassislik toʻlov-kontrakt asosida boʻladi.',
+      'Faqat oliy tibbiy ma’lumotga ega vrachlar tanlov asosida qabul qilinadi. Ikkinchi mutaxassislik to’lov-kontrakt asosida bo’ladi.',
     eligibilityLabel: 'Kim topshira oladi',
     eligibility: [
-      'Oliy tibbiy maʼlumotli vrachlar',
+      'Oliy tibbiy ma’lumotli vrachlar',
       'Ilgari ordinatura yoki magistratura bitirganlar (ikkinchi mutaxassislikka)',
-      'Xorijda oʻqiganlar — nostrifikatsiyadan soʻng',
+      'Xorijda o’qiganlar — nostrifikatsiyadan so’ng',
     ],
     timelineLabel: 'Muddat',
     timelineValue: 'Ariza qabuli — kamida 30 kun · Test sinovi — avgust oyi oxiri',
@@ -65,50 +65,50 @@ export const EDUCATION_COPY: Record<Lang, EducationCopy> = {
       {
         title: 'Hujjatlarni topshiring',
         desc:
-          'Rektor nomiga ariza, diplom, pasport, tibbiy maʼlumotnoma va fotosurat rasmiy platforma orqali yuboriladi.',
+          'Rektor nomiga ariza, diplom, pasport, tibbiy ma’lumotnoma va fotosurat rasmiy platforma orqali yuboriladi.',
       },
       {
         title: 'Tanlov sinovi',
         desc:
-          'Avgust oxirida test sinovi. Eng yuqori ballarning kamida 30 foizini toʻplash shart.',
+          'Avgust oxirida test sinovi. Eng yuqori ballarning kamida 30 foizini to’plash shart.',
       },
       {
         title: 'Yakuniy qabul',
         desc:
-          'Natijalar 10-sentyabrgacha rasmiylashtiriladi. Maqsadli oʻrinlar 3 tomonlama shartnoma bilan.',
+          'Natijalar 10-sentyabrgacha rasmiylashtiriladi. Maqsadli o’rinlar 3 tomonlama shartnoma bilan.',
       },
     ],
 
     docsTitle: 'Kerakli hujjatlar',
     docsSubtitle:
-      'Fayl nomida ism-familiya va hujjat turi koʻrsatiladi. Masalan: Olimov_Olim_diplom.pdf',
+      'Fayl nomida ism-familiya va hujjat turi ko’rsatiladi. Masalan: Olimov_Olim_diplom.pdf',
     docs: [
-      { title: 'Rektor nomiga ariza', hint: 'Namuna boʻyicha, imzolangan skaner (PDF)' },
-      { title: 'Oliy maʼlumot diplomi', hint: 'Diplom + ilova, rangli skaner (PDF)' },
-      { title: 'Pasport', hint: 'Fotosuratli va roʻyxatdan oʻtgan betlar (PDF)' },
-      { title: '086-U tibbiy maʼlumotnoma', hint: 'Ikki tomoni rangli skaner (PDF)' },
+      { title: 'Rektor nomiga ariza', hint: 'Namuna bo’yicha, imzolangan skaner (PDF)' },
+      { title: 'Oliy ma’lumot diplomi', hint: 'Diplom + ilova, rangli skaner (PDF)' },
+      { title: 'Pasport', hint: 'Fotosuratli va ro’yxatdan o’tgan betlar (PDF)' },
+      { title: '086-U tibbiy ma’lumotnoma', hint: 'Ikki tomoni rangli skaner (PDF)' },
       { title: 'Fotosurat 3.5 × 4.5 sm', hint: 'Rangli, JPG, 300 DPI' },
-      { title: 'Imtiyoz hujjati', hint: 'Boʻlsa — rangli skaner (PDF)' },
+      { title: 'Imtiyoz hujjati', hint: 'Bo’lsa — rangli skaner (PDF)' },
     ],
 
     phonesTitle: 'Qabul komissiyasi',
     phonesSubtitle:
-      'Hujjat, muddat va imtihon manzillari boʻyicha savollarga qabul komissiyasi javob beradi.',
+      'Hujjat, muddat va imtihon manzillari bo’yicha savollarga qabul komissiyasi javob beradi.',
 
     kurslarTitle: 'Malaka oshirish va kurslar',
     kurslarIntro:
-      'Amaliyotdagi shifokorlar uchun CME dasturlari, klinik seminarlar va tadqiqot amaliyoti — yoʻnalishga qarab modul yoki intensiv formatda.',
-    categoriesTitle: 'Kurs yoʻnalishlari',
+      'Amaliyotdagi shifokorlar uchun CME dasturlari, klinik seminarlar va tadqiqot amaliyoti — yo’nalishga qarab modul yoki intensiv formatda.',
+    categoriesTitle: 'Kurs yo’nalishlari',
     categories: [
       {
         title: 'Malaka oshirish kurslari',
-        desc: 'Klinik mutaxassisliklar boʻyicha 36–144 soatlik CME dasturlari.',
+        desc: 'Klinik mutaxassisliklar bo’yicha 36–144 soatlik CME dasturlari.',
         meta: 'Sertifikat',
       },
       {
         title: 'Qayta tayyorlash',
-        desc: 'Ikkinchi mutaxassislik yoki tor yoʻnalishga oʻtish uchun modulli kurslar.',
-        meta: 'Toʻlov-kontrakt',
+        desc: 'Ikkinchi mutaxassislik yoki tor yo’nalishga o’tish uchun modulli kurslar.',
+        meta: 'To’lov-kontrakt',
       },
       {
         title: 'Klinik seminar va vebinar',
@@ -121,10 +121,10 @@ export const EDUCATION_COPY: Record<Lang, EducationCopy> = {
         meta: '16–80 soat',
       },
     ],
-    kurslarContactTitle: 'Kurs boʻyicha maslahat',
+    kurslarContactTitle: 'Kurs bo’yicha maslahat',
     kurslarContactDesc:
-      'Taʼlim boʻlimi mos dasturni tanlashda yordam beradi va yozilish tartibini tushuntiradi.',
-    kurslarContactCta: 'Aloqaga oʻtish',
+      'Ta’lim bo’limi mos dasturni tanlashda yordam beradi va yozilish tartibini tushuntiradi.',
+    kurslarContactCta: 'Aloqaga o’tish',
   },
 
   ru: {
@@ -304,12 +304,12 @@ export const EDUCATION_COPY: Record<Lang, EducationCopy> = {
   },
 
   kaa: {
-    eyebrow: 'Taʼlim',
+    eyebrow: 'Ta’lim',
     title1: 'Ordinatura hám',
     titleEm: 'malaka asıńlaw',
     description:
       'FJSTI klinik bazası shıpakerler ushın úsh baǵdardı bir jerde usınadı: klinik ordinatura, malaka asıńlaw kursları hám izertlew ámeliyatı.',
-    universityNote: 'Tiykarǵı joqarı taʼlim — universitetimizde.',
+    universityNote: 'Tiykarǵı joqarı ta’lim — universitetimizde.',
     universityLink: 'fjsti.uz saytına ótiw →',
 
     ordinaturaTitle: 'Klinik ordinatura (rezidentura)',
@@ -329,7 +329,7 @@ export const EDUCATION_COPY: Record<Lang, EducationCopy> = {
       {
         title: 'Hújjetlerdi tapsırıń',
         desc:
-          'Rektor atına arza, diplom, pasport, meditsinalıq maʼlumatnama hám fotosúret rásmiy platforma arqalı jiberiledi.',
+          'Rektor atına arza, diplom, pasport, meditsinalıq ma’lumatnama hám fotosúret rásmiy platforma arqalı jiberiledi.',
       },
       {
         title: 'Tańlaw sinaqı',
@@ -348,9 +348,9 @@ export const EDUCATION_COPY: Record<Lang, EducationCopy> = {
       'Fayl atında familiya-atıńız hám hújjet túri kórsetiledi. Mısalı: Olimov_Olim_diplom.pdf',
     docs: [
       { title: 'Rektor atına arza', hint: 'Namunaga tiykarlanǵan, imzalanǵan skaner (PDF)' },
-      { title: 'Joqarı taʼlim diplomı', hint: 'Diplom + qosımsha, reńli skaner (PDF)' },
+      { title: 'Joqarı ta’lim diplomı', hint: 'Diplom + qosımsha, reńli skaner (PDF)' },
       { title: 'Pasport', hint: 'Fotosúretli hám dizim betleri (PDF)' },
-      { title: '086-U meditsinalıq maʼlumatnama', hint: 'Eki tárepin reńli skaner (PDF)' },
+      { title: '086-U meditsinalıq ma’lumatnama', hint: 'Eki tárepin reńli skaner (PDF)' },
       { title: 'Fotosúret 3.5 × 4.5 sm', hint: 'Reńli, JPG, 300 DPI' },
       { title: 'Jeńillik hújjeti', hint: 'Bolsa — reńli skaner (PDF)' },
     ],
@@ -387,7 +387,7 @@ export const EDUCATION_COPY: Record<Lang, EducationCopy> = {
     ],
     kurslarContactTitle: 'Kurs boyınsha másláhát',
     kurslarContactDesc:
-      'Taʼlim bólimi sizge sáykes baǵdarlamanı tańlawǵa hám jazılıw tártibin túsindiriwge járdem beredi.',
+      'Ta’lim bólimi sizge sáykes baǵdarlamanı tańlawǵa hám jazılıw tártibin túsindiriwge járdem beredi.',
     kurslarContactCta: 'Baylanıs',
   },
 }

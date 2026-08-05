@@ -15,14 +15,14 @@ export const radiologyScans: RadiologyDemoScan[] = [
   {
     id: 'chest-ct-nodule',
     label: {
-      uz: 'Ko‘krak KT — tugun',
+      uz: 'Ko’krak KT — tugun',
       ru: 'КТ грудной клетки — узел',
       en: 'Chest CT — pulmonary nodule',
     },
     modality: { uz: 'KT', ru: 'КТ', en: 'CT' },
     findings: {
       uz: [
-        'O‘ng yuqori bo‘lakda 8 mm tugun (spikulatsiya belgisi).',
+        'O’ng yuqori bo’lakda 8 mm tugun (spikulatsiya belgisi).',
         'Plevral suyuqlik aniqlanmadi.',
         'Mediastinal limfa tugunlari yiriklashmagan.',
       ],
@@ -53,8 +53,8 @@ export const radiologyScans: RadiologyDemoScan[] = [
       en: 'AI prioritized the lesion. Radiologist confirmation pending.',
     },
     icd: [
-      { code: 'R91.1', label: { uz: 'Yolg‘iz o‘pka tuguni', ru: 'Солитарный узел лёгкого', en: 'Solitary pulmonary nodule' } },
-      { code: 'Z12.2', label: { uz: 'O‘pka skriningi', ru: 'Скрининг лёгких', en: 'Lung screening' } },
+      { code: 'R91.1', label: { uz: 'Yolg’iz o’pka tuguni', ru: 'Солитарный узел лёгкого', en: 'Solitary pulmonary nodule' } },
+      { code: 'Z12.2', label: { uz: 'O’pka skriningi', ru: 'Скрининг лёгких', en: 'Lung screening' } },
     ],
   },
   {
@@ -67,7 +67,7 @@ export const radiologyScans: RadiologyDemoScan[] = [
     modality: { uz: 'MRT', ru: 'МРТ', en: 'MRI' },
     findings: {
       uz: [
-        'Chap MCA hududida yangi ishemik o‘choq ehtimoli.',
+        'Chap MCA hududida yangi ishemik o’choq ehtimoli.',
         'Diffuziyada signal kuchaygan.',
         'Mass-effekt sezilarli emas.',
       ],
@@ -88,12 +88,12 @@ export const radiologyScans: RadiologyDemoScan[] = [
       en: 'Urgent priority score: 0.91',
     },
     recommendation: {
-      uz: 'Stroke protokoli bo‘yicha zudlik bilan nevrologik baholash.',
+      uz: 'Stroke protokoli bo’yicha zudlik bilan nevrologik baholash.',
       ru: 'Немедленная неврологическая оценка по stroke-протоколу.',
       en: 'Immediate neuro assessment under stroke protocol.',
     },
     reportSnippet: {
-      uz: 'AI case navbatda birinchi o‘ringa ko‘tardi.',
+      uz: 'AI case navbatda birinchi o’ringa ko’tardi.',
       ru: 'ИИ поднял кейс в верх очереди.',
       en: 'AI escalated this case to top of queue.',
     },
@@ -127,7 +127,7 @@ export const radiologyDemoCopy: Record<
     desc: 'Tasvir turini tanlang yoki klinik izoh kiriting — AI prioritet, topilmalar va radiologga draft xulosa chiqaradi.',
     selectLabel: 'Tayyor skan',
     inputLabel: 'Klinik izoh',
-    inputPlaceholder: 'Masalan: yo‘tal + vazn yo‘qotish, KTda tugun shubha...',
+    inputPlaceholder: 'Masalan: yo’tal + vazn yo’qotish, KTda tugun shubha...',
     run: 'AI tahlilni ishga tushirish',
     running: 'Tahlil qilinmoqda…',
     findings: 'Topilmalar',

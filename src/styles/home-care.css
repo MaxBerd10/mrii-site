@@ -142,6 +142,360 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
   margin-inline: auto;
 }
 
+/* ----------------------------------------------------------------------
+   Doctor navigator — a single chosen clinician, with the remaining team
+   acting as a calm directory rather than a decorative portrait collage. */
+.hc-doctor-navigator {
+  padding-block: var(--hc-section);
+}
+
+.hc-doctor-navigator__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.55fr);
+  align-items: end;
+  gap: clamp(24px, 6vw, 96px);
+  margin-bottom: clamp(32px, 5vw, 56px);
+}
+
+.hc-doctor-navigator__head .hc-lead {
+  margin: 0 0 5px;
+}
+
+.hc-doctor-navigator__layout {
+  display: grid;
+  grid-template-columns: minmax(270px, 0.55fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: stretch;
+}
+
+.hc-doctor-navigator__list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--hc-line);
+}
+
+.hc-doctor-navigator__item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) 20px;
+  align-items: center;
+  gap: 12px;
+  padding: 17px 0;
+  border: 0;
+  border-bottom: 1px solid var(--hc-line);
+  background: transparent;
+  color: var(--hc-ink);
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.22s var(--hc-ease), transform 0.22s var(--hc-ease);
+}
+
+.hc-doctor-navigator__item:hover,
+.hc-doctor-navigator__item.is-active {
+  transform: translateX(12px);
+  color: var(--hc-blue);
+}
+
+.hc-doctor-navigator__number {
+  color: var(--hc-faint);
+  font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.hc-doctor-navigator__item strong,
+.hc-doctor-navigator__item small {
+  display: block;
+}
+
+.hc-doctor-navigator__item strong {
+  font-family: var(--hc-display);
+  font-size: 0.98rem;
+  line-height: 1.2;
+}
+
+.hc-doctor-navigator__item small {
+  margin-top: 3px;
+  color: var(--hc-muted);
+  font-size: 0.82rem;
+}
+
+.hc-doctor-navigator__arrow {
+  font-size: 1rem;
+  opacity: 0;
+  transform: translate(-5px, 5px);
+  transition: opacity 0.22s var(--hc-ease), transform 0.22s var(--hc-ease);
+}
+
+.hc-doctor-navigator__item:hover .hc-doctor-navigator__arrow,
+.hc-doctor-navigator__item.is-active .hc-doctor-navigator__arrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.hc-doctor-navigator__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin-top: 24px;
+  color: var(--hc-blue);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hc-doctor-navigator__profile {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 0.78fr);
+  min-height: 460px;
+  overflow: hidden;
+  border: 1px solid var(--hc-line);
+  border-radius: var(--hc-r-lg);
+  background: var(--hc-card);
+  box-shadow: var(--hc-shadow-md);
+}
+
+.hc-doctor-navigator__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(28px, 4vw, 52px);
+}
+
+.hc-doctor-navigator__specialty {
+  margin: 0;
+  color: var(--hc-cyan-ink);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hc-doctor-navigator__copy h3 {
+  margin: 14px 0 5px;
+  color: var(--hc-ink);
+  font-family: var(--hc-display);
+  font-size: clamp(1.9rem, 3vw, 2.65rem);
+  letter-spacing: -0.045em;
+  line-height: 1.03;
+}
+
+.hc-doctor-navigator__role {
+  margin: 0;
+  color: var(--hc-blue);
+  font-weight: 700;
+}
+
+.hc-doctor-navigator__about {
+  margin: 22px 0 0;
+  color: var(--hc-muted);
+  font-size: 0.98rem;
+  line-height: 1.62;
+}
+
+.hc-doctor-navigator__facts {
+  display: flex;
+  gap: 28px;
+  margin: auto 0 24px;
+  padding-top: 28px;
+}
+
+.hc-doctor-navigator__facts div { min-width: 94px; }
+.hc-doctor-navigator__facts dt { color: var(--hc-ink); font-family: var(--hc-display); font-size: 1.05rem; font-weight: 800; }
+.hc-doctor-navigator__facts dd { margin: 4px 0 0; color: var(--hc-faint); font-size: 0.76rem; }
+
+.hc-doctor-navigator__photo-wrap {
+  position: relative;
+  min-height: 260px;
+  overflow: hidden;
+  background: linear-gradient(155deg, var(--hc-blue-wash), var(--hc-cyan-wash));
+}
+
+.hc-doctor-navigator__photo-wrap::after {
+  content: '';
+  position: absolute;
+  inset: auto 10% 7% 10%;
+  height: 11%;
+  border-radius: 50%;
+  background: rgba(15, 76, 129, 0.18);
+  filter: blur(18px);
+}
+
+.hc-doctor-navigator__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+@media (max-width: 800px) {
+  .hc-doctor-navigator__head,
+  .hc-doctor-navigator__layout,
+  .hc-doctor-navigator__profile { grid-template-columns: 1fr; }
+  .hc-doctor-navigator__head { align-items: start; gap: 14px; }
+  .hc-doctor-navigator__list { order: 2; }
+  .hc-doctor-navigator__profile { order: 1; }
+  .hc-doctor-navigator__photo-wrap { min-height: 360px; }
+}
+
+/* ----------------------------------------------------------------------
+   Living staff wall — an editorial group portrait, not a standard card grid. */
+.hc-doctor-wall {
+  padding-block: var(--hc-section);
+}
+
+.hc-doctor-wall__head {
+  max-width: 680px;
+  margin-bottom: clamp(32px, 5vw, 54px);
+}
+
+.hc-doctor-wall__head .hc-lead {
+  margin: 16px 0 0;
+}
+
+.hc-doctor-wall__stage {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(6px, 1vw, 14px);
+  min-height: clamp(350px, 42vw, 510px);
+  padding: 16px;
+  overflow: hidden;
+  border: 1px solid var(--hc-line);
+  border-radius: var(--hc-r-lg);
+  background:
+    radial-gradient(circle at 56% 8%, color-mix(in srgb, var(--hc-cyan) 22%, transparent), transparent 36%),
+    linear-gradient(150deg, var(--hc-blue-wash), var(--hc-card) 56%, var(--hc-cyan-wash));
+  box-shadow: var(--hc-shadow-md);
+}
+
+.hc-doctor-wall__card {
+  position: relative;
+  flex: 1 1 0;
+  align-self: stretch;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: calc(var(--hc-r-md) - 2px);
+  background: var(--hc-blue-wash);
+  box-shadow: 0 12px 22px rgba(11, 31, 51, 0.11);
+  color: #fff;
+  isolation: isolate;
+  text-decoration: none;
+  transition: box-shadow 0.25s var(--hc-ease), filter 0.25s var(--hc-ease);
+}
+
+.hc-doctor-wall__card.is-center {
+  flex-grow: 1.72;
+  box-shadow: var(--hc-shadow-lg);
+}
+
+.hc-doctor-wall__stage:hover .hc-doctor-wall__card {
+  filter: saturate(1.04) contrast(1.03);
+}
+
+.hc-doctor-wall__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--wall-photo-position, 50% 12%);
+  transition: transform 0.7s var(--hc-ease), filter 0.52s var(--hc-ease);
+}
+
+.hc-doctor-wall__video {
+  object-fit: cover;
+  object-position: var(--wall-photo-position, 50% 12%);
+}
+
+.hc-doctor-wall__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, transparent 38%, rgba(6, 24, 42, 0.88) 100%);
+}
+
+.hc-doctor-wall__meta {
+  position: absolute;
+  z-index: 2;
+  right: 18px;
+  bottom: 18px;
+  left: 18px;
+  display: grid;
+  gap: 4px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.35s var(--hc-ease), transform 0.35s var(--hc-ease);
+}
+
+.hc-doctor-wall__scrim,
+.hc-doctor-wall__meta {
+  display: none;
+}
+
+.hc-doctor-wall__card.is-center .hc-doctor-wall__scrim,
+.hc-doctor-wall__card.is-center .hc-doctor-wall__meta {
+  display: none;
+}
+
+.hc-doctor-wall__meta small {
+  color: var(--hc-cyan);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.hc-doctor-wall__meta strong {
+  font-family: var(--hc-display);
+  font-size: clamp(1rem, 1.65vw, 1.35rem);
+  line-height: 1.1;
+}
+
+.hc-doctor-wall__meta em {
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.8rem;
+  font-style: normal;
+}
+
+.hc-doctor-wall__meta b {
+  margin-top: 8px;
+  color: #fff;
+  font-size: 0.82rem;
+}
+
+.hc-doctor-wall__foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
+  color: var(--hc-muted);
+  font-size: 0.88rem;
+}
+
+.hc-doctor-wall__foot a {
+  color: var(--hc-blue);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 720px) {
+  .hc-doctor-wall__stage {
+    min-height: 390px;
+    overflow-x: auto;
+    padding: 14px;
+  }
+  .hc-doctor-wall__card { flex: 0 0 76px; min-height: 350px; }
+  .hc-doctor-wall__card.is-center { flex-basis: 230px; }
+  .hc-doctor-wall__foot { align-items: flex-start; flex-direction: column; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hc-doctor-wall__card,
+  .hc-doctor-wall__photo,
+  .hc-doctor-wall__meta { transition: none; }
+}
+
 /* ======================================================================
  * Type scale
  * ==================================================================== */
@@ -997,8 +1351,8 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
   letter-spacing: -0.032em;
   margin: 0;
   text-wrap: balance;
-  /* Uzbek and Karakalpak build long single words — "sogʻayishgacha",
-     "soʻraladigan" — that exceed the column at narrow widths. The sections clip
+  /* Uzbek and Karakalpak build long single words — "sog’ayishgacha",
+     "so’raladigan" — that exceed the column at narrow widths. The sections clip
      their overflow, so without a break opportunity the tail of the word is
      silently cut off. `break-word` only splits a word that would otherwise
      overflow, so ordinary headings are untouched. */
@@ -2890,7 +3244,7 @@ a.hc-card:active {
 
 /* Path and FAQ park their heading in a sticky sidebar, so it cannot borrow the
    full-width head scale: at the shared 5.4vw/5.5rem the column was ~390px while
-   a single word such as "sogʻayishgacha" measured ~490px, and the tail was
+   a single word such as "sog’ayishgacha" measured ~490px, and the tail was
    clipped. Uzbek and Karakalpak carry the longest words, but Russian
    ("выздоровления") hits the same wall — the scale was wrong for the column,
    not for one language. The cap is in ch so it tracks the font. */
@@ -5199,7 +5553,7 @@ a.hc-card:active {
 }
 
 .hc-hero--dna .hc-display {
-  /* Sized so the ink lead wraps like the target ("Farg‘onada / ishonchli
+  /* Sized so the ink lead wraps like the target ("Farg’onada / ishonchli
      tibbiy / yordam —") while the blue phrase below still fits one line. */
   max-width: 8.2em;
   color: #0b1f33;
@@ -5564,6 +5918,22 @@ a.hc-card:active {
 }
 
 @media (max-width: 760px) {
+  /* The phone hero becomes a white, document-like introduction. The desktop
+     stage is dark, so its light headline must be explicitly reset here. */
+  .hc-hero--dna .hc-eyebrow {
+    color: var(--hc-cyan-ink);
+    text-shadow: none;
+  }
+
+  .hc-hero--dna .hc-display {
+    color: var(--hc-ink);
+    text-shadow: none;
+  }
+
+  .hc-hero--dna .hc-display em {
+    color: #2455df;
+  }
+
   /* Phone: drop scroll-theater. Stack claim → CTAs → team photo. */
   .hc-hero--dna .hc-hero__track {
     height: auto;

@@ -50,10 +50,10 @@ export const CHECKUP_DIRECTIONS: CheckupDirection[] = [
           "Jarroh",
           "Urolog",
           "Umumiy qon taxlili",
-          "Qorin bo'shlig'ining ultratovush tekshiruv"
+          "Qorin bo’shlig’ining ultratovush tekshiruv"
         ],
         "notes": [
-          "Biokimyoviy qon testi (yorug'lik): ALT, AST (jigar testlari), bilirubin (jami, to'g'ridan-to'g'ri), gidroksidi fosfataza (ALP)).",
+          "Biokimyoviy qon testi (yorug’lik): ALT, AST (jigar testlari), bilirubin (jami, to’g’ridan-to’g’ri), gidroksidi fosfataza (ALP)).",
           "Biokimyoviy qon testi"
         ]
       },
@@ -76,7 +76,7 @@ export const CHECKUP_DIRECTIONS: CheckupDirection[] = [
           "Jarroh",
           "Urolog",
           "Umumiy qon taxlili",
-          "Qorin bo'shlig'ining ultratovush tekshiruv",
+          "Qorin bo’shlig’ining ultratovush tekshiruv",
           "FGDS"
         ],
         "notes": [
@@ -103,7 +103,7 @@ export const CHECKUP_DIRECTIONS: CheckupDirection[] = [
           "Jarroh",
           "Urolog",
           "Umumiy qon taxlili+Umumiy siydik taxlili",
-          "Qorin bo'shlig'ining ultratovush tekshiruv",
+          "Qorin bo’shlig’ining ultratovush tekshiruv",
           "FGDS",
           "koprogramma",
           "Najasda yashirin qon testi"
@@ -223,7 +223,7 @@ export const CHECKUP_DIRECTIONS: CheckupDirection[] = [
           "Jarroh",
           "Urolog",
           "Surtma olish",
-          "Tos a'zolarining ultratovush tekshiruvi"
+          "Tos a’zolarining ultratovush tekshiruvi"
         ],
         "notes": []
       },
@@ -246,7 +246,7 @@ export const CHECKUP_DIRECTIONS: CheckupDirection[] = [
           "Jarroh",
           "Urolog",
           "Surtma olish",
-          "Tos a'zolarining ultratovush tekshiruvi",
+          "Tos a’zolarining ultratovush tekshiruvi",
           "Pap testi"
         ],
         "notes": []
@@ -270,7 +270,7 @@ export const CHECKUP_DIRECTIONS: CheckupDirection[] = [
           "Jarroh",
           "Urolog",
           "Surtma olish",
-          "Tos a'zolarining ultratovush tekshiruvi",
+          "Tos a’zolarining ultratovush tekshiruvi",
           "Pap testi",
           "Femoflor surtma olish",
           "Mammografiya"
@@ -348,14 +348,14 @@ export const CHECKUP_DIRECTIONS: CheckupDirection[] = [
           "Proktolog",
           "Flebolog",
           "Travmatolog-ortoped",
-          "Davolash ishlari bo`yicha bosh vrach o'rinbosari :",
+          "Davolash ishlari bo’yicha bosh vrach o’rinbosari :",
           "Iqtisodchi:",
           "Dermatovenerolog",
           "Jarroh",
           "Urolog",
           "Siydik tizimi ultratovush tekshiruvi",
           "Transrektal prostata ultratovush tekshiruvi",
-          "Yorg`oqning ultratovush tekshiruvi",
+          "Yorg’oqning ultratovush tekshiruvi",
           "Umumiy qon taxlili+Umumiy siydik taxlili",
           "PSA umumiy+PSA b.",
           "S.S.Askarov",
@@ -492,7 +492,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 16,
-    "name": "Vrach ginekolog koʼrigi",
+    "name": "Vrach ginekolog ko’rigi",
     "citizen": 81000,
     "foreign": 105300,
     "location": null,
@@ -508,7 +508,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 18,
-    "name": "Tampon qoʼyish",
+    "name": "Tampon qo’yish",
     "citizen": 24000,
     "foreign": 31200,
     "location": "Davolash binosi 1-2 qavat",
@@ -524,7 +524,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 20,
-    "name": "Bachadon boʼshligʼidan aspirat olish",
+    "name": "Bachadon bo’shlig’idan aspirat olish",
     "citizen": 43000,
     "foreign": 55900,
     "location": "Davolash binosi 1-2 qavat",
@@ -540,7 +540,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 21,
-    "name": "Bogʼlov xona xizmati (Jaroxat bogʼlamini alishtirish) dori-darmonsiz",
+    "name": "Bog’lov xona xizmati (Jaroxat bog’lamini alishtirish) dori-darmonsiz",
     "citizen": 65000,
     "foreign": 84500,
     "location": "Davolash binosi 1-2 qavat",
@@ -548,7 +548,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 22,
-    "name": "Bogʼlov xona xizmati (Jaroxat bogʼlamini alishtirish) dori-darmon bilan",
+    "name": "Bog’lov xona xizmati (Jaroxat bog’lamini alishtirish) dori-darmon bilan",
     "citizen": 90000,
     "foreign": 117000,
     "location": "Davolash binosi 1-2 qavat",
@@ -596,7 +596,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 28,
-    "name": "Yuqori jag` bo`shlig`i punksiyasi",
+    "name": "Yuqori jag’ bo’shlig’i punksiyasi",
     "citizen": 100000,
     "foreign": 130000,
     "location": "Davolash binosi 1-2 qavat",
@@ -780,7 +780,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 51,
-    "name": "EKG xizmati boʼlimga borib",
+    "name": "EKG xizmati bo’limga borib",
     "citizen": 40000,
     "foreign": 52000,
     "location": "Davolash binosi 1-2 qavat",
@@ -796,7 +796,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 53,
-    "name": "UZI xizmati boʼlimga borganda har bir ko`ruv uchun qo`shimcha",
+    "name": "UZI xizmati bo’limga borganda har bir ko’ruv uchun qo’shimcha",
     "citizen": 19000,
     "foreign": 24700,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -804,7 +804,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 54,
-    "name": "O't pufagi + jigar",
+    "name": "O’t pufagi + jigar",
     "citizen": 70000,
     "foreign": 91000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -828,7 +828,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 57,
-    "name": "Murakkab: jigar + o't pufagi + oshqozon osti bezi + taloq",
+    "name": "Murakkab: jigar + o’t pufagi + oshqozon osti bezi + taloq",
     "citizen": 150000,
     "foreign": 195000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -900,7 +900,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 66,
-    "name": "Bo`g`im 1 dona oyoq (tizza bo`g`im)",
+    "name": "Bo’g’im 1 dona oyoq (tizza bo’g’im)",
     "citizen": 80000,
     "foreign": 104000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -908,7 +908,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 67,
-    "name": "Bo`g`im bir juft (tizza bo`g`im)",
+    "name": "Bo’g’im bir juft (tizza bo’g’im)",
     "citizen": 140000,
     "foreign": 182000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -964,7 +964,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 74,
-    "name": "Yumshoq to`qima",
+    "name": "Yumshoq to’qima",
     "citizen": 60000,
     "foreign": 78000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -980,7 +980,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 76,
-    "name": "Entorka foto qogʼoz",
+    "name": "Entorka foto qog’oz",
     "citizen": 130000,
     "foreign": 169000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -996,7 +996,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 78,
-    "name": "Uretra grafiya foto qogʼoz",
+    "name": "Uretra grafiya foto qog’oz",
     "citizen": 130000,
     "foreign": 169000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -1012,7 +1012,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 80,
-    "name": "Аntrogratka plyonka foto qogʼoz",
+    "name": "Аntrogratka plyonka foto qog’oz",
     "citizen": 130000,
     "foreign": 169000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -1028,7 +1028,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 82,
-    "name": "Getro solpingo grafiya foto qogʼoz",
+    "name": "Getro solpingo grafiya foto qog’oz",
     "citizen": 170000,
     "foreign": 221000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -1044,7 +1044,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 84,
-    "name": "Irigo grafiya foto qogʼoz",
+    "name": "Irigo grafiya foto qog’oz",
     "citizen": 170000,
     "foreign": 221000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -1052,7 +1052,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 85,
-    "name": "Tana aʼzosi 1 koʼrinishi plyonka",
+    "name": "Tana a’zosi 1 ko’rinishi plyonka",
     "citizen": 90000,
     "foreign": 117000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -1060,7 +1060,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 86,
-    "name": "Tana aʼzosi 2 koʼrinishi plyonka",
+    "name": "Tana a’zosi 2 ko’rinishi plyonka",
     "citizen": 110000,
     "foreign": 143000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -1076,7 +1076,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 88,
-    "name": "Tana aʼzosi 1 koʼrinishi foto qogʼoz",
+    "name": "Tana a’zosi 1 ko’rinishi foto qog’oz",
     "citizen": 50000,
     "foreign": 65000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -1084,7 +1084,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 89,
-    "name": "Tana aʼzosi 2 koʼrinishi foto qogʼoz",
+    "name": "Tana a’zosi 2 ko’rinishi foto qog’oz",
     "citizen": 90000,
     "foreign": 117000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -1092,7 +1092,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 90,
-    "name": "Flyurografiya foto qogʼoz",
+    "name": "Flyurografiya foto qog’oz",
     "citizen": 20000,
     "foreign": 26000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -1580,7 +1580,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 139,
-    "name": "Sariflangan dori-darmon uchun oʼrtacha (dez modda, spirt va paxta) xirurgik bo`limlar uchun",
+    "name": "Sariflangan dori-darmon uchun o’rtacha (dez modda, spirt va paxta) xirurgik bo’limlar uchun",
     "citizen": 12000,
     "foreign": 12000,
     "location": "Davolash binosi 1-2 qavat",
@@ -1588,7 +1588,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 140,
-    "name": "Sariflangan dori-darmon uchun oʼrtacha (dez modda, spirt va paxta) terapevtik bo`limlar uchun",
+    "name": "Sariflangan dori-darmon uchun o’rtacha (dez modda, spirt va paxta) terapevtik bo’limlar uchun",
     "citizen": 10000,
     "foreign": 10000,
     "location": "Davolash binosi 1-2 qavat",
@@ -1604,7 +1604,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 142,
-    "name": "Gistologik tekshiruv 1 ta boʼlak uchun",
+    "name": "Gistologik tekshiruv 1 ta bo’lak uchun",
     "citizen": 10000,
     "foreign": 12500,
     "location": "Davolash binosi 1-2 qavat",
@@ -1612,7 +1612,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 143,
-    "name": "Jarroxlik boʼlimida bir oʼrin-joy xizmati lyuks jixozlangan xona uchun (xojatxona,televizor, Muzlatgich, va boshqalar )",
+    "name": "Jarroxlik bo’limida bir o’rin-joy xizmati lyuks jixozlangan xona uchun (xojatxona,televizor, Muzlatgich, va boshqalar )",
     "citizen": 480000,
     "foreign": 624000,
     "location": "Davolash binosi 1-2 qavat",
@@ -1620,7 +1620,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 144,
-    "name": "Terapiya boʼlimida bir oʼrin-joy xizmati uchun lyuks jixozlangan xona uchun (xojatxona,televizor, Muzlatgich, va boshqalar )",
+    "name": "Terapiya bo’limida bir o’rin-joy xizmati uchun lyuks jixozlangan xona uchun (xojatxona,televizor, Muzlatgich, va boshqalar )",
     "citizen": 440000,
     "foreign": 572000,
     "location": "Davolash binosi 1-2 qavat",
@@ -1628,7 +1628,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 145,
-    "name": "Kunduzgi o`rin-joy 10 soatgacha",
+    "name": "Kunduzgi o’rin-joy 10 soatgacha",
     "citizen": 150000,
     "foreign": 195000,
     "location": "Davolash binosi 1-2 qavat",
@@ -1636,7 +1636,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 146,
-    "name": "Kunduzgi o`rin-joy 5 soatgacha",
+    "name": "Kunduzgi o’rin-joy 5 soatgacha",
     "citizen": 75000,
     "foreign": 97500,
     "location": "Davolash binosi 1-2 qavat",
@@ -1644,7 +1644,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 147,
-    "name": "Kunduzgi o`rin-joy bir marotaba muolaja uchun",
+    "name": "Kunduzgi o’rin-joy bir marotaba muolaja uchun",
     "citizen": 50000,
     "foreign": 65000,
     "location": "Davolash binosi 1-2 qavat",
@@ -1652,7 +1652,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 148,
-    "name": "Intensiv reanimatsiya boʼlimida bir kunlik oʼrin-joy xizmati",
+    "name": "Intensiv reanimatsiya bo’limida bir kunlik o’rin-joy xizmati",
     "citizen": 660000,
     "foreign": 858000,
     "location": "Davolash binosi 1-2 qavat",
@@ -1679,7 +1679,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
     "name": "Kserokopiya (1 list A5 yoki A4 format)",
     "citizen": 1000,
     "foreign": 1000,
-    "location": "Ma`muriyat binosi 1 qavat",
+    "location": "Ma’muriyat binosi 1 qavat",
     "category": "Servis"
   }
 ]

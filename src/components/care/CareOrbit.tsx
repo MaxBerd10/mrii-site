@@ -9,8 +9,8 @@ import {
   type MotionValue,
 } from 'motion/react'
 import { useLanguage } from '../../i18n/LanguageContext'
-import { getHomeFeaturedDoctors, getHomeOrbitDoctors } from '../../data/doctors'
-import { getDoctorCardPortrait } from '../../data/doctorTurnMedia'
+import { getHomeFeaturedDoctors, getHomeDoctorWallDoctors, getDoctorWallPlaybackRate, getDoctorWallPortraitPosition, getHomeOrbitDoctors } from '../../data/doctors'
+import { getDoctorCardPortrait, getDoctorTurnMedia } from '../../data/doctorTurnMedia'
 import { useMobileLayout } from '../../hooks/useMobileLayout'
 import { MaskedText, SectionHead } from './careUi'
 
@@ -415,12 +415,199 @@ function CareOrbitStatic() {
   )
 }
 
+/** A focused doctor picker: selecting a name changes the single lead profile. */
+function CareDoctorNavigator() {
+  const { t, contentLang } = useLanguage()
+  const doctors = getHomeOrbitDoctors(6).map((doctor) => ({
+    slug: doctor.slug,
+    photo: getDoctorCardPortrait(doctor.slug, doctor.photo),
+    ...doctor.content[contentLang],
+  }))
+  const [activeSlug, setActiveSlug] = useState(doctors[0]?.slug ?? '')
+  const active = doctors.find((doctor) => doctor.slug === activeSlug) ?? doctors[0]
+
+  if (!active) return null
+
+  return (
+    <section className="hc-section hc-section--tint hc-doctor-navigator" aria-labelledby="hc-doctor-navigator-title">
+      <div className="hc-shell">
+        <div className="hc-doctor-navigator__head">
+          <div>
+            <p className="hc-eyebrow">{t.homeCare.doctorsEyebrow}</p>
+            <h2 className="hc-display" id="hc-doctor-navigator-title">
+              {t.homeCare.orbitTitle1} <em>{t.homeCare.orbitTitleEm}</em>
+            </h2>
+          </div>
+          <p className="hc-lead">{t.homeCare.orbitReveal}</p>
+        </div>
+
+        <div className="hc-doctor-navigator__layout">
+          <nav className="hc-doctor-navigator__list" aria-label={t.homeCare.doctorsEyebrow}>
+            {doctors.map((doctor, index) => {
+              const isActive = doctor.slug === active.slug
+              return (
+                <button
+                  key={doctor.slug}
+                  type="button"
+                  className={`hc-doctor-navigator__item${isActive ? ' is-active' : ''}`}
+                  onClick={() => setActiveSlug(doctor.slug)}
+                  aria-pressed={isActive}
+                >
+                  <span className="hc-doctor-navigator__number">0{index + 1}</span>
+                  <span>
+                    <strong>{doctor.name}</strong>
+                    <small>{doctor.specialty}</small>
+                  </span>
+                  <span className="hc-doctor-navigator__arrow" aria-hidden>↗</span>
+                </button>
+              )
+            })}
+            <a className="hc-doctor-navigator__all" href="/doctors">
+              {t.homeDark.team.viewAll} <span aria-hidden>→</span>
+            </a>
+          </nav>
+
+          <article className="hc-doctor-navigator__profile">
+            <div className="hc-doctor-navigator__copy">
+              <p className="hc-doctor-navigator__specialty">{active.specialty}</p>
+              <h3>{active.name}</h3>
+              <p className="hc-doctor-navigator__role">{active.role}</p>
+              <p className="hc-doctor-navigator__about">{active.about}</p>
+              <dl className="hc-doctor-navigator__facts">
+                <div><dt>{active.exp}</dt><dd>{t.homeCare.doctorsEyebrow}</dd></div>
+                <div><dt>{active.languages.length}</dt><dd>{active.languages.join(' · ')}</dd></div>
+              </dl>
+              <a className="hc-btn" href={`/doctors/${active.slug}`}>{t.doctors.bookBtn}</a>
+            </div>
+            <div className="hc-doctor-navigator__photo-wrap">
+              <img src={active.photo} alt={active.name} className="hc-doctor-navigator__photo" />
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function primeWallVideo(el: HTMLVideoElement | null, slug: string) {
+  if (!el) return
+  el.playbackRate = getDoctorWallPlaybackRate(slug)
+  const showFirstFrame = () => {
+    el.pause()
+    el.currentTime = 0.001
+  }
+  if (el.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) showFirstFrame()
+  else el.addEventListener('loadeddata', showFirstFrame, { once: true })
+}
+
+/** A living staff wall: one portrait expands while the rest yield around it. */
+function CareDoctorWall() {
+  const { t, contentLang } = useLanguage()
+  const doctors = getHomeDoctorWallDoctors(7).map((doctor) => {
+    const turn = getDoctorTurnMedia(doctor.slug)
+    return {
+      slug: doctor.slug,
+      photo: turn?.poster ?? doctor.photo,
+      video: turn?.video,
+      ...doctor.content[contentLang],
+    }
+  })
+  const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({})
+
+  const playAll = () => {
+    Object.entries(videoRefs.current).forEach(([slug, video]) => {
+      if (!video) return
+      video.playbackRate = getDoctorWallPlaybackRate(slug)
+      video.currentTime = 0
+      video.play().catch(() => undefined)
+    })
+  }
+
+  const resetAll = () => {
+    Object.entries(videoRefs.current).forEach(([slug, video]) => {
+      if (!video) return
+      primeWallVideo(video, slug)
+    })
+  }
+
+  return (
+    <section className="hc-section hc-section--tint hc-doctor-wall" aria-labelledby="hc-doctor-wall-title">
+      <div className="hc-shell">
+        <div className="hc-doctor-wall__head">
+          <p className="hc-eyebrow">{t.homeCare.doctorsEyebrow}</p>
+          <h2 className="hc-display" id="hc-doctor-wall-title">
+            {t.homeCare.orbitTitle1} <em>{t.homeCare.orbitTitleEm}</em>
+          </h2>
+          <p className="hc-lead">{t.homeCare.orbitReveal}</p>
+        </div>
+
+        <div className="hc-doctor-wall__stage" onPointerEnter={playAll} onPointerLeave={resetAll}>
+          {doctors.map((doctor, index) => {
+            const isCenter = index === Math.floor(doctors.length / 2)
+            return (
+              <a
+                key={doctor.slug}
+                href={`/doctors/${doctor.slug}`}
+                className={`hc-doctor-wall__card${isCenter ? ' is-center' : ''}`}
+                style={{
+                  ['--wall-order' as string]: index,
+                  ['--wall-photo-position' as string]: getDoctorWallPortraitPosition(doctor.slug),
+                }}
+              >
+                {doctor.video ? (
+                  <video
+                    ref={(element) => {
+                      videoRefs.current[doctor.slug] = element
+                      primeWallVideo(element, doctor.slug)
+                    }}
+                    className="hc-doctor-wall__photo hc-doctor-wall__video"
+                    muted
+                    playsInline
+                    preload="auto"
+                    poster={doctor.photo}
+                    aria-label={doctor.name}
+                    onLoadedData={(event) => primeWallVideo(event.currentTarget, doctor.slug)}
+                  >
+                    <source src={doctor.video} type="video/mp4" />
+                  </video>
+                ) : (
+                  <img src={doctor.photo} alt={doctor.name} className="hc-doctor-wall__photo" />
+                )}
+                <span className="hc-doctor-wall__scrim" aria-hidden />
+                <span className="hc-doctor-wall__meta">
+                  <small>{doctor.specialty}</small>
+                  <strong>{doctor.name}</strong>
+                  <em>{doctor.exp}</em>
+                  <b>{t.doctors.bookBtn} <span aria-hidden>→</span></b>
+                </span>
+              </a>
+            )
+          })}
+        </div>
+
+        <div className="hc-doctor-wall__foot">
+          <span>{t.homeCare.orbitHint}</span>
+          <a href="/doctors">{t.homeDark.team.viewAll} <span aria-hidden>→</span></a>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function CareOrbit() {
   const isMobile = useMobileLayout()
   const reduce = useReducedMotion()
-  if (isMobile) return <CareOrbitMobile />
-  if (reduce) return <CareOrbitStatic />
-  return <CareOrbitAnimated />
+  const useLegacyOrbit = false
+  const useNavigator = false
+
+  // The original ring-to-arch scene stays in this file for a fast rollback.
+  if (useLegacyOrbit) {
+    if (isMobile) return <CareOrbitMobile />
+    if (reduce) return <CareOrbitStatic />
+    return <CareOrbitAnimated />
+  }
+
+  return useNavigator ? <CareDoctorNavigator /> : <CareDoctorWall />
 }
 
 export { CARD_W, CARD_H }

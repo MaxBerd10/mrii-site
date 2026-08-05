@@ -1329,7 +1329,9 @@
   .hp-nav__drawer {
     inset-block-start: calc(8px + 56px + 10px);
     inset-block-end: auto;
-    max-height: calc(100dvh - 82px);
+    height: calc(100dvh - 82px - env(safe-area-inset-bottom));
+    max-height: none;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
   }
   .hp-hero { min-height: auto; padding-top: 0; }
   .hp-hero__sticky {

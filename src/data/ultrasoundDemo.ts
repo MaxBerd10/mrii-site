@@ -22,9 +22,9 @@ export const ultrasoundCases: UltrasoundDemoCase[] = [
     modality: { uz: 'UTT', ru: 'УЗИ', en: 'US' },
     findings: {
       uz: [
-        'O‘ng bo‘lakda 11 mm gipoxogen tugun segmentatsiya qilindi.',
+        'O’ng bo’lakda 11 mm gipoxogen tugun segmentatsiya qilindi.',
         'Chegaralari notekis, mikro-kalsifikatsiya ehtimoli.',
-        'Bo‘yin limfa tugunlari kattalashmagan.',
+        'Bo’yin limfa tugunlari kattalashmagan.',
       ],
       ru: [
         'Сегментирован гипоэхогенный узел 11 мм в правой доле.',
@@ -43,12 +43,12 @@ export const ultrasoundCases: UltrasoundDemoCase[] = [
       en: 'TI-RADS risk: TR4',
     },
     recommendation: {
-      uz: 'Endokrinolog ko‘rigi va nazorat UTT / FNAB masalasini ko‘rib chiqish.',
+      uz: 'Endokrinolog ko’rigi va nazorat UTT / FNAB masalasini ko’rib chiqish.',
       ru: 'Осмотр эндокринолога и обсуждение контрольного УЗИ / ТАБ.',
       en: 'Endocrine review; consider follow-up US / FNA decision.',
     },
     reportSnippet: {
-      uz: 'AI avtomatik o‘lchov va markerlarni protokolga joyladi.',
+      uz: 'AI avtomatik o’lchov va markerlarni protokolga joyladi.',
       ru: 'ИИ автоматически внёс размеры и маркеры в протокол.',
       en: 'AI auto-populated measurements and lesion markers.',
     },
@@ -69,7 +69,7 @@ export const ultrasoundCases: UltrasoundDemoCase[] = [
       uz: [
         'Jigar echogenligi diffuz oshgan.',
         'Portal vena diametri normal chegarada.',
-        'Fokal o‘choq topilmadi.',
+        'Fokal o’choq topilmadi.',
       ],
       ru: [
         'Диффузное повышение эхогенности печени.',
@@ -98,7 +98,7 @@ export const ultrasoundCases: UltrasoundDemoCase[] = [
       en: 'AI flagged steatosis markers and drafted the report.',
     },
     icd: [
-      { code: 'K76.0', label: { uz: 'Yog‘li jigar', ru: 'Жировая дистрофия печени', en: 'Fatty liver, not elsewhere classified' } },
+      { code: 'K76.0', label: { uz: 'Yog’li jigar', ru: 'Жировая дистрофия печени', en: 'Fatty liver, not elsewhere classified' } },
       { code: 'E66.9', label: { uz: 'Semizlik (hamroh omil)', ru: 'Ожирение (сопутствующий фактор)', en: 'Obesity (comorbidity)' } },
     ],
   },
@@ -124,12 +124,12 @@ export const ultrasoundDemoCopy: Record<
 > = {
   uz: {
     title: 'AI Ultrasound live-demo',
-    desc: 'UTT case tanlang yoki klinik izoh kiriting — AI segmentatsiya, o‘lchov va draft protokolni ko‘rsatadi.',
+    desc: 'UTT case tanlang yoki klinik izoh kiriting — AI segmentatsiya, o’lchov va draft protokolni ko’rsatadi.',
     selectLabel: 'Tayyor UTT case',
     inputLabel: 'Klinik izoh',
-    inputPlaceholder: 'Masalan: bo‘yin UTT, tugun shubha, TSH oshgan...',
+    inputPlaceholder: 'Masalan: bo’yin UTT, tugun shubha, TSH oshgan...',
     run: 'AI UTT tahlilini ishga tushirish',
-    running: 'Segmentatsiya va o‘lchovlar hisoblanmoqda…',
+    running: 'Segmentatsiya va o’lchovlar hisoblanmoqda…',
     findings: 'Topilmalar',
     risk: 'Risk bahosi',
     recommendation: 'Keyingi qadam',

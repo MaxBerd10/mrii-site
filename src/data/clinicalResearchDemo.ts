@@ -23,8 +23,8 @@ export const researchStudies: ClinicalResearchDemoStudy[] = [
     findings: {
       uz: [
         'AI 320 nomzoddan 41 bemorni mezonga mos deb topdi.',
-        'eCRF maydonlarida 7 ta majburiy bo‘sh qiymat aniqlandi.',
-        'Nojo‘ya hodisa signali: 2 bemorda ALT oshishi.',
+        'eCRF maydonlarida 7 ta majburiy bo’sh qiymat aniqlandi.',
+        'Nojo’ya hodisa signali: 2 bemorda ALT oshishi.',
       ],
       ru: [
         'ИИ нашёл 41 подходящего пациента из 320 кандидатов.',
@@ -38,7 +38,7 @@ export const researchStudies: ClinicalResearchDemoStudy[] = [
       ],
     },
     risk: {
-      uz: 'Monitoring alert: o‘rta',
+      uz: 'Monitoring alert: o’rta',
       ru: 'Monitoring alert: средний',
       en: 'Monitoring alert: medium',
     },
@@ -60,7 +60,7 @@ export const researchStudies: ClinicalResearchDemoStudy[] = [
   {
     id: 'oncology-multicenter',
     label: {
-      uz: 'Onkologiya — ko‘p markazli',
+      uz: 'Onkologiya — ko’p markazli',
       ru: 'Онкология — мультицентровое',
       en: 'Oncology — multi-center',
     },
@@ -83,7 +83,7 @@ export const researchStudies: ClinicalResearchDemoStudy[] = [
       ],
     },
     risk: {
-      uz: 'Operatsion risk: past-o‘rta',
+      uz: 'Operatsion risk: past-o’rta',
       ru: 'Операционный риск: низко-средний',
       en: 'Operational risk: low-medium',
     },
@@ -93,7 +93,7 @@ export const researchStudies: ClinicalResearchDemoStudy[] = [
       en: 'Retraining for low-performing sites and query-closure sprint.',
     },
     reportSnippet: {
-      uz: 'AI monitoring panel markazlar kesimida KPI driftni ko‘rsatdi.',
+      uz: 'AI monitoring panel markazlar kesimida KPI driftni ko’rsatdi.',
       ru: 'AI monitoring panel отобразила KPI drift по центрам.',
       en: 'AI monitoring panel highlighted KPI drift by site.',
     },
@@ -124,7 +124,7 @@ export const clinicalResearchDemoCopy: Record<
 > = {
   uz: {
     title: 'AI Clinical Research live-demo',
-    desc: 'Trial case tanlang yoki protocol context qo‘shing — AI screening, safety va data-quality signalini chiqaradi.',
+    desc: 'Trial case tanlang yoki protocol context qo’shing — AI screening, safety va data-quality signalini chiqaradi.',
     selectLabel: 'Tadqiqot case',
     inputLabel: 'Protocol context',
     inputPlaceholder: 'Masalan: inclusion age 18-65, ALT monitoring har 2 hafta...',

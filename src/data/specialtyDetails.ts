@@ -18,8 +18,8 @@ export const specialtyDetails: SpecialtyDetail[] = [
     slug: 'ent',
     content: {
       uz: {
-        overview: 'Otorinolaringologiya bo‘limi quloq, burun va tomoq kasalliklarini diagnostika qiladi va davolaydi. Eshitish, nafas olish va ovoz muammolari bir markazda baholanadi.',
-        conditions: 'Sinuzit va rinit|O‘tka o‘tish va tonsillit|Eshitish pasayishi va shovqin',
+        overview: 'Otorinolaringologiya bo’limi quloq, burun va tomoq kasalliklarini diagnostika qiladi va davolaydi. Eshitish, nafas olish va ovoz muammolari bir markazda baholanadi.',
+        conditions: 'Sinuzit va rinit|O’tka o’tish va tonsillit|Eshitish pasayishi va shovqin',
         services: 'LOR konsultatsiyasi|Endoskopik tekshiruv|Eshitishni baholash',
         diagnostics: 'LOR endoskopiyasi|Audiometriya|KT va rentgen',
       },
@@ -41,8 +41,8 @@ export const specialtyDetails: SpecialtyDetail[] = [
     slug: 'gastroenterology',
     content: {
       uz: {
-        overview: 'Gastroenterologiya markazi ovqat hazm qilish tizimi, jigar va o‘t yo‘llari kasalliklarini diagnostika va davolash bilan shug‘ullanadi. Endoskopiya, laboratoriya va ovqatlanish tavsiyalari bir joyda taqdim etiladi.',
-        conditions: 'Gastrit va reflyuks|Ichak yallig‘lanish kasalliklari|Jigar va o‘t yo‘llari kasalliklari',
+        overview: 'Gastroenterologiya markazi ovqat hazm qilish tizimi, jigar va o’t yo’llari kasalliklarini diagnostika va davolash bilan shug’ullanadi. Endoskopiya, laboratoriya va ovqatlanish tavsiyalari bir joyda taqdim etiladi.',
+        conditions: 'Gastrit va reflyuks|Ichak yallig’lanish kasalliklari|Jigar va o’t yo’llari kasalliklari',
         services: 'Gastroenterolog qabuli|Davolovchi ovqatlanish rejasi|Endoskopik muolajalar',
         diagnostics: 'Gastroskopiya va kolonoskopiya|UZI va elastografiya|Mikrobiom tahlillari',
       },
@@ -64,8 +64,8 @@ export const specialtyDetails: SpecialtyDetail[] = [
     slug: 'pulmonology',
     content: {
       uz: {
-        overview: 'Pulmonologiya bo‘limi o‘pka va nafas yo‘llari kasalliklarini erta aniqlash, davolash va surunkali holatlarni nazorat qilish bilan shug‘ullanadi.',
-        conditions: 'Bronxit va bronxial astma|Surunkali obstruktiv o‘pka kasalligi|O‘pka infeksiyalari',
+        overview: 'Pulmonologiya bo’limi o’pka va nafas yo’llari kasalliklarini erta aniqlash, davolash va surunkali holatlarni nazorat qilish bilan shug’ullanadi.',
+        conditions: 'Bronxit va bronxial astma|Surunkali obstruktiv o’pka kasalligi|O’pka infeksiyalari',
         services: 'Pulmonolog konsultatsiyasi|Nafas funksiyasini tiklash|Surunkali holatlarni kuzatuv',
         diagnostics: 'Spirometriya|Rentgen va KT|Arterial qon gazlari tahlili',
       },
@@ -87,9 +87,9 @@ export const specialtyDetails: SpecialtyDetail[] = [
     slug: 'rheumatology',
     content: {
       uz: {
-        overview: 'Revmatologiya bo‘limi bo‘g‘im, mushak va autoimmun kasalliklarni kompleks baholaydi. Og‘riqni kamaytirish va harakat funksiyasini tiklashga qaratilgan davolash rejasi tuziladi.',
+        overview: 'Revmatologiya bo’limi bo’g’im, mushak va autoimmun kasalliklarni kompleks baholaydi. Og’riqni kamaytirish va harakat funksiyasini tiklashga qaratilgan davolash rejasi tuziladi.',
         conditions: 'Artrit va artroz|Revmatoid artrit|Autoimmun kasalliklar',
-        services: 'Revmatolog konsultatsiyasi|Dori-darmon terapiyasi|Fizioterapiya yo‘naltirish',
+        services: 'Revmatolog konsultatsiyasi|Dori-darmon terapiyasi|Fizioterapiya yo’naltirish',
         diagnostics: 'Laborator immunoassay|Rentgen va MRT|Qon va sidik tahlillari',
       },
       ru: {
@@ -110,7 +110,7 @@ export const specialtyDetails: SpecialtyDetail[] = [
     slug: 'cardiology',
     content: {
       uz: {
-        overview: 'Kardiologiya bo‘limi yurak va qon-tomir kasalliklarini erta aniqlash, davolash va uzoq muddat nazorat qilishga ixtisoslashgan. Har bir holat kardiolog, diagnost va zarur bo‘lsa kardiojarroh ishtirokida ko‘rib chiqiladi.',
+        overview: 'Kardiologiya bo’limi yurak va qon-tomir kasalliklarini erta aniqlash, davolash va uzoq muddat nazorat qilishga ixtisoslashgan. Har bir holat kardiolog, diagnost va zarur bo’lsa kardiojarroh ishtirokida ko’rib chiqiladi.',
         conditions: 'Arterial gipertoniya|Yurak ishemik kasalligi|Aritmiya va yurak yetishmovchiligi',
         services: 'Kardiolog konsultatsiyasi|Individual davolash rejasi|Operatsiyadan keyingi kuzatuv',
         diagnostics: 'EKG va Xolter monitoring|Ehokardiografiya|Yuklama sinovlari',
@@ -156,9 +156,9 @@ export const specialtyDetails: SpecialtyDetail[] = [
     slug: 'intensive-care',
     content: {
       uz: {
-        overview: 'Reanimatsiya bo‘limi og‘ir va shoshilinch holatlarda doimiy monitoring, intensiv terapiya va ko‘p tarmoqli yordam ko‘rsatadi.',
-        conditions: 'Shoshilinch yurak-qon tomir holatlari|Og‘ir nafas yetishmovchiligi|Operatsiyadan keyingi intensiv kuzatuv',
-        services: 'Intensiv monitoring|Reanimatsiya va yordam|Ko‘p tarmoqli konsilium',
+        overview: 'Reanimatsiya bo’limi og’ir va shoshilinch holatlarda doimiy monitoring, intensiv terapiya va ko’p tarmoqli yordam ko’rsatadi.',
+        conditions: 'Shoshilinch yurak-qon tomir holatlari|Og’ir nafas yetishmovchiligi|Operatsiyadan keyingi intensiv kuzatuv',
+        services: 'Intensiv monitoring|Reanimatsiya va yordam|Ko’p tarmoqli konsilium',
         diagnostics: 'Doimiy vital monitoring|Laboratoriya va tasvir|Portativ diagnostika',
       },
       ru: {
@@ -179,7 +179,7 @@ export const specialtyDetails: SpecialtyDetail[] = [
     slug: 'gynecology',
     content: {
       uz: {
-        overview: 'Ginekologiya bo‘limi profilaktik ko‘rikdan reproduktiv tibbiyot va minimal invaziv jarrohlikkacha ayollar salomatligining barcha bosqichlarini qamrab oladi.',
+        overview: 'Ginekologiya bo’limi profilaktik ko’rikdan reproduktiv tibbiyot va minimal invaziv jarrohlikkacha ayollar salomatligining barcha bosqichlarini qamrab oladi.',
         conditions: 'Hayz sikli buzilishlari|Bepushtlik va reproduktiv muammolar|Bachadon va tuxumdon kasalliklari',
         services: 'Ginekolog konsultatsiyasi|Homiladorlikni rejalashtirish|Minimal invaziv muolajalar',
         diagnostics: 'Ekspert UZI|Kolposkopiya|Gormonal va sitologik tahlillar',
@@ -202,8 +202,8 @@ export const specialtyDetails: SpecialtyDetail[] = [
     slug: 'neurology',
     content: {
       uz: {
-        overview: 'Nevrologiya bo‘limi bosh miya, orqa miya va periferik asab tizimi kasalliklarini kompleks baholaydi. Tezkor diagnostika reabilitatsiya va profilaktika bilan yagona rejaga birlashtiriladi.',
-        conditions: 'Bosh og‘rig‘i va migren|Insult va uning oqibatlari|Epilepsiya va neyrodegenerativ holatlar',
+        overview: 'Nevrologiya bo’limi bosh miya, orqa miya va periferik asab tizimi kasalliklarini kompleks baholaydi. Tezkor diagnostika reabilitatsiya va profilaktika bilan yagona rejaga birlashtiriladi.',
+        conditions: 'Bosh og’rig’i va migren|Insult va uning oqibatlari|Epilepsiya va neyrodegenerativ holatlar',
         services: 'Nevrolog konsultatsiyasi|Insultdan keyingi kuzatuv|Kognitiv reabilitatsiya',
         diagnostics: 'MRT va KT|EEG va ENMG|Qon-tomir doppleri',
       },
@@ -225,8 +225,8 @@ export const specialtyDetails: SpecialtyDetail[] = [
     slug: 'surgery',
     content: {
       uz: {
-        overview: 'Jarrohlik markazi umumiy, torakal va laparoskopik operatsiyalarni xavfsizlikning xalqaro standartlari asosida bajaradi. Operatsiyadan oldingi tayyorgarlik va reabilitatsiya yagona yo‘l xaritasiga kiritiladi.',
-        conditions: 'Qorin bo‘shlig‘i kasalliklari|Churra va yumshoq to‘qima holatlari|Torakal jarrohlik patologiyalari',
+        overview: 'Jarrohlik markazi umumiy, torakal va laparoskopik operatsiyalarni xavfsizlikning xalqaro standartlari asosida bajaradi. Operatsiyadan oldingi tayyorgarlik va reabilitatsiya yagona yo’l xaritasiga kiritiladi.',
+        conditions: 'Qorin bo’shlig’i kasalliklari|Churra va yumshoq to’qima holatlari|Torakal jarrohlik patologiyalari',
         services: 'Jarroh konsultatsiyasi|Laparoskopik operatsiyalar|Operatsiyadan keyingi kuzatuv',
         diagnostics: 'Operatsiya oldi check-up|KT va MRT rejalashtirish|Anesteziolog bahosi',
       },
@@ -248,8 +248,8 @@ export const specialtyDetails: SpecialtyDetail[] = [
     slug: 'therapy',
     content: {
       uz: {
-        overview: 'Terapiya bo‘limi kattalar uchun birlamchi tibbiy yordam, profilaktik tekshiruv va surunkali kasalliklarni boshqarishni ta’minlaydi. Terapevt kerakli tor mutaxassislarni yagona davolash rejasiga birlashtiradi.',
-        conditions: 'Nafas yo‘llari kasalliklari|Surunkali metabolik holatlar|Ko‘p kasallik birga kechishi',
+        overview: 'Terapiya bo’limi kattalar uchun birlamchi tibbiy yordam, profilaktik tekshiruv va surunkali kasalliklarni boshqarishni ta’minlaydi. Terapevt kerakli tor mutaxassislarni yagona davolash rejasiga birlashtiradi.',
+        conditions: 'Nafas yo’llari kasalliklari|Surunkali metabolik holatlar|Ko’p kasallik birga kechishi',
         services: 'Terapevt qabuli|Yillik check-up|Surunkali holatlarni nazorat qilish',
         diagnostics: 'Laboratoriya tahlillari|Funksional diagnostika|Individual xavf bahosi',
       },
@@ -289,19 +289,19 @@ export const specialtyPageLabels: Record<ContentLang, {
   closingText: string
 }> = {
   uz: {
-    back: 'Klinika yo‘nalishlari',
-    expertise: 'Yo‘nalish haqida',
+    back: 'Klinika yo’nalishlari',
+    expertise: 'Yo’nalish haqida',
     conditions: 'Qaysi holatlarda yordam beramiz',
     services: 'Xizmatlar va davolash',
     diagnostics: 'Diagnostika imkoniyatlari',
-    pathway: 'Shaxsiy davolash yo‘li',
+    pathway: 'Shaxsiy davolash yo’li',
     pathwayText: 'Birinchi konsultatsiyadan natijalarni nazorat qilishgacha barcha bosqichlar bitta koordinatsiyalangan jamoa tomonidan boshqariladi.',
     accredited: 'Xalqaro klinik protokollar',
     available: 'Telefon orqali yozilish',
-    related: 'Boshqa klinik yo‘nalishlar',
-    teamText: 'Mutaxassis profilini ko‘ring va sizga mos shifokorni tanlang.',
-    closingTitle: 'Keyingi qadam — qabulga qo‘ng‘iroq qiling',
-    closingText: 'Belgilangan raqamga qo‘ng‘iroq qiling — bemor xizmatimiz mos shifokor va vaqtni tayinlaydi.',
+    related: 'Boshqa klinik yo’nalishlar',
+    teamText: 'Mutaxassis profilini ko’ring va sizga mos shifokorni tanlang.',
+    closingTitle: 'Keyingi qadam — qabulga qo’ng’iroq qiling',
+    closingText: 'Belgilangan raqamga qo’ng’iroq qiling — bemor xizmatimiz mos shifokor va vaqtni tayinlaydi.',
   },
   ru: {
     back: 'Направления клиники',

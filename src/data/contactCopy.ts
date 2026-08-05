@@ -38,15 +38,15 @@ export const CONTACT_TELEGRAM_URL = CLINIC_TELEGRAM_URL
 export const CONTACT_WEBSITE = CLINIC_WEBSITE
 
 export const CONTACT_EMAIL = 'info@fjsti.uz'
-/** Fargʻona shahri, Yangi Turon koʻchasi, 2-a uy. */
-export const CONTACT_ADDRESS_QUERY = 'Farg\'ona Yangi Turon 2a'
+/** Farg’ona shahri, Yangi Turon ko’chasi, 2-a uy. */
+export const CONTACT_ADDRESS_QUERY = 'Farg’ona Yangi Turon 2a'
 
 export const CONTACT_COPY: Record<Lang, ContactCopy> = {
   uz: {
     eyebrow: 'Aloqa',
-    title: 'Qabulga yozilish uchun qo‘ng‘iroq qiling',
+    title: 'Qabulga yozilish uchun qo’ng’iroq qiling',
     desc:
-      'Bemor xizmatimiz siz bilan bog‘lanadi, mos shifokorni tanlaydi va qabul vaqtini tayinlaydi.',
+      'Bemor xizmatimiz siz bilan bog’lanadi, mos shifokorni tanlaydi va qabul vaqtini tayinlaydi.',
     phoneLabel: 'Qabulga yozilish',
     phoneHint: 'Dushanba–Shanba, 09:00–18:00',
     telegramChannelLabel: 'Telegram',
@@ -54,7 +54,7 @@ export const CONTACT_COPY: Record<Lang, ContactCopy> = {
     websiteChannelLabel: 'Sayt',
     websiteLabel: 'fjsti.uz',
     addressLabel: 'Manzil',
-    addressValue: 'Farg‘ona sh., Yangi Turon ko‘chasi, 2-a uy',
+    addressValue: 'Farg’ona sh., Yangi Turon ko’chasi, 2-a uy',
     emailLabel: 'Elektron pochta',
     hoursLabel: 'Ish vaqti',
     hoursValue: 'Dushanba–Shanba · 09:00–18:00',
@@ -63,10 +63,10 @@ export const CONTACT_COPY: Record<Lang, ContactCopy> = {
     sponsorEyebrow: 'Homiylar va CRO',
     sponsorTitle: 'Tadqiqotlarda hamkorlik',
     sponsorDesc:
-      'Homiy, CRO va akademik institutlar bilan hamkorlik uchun email yuboring yoki qo‘ng‘iroq qiling. Protokol va hujjatlarni biriktirishingiz mumkin.',
-    sponsorEmailLabel: 'Tadqiqot bo‘limi',
+      'Homiy, CRO va akademik institutlar bilan hamkorlik uchun email yuboring yoki qo’ng’iroq qiling. Protokol va hujjatlarni biriktirishingiz mumkin.',
+    sponsorEmailLabel: 'Tadqiqot bo’limi',
     sponsorEmailHint: 'Protokol va hujjatlarni biriktiring',
-    sponsorPhoneLabel: 'Yoki qo‘ng‘iroq qiling',
+    sponsorPhoneLabel: 'Yoki qo’ng’iroq qiling',
   },
   ru: {
     eyebrow: 'Контакты',
@@ -122,17 +122,17 @@ export const CONTACT_COPY: Record<Lang, ContactCopy> = {
   },
   kaa: {
     eyebrow: 'Baylanıs',
-    title: 'Qabılg‘a jazılıw ushın qońıraw etiń',
+    title: 'Qabılg’a jazılıw ushın qońıraw etiń',
     desc:
       'Bemar xızmetimiz siz benen baylanısıp, sáykes shıpaker tabıp, qabıllaw waqtın belgileydi.',
-    phoneLabel: 'Qabılg‘a jazılıw',
+    phoneLabel: 'Qabılg’a jazılıw',
     phoneHint: 'Dúyshembi–Shembi, 09:00–18:00',
     telegramChannelLabel: 'Telegram',
     telegramLabel: CLINIC_TELEGRAM_HANDLE,
     websiteChannelLabel: 'Sayt',
     websiteLabel: 'fjsti.uz',
     addressLabel: 'Manzil',
-    addressValue: 'Farg‘ana q., Yangi Turon kóshesi, 2-a úy',
+    addressValue: 'Farg’ana q., Yangi Turon kóshesi, 2-a úy',
     emailLabel: 'Elektron pochta',
     hoursLabel: 'Islew waqtı',
     hoursValue: 'Dúyshembi–Shembi · 09:00–18:00',

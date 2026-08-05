@@ -9,11 +9,11 @@ export default function AiShifokorRedirect() {
 
   return (
     <main className="container-main" style={{ padding: '4rem 0', textAlign: 'center' }}>
-      <p>AiShifokorga yo‘naltirilmoqda…</p>
+      <p>AiShifokorga yo’naltirilmoqda…</p>
       <p>
         <a href={AISHIFOKOR_URL}>aishifokor.uz</a>
         {' · '}
-        <a href="/ai">Klinika saytidagi AI bo‘limi</a>
+        <a href="/ai">Klinika saytidagi AI bo’limi</a>
       </p>
     </main>
   )

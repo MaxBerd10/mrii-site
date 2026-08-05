@@ -11,7 +11,7 @@ import { EASE_OUT } from '../lib/animations'
 type NavChild = { label: string; href: string }
 type NavItem = { label: string; href: string; children: NavChild[] }
 
-/** The highlight slides between items on a spring — the nav's one signature motion. */
+/** The highlight slides between items on a spring — the nav’s one signature motion. */
 const HIGHLIGHT_SPRING = { type: 'spring', stiffness: 420, damping: 34, mass: 0.7 } as const
 
 export default function Nav() {

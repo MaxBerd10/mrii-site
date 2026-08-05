@@ -71,7 +71,7 @@ export const FOOTER_NAV: FooterNavCol[] = [
       {
         href: '/clinic',
         label: {
-          uz: 'Barcha yo‘nalishlar',
+          uz: 'Barcha yo’nalishlar',
           ru: 'Все направления',
           en: 'All departments',
           kaa: 'Barlıq baǵdarlar',
@@ -218,7 +218,7 @@ export const FOOTER_NAV: FooterNavCol[] = [
       {
         href: '/ai',
         label: {
-          uz: 'AI bo‘limi',
+          uz: 'AI bo’limi',
           ru: 'AI-раздел',
           en: 'AI section',
           kaa: 'AI bólimi',

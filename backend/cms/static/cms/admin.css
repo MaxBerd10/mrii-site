@@ -794,7 +794,7 @@ body.mrii-index #content,
   border-bottom: 1px solid var(--line) !important;
 }
 
-/* Filter sidebar — o‘chirilgan */
+/* Filter sidebar — o’chirilgan */
 #changelist-filter {
   display: none !important;
 }
@@ -806,7 +806,7 @@ body.mrii-index #content,
   width: 100% !important;
 }
 
-/* Changelist: toza qidiruv + to‘liq kenglik jadval */
+/* Changelist: toza qidiruv + to’liq kenglik jadval */
 body.change-list #content {
   max-width: 1180px;
 }
