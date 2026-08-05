@@ -210,8 +210,17 @@ export default function VacanciesPage() {
 
       <section id="vacancy-application" className="vacancies-page__form-wrap">
         <div className="vacancies-page__form-head">
-          <h2 ref={applicationHeadingRef} tabIndex={-1}>{t.vacancies.formTitle}</h2>
-          <p>{t.vacancies.formLead}</p>
+          <div>
+            <h2 ref={applicationHeadingRef} tabIndex={-1}>{t.vacancies.formTitle}</h2>
+            <p>{t.vacancies.formLead}</p>
+          </div>
+          <aside className="vacancies-hr-contact">
+            <img src={HR_CONTACT_PHOTO} alt={t.vacancies.hrPersonName} />
+            <div>
+              <span>{t.vacancies.hrLabel}</span>
+              <strong>{t.vacancies.hrPersonName}</strong>
+            </div>
+          </aside>
         </div>
 
         <p className="vacancies-form__selection" aria-live="polite">
@@ -226,18 +235,7 @@ export default function VacanciesPage() {
         ) : null}
         {error ? <p className="vacancies-form__error">{error}</p> : null}
 
-        <div className="vacancies-page__application-grid">
-          <aside className="vacancies-hr-card">
-            <img src={HR_CONTACT_PHOTO} alt={t.vacancies.hrPersonName} />
-            <div>
-              <p>{t.vacancies.hrLabel}</p>
-              <h3>{t.vacancies.hrPersonName}</h3>
-              <span>{t.vacancies.hrPersonRole}</span>
-            </div>
-            <small>{t.vacancies.hrNote}</small>
-          </aside>
-
-          <form className="vacancies-form" onSubmit={handleSubmit}>
+        <form className="vacancies-form" onSubmit={handleSubmit}>
             <div className="vacancies-form__row">
               <label>
                 {t.vacancies.nameLabel}
@@ -281,8 +279,7 @@ export default function VacanciesPage() {
               {submitting ? t.vacancies.submitting : t.vacancies.submit}
             </button>
             <p className="vacancies-form__note">{t.vacancies.formNote}</p>
-          </form>
-        </div>
+        </form>
       </section>
     </main>
   )
