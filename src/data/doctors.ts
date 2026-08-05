@@ -312,7 +312,7 @@ const REST: Array<{
   { slug: 'toxtayeva-h-r', uzName: 'Dr. To’xtayeva H.R.', ruName: 'Др. Тухтаева Х.Р.', roleUz: 'Terapevt', roleRu: 'Терапевт', roleEn: 'General practitioner', specUz: 'Terapiya', specRu: 'Терапия', specEn: 'Therapy', papers: 20, studies: 3 },
   { slug: 'karimova-o-b', uzName: 'Dr. Karimova O.B.', ruName: 'Др. Каримова О.Б.', roleUz: 'Endokrinolog', roleRu: 'Эндокринолог', roleEn: 'Endocrinologist', specUz: 'Endokrinologiya', specRu: 'Эндокринология', specEn: 'Endocrinology', papers: 21, studies: 4 },
   { slug: 'yusupov-b-t', uzName: 'Dr. Yusupov B.T.', ruName: 'Др. Юсупов Б.Т.', roleUz: 'Pulmonolog', roleRu: 'Пульмонолог', roleEn: 'Pulmonologist', specUz: 'Pulmonologiya', specRu: 'Пульмонология', specEn: 'Pulmonology', papers: 31, studies: 6 },
-  { slug: 'nigmatova-s-a', uzName: 'Nigmatova S.A.', ruName: 'Нигматова С.А.', roleUz: 'Kadrlar bo’limi hamshirasi', roleRu: 'Медсестра отдела кадров', roleEn: 'HR department nurse', specUz: 'Kadrlar bo’limi', specRu: 'Отдел кадров', specEn: 'Human resources', papers: 4, studies: 0, staffKind: 'nurse' },
+  { slug: 'nigmatova-s-a', uzName: 'Nigmatova S.A.', ruName: 'Нигматова С.А.', roleUz: 'Kadrlar bo’limi', roleRu: 'Отдел кадров', roleEn: 'Human resources', specUz: 'Kadrlar bo’limi', specRu: 'Отдел кадров', specEn: 'Human resources', papers: 4, studies: 0, staffKind: 'nurse' },
   { slug: 'boboyeva-m-r', uzName: 'Hamshira Boboyeva M.R.', ruName: 'Медсестра Бобоева М.Р.', roleUz: 'Procedura hamshirasi', roleRu: 'Процедурная медсестра', roleEn: 'Procedure nurse', specUz: 'Procedura', specRu: 'Процедурный кабинет', specEn: 'Procedures', papers: 3, studies: 0, staffKind: 'nurse' },
   { slug: 'sharipova-d-a', uzName: 'Hamshira Sharipova D.A.', ruName: 'Медсестра Шарипова Д.А.', roleUz: 'Operatsion hamshira', roleRu: 'Операционная медсестра', roleEn: 'Operating nurse', specUz: 'Jarrohlik', specRu: 'Хирургия', specEn: 'Surgery', papers: 5, studies: 0, staffKind: 'nurse' },
   { slug: 'madaminova-l-k', uzName: 'Hamshira Madaminova L.K.', ruName: 'Медсестра Мадаминова Л.К.', roleUz: 'Bosh hamshira', roleRu: 'Старшая медсестра', roleEn: 'Head nurse', specUz: 'Terapiya', specRu: 'Терапия', specEn: 'Therapy', papers: 6, studies: 0, staffKind: 'nurse' },
@@ -422,32 +422,32 @@ for (let i = 0; i < REST.length; i++) {
   if (nigmatovaIndex >= 0) {
     doctorProfiles[nigmatovaIndex] = profile(14, 'nigmatova-s-a', {
       name: 'Nigmatova S.A.',
-      role: 'Kadrlar bo’limi hamshirasi',
+      role: 'Kadrlar bo’limi',
       specialty: 'Kadrlar bo’limi',
       exp: '14 yil tajriba',
       about:
-        'Nigmatova S.A. — FJSTI ko’p tarmoqli klinikasining Kadrlar bo’limi hamshirasi. Xodimlar hujjatlari, mehnat intizomi va kadrlar bilan bog’liq tashkiliy jarayonlarda klinika jamoasiga yordam beradi.',
-      education: ['Tibbiyot kolleji — hamshiralik', 'Kadrlar bo’limi amaliyoti'],
+        'Nigmatova S.A. — FJSTI ko’p tarmoqli klinikasining Kadrlar bo’limida ishlaydi. Xodimlar hujjatlari, mehnat intizomi va kadrlar bilan bog’liq tashkiliy jarayonlarda klinika jamoasiga yordam beradi.',
+      education: ['Tibbiyot kolleji', 'Kadrlar bo’limi amaliyoti'],
       focuses: ['Kadrlar hujjatlari', 'Mehnat intizomi', 'Tashkiliy yordam', 'Klinika jamoasi'],
       languages: ["O’zbek", 'Русский'],
     }, {
       name: 'Нигматова С.А.',
-      role: 'Медсестра отдела кадров',
+      role: 'Отдел кадров',
       specialty: 'Отдел кадров',
       exp: '14 лет опыта',
       about:
-        'Нигматова С.А. — медсестра отдела кадров многопрофильной клиники FJSTI. Сопровождает кадровую документацию, трудовую дисциплину и организационные процессы, связанные с персоналом клиники.',
-      education: ['Медицинский колледж — сестринское дело', 'Практика в отделе кадров'],
+        'Нигматова С.А. работает в отделе кадров многопрофильной клиники FJSTI. Сопровождает кадровую документацию, трудовую дисциплину и организационные процессы, связанные с персоналом клиники.',
+      education: ['Медицинский колледж', 'Практика в отделе кадров'],
       focuses: ['Кадровая документация', 'Трудовая дисциплина', 'Организационная поддержка', 'Команда клиники'],
       languages: ['Узбекский', 'Русский'],
     }, {
       name: 'Nigmatova S.A.',
-      role: 'HR department nurse',
+      role: 'Human resources',
       specialty: 'Human resources',
       exp: '14 years experience',
       about:
-        'Nigmatova S.A. — nurse in the HR department of the FJSTI multi-specialty clinic. Supports personnel records, workplace compliance, and organizational processes for the clinical team.',
-      education: ['Medical college — nursing', 'HR department practice'],
+        'Nigmatova S.A. works in the HR department of the FJSTI multi-specialty clinic. Supports personnel records, workplace compliance, and organizational processes for the clinical team.',
+      education: ['Medical college', 'HR department practice'],
       focuses: ['Personnel records', 'Workplace compliance', 'Organizational support', 'Clinical team'],
       languages: ['Uzbek', 'Russian'],
     }, 4, 0, 'nurse')
