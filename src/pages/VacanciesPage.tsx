@@ -9,7 +9,7 @@ import {
   type CmsVacancy,
   type VacancyCategory,
 } from '../api/client'
-import { FALLBACK_VACANCIES } from '../data/vacanciesFallback'
+import { getFallbackVacancies } from '../data/vacanciesFallback'
 import { getDoctorCardPortrait } from '../data/doctorTurnMedia'
 import '../styles/vacancies-page.css'
 
@@ -31,6 +31,9 @@ function formatDeadline(value: string | null, lang: string) {
   if (lang === 'ru') {
     return `${d} ${['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'][m - 1]} ${y}`
   }
+  if (lang === 'kaa') {
+    return `${d} ${['yanvar', 'fevral', 'mart', 'aprel', 'may', 'iyun', 'iyul', 'avgust', 'sentyabr', 'oktyabr', 'noyabr', 'dekabr'][m - 1]} ${y}`
+  }
   return `${String(d).padStart(2, '0')}.${String(m).padStart(2, '0')}.${y}`
 }
 
@@ -40,7 +43,7 @@ export default function VacanciesPage() {
   const reduceMotion = useReducedMotion()
   const shouldAnimate = routeEnter && !reduceMotion
 
-  const [vacancies, setVacancies] = useState<CmsVacancy[]>(FALLBACK_VACANCIES)
+  const [vacancies, setVacancies] = useState<CmsVacancy[]>(() => getFallbackVacancies(lang))
   const [filter, setFilter] = useState<FilterId>('all')
   const [selectedId, setSelectedId] = useState<string>('')
   const [name, setName] = useState('')
@@ -53,7 +56,14 @@ export default function VacanciesPage() {
   const applicationHeadingRef = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
+    const fallback = getFallbackVacancies(lang)
+    if (lang === 'kaa') {
+      setVacancies(fallback)
+      return
+    }
+
     let cancelled = false
+    setVacancies(fallback)
     void fetchVacancies(lang).then((rows) => {
       if (cancelled || !rows?.length) return
       setVacancies(rows)
