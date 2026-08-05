@@ -8,7 +8,7 @@ from cms import models
 
 FJSTI_SETTINGS = {
     'institute_name': "FJSTI ko'p tarmoqli klinikasi",
-    'copyright_uz': "© 2026 Farg'ona Jamoat Salomatligi Tibbiyot Instituti. Barcha huquqlar himoyalangan.",
+    'copyright_uz': "© 2026 Farg’ona Jamoat Salomatligi Tibbiyot Instituti. Barcha huquqlar himoyalangan.",
     'copyright_ru': '© 2026 Ферганский медицинский институт общественного здоровья. Все права защищены.',
     'copyright_en': '© 2026 Ferghana Medical Institute of Public Health. All rights reserved.',
 }
@@ -76,6 +76,7 @@ class Command(BaseCommand):
             models.Partner,
             models.InternationalService,
             models.ClinicTourVideo,
+            models.Vacancy,
             models.Inquiry,
         ]
 

@@ -9,14 +9,14 @@ def seed_homepage(apps, schema_editor):
         HomePage.objects.bulk_create([HomePage(
             pk=1,
             eyebrow_uz='2008 yildan beri · ISO 9001:2015 · GCP',
-            title_lead_uz='Farg‘onada ishonchli tibbiy yordam —',
+            title_lead_uz='Farg’onada ishonchli tibbiy yordam —',
             title_em_uz='tajribali shifokorlar',
             lead_uz=(
-                '11 klinik yo‘nalish, telefon orqali yozilish va zamonaviy diagnostika. '
+                '11 klinik yo’nalish, telefon orqali yozilish va zamonaviy diagnostika. '
                 'Qaror har doim shifokorda; AiShifokor qabulda yordam beradi.'
             ),
             metric_1_value='11+',
-            metric_1_label_uz='Klinika yo‘nalishlari',
+            metric_1_label_uz='Klinika yo’nalishlari',
             metric_2_value='100+',
             metric_2_label_uz='Mutaxassis shifokorlar',
             metric_3_value='2008',
@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
                 ('lead_ru', models.TextField(blank=True, verbose_name='Izoh (RU)')),
                 ('lead_en', models.TextField(blank=True, verbose_name='Izoh (EN)')),
                 ('team_image', models.ImageField(blank=True, null=True, upload_to='homepage/', verbose_name='Asosiy jamoa rasmi')),
-                ('team_image_url', models.CharField(blank=True, max_length=512, verbose_name='Yoki rasm yo‘li/URL')),
+                ('team_image_url', models.CharField(blank=True, max_length=512, verbose_name='Yoki rasm yo’li/URL')),
                 ('metric_1_value', models.CharField(blank=True, max_length=64, verbose_name='1-raqam')),
                 ('metric_1_label_uz', models.CharField(blank=True, max_length=128, verbose_name='1-raqam izohi (UZ)')),
                 ('metric_1_label_ru', models.CharField(blank=True, max_length=128, verbose_name='1-raqam izohi (RU)')),

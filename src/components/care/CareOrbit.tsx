@@ -513,6 +513,7 @@ function DoctorWallCard({
     slug: string
     name: string
     specialty: string
+    wallLabel: string
     exp: string
     portrait: string
     fallbackPortrait: string
@@ -533,6 +534,7 @@ function DoctorWallCard({
     <a
       href={`/doctors/${doctor.slug}`}
       className={`hc-doctor-wall__card${isCenter ? ' is-center' : ''}`}
+      aria-label={`${doctor.name}, ${doctor.wallLabel}`}
       style={{
         ['--wall-order' as string]: index,
         ['--wall-photo-position' as string]: getDoctorWallPortraitPosition(doctor.slug),
@@ -581,6 +583,7 @@ function DoctorWallCard({
           }}
         />
       )}
+      <span className="hc-doctor-wall__specialty">{doctor.wallLabel}</span>
       <span className="hc-doctor-wall__scrim" aria-hidden />
       <span className="hc-doctor-wall__meta">
         <small>{doctor.specialty}</small>
@@ -600,12 +603,15 @@ function CareDoctorWall() {
   const doctors = getHomeDoctorWallDoctors(7).map((doctor) => {
     const turn = getDoctorTurnMedia(doctor.slug)
     const portrait = turn?.poster ?? doctor.photo
+    const content = doctor.content[contentLang]
+    const wallLabel = doctor.staffKind === 'nurse' ? content.role : content.specialty
     return {
       slug: doctor.slug,
       portrait,
       fallbackPortrait: portrait,
       video: turn?.video,
-      ...doctor.content[contentLang],
+      wallLabel,
+      ...content,
     }
   })
   const isMobile = useMobileLayout()

@@ -381,6 +381,50 @@ class ClinicTourVideoSerializer(serializers.ModelSerializer):
         return media_url(self.context.get('request'), obj.poster, obj.poster_url)
 
 
+class VacancySerializer(LangContextMixin, serializers.ModelSerializer):
+    id = serializers.CharField(source='slug')
+    title = serializers.SerializerMethodField()
+    department = serializers.SerializerMethodField()
+    location = serializers.SerializerMethodField()
+    experience = serializers.SerializerMethodField()
+    description = serializers.SerializerMethodField()
+    requirements = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.Vacancy
+        fields = (
+            'id',
+            'category',
+            'employment',
+            'title',
+            'department',
+            'location',
+            'experience',
+            'description',
+            'requirements',
+            'deadline',
+            'order',
+        )
+
+    def get_title(self, obj):
+        return pick(obj, 'title', self.lang)
+
+    def get_department(self, obj):
+        return pick(obj, 'department', self.lang)
+
+    def get_location(self, obj):
+        return pick(obj, 'location', self.lang)
+
+    def get_experience(self, obj):
+        return pick(obj, 'experience', self.lang)
+
+    def get_description(self, obj):
+        return pick(obj, 'description', self.lang)
+
+    def get_requirements(self, obj):
+        return split_pipe(pick(obj, 'requirements', self.lang))
+
+
 class InquiryCreateSerializer(serializers.Serializer):
     intent = serializers.ChoiceField(choices=models.Inquiry.Intent.values)
     name = serializers.CharField(max_length=255)
@@ -418,6 +462,8 @@ class InquiryCreateSerializer(serializers.Serializer):
             prefix = 'AI'
         elif intent == models.Inquiry.Intent.CONSULT:
             prefix = 'MAS'
+        elif intent == models.Inquiry.Intent.CAREER:
+            prefix = 'HR'
         else:
             prefix = 'FJSTI'
 

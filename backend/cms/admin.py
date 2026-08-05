@@ -541,6 +541,57 @@ class TestimonialAdmin(AutoTranslateAdmin):
     )
 
 
+@admin.register(models.Vacancy, site=mrii_admin_site)
+class VacancyAdmin(AutoTranslateAdmin):
+    list_display = ('title_uz', 'category', 'employment', 'deadline', 'order', 'is_active')
+    list_editable = ('order', 'is_active')
+    list_filter = ('category', 'employment', 'is_active')
+    search_fields = ('title_uz', 'title_ru', 'title_en', 'slug', 'department_uz')
+    prepopulated_fields = {'slug': ('title_uz',)}
+    date_hierarchy = 'deadline'
+    fieldsets = (
+        ('Asosiy', {
+            'description': 'Faol bo‘lmagan vakansiya saytda ko‘rinmaydi.',
+            'fields': ('slug', 'category', 'employment', 'deadline', 'order', 'is_active'),
+        }),
+        ('O‘zbekcha', {
+            'description': f'{LANG_UZ} {AUTO_TIP} Talablarni | bilan ajrating.',
+            'fields': (
+                'title_uz',
+                'department_uz',
+                'location_uz',
+                'experience_uz',
+                'description_uz',
+                'requirements_uz',
+            ),
+        }),
+        ('Русский', {
+            'classes': ('collapse',),
+            'description': LANG_RU,
+            'fields': (
+                'title_ru',
+                'department_ru',
+                'location_ru',
+                'experience_ru',
+                'description_ru',
+                'requirements_ru',
+            ),
+        }),
+        ('English', {
+            'classes': ('collapse',),
+            'description': LANG_EN,
+            'fields': (
+                'title_en',
+                'department_en',
+                'location_en',
+                'experience_en',
+                'description_en',
+                'requirements_en',
+            ),
+        }),
+    )
+
+
 @admin.register(models.ClinicTourVideo, site=mrii_admin_site)
 class ClinicTourVideoAdmin(AutoTranslateAdmin):
     list_display = ('video_key', 'order', 'is_active', 'preview', 'has_video')

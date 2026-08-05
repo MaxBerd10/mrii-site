@@ -479,6 +479,65 @@ class ClinicTourVideo(TimeStampedModel, OrderedModel):
         return self.get_video_key_display()
 
 
+class Vacancy(TimeStampedModel, OrderedModel):
+    """Open positions — managed in admin, shown on /vakansiyalar."""
+
+    class Category(models.TextChoices):
+        DOCTOR = 'doctor', 'Shifokor'
+        NURSE = 'nurse', 'Hamshira / parvarish'
+        ADMIN = 'admin', 'Ma’muriy'
+        RESIDENCY = 'residency', 'Ordinatura / rezident'
+        OTHER = 'other', 'Boshqa'
+
+    class Employment(models.TextChoices):
+        FULL_TIME = 'full_time', 'To‘liq stavka'
+        PART_TIME = 'part_time', 'Qisman'
+        CONTRACT = 'contract', 'Shartnoma'
+
+    slug = models.SlugField('Slug', unique=True)
+    category = models.CharField(
+        'Kategoriya',
+        max_length=32,
+        choices=Category.choices,
+        default=Category.OTHER,
+        db_index=True,
+    )
+    employment = models.CharField(
+        'Bandlik turi',
+        max_length=32,
+        choices=Employment.choices,
+        default=Employment.FULL_TIME,
+    )
+    title_uz = models.CharField('Lavozim (UZ)', max_length=255)
+    title_ru = models.CharField('Lavozim (RU)', max_length=255, blank=True)
+    title_en = models.CharField('Lavozim (EN)', max_length=255, blank=True)
+    department_uz = models.CharField('Bo‘lim (UZ)', max_length=255, blank=True)
+    department_ru = models.CharField('Bo‘lim (RU)', max_length=255, blank=True)
+    department_en = models.CharField('Bo‘lim (EN)', max_length=255, blank=True)
+    location_uz = models.CharField('Joy (UZ)', max_length=255, blank=True)
+    location_ru = models.CharField('Joy (RU)', max_length=255, blank=True)
+    location_en = models.CharField('Joy (EN)', max_length=255, blank=True)
+    experience_uz = models.CharField('Tajriba (UZ)', max_length=128, blank=True)
+    experience_ru = models.CharField('Tajriba (RU)', max_length=128, blank=True)
+    experience_en = models.CharField('Tajriba (EN)', max_length=128, blank=True)
+    description_uz = models.TextField('Tavsif (UZ)', blank=True)
+    description_ru = models.TextField('Tavsif (RU)', blank=True)
+    description_en = models.TextField('Tavsif (EN)', blank=True)
+    requirements_uz = models.TextField('Talablar | bilan (UZ)', blank=True)
+    requirements_ru = models.TextField('Talablar (RU)', blank=True)
+    requirements_en = models.TextField('Talablar (EN)', blank=True)
+    deadline = models.DateField('Ariza muddati', null=True, blank=True)
+    is_active = models.BooleanField('Faol', default=True)
+
+    class Meta:
+        verbose_name = 'Vakansiya'
+        verbose_name_plural = 'Vakansiyalar'
+        ordering = ['order', '-created_at', 'id']
+
+    def __str__(self):
+        return self.title_uz
+
+
 class Inquiry(TimeStampedModel):
     """Public lead from contact / AI demo forms — managed in admin."""
 
@@ -489,6 +548,7 @@ class Inquiry(TimeStampedModel):
         AI = 'ai', 'AI demo'
         INTERNATIONAL = 'international', 'Xalqaro bo‘lim'
         CONSULT = 'consult', 'Maslahat so‘rovi'
+        CAREER = 'career', 'Vakansiya / karyera'
 
     class Status(models.TextChoices):
         NEW = 'new', 'Yangi'

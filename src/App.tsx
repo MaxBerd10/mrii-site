@@ -22,6 +22,7 @@ import PageShell from './pages/PageShell'
 import PricesPage from './pages/PricesPage'
 import ClinicGalleryPage from './pages/ClinicGalleryPage'
 import ClinicTourPage from './pages/ClinicTourPage'
+import VacanciesPage from './pages/VacanciesPage'
 import { PageTransitionProvider, usePageNav } from './components/PageTransition'
 import PageEnter from './components/PageEnter'
 import { useScrollToTopOnRoute } from './lib/scrollRoute'
@@ -122,6 +123,12 @@ function AppRoutes() {
     body = (
       <PageShell className="page-shell--education">
         <Education />
+      </PageShell>
+    )
+  } else if (path === '/vakansiyalar') {
+    body = (
+      <PageShell className="page-shell--vacancies">
+        <VacanciesPage />
       </PageShell>
     )
   } else if (path === '/ai') {

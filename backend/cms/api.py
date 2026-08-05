@@ -169,6 +169,15 @@ class ClinicTourListAPI(APIView):
         )
 
 
+class VacancyListAPI(APIView):
+    def get(self, request):
+        lang = resolve_lang(request)
+        qs = models.Vacancy.objects.filter(is_active=True)
+        return Response(
+            serializers.VacancySerializer(qs, many=True, context=ctx(request, lang)).data
+        )
+
+
 class InquiryCreateAPI(APIView):
     """Public POST for contact / AI demo / consult leads → Django admin."""
 

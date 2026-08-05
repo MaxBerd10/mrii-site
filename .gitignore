@@ -14,6 +14,8 @@ skills-lock.json
 *.local
 .vercel
 pnpm-lock.yaml
+playwright-report/
+test-results/
 
 # Django CMS
 backend/.venv/

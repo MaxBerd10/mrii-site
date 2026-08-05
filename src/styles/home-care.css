@@ -428,6 +428,27 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
   pointer-events: none;
 }
 
+.hc-doctor-wall__specialty {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 10px;
+  left: 0;
+  max-height: 62%;
+  padding: 8px 4px;
+  color: #fff;
+  font-size: clamp(0.56rem, 0.85vw, 0.68rem);
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  line-height: 1.25;
+  pointer-events: none;
+  text-align: center;
+  text-orientation: mixed;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+
 .hc-doctor-wall__scrim {
   position: absolute;
   inset: 0;

@@ -52,6 +52,7 @@ export default function Nav() {
       children: [
         { label: t.nav.children.residency, href: '/education#ordinatura' },
         { label: t.nav.children.courses, href: '/education#kurslar' },
+        { label: t.nav.children.vacancies, href: '/vakansiyalar' },
       ],
     },
     { label: t.nav.contacts, href: '/contacts', children: [] },

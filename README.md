@@ -1,4 +1,4 @@
-# FJSTI — Fargʻona Jamoat Salomatligi Tibbiyot Instituti
+# FJSTI — Farg’ona Jamoat Salomatligi Tibbiyot Instituti
 
 Sayt (React + Vite) + CMS (Django Admin/API).
 
@@ -61,7 +61,7 @@ python manage.py runserver 8000
 VITE_API_URL=https://api.example.com
 ```
 
-Bo‘sh qoldirilsa — sayt static fallback matndan ishlaydi.
+Bo’sh qoldirilsa — sayt static fallback matndan ishlaydi.
 
 **Backend** (`backend/.env`): qarang `backend/.env.example`  
 (`DJANGO_SECRET_KEY`, `FRONTEND_URL`, `CORS_ALLOWED_ORIGINS`, Postgres…)

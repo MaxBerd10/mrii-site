@@ -103,7 +103,7 @@ class MriiAdminSite(AdminSite):
         primary = [
             {
                 'title': 'Murojaatlar',
-                'desc': 'Kontakt va AI demo arizalari — telefon, holat, izoh.',
+                'desc': 'Kontakt, AI demo va ishga arizalar — telefon, holat, izoh.',
                 'meta': f'{new_leads} yangi' if new_leads else 'Leadlar',
                 'icon': 'inbox',
                 'tone': 'mint',
@@ -171,6 +171,12 @@ class MriiAdminSite(AdminSite):
                 'desc': 'Bo‘lim sarlavhasi va “Nima uchun”',
                 'icon': 'doc',
                 'url': change_url('researchsection'),
+            },
+            {
+                'title': 'Vakansiyalar',
+                'desc': 'Ochiq lavozimlar va arizalar',
+                'icon': 'doctor',
+                'url': url('vacancy'),
             },
             {
                 'title': 'Ta’lim',

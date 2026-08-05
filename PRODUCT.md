@@ -5,7 +5,7 @@ Durable product truth for the FJSTI site. Visual decisions live in DESIGN.md.
 ## What this is
 
 **FJSTI Multidisciplinary Clinic** — the clinical arm of the Ferghana Public Health
-Medical Institute (Fargʻona Jamoat Salomatligi Tibbiyot Instituti), Uzbekistan.
+Medical Institute (Farg’ona Jamoat Salomatligi Tibbiyot Instituti), Uzbekistan.
 Operating since 2008. ISO 9001:2015 · GCP · ICH E6.
 
 It is four things under one roof, and the site exists because most visitors only

@@ -145,8 +145,29 @@ export type CmsClinicTourVideo = {
   order: number
 }
 
+export type VacancyCategory = 'doctor' | 'nurse' | 'admin' | 'residency' | 'other'
+export type VacancyEmployment = 'full_time' | 'part_time' | 'contract'
+
+export type CmsVacancy = {
+  id: string
+  category: VacancyCategory
+  employment: VacancyEmployment
+  title: string
+  department: string
+  location: string
+  experience: string
+  description: string
+  requirements: string[]
+  deadline: string | null
+  order: number
+}
+
 export function fetchClinicTourVideos(lang: Lang) {
   return getJson<CmsClinicTourVideo[]>('/api/clinic-tour/', lang)
+}
+
+export function fetchVacancies(lang: Lang) {
+  return getJson<CmsVacancy[]>('/api/vacancies/', lang)
 }
 
 export function fetchHome(lang: Lang) {
@@ -172,6 +193,7 @@ export type InquiryIntent =
   | 'ai'
   | 'international'
   | 'consult'
+  | 'career'
 
 export type InquiryPayload = {
   intent: InquiryIntent

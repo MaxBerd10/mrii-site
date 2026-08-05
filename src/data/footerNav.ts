@@ -196,6 +196,15 @@ export const FOOTER_NAV: FooterNavCol[] = [
           kaa: 'Jańalıqlar',
         },
       },
+      {
+        href: '/vakansiyalar',
+        label: {
+          uz: 'Vakansiyalar',
+          ru: 'Вакансии',
+          en: 'Vacancies',
+          kaa: 'Vakansiyalar',
+        },
+      },
     ],
   },
   {
@@ -286,6 +295,15 @@ export const FOOTER_NAV: FooterNavCol[] = [
           ru: 'Контакты',
           en: 'Contact',
           kaa: 'Baylanıs',
+        },
+      },
+      {
+        href: '/vakansiyalar',
+        label: {
+          uz: 'Vakansiyalar',
+          ru: 'Вакансии',
+          en: 'Vacancies',
+          kaa: 'Vakansiyalar',
         },
       },
     ],

@@ -3,8 +3,9 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
-  /* Instant jumps for section nav — smooth was causing bounce with hash corrections. */
-  scroll-behavior: auto;
+  /* Native anchor navigation eases into place without delaying touch scrolling. */
+  scroll-behavior: smooth;
+  scroll-padding-block-start: 88px;
   background: var(--bg);
 }
 
