@@ -312,7 +312,7 @@ const REST: Array<{
   { slug: 'toxtayeva-h-r', uzName: 'Dr. To’xtayeva H.R.', ruName: 'Др. Тухтаева Х.Р.', roleUz: 'Terapevt', roleRu: 'Терапевт', roleEn: 'General practitioner', specUz: 'Terapiya', specRu: 'Терапия', specEn: 'Therapy', papers: 20, studies: 3 },
   { slug: 'karimova-o-b', uzName: 'Dr. Karimova O.B.', ruName: 'Др. Каримова О.Б.', roleUz: 'Endokrinolog', roleRu: 'Эндокринолог', roleEn: 'Endocrinologist', specUz: 'Endokrinologiya', specRu: 'Эндокринология', specEn: 'Endocrinology', papers: 21, studies: 4 },
   { slug: 'yusupov-b-t', uzName: 'Dr. Yusupov B.T.', ruName: 'Др. Юсупов Б.Т.', roleUz: 'Pulmonolog', roleRu: 'Пульмонолог', roleEn: 'Pulmonologist', specUz: 'Pulmonologiya', specRu: 'Пульмонология', specEn: 'Pulmonology', papers: 31, studies: 6 },
-  { slug: 'nigmatova-s-a', uzName: 'Hamshira Nigmatova S.A.', ruName: 'Медсестра Нигматова С.А.', roleUz: 'Kadrlar bo’limi hamshirasi', roleRu: 'Медсестра отдела кадров', roleEn: 'HR department nurse', specUz: 'Kadrlar bo’limi', specRu: 'Отдел кадров', specEn: 'Human resources', papers: 4, studies: 0, staffKind: 'nurse' },
+  { slug: 'nigmatova-s-a', uzName: 'Nigmatova S.A.', ruName: 'Нигматова С.А.', roleUz: 'Kadrlar bo’limi hamshirasi', roleRu: 'Медсестра отдела кадров', roleEn: 'HR department nurse', specUz: 'Kadrlar bo’limi', specRu: 'Отдел кадров', specEn: 'Human resources', papers: 4, studies: 0, staffKind: 'nurse' },
   { slug: 'boboyeva-m-r', uzName: 'Hamshira Boboyeva M.R.', ruName: 'Медсестра Бобоева М.Р.', roleUz: 'Procedura hamshirasi', roleRu: 'Процедурная медсестра', roleEn: 'Procedure nurse', specUz: 'Procedura', specRu: 'Процедурный кабинет', specEn: 'Procedures', papers: 3, studies: 0, staffKind: 'nurse' },
   { slug: 'sharipova-d-a', uzName: 'Hamshira Sharipova D.A.', ruName: 'Медсестра Шарипова Д.А.', roleUz: 'Operatsion hamshira', roleRu: 'Операционная медсестра', roleEn: 'Operating nurse', specUz: 'Jarrohlik', specRu: 'Хирургия', specEn: 'Surgery', papers: 5, studies: 0, staffKind: 'nurse' },
   { slug: 'madaminova-l-k', uzName: 'Hamshira Madaminova L.K.', ruName: 'Медсестра Мадаминова Л.К.', roleUz: 'Bosh hamshira', roleRu: 'Старшая медсестра', roleEn: 'Head nurse', specUz: 'Terapiya', specRu: 'Терапия', specEn: 'Therapy', papers: 6, studies: 0, staffKind: 'nurse' },
@@ -421,7 +421,7 @@ for (let i = 0; i < REST.length; i++) {
   const nigmatovaIndex = doctorProfiles.findIndex((p) => p.slug === 'nigmatova-s-a')
   if (nigmatovaIndex >= 0) {
     doctorProfiles[nigmatovaIndex] = profile(14, 'nigmatova-s-a', {
-      name: 'Hamshira Nigmatova S.A.',
+      name: 'Nigmatova S.A.',
       role: 'Kadrlar bo’limi hamshirasi',
       specialty: 'Kadrlar bo’limi',
       exp: '14 yil tajriba',
@@ -431,7 +431,7 @@ for (let i = 0; i < REST.length; i++) {
       focuses: ['Kadrlar hujjatlari', 'Mehnat intizomi', 'Tashkiliy yordam', 'Klinika jamoasi'],
       languages: ["O’zbek", 'Русский'],
     }, {
-      name: 'Медсестра Нигматова С.А.',
+      name: 'Нигматова С.А.',
       role: 'Медсестра отдела кадров',
       specialty: 'Отдел кадров',
       exp: '14 лет опыта',
@@ -441,7 +441,7 @@ for (let i = 0; i < REST.length; i++) {
       focuses: ['Кадровая документация', 'Трудовая дисциплина', 'Организационная поддержка', 'Команда клиники'],
       languages: ['Узбекский', 'Русский'],
     }, {
-      name: 'Nurse Nigmatova S.A.',
+      name: 'Nigmatova S.A.',
       role: 'HR department nurse',
       specialty: 'Human resources',
       exp: '14 years experience',
