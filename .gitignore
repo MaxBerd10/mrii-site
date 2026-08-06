@@ -16,6 +16,7 @@ skills-lock.json
 pnpm-lock.yaml
 playwright-report/
 test-results/
+.impeccable/
 
 # Django CMS
 backend/.venv/
