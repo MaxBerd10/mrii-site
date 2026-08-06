@@ -192,7 +192,7 @@ export default function PricesPage() {
                         <p className="prices-tier__note">{tr(tier.notes[0], lang)}</p>
                       ) : null}
 
-                      <a href="/doctors" className="prices-tier__cta">
+                      <a href="/contacts?intent=booking" className="prices-tier__cta">
                         {t.prices.book}
                       </a>
                     </article>
