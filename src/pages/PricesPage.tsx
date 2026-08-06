@@ -14,9 +14,9 @@ import { PRICE_TRANSLATIONS } from '../data/clinicPricesTranslations'
 import type { Lang } from '../i18n/types'
 import '../styles/prices.css'
 
-/** Display-only lookup — ru/en pull from the generated dictionary, uz/kaa keep the source text. */
+/** Display-only lookup — ru/en/kaa pull from the generated dictionary, uz keeps the source text. */
 function tr(text: string, lang: Lang): string {
-  if (lang !== 'ru' && lang !== 'en') return text
+  if (lang === 'uz') return text
   return PRICE_TRANSLATIONS[text]?.[lang] ?? text
 }
 
