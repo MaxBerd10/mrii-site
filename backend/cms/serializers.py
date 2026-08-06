@@ -1,7 +1,9 @@
+from django.core.exceptions import ValidationError as DjangoValidationError
+from django.core.validators import FileExtensionValidator
 from rest_framework import serializers
 
 from . import models
-from .utils import media_url, pick, split_pipe
+from .utils import media_url, pick, split_pipe, validate_resume_size
 
 
 class LangContextMixin:
@@ -62,7 +64,7 @@ class DoctorSerializer(LangContextMixin, serializers.ModelSerializer):
     role = serializers.SerializerMethodField()
     specialty = serializers.SerializerMethodField()
     photo = serializers.SerializerMethodField()
-    exp = serializers.CharField(source='experience')
+    exp = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Doctor
@@ -73,6 +75,9 @@ class DoctorSerializer(LangContextMixin, serializers.ModelSerializer):
 
     def get_specialty(self, obj):
         return pick(obj, 'specialty', self.lang)
+
+    def get_exp(self, obj):
+        return pick(obj, 'experience', self.lang)
 
     def get_photo(self, obj):
         return media_url(self.request, obj.photo, obj.photo_url)
@@ -436,6 +441,7 @@ class InquiryCreateSerializer(serializers.Serializer):
     medical_history = serializers.CharField(required=False, allow_blank=True, default='')
     allergies = serializers.CharField(required=False, allow_blank=True, default='')
     message = serializers.CharField(required=False, allow_blank=True, default='')
+    resume = serializers.FileField(required=False, allow_null=True)
     lang = serializers.CharField(max_length=8, required=False, allow_blank=True, default='')
     source_path = serializers.CharField(max_length=512, required=False, allow_blank=True, default='')
 
@@ -444,6 +450,16 @@ class InquiryCreateSerializer(serializers.Serializer):
         if len(digits.replace('+', '')) < 7:
             raise serializers.ValidationError('Telefon raqami juda qisqa.')
         return value.strip()
+
+    def validate_resume(self, value):
+        if value is None:
+            return value
+        try:
+            FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx'])(value)
+            validate_resume_size(value)
+        except DjangoValidationError as exc:
+            raise serializers.ValidationError(exc.messages)
+        return value
 
     def validate(self, attrs):
         if attrs.get('intent') == models.Inquiry.Intent.CONSULT:

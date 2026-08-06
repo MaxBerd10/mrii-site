@@ -38,6 +38,31 @@ def thumb(url_field, file_field):
     return _thumb
 
 
+def big_preview(url_field, file_field):
+    """Readonly change-form preview — shows the actual picture, not just a URL link."""
+
+    @admin.display(description='Joriy rasm')
+    def _big_preview(self, obj):
+        url = ''
+        f = getattr(obj, file_field, None)
+        if f:
+            try:
+                url = f.url
+            except ValueError:
+                url = ''
+        if not url:
+            url = absolute_frontend_url(getattr(obj, url_field, '') or '')
+        if not url:
+            return 'Hozircha rasm yo‘q.'
+        return format_html(
+            '<img src="{}" style="max-height:160px;max-width:100%;border-radius:12px;'
+            'box-shadow:0 6px 16px rgba(12,27,42,.15);" alt="" />',
+            url,
+        )
+
+    return _big_preview
+
+
 LANG_UZ = 'Faqat o‘zbekcha yozing — asosiy matn shu yerda.'
 LANG_RU = (
     'Yuqoridagi «Rus va inglizchani to‘ldirish» tugmasi bilan avtomatik to‘ldiriladi. '
@@ -246,6 +271,8 @@ class SpecialtyAdmin(AutoTranslateAdmin):
     prepopulated_fields = {'slug': ('name_uz',)}
     list_per_page = 25
     preview = thumb('image_url', 'image')
+    image_preview = big_preview('image_url', 'image')
+    readonly_fields = ('image_preview',)
     fieldsets = (
         ('Asosiy', {
             'description': 'Slug URL uchun (masalan: cardiology). Tartib — ro‘yxatdagi o‘rin.',
@@ -276,20 +303,22 @@ class SpecialtyAdmin(AutoTranslateAdmin):
         }),
         ('Rasm', {
             'description': IMG_HELP,
-            'fields': ('image', 'image_url'),
+            'fields': ('image_preview', 'image', 'image_url'),
         }),
     )
 
 
 @admin.register(models.Doctor, site=mrii_admin_site)
 class DoctorAdmin(AutoTranslateAdmin):
-    list_display = ('name', 'specialty_uz', 'experience', 'order', 'is_active', 'preview', 'quick_delete')
+    list_display = ('name', 'specialty_uz', 'experience_uz', 'order', 'is_active', 'preview', 'quick_delete')
     list_editable = ('order', 'is_active')
     list_display_links = ('name',)
     search_fields = ('name', 'specialty_uz', 'specialty_ru', 'specialty_en')
     list_per_page = 25
     actions = ('delete_selected', 'make_inactive', 'make_active')
     preview = thumb('photo_url', 'photo')
+    image_preview = big_preview('photo_url', 'photo')
+    readonly_fields = ('image_preview',)
     fieldsets = (
         ('Asosiy', {
             'description': (
@@ -297,23 +326,23 @@ class DoctorAdmin(AutoTranslateAdmin):
                 'O‘chirish: pastdagi qizil «O‘chirish» yoki ro‘yxatdagi belgilab «Tanlanganlarni o‘chirish». '
                 'Vaqtincha yashirish uchun «Faol» ni o‘chiring.'
             ),
-            'fields': ('name', 'experience', 'papers', 'studies', 'is_active'),
+            'fields': ('name', 'papers', 'studies', 'is_active'),
         }),
         ('O‘zbekcha', {
             'description': f'{LANG_UZ} {AUTO_TIP}',
-            'fields': ('role_uz', 'specialty_uz'),
+            'fields': ('role_uz', 'specialty_uz', 'experience_uz'),
         }),
         ('Русский', {
             'description': LANG_RU,
-            'fields': ('role_ru', 'specialty_ru'),
+            'fields': ('role_ru', 'specialty_ru', 'experience_ru'),
         }),
         ('English', {
             'description': LANG_EN,
-            'fields': ('role_en', 'specialty_en'),
+            'fields': ('role_en', 'specialty_en', 'experience_en'),
         }),
         ('Rasm', {
             'description': IMG_HELP,
-            'fields': ('photo', 'photo_url'),
+            'fields': ('image_preview', 'photo', 'photo_url'),
         }),
         ('Qo‘shimcha (ixtiyoriy)', {
             'classes': ('collapse',),
@@ -374,6 +403,8 @@ class NewsArticleAdmin(AutoTranslateAdmin):
     prepopulated_fields = {'slug': ('title_uz',)}
     list_per_page = 20
     preview = thumb('cover_url', 'cover')
+    image_preview = big_preview('cover_url', 'cover')
+    readonly_fields = ('image_preview',)
     fieldsets = (
         ('Asosiy', {
             'description': 'Chop etilmagan (“Faol emas”) maqola saytda ko‘rinmaydi.',
@@ -395,7 +426,7 @@ class NewsArticleAdmin(AutoTranslateAdmin):
         }),
         ('Rasm', {
             'description': IMG_HELP,
-            'fields': ('cover', 'cover_url'),
+            'fields': ('image_preview', 'cover', 'cover_url'),
         }),
     )
 
@@ -407,6 +438,8 @@ class AIProductAdmin(AutoTranslateAdmin):
     search_fields = ('name_uz', 'slug')
     prepopulated_fields = {'slug': ('name_uz',)}
     preview = thumb('image_url', 'image')
+    image_preview = big_preview('image_url', 'image')
+    readonly_fields = ('image_preview',)
     fieldsets = (
         ('Asosiy', {
             'description': 'Metric — katta raqam (masalan 87%). Rang — teg rangi.',
@@ -435,7 +468,7 @@ class AIProductAdmin(AutoTranslateAdmin):
         }),
         ('Rasm', {
             'description': IMG_HELP,
-            'fields': ('image', 'image_url'),
+            'fields': ('image_preview', 'image', 'image_url'),
         }),
     )
 
@@ -504,7 +537,11 @@ class ResearchCapabilityAdmin(AutoTranslateAdmin):
     )
 
 
-@admin.register(models.EducationTrack, site=mrii_admin_site)
+# Not registered: the live Klinik baza page (src/components/Education.tsx)
+# reads from src/data/educationCopy.ts, not this model or /api/education/ —
+# editing this here has no effect on the site. Re-add
+# `@admin.register(models.EducationTrack, site=mrii_admin_site)` above this
+# class once the frontend actually consumes the CMS data.
 class EducationTrackAdmin(AutoTranslateAdmin):
     list_display = ('audience_uz', 'order', 'is_active')
     list_editable = ('order', 'is_active')
@@ -598,6 +635,8 @@ class ClinicTourVideoAdmin(AutoTranslateAdmin):
     list_editable = ('order', 'is_active')
     list_display_links = ('video_key',)
     preview = thumb('poster_url', 'poster')
+    image_preview = big_preview('poster_url', 'poster')
+    readonly_fields = ('image_preview',)
 
     @admin.display(description='Video', boolean=True)
     def has_video(self, obj):
@@ -617,7 +656,7 @@ class ClinicTourVideoAdmin(AutoTranslateAdmin):
         }),
         ('Poster', {
             'description': IMG_HELP + ' Play tugmasidan oldin ko‘rinadigan kadr.',
-            'fields': ('poster', 'poster_url'),
+            'fields': ('image_preview', 'poster', 'poster_url'),
         }),
     )
 
@@ -627,6 +666,8 @@ class PartnerAdmin(AutoTranslateAdmin):
     list_display = ('name', 'order', 'is_active', 'preview')
     list_editable = ('order', 'is_active')
     preview = thumb('logo_url', 'logo')
+    image_preview = big_preview('logo_url', 'logo')
+    readonly_fields = ('image_preview',)
     fieldsets = (
         ('Asosiy', {
             'description': 'Hamkor nomi lenta (marquee) da aylanadi.',
@@ -634,7 +675,7 @@ class PartnerAdmin(AutoTranslateAdmin):
         }),
         ('Rasm', {
             'description': IMG_HELP + ' Logo ixtiyoriy.',
-            'fields': ('logo', 'logo_url'),
+            'fields': ('image_preview', 'logo', 'logo_url'),
         }),
     )
 
@@ -660,6 +701,7 @@ class InquiryAdmin(admin.ModelAdmin):
         'phone',
         'status',
         'has_advice_display',
+        'resume_link',
         'created_at',
     )
     list_filter = ('intent', 'status', 'created_at')
@@ -688,6 +730,7 @@ class InquiryAdmin(admin.ModelAdmin):
         'medical_history',
         'allergies',
         'message',
+        'resume_link',
         'lang',
         'source_path',
         'created_at',
@@ -710,6 +753,7 @@ class InquiryAdmin(admin.ModelAdmin):
                 'medical_history',
                 'allergies',
                 'message',
+                'resume_link',
                 'topic',
                 'clinic',
                 'product_slug',
@@ -721,6 +765,12 @@ class InquiryAdmin(admin.ModelAdmin):
     @admin.display(boolean=True, description='Javob')
     def has_advice_display(self, obj):
         return bool((obj.advice or '').strip())
+
+    @admin.display(description='Rezyume')
+    def resume_link(self, obj):
+        if not obj.resume:
+            return '—'
+        return format_html('<a href="{}" target="_blank" rel="noopener">Yuklab olish</a>', obj.resume.url)
 
     def has_add_permission(self, request):
         return False

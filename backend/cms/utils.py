@@ -1,4 +1,11 @@
 from django.conf import settings
+from django.core.exceptions import ValidationError
+
+
+def validate_resume_size(value, max_mb: int = 5):
+    limit = max_mb * 1024 * 1024
+    if value.size > limit:
+        raise ValidationError(f'Fayl hajmi {max_mb}MB dan oshmasligi kerak.')
 
 
 def resolve_lang(request) -> str:

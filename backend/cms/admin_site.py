@@ -83,6 +83,13 @@ class MriiAdminSite(AdminSite):
     def index(self, request, extra_context=None):
         from . import models
 
+        def can_access(model) -> bool:
+            opts = model._meta
+            return any(
+                request.user.has_perm(f'{opts.app_label}.{action}_{opts.model_name}')
+                for action in ('view', 'change', 'add', 'delete')
+            )
+
         def url(name: str) -> str:
             return reverse(f'admin:cms_{name}_changelist')
 
@@ -179,12 +186,6 @@ class MriiAdminSite(AdminSite):
                 'url': url('vacancy'),
             },
             {
-                'title': 'Ta’lim',
-                'desc': 'Yo‘nalishlar va dasturlar',
-                'icon': 'edu',
-                'url': url('educationtrack'),
-            },
-            {
                 'title': 'Sharhlar',
                 'desc': 'Mijoz va hamkor fikrlari',
                 'icon': 'quote',
@@ -216,16 +217,56 @@ class MriiAdminSite(AdminSite):
             },
         ]
 
+        card_models = {
+            'Murojaatlar': models.Inquiry,
+            'Yangiliklar': models.NewsArticle,
+            'Shifokorlar': models.Doctor,
+            'Klinik yo‘nalishlar': models.Specialty,
+            'Sayt sozlamalari': models.SiteSettings,
+            'Bosh sahifa': models.HomePage,
+            'AI mahsulotlar': models.AIProduct,
+            'Tadqiqotlar': models.ResearchStudy,
+            'Tadqiqotlar matni': models.ResearchSection,
+            'Vakansiyalar': models.Vacancy,
+            'Sharhlar': models.Testimonial,
+            'Hamkorlar': models.Partner,
+            'Xalqaro xizmatlar': models.InternationalService,
+            'Klinika sayohati': models.ClinicTourVideo,
+            'Tadqiqot imkoniyatlari': models.ResearchCapability,
+        }
+        primary = [card for card in primary if can_access(card_models[card['title']])]
+        secondary = [card for card in secondary if can_access(card_models[card['title']])]
+
+        is_hr_workspace = (
+            request.user.groups.filter(name='HR bo‘limi').exists()
+            and not request.user.is_superuser
+        )
+        if is_hr_workspace:
+            vacancy_card = next((card for card in secondary if card['title'] == 'Vakansiyalar'), None)
+            inquiry_card = next((card for card in primary if card['title'] == 'Murojaatlar'), None)
+            primary = [card for card in (inquiry_card, vacancy_card) if card]
+            secondary = []
+
+        stats = [
+            {'label': 'Yangi murojaat', 'value': new_leads, 'tone': 'mint', 'model': models.Inquiry},
+            {'label': 'Yo‘nalishlar', 'value': models.Specialty.objects.count(), 'tone': 'navy', 'model': models.Specialty},
+            {'label': 'Shifokorlar', 'value': models.Doctor.objects.count(), 'tone': 'teal', 'model': models.Doctor},
+            {'label': 'Yangiliklar', 'value': models.NewsArticle.objects.count(), 'tone': 'sky', 'model': models.NewsArticle},
+        ]
+        if is_hr_workspace:
+            stats = [
+                {'label': 'Yangi murojaat', 'value': new_leads, 'tone': 'mint'},
+                {'label': 'Ochiq vakansiya', 'value': models.Vacancy.objects.filter(is_active=True).count(), 'tone': 'navy'},
+            ]
+        else:
+            stats = [{key: value for key, value in stat.items() if key != 'model'} for stat in stats if can_access(stat['model'])]
+
         extra = extra_context or {}
         extra.update({
-            'mrii_stats': [
-                {'label': 'Yangi murojaat', 'value': new_leads, 'tone': 'mint'},
-                {'label': 'Yo‘nalishlar', 'value': models.Specialty.objects.count(), 'tone': 'navy'},
-                {'label': 'Shifokorlar', 'value': models.Doctor.objects.count(), 'tone': 'teal'},
-                {'label': 'Yangiliklar', 'value': models.NewsArticle.objects.count(), 'tone': 'sky'},
-            ],
+            'mrii_stats': stats,
             'mrii_primary': primary,
             'mrii_secondary': secondary,
+            'mrii_hr_workspace': is_hr_workspace,
         })
         return super().index(request, extra_context=extra)
 

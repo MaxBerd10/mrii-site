@@ -15,10 +15,14 @@
     <header class="mrii-hero">
       <div class="mrii-hero__copy">
         <p class="mrii-kicker">FJSTI CMS</p>
-        <h2>Sayt kontentini shu yerdan boshqarasiz</h2>
+        <h2>{% if mrii_hr_workspace %}Arizalarni shu yerdan boshqarasiz{% else %}Sayt kontentini shu yerdan boshqarasiz{% endif %}</h2>
         <p class="mrii-hero__lead">
-          Kerakli bo‘limni oching, matn yoki rasmni o‘zgartiring va <strong>Saqlash</strong> tugmasini bosing.
-          Sayt (API ulangan bo‘lsa) yangilanadi — dasturchi kerak emas.
+          {% if mrii_hr_workspace %}
+            Yangi murojaatlarni oching, holatini yangilang va nomzod bilan telefon orqali bog‘laning.
+          {% else %}
+            Kerakli bo‘limni oching, matn yoki rasmni o‘zgartiring va <strong>Saqlash</strong> tugmasini bosing.
+            Sayt (API ulangan bo‘lsa) yangilanadi — dasturchi kerak emas.
+          {% endif %}
         </p>
         <ol class="mrii-steps" aria-label="Ish tartibi">
           <li><span>1</span> Bo‘lim tanlang</li>
@@ -26,7 +30,7 @@
           <li><span>3</span> Saqlash</li>
         </ol>
       </div>
-      <div class="mrii-hero__aside">
+      {% if not mrii_hr_workspace %}<div class="mrii-hero__aside">
         <div class="mrii-hero__aside-visual" aria-hidden="true">
           <img src="{% static 'cms/dna-login-hero.png' %}" alt="" width="400" height="520" decoding="async">
         </div>
@@ -43,7 +47,7 @@
             <li>Saqlashdan keyin sayt yangilanadi</li>
           </ul>
         </div>
-      </div>
+      </div>{% endif %}
     </header>
 
     <div class="mrii-dash__stats">
@@ -55,7 +59,7 @@
       {% endfor %}
     </div>
 
-    <section class="mrii-section">
+    {% if mrii_primary %}<section class="mrii-section">
       <div class="mrii-section__head">
         <h3>Asosiy bo‘limlar</h3>
         <p>Kunlik ishlar uchun — shu yerdan boshlang</p>
@@ -75,9 +79,9 @@
           </a>
         {% endfor %}
       </div>
-    </section>
+    </section>{% endif %}
 
-    <section class="mrii-section">
+    {% if mrii_secondary %}<section class="mrii-section">
       <div class="mrii-section__head">
         <h3>Qo‘shimcha</h3>
         <p>Kamroq o‘zgaradigan bo‘limlar</p>
@@ -96,7 +100,7 @@
           </a>
         {% endfor %}
       </div>
-    </section>
+    </section>{% endif %}
   </div>
 </div>
 {% endblock %}

@@ -805,6 +805,17 @@ body.mrii-index #content,
   margin-right: 0 !important;
   width: 100% !important;
 }
+/* Bizning change_list.html #toolbar’ni changelist-form-container’ning
+   to‘g‘ridan-to‘g‘ri farzandi sifatida joylashtiradi (Django’ning standart
+   ichki <div> o‘rovisisiz), shu sababli Django’ning o‘zi ta’minlagan flex
+   qatlami (#changelist-form-container{display:flex}) qidiruv panelini
+   natija jadvali bilan bo‘lishtirib, uni siqib torlashtiradi. Filtr paneli
+   umuman render qilinmagani sababli flex kerak emas — blok qatlamiga
+   qaytaramiz. */
+body.change-list .changelist-form-container {
+  display: block !important;
+  width: 100% !important;
+}
 
 /* Changelist: toza qidiruv + to’liq kenglik jadval */
 body.change-list #content {
@@ -853,6 +864,17 @@ body.change-list #toolbar form {
   align-items: center;
   gap: 10px;
   margin: 0 !important;
+}
+
+/* Django wraps the actual input/button in an inner <div> ("DIV needed for
+   valid HTML") — that div, not the <form>, is the real flex parent the
+   searchbar needs to stretch inside. */
+body.change-list #toolbar form > div {
+  display: flex !important;
+  flex: 1 !important;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
 }
 
 body.change-list #toolbar label {
@@ -981,6 +1003,49 @@ select,
   box-sizing: border-box !important;
 }
 
+/* AdminURLFieldWidget's "Hozirda: <link><br>O'zgartirish: <input>" block —
+   was cramped against the input right below it. */
+p.url {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 !important;
+}
+
+p.url a {
+  word-break: break-all;
+  color: var(--teal) !important;
+  font-size: 0.85rem;
+}
+
+/* Native file input — otherwise the only unstyled control on the page */
+input[type=file] {
+  display: inline-block;
+  padding: 9px 12px !important;
+  border: 1px solid var(--line-strong) !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  font-size: 0.9rem !important;
+  line-height: 1.4 !important;
+  box-sizing: border-box !important;
+}
+
+input[type=file]::file-selector-button {
+  margin-right: 12px;
+  padding: 7px 14px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--teal);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+input[type=file]::file-selector-button:hover {
+  filter: brightness(1.05);
+}
+
 /* Select text was clipped (top of letters cut off) */
 select,
 select.vTextField,
@@ -1029,6 +1094,15 @@ a.button,
   font-weight: 700 !important;
   border: 0 !important;
   box-shadow: 0 8px 16px rgba(15, 118, 110, 0.18) !important;
+  text-transform: none !important;
+}
+
+/* Django's base.css uppercases only the primary `.default` submit button —
+   the other submit-row buttons stay mixed-case, which reads as inconsistent
+   next to each other. Match them all to mixed-case. */
+.button.default,
+input[type=submit].default {
+  text-transform: none !important;
 }
 
 .object-tools a,

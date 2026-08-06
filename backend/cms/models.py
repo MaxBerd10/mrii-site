@@ -1,9 +1,12 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
+
+from .utils import validate_resume_size
 
 
 class TimeStampedModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField('Yaratilgan sana', auto_now_add=True)
+    updated_at = models.DateTimeField('Yangilangan sana', auto_now=True)
 
     class Meta:
         abstract = True
@@ -177,7 +180,9 @@ class Doctor(TimeStampedModel, OrderedModel):
     specialty_uz = models.CharField('Mutaxassislik (UZ)', max_length=255, blank=True)
     specialty_ru = models.CharField('Mutaxassislik (RU)', max_length=255, blank=True)
     specialty_en = models.CharField('Mutaxassislik (EN)', max_length=255, blank=True)
-    experience = models.CharField('Tajriba', max_length=64, blank=True)
+    experience_uz = models.CharField('Tajriba (UZ)', max_length=64, blank=True)
+    experience_ru = models.CharField('Tajriba (RU)', max_length=64, blank=True)
+    experience_en = models.CharField('Tajriba (EN)', max_length=64, blank=True)
     papers = models.CharField('Maqolalar', max_length=64, blank=True)
     studies = models.CharField('Tadqiqotlar', max_length=64, blank=True)
     color = models.CharField('Rang', max_length=32, blank=True, default='#0B3D6B')
@@ -579,6 +584,17 @@ class Inquiry(TimeStampedModel):
     medical_history = models.TextField('Kasallik tarixi', blank=True)
     allergies = models.TextField('Allergiya', blank=True)
     message = models.TextField('Shikoyat / xabar', blank=True)
+    resume = models.FileField(
+        'Rezyume (PDF/DOC)',
+        upload_to='resumes/%Y/%m/',
+        blank=True,
+        null=True,
+        validators=[
+            FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx']),
+            validate_resume_size,
+        ],
+        help_text='PDF, DOC yoki DOCX, 5MB gacha.',
+    )
     advice = models.TextField(
         'Javob / maslahat',
         blank=True,

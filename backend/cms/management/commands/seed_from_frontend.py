@@ -244,7 +244,7 @@ class Command(BaseCommand):
                     'order': i + 1,
                     'role_uz': ru_uz, 'role_ru': ru_ru, 'role_en': ru_en,
                     'specialty_uz': su, 'specialty_ru': sr, 'specialty_en': se,
-                    'experience': exp, 'papers': papers, 'studies': studies,
+                    'experience_uz': exp, 'papers': papers, 'studies': studies,
                     'color': color, 'photo_url': photo, 'is_active': True,
                 },
             )
@@ -501,14 +501,14 @@ class Command(BaseCommand):
                 },
             )
         caps = [
-            ("I-bosqich bo'limi", 'Отделение I фазы', 'Phase I unit', 'Ha', True),
+            ("I-bosqich bo'limi", 'Отделение I фазы', 'Phase I unit', '✓', True),
             ('Terapevtik sohalar', 'Терапевтические области', 'Therapeutic areas', '18+', False),
             ('Bemorlar bazasi', 'База пациентов', 'Patient database', '50 000+', False),
             ('GCP tadqiqotchilar', 'Исследователи GCP', 'GCP investigators', '35', False),
             ('Klinik laboratoriyalar', 'Клинические лаборатории', 'Clinical labs', '3', False),
-            ('LIMS tizimi', 'Система LIMS', 'LIMS system', 'Ha', True),
-            ('eTMF integratsiya', 'Интеграция eTMF', 'eTMF integration', 'Ha', True),
-            ('CTMS tizimi', 'Система CTMS', 'CTMS system', 'Ha', True),
+            ('LIMS tizimi', 'Система LIMS', 'LIMS system', '✓', True),
+            ('eTMF integratsiya', 'Интеграция eTMF', 'eTMF integration', '✓', True),
+            ('CTMS tizimi', 'Система CTMS', 'CTMS system', '✓', True),
         ]
         models.ResearchCapability.objects.all().delete()
         for i, (lu, lr, le, value, hl) in enumerate(caps):
