@@ -206,6 +206,7 @@ export type InquiryPayload = {
   medical_history?: string
   allergies?: string
   message?: string
+  resume?: File | null
   lang?: string
   source_path?: string
 }
@@ -227,14 +228,23 @@ export type InquiryAdvice = {
 
 export async function submitInquiry(payload: InquiryPayload): Promise<InquiryResponse | null> {
   if (!API_URL) return null
-  const res = await fetch(`${API_URL}/api/inquiries/`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
+  const { resume, ...rest } = payload
+  let init: RequestInit
+  if (resume) {
+    const form = new FormData()
+    for (const [key, value] of Object.entries(rest)) {
+      if (value !== undefined && value !== null) form.append(key, String(value))
+    }
+    form.append('resume', resume)
+    init = { method: 'POST', headers: { Accept: 'application/json' }, body: form }
+  } else {
+    init = {
+      method: 'POST',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(rest),
+    }
+  }
+  const res = await fetch(`${API_URL}/api/inquiries/`, init)
   if (!res.ok) {
     let detail = 'Submit failed'
     try {

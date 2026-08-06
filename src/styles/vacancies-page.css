@@ -339,6 +339,18 @@
   resize: vertical;
 }
 
+.vacancies-form input[type='file'] {
+  padding: 9px 14px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.vacancies-form__hint {
+  color: #5a7180;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
 .vacancies-form__submit {
   justify-self: start;
   min-height: 44px;

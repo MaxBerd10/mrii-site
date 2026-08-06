@@ -10,11 +10,26 @@ import {
   type CheckupTier,
   type PriceTier,
 } from '../data/clinicPrices'
+import { PRICE_TRANSLATIONS } from '../data/clinicPricesTranslations'
+import type { Lang } from '../i18n/types'
 import '../styles/prices.css'
+
+/** Display-only lookup — ru/en pull from the generated dictionary, uz/kaa keep the source text. */
+function tr(text: string, lang: Lang): string {
+  if (lang !== 'ru' && lang !== 'en') return text
+  return PRICE_TRANSLATIONS[text]?.[lang] ?? text
+}
 
 type Tab = 'packages' | 'catalog'
 
 const TIER_ORDER: PriceTier[] = ['Layt', 'Standart', 'Premium']
+
+const TIER_LABELS: Record<string, Record<PriceTier, string>> = {
+  uz: { Layt: 'Layt', Standart: 'Standart', Premium: 'Premium' },
+  ru: { Layt: 'Лайт', Standart: 'Стандарт', Premium: 'Премиум' },
+  en: { Layt: 'Light', Standart: 'Standard', Premium: 'Premium' },
+  kaa: { Layt: 'Layt', Standart: 'Standart', Premium: 'Premium' },
+}
 
 export default function PricesPage() {
   const { lang, t } = useLanguage()
@@ -119,7 +134,7 @@ export default function PricesPage() {
                     style={{ ['--dir-accent' as string]: dir.accent }}
                     onClick={() => setDirectionId(dir.id)}
                   >
-                    {dir.title}
+                    {tr(dir.title, lang)}
                   </button>
                 ))}
               </div>
@@ -145,7 +160,7 @@ export default function PricesPage() {
                         <span className="prices-tier__badge">{t.prices.recommended}</span>
                       ) : null}
                       <header className="prices-tier__head">
-                        <h2 className="prices-tier__name">{tier.tier}</h2>
+                        <h2 className="prices-tier__name">{TIER_LABELS[lang][tier.tier]}</h2>
                         <p className="prices-tier__price">
                           <strong>{formatSom(tier.price)}</strong>
                           <span>{t.prices.currency}</span>
@@ -155,7 +170,7 @@ export default function PricesPage() {
 
                       <ul className="prices-tier__list">
                         {visible.map((item, idx) => (
-                          <li key={`${item}-${idx}`}>{item}</li>
+                          <li key={`${item}-${idx}`}>{tr(item, lang)}</li>
                         ))}
                       </ul>
 
@@ -174,7 +189,7 @@ export default function PricesPage() {
                       ) : null}
 
                       {tier.notes.length > 0 ? (
-                        <p className="prices-tier__note">{tier.notes[0]}</p>
+                        <p className="prices-tier__note">{tr(tier.notes[0], lang)}</p>
                       ) : null}
 
                       <a href="/doctors" className="prices-tier__cta">
@@ -233,7 +248,7 @@ export default function PricesPage() {
                     <option value="all">{t.prices.allCategories}</option>
                     {PRICE_CATEGORIES.map((cat) => (
                       <option key={cat} value={cat}>
-                        {cat}
+                        {tr(cat, lang)}
                       </option>
                     ))}
                   </select>
@@ -254,14 +269,14 @@ export default function PricesPage() {
                 <div className="prices-catalog__groups">
                   {catalogGroups.map(([cat, items]) => (
                     <section key={cat} className="prices-cat">
-                      <h2 className="prices-cat__title">{cat}</h2>
+                      <h2 className="prices-cat__title">{tr(cat, lang)}</h2>
                       <ul className="prices-cat__list">
                         {items.map((item, idx) => (
                           <li key={`${item.id}-${idx}`} className="prices-cat__row">
                             <div className="prices-cat__name">
-                              <span>{item.name}</span>
+                              <span>{tr(item.name, lang)}</span>
                               {item.location ? (
-                                <small>{item.location}</small>
+                                <small>{tr(item.location, lang)}</small>
                               ) : null}
                             </div>
                             <div className="prices-cat__citizen" data-label={t.prices.colCitizen}>

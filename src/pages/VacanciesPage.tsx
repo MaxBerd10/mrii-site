@@ -50,10 +50,32 @@ export default function VacanciesPage() {
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
+  const [resume, setResume] = useState<File | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [successId, setSuccessId] = useState('')
   const applicationHeadingRef = useRef<HTMLHeadingElement>(null)
+  const resumeInputRef = useRef<HTMLInputElement>(null)
+
+  const RESUME_MAX_BYTES = 5 * 1024 * 1024
+  const RESUME_EXTENSIONS = ['.pdf', '.doc', '.docx']
+
+  const handleResumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] ?? null
+    if (!file) {
+      setResume(null)
+      return
+    }
+    const ext = file.name.slice(file.name.lastIndexOf('.')).toLowerCase()
+    if (!RESUME_EXTENSIONS.includes(ext) || file.size > RESUME_MAX_BYTES) {
+      setError(t.vacancies.resumeError)
+      setResume(null)
+      if (resumeInputRef.current) resumeInputRef.current.value = ''
+      return
+    }
+    setError('')
+    setResume(file)
+  }
 
   useEffect(() => {
     const fallback = getFallbackVacancies(lang)
@@ -122,6 +144,7 @@ export default function VacanciesPage() {
         email: email.trim(),
         topic,
         message: message.trim() || t.vacancies.defaultMessage,
+        resume,
         lang,
         source_path: '/vakansiyalar',
       })
@@ -134,6 +157,8 @@ export default function VacanciesPage() {
       setPhone('')
       setEmail('')
       setMessage('')
+      setResume(null)
+      if (resumeInputRef.current) resumeInputRef.current.value = ''
     } catch {
       setError(t.vacancies.submitError)
     } finally {
@@ -284,6 +309,18 @@ export default function VacanciesPage() {
                 onChange={(event) => setMessage(event.target.value)}
                 placeholder={t.vacancies.messagePlaceholder}
               />
+            </label>
+            <label>
+              {t.vacancies.resumeLabel}
+              <input
+                ref={resumeInputRef}
+                type="file"
+                accept=".pdf,.doc,.docx"
+                onChange={handleResumeChange}
+              />
+              <span className="vacancies-form__hint">
+                {resume ? resume.name : t.vacancies.resumeHint}
+              </span>
             </label>
             <button type="submit" className="vacancies-form__submit" disabled={submitting}>
               {submitting ? t.vacancies.submitting : t.vacancies.submit}
