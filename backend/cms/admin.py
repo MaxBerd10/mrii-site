@@ -74,6 +74,10 @@ VIDEO_HELP = (
     'MP4 yuklang — to‘liq sifat saqlanadi. '
     'Yuklangan fayl «video yo‘li» dan ustun. Katta fayllar 512 MB gacha.'
 )
+SLUG_HELP = (
+    'Havolaning (URL) oxirgi qismi — sarlavhadan avtomatik hosil bo‘ladi. '
+    'Odatda tegishning hojati yo‘q; faqat lotin harflar va chiziqcha ishlating.'
+)
 AUTO_TIP = (
     'O‘zbekcha yozing, keyin yuqoridagi «Rus va inglizchani to‘ldirish» tugmasini bosing — '
     'maydonlar forma ichida to‘ldiriladi. So‘ng Saqlash.'
@@ -275,8 +279,8 @@ class SpecialtyAdmin(AutoTranslateAdmin):
     readonly_fields = ('image_preview',)
     fieldsets = (
         ('Asosiy', {
-            'description': 'Slug URL uchun (masalan: cardiology). Tartib — ro‘yxatdagi o‘rin.',
-            'fields': ('slug', 'icon', 'doctor_count', 'order', 'is_active'),
+            'description': 'Tartib — ro‘yxatdagi o‘rin.',
+            'fields': ('icon', 'doctor_count', 'order', 'is_active'),
         }),
         ('O‘zbekcha', {
             'description': f'{LANG_UZ} {AUTO_TIP} Ro‘yxat maydonlarida | bilan ajrating.',
@@ -304,6 +308,11 @@ class SpecialtyAdmin(AutoTranslateAdmin):
         ('Rasm', {
             'description': IMG_HELP,
             'fields': ('image_preview', 'image', 'image_url'),
+        }),
+        ('Sahifa manzili', {
+            'classes': ('collapse',),
+            'description': SLUG_HELP,
+            'fields': ('slug',),
         }),
     )
 
@@ -408,7 +417,7 @@ class NewsArticleAdmin(AutoTranslateAdmin):
     fieldsets = (
         ('Asosiy', {
             'description': 'Chop etilmagan (“Faol emas”) maqola saytda ko‘rinmaydi.',
-            'fields': ('slug', 'published_at', 'category_color', 'order', 'is_published'),
+            'fields': ('published_at', 'category_color', 'order', 'is_published'),
         }),
         ('O‘zbekcha', {
             'description': f'{LANG_UZ} {AUTO_TIP} Body paragraflarini | bilan ajrating.',
@@ -428,6 +437,11 @@ class NewsArticleAdmin(AutoTranslateAdmin):
             'description': IMG_HELP,
             'fields': ('image_preview', 'cover', 'cover_url'),
         }),
+        ('Sahifa manzili', {
+            'classes': ('collapse',),
+            'description': SLUG_HELP,
+            'fields': ('slug',),
+        }),
     )
 
 
@@ -443,7 +457,7 @@ class AIProductAdmin(AutoTranslateAdmin):
     fieldsets = (
         ('Asosiy', {
             'description': 'Metric — katta raqam (masalan 87%). Rang — teg rangi.',
-            'fields': ('slug', 'product_key', 'tag_color', 'metric', 'order', 'is_active'),
+            'fields': ('product_key', 'tag_color', 'metric', 'order', 'is_active'),
         }),
         ('O‘zbekcha', {
             'description': LANG_UZ + ' Features/outcomes/workflow ni | bilan ajrating.',
@@ -469,6 +483,11 @@ class AIProductAdmin(AutoTranslateAdmin):
         ('Rasm', {
             'description': IMG_HELP,
             'fields': ('image_preview', 'image', 'image_url'),
+        }),
+        ('Sahifa manzili', {
+            'classes': ('collapse',),
+            'description': SLUG_HELP,
+            'fields': ('slug',),
         }),
     )
 
@@ -589,7 +608,7 @@ class VacancyAdmin(AutoTranslateAdmin):
     fieldsets = (
         ('Asosiy', {
             'description': 'Faol bo‘lmagan vakansiya saytda ko‘rinmaydi.',
-            'fields': ('slug', 'category', 'employment', 'deadline', 'order', 'is_active'),
+            'fields': ('category', 'employment', 'deadline', 'order', 'is_active'),
         }),
         ('O‘zbekcha', {
             'description': f'{LANG_UZ} {AUTO_TIP} Talablarni | bilan ajrating.',
@@ -625,6 +644,11 @@ class VacancyAdmin(AutoTranslateAdmin):
                 'description_en',
                 'requirements_en',
             ),
+        }),
+        ('Sahifa manzili', {
+            'classes': ('collapse',),
+            'description': SLUG_HELP,
+            'fields': ('slug',),
         }),
     )
 
