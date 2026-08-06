@@ -50,8 +50,7 @@ class Command(BaseCommand):
         self.seed_ai()
         self.seed_research()
         self.seed_education()
-        self.seed_partners()
-        self.seed_international()
+        self.seed_testimonials()
         self.seed_clinic_tour()
         self.seed_vacancies()
         if options['superuser']:
@@ -319,7 +318,7 @@ class Command(BaseCommand):
         products = [
             {
                 'slug': 'doctor-assistant', 'product_key': 'doctor', 'order': 1,
-                'name_uz': 'AI Doctor Assistant', 'name_ru': 'AI Doctor Assistant', 'name_en': 'AI Doctor Assistant',
+                'name_uz': 'AiShifokor', 'name_ru': 'AiShifokor', 'name_en': 'AiShifokor',
                 'tag_uz': 'Klinik yechim', 'tag_ru': 'Клиническое решение', 'tag_en': 'Clinical tool',
                 'tag_color': '#0EA5E9',
                 'desc_uz': 'Qabulda shifokor yordamchisi. Protokollar, klinik tavsiyalar, anamnez tahlili real vaqtda.',
@@ -331,9 +330,9 @@ class Command(BaseCommand):
                 'metric': '87%', 'metric_label_uz': 'hujjatlashtirish vaqtini qisqartirish',
                 'metric_label_ru': 'сокращение времени документации',
                 'metric_label_en': 'less documentation time',
-                'overview_uz': 'AI Doctor Assistant qabulda shifokorga real vaqtda yordam beradi.',
-                'overview_ru': 'AI Doctor Assistant помогает врачу на приёме в реальном времени.',
-                'overview_en': 'AI Doctor Assistant supports physicians in real time.',
+                'overview_uz': 'AiShifokor qabulda shifokorga real vaqtda yordam beradi.',
+                'overview_ru': 'AiShifokor помогает врачу на приёме в реальном времени.',
+                'overview_en': 'AiShifokor supports physicians in real time.',
                 'audience_uz': 'Klinikalar va ko’p tarmoqli markazlar uchun.',
                 'audience_ru': 'Для клиник и многопрофильных центров.',
                 'audience_en': 'For clinics and multidisciplinary centers.',
@@ -549,11 +548,7 @@ class Command(BaseCommand):
                     spots=p[6],
                 )
 
-    def seed_partners(self):
-        models.Partner.objects.all().delete()
-        for i, name in enumerate(['Roche', 'Novartis', 'Pfizer', 'AstraZeneca', 'Sanofi', 'Bayer', 'Merck', 'GSK']):
-            models.Partner.objects.create(name=name, order=i + 1, is_active=True)
-
+    def seed_testimonials(self):
         models.Testimonial.objects.all().delete()
         testimonials = [
             (
@@ -563,9 +558,9 @@ class Command(BaseCommand):
                 'Elena Kovaleva', 'Clinical Operations Director, Roche',
             ),
             (
-                'AI Doctor Assistant hujjatlashtirish vaqtini 87% qisqartirdi.',
-                'AI Doctor Assistant сократил время документации на 87%.',
-                'AI Doctor Assistant cut documentation time by 87%.',
+                'AiShifokor hujjatlashtirish vaqtini 87% qisqartirdi.',
+                'AiShifokor сократил время документации на 87%.',
+                'AiShifokor cut documentation time by 87%.',
                 'Dmitriy Volkov', 'Bosh shifokor / Главный врач / Chief physician',
             ),
             (
@@ -580,34 +575,6 @@ class Command(BaseCommand):
                 order=i + 1, quote_uz=qu, quote_ru=qr, quote_en=qe,
                 author_uz=author, author_ru=author, author_en=author,
                 role_uz=role, role_ru=role, role_en=role, is_active=True,
-            )
-
-    def seed_international(self):
-        models.InternationalService.objects.all().delete()
-        services = [
-            ('Tibbiy turizm', 'Медицинский туризм', 'Medical tourism',
-             'Yozilishdan chiqishgacha to\'liq tibbiy tur.',
-             'Полный медицинский тур от записи до выписки.',
-             'Full medical journey from booking to discharge.'),
-            ('Viza yordami', 'Визовое сопровождение', 'Visa support',
-             'Taklifnomalar va tibbiy vizalar.',
-             'Приглашения и медицинские визы.',
-             'Invitations and medical visas.'),
-            ('Tarjimonlar', 'Переводчики', 'Interpreters',
-             '12 tilda tibbiy tarjimonlar.',
-             'Медицинские переводчики на 12 языках.',
-             'Medical interpreters in 12 languages.'),
-            ('Telemeditsina', 'Телемедицина', 'Telemedicine',
-             'Video orqali maslahat.',
-             'Консультации по видео.',
-             'Video consultations.'),
-        ]
-        for i, s in enumerate(services):
-            models.InternationalService.objects.create(
-                order=i + 1,
-                title_uz=s[0], title_ru=s[1], title_en=s[2],
-                desc_uz=s[3], desc_ru=s[4], desc_en=s[5],
-                is_active=True,
             )
 
     def seed_clinic_tour(self):

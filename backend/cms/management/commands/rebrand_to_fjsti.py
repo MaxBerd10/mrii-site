@@ -73,8 +73,6 @@ class Command(BaseCommand):
             models.ResearchCapability,
             models.EducationTrack,
             models.Testimonial,
-            models.Partner,
-            models.InternationalService,
             models.ClinicTourVideo,
             models.Vacancy,
             models.Inquiry,
