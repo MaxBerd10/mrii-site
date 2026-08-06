@@ -36,8 +36,6 @@ class HomeAPI(APIView):
         caps = models.ResearchCapability.objects.all()
         tracks = models.EducationTrack.objects.filter(is_active=True).prefetch_related('programs')
         testimonials = models.Testimonial.objects.filter(is_active=True)
-        partners = models.Partner.objects.filter(is_active=True)
-        intl = models.InternationalService.objects.filter(is_active=True)
 
         research_data = None
         if research:
@@ -65,8 +63,6 @@ class HomeAPI(APIView):
             'research': research_data,
             'education': serializers.EducationTrackSerializer(tracks, many=True, context=c).data,
             'testimonials': serializers.TestimonialSerializer(testimonials, many=True, context=c).data,
-            'partners': serializers.PartnerSerializer(partners, many=True, context=c).data,
-            'international': serializers.InternationalServiceSerializer(intl, many=True, context=c).data,
         })
 
 

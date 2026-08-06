@@ -661,37 +661,6 @@ class ClinicTourVideoAdmin(AutoTranslateAdmin):
     )
 
 
-@admin.register(models.Partner, site=mrii_admin_site)
-class PartnerAdmin(AutoTranslateAdmin):
-    list_display = ('name', 'order', 'is_active', 'preview')
-    list_editable = ('order', 'is_active')
-    preview = thumb('logo_url', 'logo')
-    image_preview = big_preview('logo_url', 'logo')
-    readonly_fields = ('image_preview',)
-    fieldsets = (
-        ('Asosiy', {
-            'description': 'Hamkor nomi lenta (marquee) da aylanadi.',
-            'fields': ('name', 'order', 'is_active'),
-        }),
-        ('Rasm', {
-            'description': IMG_HELP + ' Logo ixtiyoriy.',
-            'fields': ('image_preview', 'logo', 'logo_url'),
-        }),
-    )
-
-
-@admin.register(models.InternationalService, site=mrii_admin_site)
-class InternationalServiceAdmin(AutoTranslateAdmin):
-    list_display = ('title_uz', 'order', 'is_active')
-    list_editable = ('order', 'is_active')
-    fieldsets = (
-        ('Asosiy', {'fields': ('order', 'is_active')}),
-        ('O‘zbekcha', {'description': LANG_UZ, 'fields': ('title_uz', 'desc_uz')}),
-        ('Русский', {'description': LANG_RU, 'fields': ('title_ru', 'desc_ru')}),
-        ('English', {'description': LANG_EN, 'fields': ('title_en', 'desc_en')}),
-    )
-
-
 @admin.register(models.Inquiry, site=mrii_admin_site)
 class InquiryAdmin(admin.ModelAdmin):
     list_display = (

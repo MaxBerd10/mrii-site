@@ -410,39 +410,6 @@ class Testimonial(TimeStampedModel, OrderedModel):
         return self.author_uz or self.quote_uz[:40]
 
 
-class Partner(TimeStampedModel, OrderedModel):
-    name = models.CharField('Nom', max_length=128)
-    logo = models.ImageField('Logo', upload_to='partners/', blank=True, null=True)
-    logo_url = models.URLField('Yoki logo URL', blank=True)
-    is_active = models.BooleanField('Faol', default=True)
-
-    class Meta:
-        verbose_name = 'Hamkor'
-        verbose_name_plural = 'Hamkorlar'
-        ordering = ['order', 'id']
-
-    def __str__(self):
-        return self.name
-
-
-class InternationalService(TimeStampedModel, OrderedModel):
-    title_uz = models.CharField('Sarlavha (UZ)', max_length=255)
-    title_ru = models.CharField('Sarlavha (RU)', max_length=255, blank=True)
-    title_en = models.CharField('Sarlavha (EN)', max_length=255, blank=True)
-    desc_uz = models.TextField('Tavsif (UZ)', blank=True)
-    desc_ru = models.TextField('Tavsif (RU)', blank=True)
-    desc_en = models.TextField('Tavsif (EN)', blank=True)
-    is_active = models.BooleanField('Faol', default=True)
-
-    class Meta:
-        verbose_name = 'Xalqaro xizmat'
-        verbose_name_plural = 'Xalqaro xizmatlar'
-        ordering = ['order', 'id']
-
-    def __str__(self):
-        return self.title_uz
-
-
 class ClinicTourVideo(TimeStampedModel, OrderedModel):
     """Clinic tour page videos — swap files in admin without redeploy."""
 

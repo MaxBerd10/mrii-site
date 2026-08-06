@@ -192,18 +192,6 @@ class MriiAdminSite(AdminSite):
                 'url': url('testimonial'),
             },
             {
-                'title': 'Hamkorlar',
-                'desc': 'Hamkor nomlari lentasi',
-                'icon': 'partner',
-                'url': url('partner'),
-            },
-            {
-                'title': 'Xalqaro xizmatlar',
-                'desc': 'Xorijiy bemorlar uchun kartalar',
-                'icon': 'globe',
-                'url': url('internationalservice'),
-            },
-            {
                 'title': 'Klinika sayohati',
                 'desc': 'Virtual tur va tadbir videolari',
                 'icon': 'clinic',
@@ -229,8 +217,6 @@ class MriiAdminSite(AdminSite):
             'Tadqiqotlar matni': models.ResearchSection,
             'Vakansiyalar': models.Vacancy,
             'Sharhlar': models.Testimonial,
-            'Hamkorlar': models.Partner,
-            'Xalqaro xizmatlar': models.InternationalService,
             'Klinika sayohati': models.ClinicTourVideo,
             'Tadqiqot imkoniyatlari': models.ResearchCapability,
         }

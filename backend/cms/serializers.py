@@ -255,32 +255,6 @@ class TestimonialSerializer(LangContextMixin, serializers.ModelSerializer):
         return pick(obj, 'role', self.lang)
 
 
-class PartnerSerializer(serializers.ModelSerializer):
-    logo = serializers.SerializerMethodField()
-
-    class Meta:
-        model = models.Partner
-        fields = ('name', 'logo', 'order')
-
-    def get_logo(self, obj):
-        return media_url(self.context.get('request'), obj.logo, obj.logo_url)
-
-
-class InternationalServiceSerializer(LangContextMixin, serializers.ModelSerializer):
-    title = serializers.SerializerMethodField()
-    desc = serializers.SerializerMethodField()
-
-    class Meta:
-        model = models.InternationalService
-        fields = ('title', 'desc', 'order')
-
-    def get_title(self, obj):
-        return pick(obj, 'title', self.lang)
-
-    def get_desc(self, obj):
-        return pick(obj, 'desc', self.lang)
-
-
 class SiteSettingsSerializer(LangContextMixin, serializers.ModelSerializer):
     badge = serializers.SerializerMethodField()
     slogan = serializers.SerializerMethodField()

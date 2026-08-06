@@ -6,8 +6,6 @@ import AISection from './components/AISection'
 import Education from './components/Education'
 import Doctors from './components/Doctors'
 import NewsSection from './components/NewsSection'
-import Partners from './components/Partners'
-import International from './components/International'
 import FooterSection from './components/FooterSection'
 import BackToTop from './components/BackToTop'
 import SiteAssistant from './components/SiteAssistant'
@@ -16,7 +14,6 @@ import NewsPage from './pages/NewsPage'
 import AiShifokorRedirect from './components/AiShifokorRedirect'
 import DoctorPage from './pages/DoctorPage'
 import NotFoundPage from './pages/NotFoundPage'
-import HomePage from './pages/HomePage'
 import HomeCarePage from './pages/HomeCarePage'
 import PageShell from './pages/PageShell'
 import PricesPage from './pages/PricesPage'
@@ -50,9 +47,6 @@ function AppRoutes() {
   const isDoctorDetail = doctorSlug !== null
 
   const isHome = path === '/'
-  // The dark "instrument" homepage stays reachable while the light care system
-  // is built out, so the two can be compared side by side. See DESIGN.md.
-  const isHomeInstrument = path === '/home-instrument'
   const isContacts = path === '/contacts'
 
   let body: ReactNode
@@ -69,12 +63,6 @@ function AppRoutes() {
     body = (
       <main className="site-main">
         <HomeCarePage />
-      </main>
-    )
-  } else if (isHomeInstrument) {
-    body = (
-      <main className="site-main">
-        <HomePage />
       </main>
     )
   } else if (isClinicIndex) {
@@ -147,18 +135,6 @@ function AppRoutes() {
     body = (
       <PageShell>
         <NewsSection />
-      </PageShell>
-    )
-  } else if (path === '/partners') {
-    body = (
-      <PageShell>
-        <Partners />
-      </PageShell>
-    )
-  } else if (path === '/international') {
-    body = (
-      <PageShell>
-        <International />
       </PageShell>
     )
   } else if (isContacts) {

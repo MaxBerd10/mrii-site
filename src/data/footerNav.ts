@@ -132,15 +132,6 @@ export const FOOTER_NAV: FooterNavCol[] = [
           kaa: 'Joriy klinikalıq izertlewler',
         },
       },
-      {
-        href: '/international',
-        label: {
-          uz: 'Xalqaro bemorlar',
-          ru: 'Международные пациенты',
-          en: 'International patients',
-          kaa: 'Xalıqaralıq bemarlar',
-        },
-      },
     ],
   },
   {
@@ -277,15 +268,6 @@ export const FOOTER_NAV: FooterNavCol[] = [
           ru: 'Галерея клиники',
           en: 'Clinic gallery',
           kaa: 'Klinika galereyası',
-        },
-      },
-      {
-        href: '/partners',
-        label: {
-          uz: 'Hamkorlar',
-          ru: 'Партнёры',
-          en: 'Partners',
-          kaa: 'Hamkorlar',
         },
       },
       {
