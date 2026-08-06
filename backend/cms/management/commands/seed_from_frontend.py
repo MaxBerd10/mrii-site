@@ -45,7 +45,6 @@ class Command(BaseCommand):
         self.seed_settings()
         self.seed_hero()
         self.seed_specialties()
-        self.seed_doctors()
         self.seed_news()
         self.seed_ai()
         self.seed_research()
@@ -219,34 +218,6 @@ class Command(BaseCommand):
             )
         valid_slugs = {row[0] for row in data}
         models.Specialty.objects.exclude(slug__in=valid_slugs).update(is_active=False)
-
-    def seed_doctors(self):
-        doctors = [
-            ('Professor Alexandrov A.V.', 'Kardiolog, t.f.d.', 'Кардиолог, д.м.н.', 'Cardiologist, MD PhD',
-             'Kardiologiya', 'Кардиология', 'Cardiology', '24 yil tajriba', '87', '12', '#0EA5E9',
-             'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&h=720&fit=crop&auto=format'),
-            ('Dr. Ismailova N.R.', 'Nevrolog, f.d.', 'Невролог, к.м.н.', 'Neurologist, PhD',
-             'Nevrologiya', 'Неврология', 'Neurology', '16 yil tajriba', '43', '7', '#6366F1',
-             'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&h=720&fit=crop&auto=format'),
-            ('Professor Gromov I.P.', 'Onkolog, t.f.d.', 'Онколог, д.м.н.', 'Oncologist, MD PhD',
-             'Onkologiya', 'Онкология', 'Oncology', '31 yil tajriba', '142', '24', '#10B981',
-             'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=600&h=720&fit=crop&auto=format'),
-            ('Dr. Sadykova G.M.', 'Endokrinolog, f.d.', 'Эндокринолог, к.м.н.', 'Endocrinologist, PhD',
-             'Endokrinologiya', 'Эндокринология', 'Endocrinology', '12 yil tajriba', '31', '5', '#F59E0B',
-             'https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=600'),
-        ]
-        for i, row in enumerate(doctors):
-            (name, ru_uz, ru_ru, ru_en, su, sr, se, exp, papers, studies, color, photo) = row
-            models.Doctor.objects.update_or_create(
-                name=name,
-                defaults={
-                    'order': i + 1,
-                    'role_uz': ru_uz, 'role_ru': ru_ru, 'role_en': ru_en,
-                    'specialty_uz': su, 'specialty_ru': sr, 'specialty_en': se,
-                    'experience_uz': exp, 'papers': papers, 'studies': studies,
-                    'color': color, 'photo_url': photo, 'is_active': True,
-                },
-            )
 
     def seed_news(self):
         items = [
