@@ -1,8 +1,0 @@
-backend
-.venv
-node_modules
-.git
-.idea
-*.sqlite3
-media
-staticfiles

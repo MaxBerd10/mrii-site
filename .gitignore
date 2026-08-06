@@ -17,6 +17,9 @@ pnpm-lock.yaml
 playwright-report/
 test-results/
 .impeccable/
+_bmad/
+_bmad-output/implementation-artifacts/review-*.md
+_bmad-output/implementation-artifacts/spec-match-*.md
 
 # Django CMS
 backend/.venv/
