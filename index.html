@@ -20,7 +20,6 @@
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
         window.scrollTo(0, 0)
         document.documentElement.scrollTop = 0
-        document.body.scrollTop = 0
         if (!location.hash || location.hash === '#') return
         document.documentElement.classList.add('no-smooth-scroll')
         try {

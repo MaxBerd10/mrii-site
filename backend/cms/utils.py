@@ -12,6 +12,13 @@ def resolve_lang(request) -> str:
     lang = (request.query_params.get('lang') or '').lower().strip()
     if lang in settings.CMS_LANGS:
         return lang
+    if lang:
+        # Explicit-but-unsupported code (e.g. 'kaa' — the CMS has no per-
+        # language content for it) must fall back to Uzbek deterministically,
+        # not to the visitor's Accept-Language header. Otherwise a QARA-
+        # selecting visitor silently sees whatever language their browser
+        # happens to report instead of the intended Uzbek fallback.
+        return 'uz'
     accept = (request.headers.get('Accept-Language') or '').lower()
     for code in settings.CMS_LANGS:
         if code in accept:
