@@ -532,7 +532,7 @@ class ResearchStudyAdmin(AutoTranslateAdmin):
     search_fields = ('study_id', 'title_uz')
     fieldsets = (
         ('Asosiy', {
-            'description': 'Status: open / closed. Phase: I–IV.',
+            'description': 'Bosqich va holatni ro‘yxatdan tanlang.',
             'fields': ('study_id', 'phase', 'status', 'order', 'is_active'),
         }),
         ('O‘zbekcha', {'description': LANG_UZ, 'fields': ('title_uz', 'area_uz')}),
@@ -547,7 +547,7 @@ class ResearchCapabilityAdmin(AutoTranslateAdmin):
     list_editable = ('order', 'highlight')
     fieldsets = (
         ('Asosiy', {
-            'description': 'Value — raqam/yozuv (18+, 50 000+). Highlight — urg‘u.',
+            'description': 'Qiymat — raqam/yozuv (masalan: 18+, 50 000+). Ajratib ko‘rsatish — kattaroq/rangli chiqadi.',
             'fields': ('value', 'highlight', 'order'),
         }),
         ('O‘zbekcha', {'fields': ('label_uz',)}),

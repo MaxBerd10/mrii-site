@@ -312,12 +312,22 @@ class ResearchSection(TimeStampedModel):
 
 
 class ResearchStudy(TimeStampedModel, OrderedModel):
+    class Phase(models.TextChoices):
+        I = 'I', 'I bosqich'
+        II = 'II', 'II bosqich'
+        III = 'III', 'III bosqich'
+        IV = 'IV', 'IV bosqich'
+
+    class Status(models.TextChoices):
+        OPEN = 'open', 'Ochiq (qabul davom etmoqda)'
+        CLOSED = 'closed', 'Yopiq (qabul tugagan)'
+
     study_id = models.CharField('Tadqiqot ID', max_length=64)
     title_uz = models.CharField('Sarlavha (UZ)', max_length=255)
     title_ru = models.CharField('Sarlavha (RU)', max_length=255, blank=True)
     title_en = models.CharField('Sarlavha (EN)', max_length=255, blank=True)
-    phase = models.CharField('Bosqich', max_length=32, blank=True)
-    status = models.CharField('Status', max_length=32, blank=True, help_text='open / closed')
+    phase = models.CharField('Bosqich', max_length=32, blank=True, choices=Phase.choices)
+    status = models.CharField('Holat', max_length=32, blank=True, choices=Status.choices)
     area_uz = models.CharField('Soha (UZ)', max_length=255, blank=True)
     area_ru = models.CharField('Soha (RU)', max_length=255, blank=True)
     area_en = models.CharField('Soha (EN)', max_length=255, blank=True)
@@ -333,9 +343,9 @@ class ResearchStudy(TimeStampedModel, OrderedModel):
 
 
 class ResearchCapability(TimeStampedModel, OrderedModel):
-    label_uz = models.CharField('Label (UZ)', max_length=128)
-    label_ru = models.CharField('Label (RU)', max_length=128, blank=True)
-    label_en = models.CharField('Label (EN)', max_length=128, blank=True)
+    label_uz = models.CharField('Nom (UZ)', max_length=128)
+    label_ru = models.CharField('Nom (RU)', max_length=128, blank=True)
+    label_en = models.CharField('Nom (EN)', max_length=128, blank=True)
     value = models.CharField('Qiymat', max_length=128)
     highlight = models.BooleanField('Ajratib ko‘rsatish', default=False)
 

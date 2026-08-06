@@ -158,7 +158,7 @@ class MriiAdminSite(AdminSite):
             },
             {
                 'title': 'AI mahsulotlar',
-                'desc': 'AI Doctor Assistant va boshqa mahsulotlar.',
+                'desc': 'AiShifokor va boshqa AI mahsulotlar.',
                 'meta': 'AI',
                 'icon': 'ai',
                 'tone': 'indigo',
