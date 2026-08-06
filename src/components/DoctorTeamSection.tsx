@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import type { ContentLang } from '../i18n/types'
+import type { Lang } from '../i18n/types'
 import type { DoctorProfile } from '../data/doctors'
 import { DoctorMiniCard, DoctorMiniShelf } from './DoctorMiniCard'
 
@@ -20,7 +20,7 @@ export function DoctorTeamSection({
   description?: string
   hoursLabel: string
   doctors: DoctorProfile[]
-  contentLang: ContentLang
+  contentLang: Lang
   action?: ReactNode
   empty?: ReactNode
   className?: string

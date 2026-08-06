@@ -1,4 +1,4 @@
-import type { ContentLang } from '../i18n/types'
+import type { Lang } from '../i18n/types'
 import { DOCTOR_PHOTOS } from './doctorPhotos'
 import { getDoctorPortrait } from './doctorTurnMedia'
 
@@ -12,7 +12,7 @@ export type DoctorProfile = {
   studies: number
   staffKind: StaffKind
   content: Record<
-    ContentLang,
+    Lang,
     {
       name: string
       role: string
@@ -40,6 +40,7 @@ function profile(
   uz: DoctorProfile['content']['uz'],
   ru: DoctorProfile['content']['ru'],
   en: DoctorProfile['content']['en'],
+  kaa: DoctorProfile['content']['kaa'],
   papers: number,
   studies: number,
   staffKind?: StaffKind,
@@ -51,7 +52,7 @@ function profile(
     papers,
     studies,
     staffKind: inferStaffKind(uz.name, staffKind),
-    content: { uz, ru, en },
+    content: { uz, ru, en, kaa },
   }
 }
 
@@ -110,6 +111,24 @@ export const doctorProfiles: DoctorProfile[] = [
       'Clinical diagnostics',
     ],
     languages: ['Uzbek', 'Russian'],
+  },   {
+    name: "Dr. Satvoldiyev D.U.",
+    role: "Kardiologiya bólimi shıpakeri",
+    specialty: "Kardiologiya",
+    exp: "5 jıl tájiriybe",
+    about:
+      "Satvoldiyev Doniyor Umarovich — Farg’ona qalasınıń 2-sanlı awrıwxanasınıń xojalıq esabındaǵı kardiologiya bóliminiń shıpakeri (2021-jıl 5-yanvardan). Osh mámleket medicina institutı hám kardiologiya ordinaturasınıń bitiriwshisi; júrek-qan tamır keselliklerin diagnostika hám emlew menen shuǵıllanadı.",
+    education: [
+      "2010 — Osh mámleket medicina institutı (kúndizgi), «Emlew isi»",
+      "ADMI — kardiologiya ordinaturası",
+    ],
+    focuses: [
+      "Kardiologiya",
+      "Júrek-qan tamır keselligi",
+      "Stacionar baqlaw",
+      "Klinikalıq diagnostika",
+    ],
+    languages: ["Ózbek", "Rus"],
   }, 20, 4),
 
   profile(1, 'aliyeva-z-v', {
@@ -169,6 +188,25 @@ export const doctorProfiles: DoctorProfile[] = [
       'Trainee teaching',
     ],
     languages: ['Uzbek', 'Russian', 'German'],
+  },   {
+    name: "Dr. Aliyeva Z.V.",
+    role: "Akusher-ginekolog · stajyor oqıtıwshı",
+    specialty: "Akusherlik",
+    exp: "7 jıl tájiriybe",
+    about:
+      "Aliyeva Zarnigor Valijon qızı — FJSTI kóp tarmaqlı klinikasında akusher-ginekolog (2026-jıl 1-apreldan). Akusher-ginekologiya kafedrası stajyor oqıtıwshısı; RIOMSM Farg’ona filialında akusher-ginekolog. Endokrinologiya hám akusher-ginekologiya boyınsha klinikalıq ordinatura tájiriybesine iye.",
+    education: [
+      "2019 — Andijon mámleket medicina institutı, ulıwma ámeliyat shıpakeri",
+      "2020–2022 — ADTI klinikalıq ordinaturası, endokrinologiya",
+      "2023–2025 — RIOMSM, akusher-ginekologiya klinikalıq ordinaturası",
+    ],
+    focuses: [
+      "Akusher-ginekologiya",
+      "Ana hám bala salamatlıǵı",
+      "Klinikalıq ordinatura",
+      "Stajyor oqıtıwshılıq",
+    ],
+    languages: ["Ózbek", "Rus", "Deutsch"],
   }, 12, 2, 'professor'),
 
   profile(2, 'mamatalieva-z-a', {
@@ -231,6 +269,26 @@ export const doctorProfiles: DoctorProfile[] = [
       'Clinical practice',
     ],
     languages: ['Uzbek', 'Russian', 'English'],
+  },   {
+    name: "Dr. Mamatalieva Z.A.",
+    role: "PhD · nevrologiya hám psixiatriya kafedrası assistenti",
+    specialty: "Nevrologiya",
+    exp: "PhD · 11 jıl tájiriybe",
+    about:
+      "Mamatalieva Janona Alimjanovna — PhD, FJSTI «Nevrologiya hám psixiatriya» kafedrası assistenti (2025-jıl oktyabrdan). FJSTI klinikasında nevrolog (2026-jıl apreldan). Evropa nevrologlar akademiyası (EAN RRFS) rezidenti (2026-jıldan). Nevrolog, izertlewshi-pedagog.",
+    education: [
+      "2009–2015 — Kemerovo mámleket medicina akademiyası",
+      "2017–2020 — ADTI, magistratura",
+      "2025–2026 — FJSTI, baza doktoranturası",
+      "PhD — ilimiy dáreje",
+    ],
+    focuses: [
+      "Nevrologiya",
+      "Psixiatriya",
+      "Ilimiy-izertlew",
+      "Klinikalıq ámeliyat",
+    ],
+    languages: ["Ózbek", "Rus", "Ingliz"],
   }, 32, 8, 'professor'),
 
   profile(3, 'abdullayeva-t-y', {
@@ -284,6 +342,23 @@ export const doctorProfiles: DoctorProfile[] = [
       'Chronic disease follow-up',
     ],
     languages: ['Russian', 'English'],
+  },   {
+    name: "Dr. Abdullayeva T.Y.",
+    role: "Shańaraq shıpakeri",
+    specialty: "Terapiya",
+    exp: "2 jıl ámeliyat",
+    about:
+      "Abdullayeva Tatyana Yusupovna — Farg’ona qalası 6-sanlı shańaraq poliklinikasınıń shańaraq shıpakeri (2024-jıl 2-oktyabrdan). «Emlew isi» baǵdarında joqarı bilim alıp atır; birinshi medicinalıq járdem hám shańaraq bemarların baqlaw menen shuǵıllanadı.",
+    education: [
+      "Joqarı bilim (kúndizgi) — «Emlew isi» (oqıw dawam etpekte)",
+    ],
+    focuses: [
+      "Shańaraq shıpakerligi",
+      "Birinshi medicinalıq járdem",
+      "Profilaktikalıq kórikler",
+      "Uzaq múddetli kesellikler baqlawı",
+    ],
+    languages: ["Rus", "Ingliz"],
   }, 8, 1),
 ]
 
@@ -352,6 +427,15 @@ for (let i = 0; i < REST.length; i++) {
       education: ['Medical university degree', `Clinical training — ${r.specEn}`],
       focuses: ['Diagnostics', 'Treatment planning', 'Follow-up'],
       languages: ['Uzbek', 'Russian'],
+    }, {
+      name: r.uzName,
+      role: r.roleUz,
+      specialty: r.specUz,
+      exp: `${10 + (i % 12)} jıl tájiriybe`,
+      about: `${r.uzName} — ${r.specUz.toLowerCase()} baǵdarında bemarlarǵa klinikalıq járdem kórsetedi. Anıq diagnostika, jeke jantasıw hám turaqlı baqlawǵa itibar beredi.`,
+      education: ['Medicina joqarı oqıw orны', `${r.specUz} boyınsha klinikalıq taярlıq`],
+      focuses: ['Diagnostika', 'Emlew jobası', 'Baqlaw'],
+      languages: ['Ózbek', 'Rus'],
     }, r.papers, r.studies, r.staffKind),
   )
 }
@@ -413,6 +497,24 @@ for (let i = 0; i < REST.length; i++) {
         'Outpatient and clinical care',
       ],
       languages: ['Uzbek', 'Russian'],
+    },     {
+      name: "Dr. Xo’jaeva G.A.",
+      role: "UTT shıpakeri · Terapiya (UASh) kafedrası assistenti",
+      specialty: "Ultrадыбыс diagnostikası",
+      exp: "32 jıl tájiriybe",
+      about:
+        "Xo’jaeva Gulnora Abdubannonovna — Farg’ona jámiyet salamatlıǵı medicina institutınıń kóp tarmaqlı klinikasında ultrадыбыс diagnostikası shıpakeri (2025-jıldan) hám Terapiya baǵdarındaǵı pánler (UASh) kafedrası assistenti (2020-jıldan). 1994-jılda Andijon mámleket medicina institutın tamamlaǵan; terapevt, oqıtıwshı, medicina kolleji bólim baslıǵı hám direktorı sıpatında uzaq jıllıq ámeliy tájiriybege iye.",
+      education: [
+        "1994 — Andijon mámleket medicina institutı (kúndizgi), «Emlew isi»",
+        "1994–1995 — Farg’ona medicina-sanitariya bólimi internaturası",
+      ],
+      focuses: [
+        "Ultrадыбыс diagnostikası",
+        "Terapiya (UASh)",
+        "Ishki kesellikler",
+        "Ambulator hám klinikalıq járdem",
+      ],
+      languages: ["Ózbek", "Rus"],
     }, 10, 2)
   }
 }
@@ -450,6 +552,24 @@ for (let i = 0; i < REST.length; i++) {
       education: ['Medical college', 'HR department practice'],
       focuses: ['Personnel records', 'Workplace compliance', 'Organizational support', 'Clinical team'],
       languages: ['Uzbek', 'Russian'],
+    },     {
+      name: "Nigmatova S.A.",
+      role: "Kadrlar bólimi",
+      specialty: "Kadrlar bólimi",
+      exp: "14 jıl tájiriybe",
+      about:
+        "Nigmatova S.A. — FJSTI kóp tarmaqlı klinikasınıń Kadrlar bóliminde isleydi. Xızmetkerler hújjetleri, miynet tártibi hám kadrlar menen baylanıslı shólkemlestiriw processlerinde klinika jamaatına járdem beredi.",
+      education: [
+        "Medicina kolleji",
+        "Kadrlar bólimi ámeliyatı",
+      ],
+      focuses: [
+        "Kadrlar hújjetleri",
+        "Miynet tártibi",
+        "Shólkemlestiriw járdemi",
+        "Klinika jamaatı",
+      ],
+      languages: ["Ózbek", "Rus"],
     }, 4, 0, 'nurse')
   }
 }
@@ -524,6 +644,29 @@ doctorProfiles.push(
       'Admission and diagnostics department',
     ],
     languages: ['Uzbek', 'Russian'],
+  },   {
+    name: "Dr. Xaydaraliyev S.A.",
+    role: "Qabıllaw-diagnostika bólimi baslıǵı · urolog · UTT shıpakeri",
+    specialty: "Urologiya",
+    exp: "15 jıl tájiriybe",
+    about:
+      "Xaydaraliyev Suxrobjon Abdulnasirovich — kóp tarmaqlı klinikanıń Qabıllaw-diagnostika bólimi baslıǵı. Urolog shıpaker, balalar urolog-andrologı hám ultrадыбыс diagnostikası shıpakeri. Ulıwma medicinalıq staj — 15 jıl; urologiya boyınsha — 15 jıl.",
+    education: [
+      "2010 — I.K. Axunbaev atındaǵı Qırǵız mámleket medicina akademiyası, «Emlew isi»",
+      "2011–2012 — Qırǵız DTQTM va MO Qublа filialı (Osh), «Urologiya» internaturası",
+      "2017–2019 — Qırǵız DTQTM va MO Qublа filialı (Osh), «Urologiya» ordinaturası",
+      "2019 — Omsk, «Qosımsha bilimlendiriw akademiyası», «Ultrадыбыс diagnostikası»",
+      "2019 — «Professional» NKT, «Balalar urologiyası-andrologiyası»",
+      "2025 — Moskva RUKTA, «Ultrадыбыс diagnostikası» maliykesin tastıyıqlaw",
+      "2025 — Moskva Urologiya ilimiy-izertlew institutı, urologiya boyınsha maliyke asırıw kursı",
+    ],
+    focuses: [
+      "Urologiya",
+      "Balalar urologiyası-andrologiyası",
+      "Ultrадыбыs diagnostikası",
+      "Qabıllaw-diagnostika bólimi",
+    ],
+    languages: ["Ózbek", "Rus"],
   }, 29, 6),
 )
 
@@ -588,6 +731,26 @@ doctorProfiles.push(
       'Obstetrics-gynecology background',
     ],
     languages: ['Uzbek', 'Russian'],
+  },   {
+    name: "Dr. Azimova G.R.",
+    role: "Ulıwma xirurgiya kafedrası úlken oqıtıwshısı · PhD",
+    specialty: "Jarrаhlıq",
+    exp: "17 jıl tájiriybe",
+    about:
+      "Azimova Gulnoza Ravshanovna — FJSTI Ulıwma xirurgiya kafedrasınıń úlken oqıtıwshısı, PhD. 2008-jılda Andijon mámleket medicina institutın tamamlaǵan. Birinshi medicinalıq járdem, akusher-ginekologiya hám xirurgiya baǵdarlarında ámeliy jumıs tájiriybesi; házir klinikalıq hám oqıw jumısların birlestiredi.",
+    education: [
+      "2008 — Andijon mámleket medicina institutı (kúndizgi), «Emlew isi»",
+      "2018–2019 — R.F. Omsk medicina akademiyası, xirurgiya ordinaturası",
+      "2019 — TTA, xirurgiya ordinaturası",
+      "PhD — ilimiy dáreje",
+    ],
+    focuses: [
+      "Ulıwma xirurgiya",
+      "Klinikalıq ámeliyat",
+      "Oqıw-metodikalıq jumıs",
+      "Akusher-ginekologiya tájiriybesi",
+    ],
+    languages: ["Ózbek", "Rus"],
   }, 32, 8, 'professor'),
 )
 
@@ -646,6 +809,24 @@ doctorProfiles.push(
       'Outpatient and inpatient care',
     ],
     languages: ['Uzbek', 'Russian', 'English'],
+  },   {
+    name: "Dr. Ruzmatov Z.S.",
+    role: "Nevrologiya bólimi shıpakeri",
+    specialty: "Nevrologiya",
+    exp: "15 jıl tájiriybe",
+    about:
+      "Ruzmatov Zuxriddin Sirojiddinovich — Farg’ona qalası 2-sanlı awrıwxanasınıń nevrologiya bólimi shıpakeri (2020-jıldan). Nevropatolog hám nevrolog sıpatında ámeliy tájiriybe; bemarlarǵa nevrologiyalıq diagnostika hám emlew boyınsha járdem beredi.",
+    education: [
+      "2011 — Andijon mámleket medicina institutı, «Emlew isi»",
+      "2011–2013 — Tashkent shıpakerler maliykesin asırıw institutı, ordinatura",
+    ],
+    focuses: [
+      "Nevrologiya",
+      "Nevropatologiya",
+      "Nevrologiyalıq diagnostika",
+      "Ambulator hám stacionar járdem",
+    ],
+    languages: ["Ózbek", "Rus", "Ingliz"],
   }, 18, 3),
 )
 
@@ -707,6 +888,25 @@ doctorProfiles.push(
       'Clinical residency',
     ],
     languages: ['Uzbek', 'Russian', 'English', 'Kyrgyz'],
+  },   {
+    name: "Dr. Kojoeva F.O.",
+    role: "Qabıllaw-diagnostika bólimi nevrologı · klinikalıq ordinator",
+    specialty: "Nevrologiya",
+    exp: "Klinikalıq ordinatura · 2 jıl ámeliyat",
+    about:
+      "Kojoeva Farangiz Omurbekovna — FJSTI kóp tarmaqlı klinikasınıń Qabıllaw-diagnostika bóliminde nevrolog (2026-jıldan). Nevrologiya kafedrasında klinikalıq ordinator oqıwshısı; Farg’ona qalası 8-sanlı shańaraq poliklinikasında shańaraq shıpakeri (2024-jıl 17-dekabrdan).",
+    education: [
+      "2019–2025 — FJSTI, «Emlew isi»",
+      "Farg’ona jámiyet salamatlıǵı institutı, «Emlew isi»",
+      "2025-jıldan — FJSTI nevrologiya kafedrası, klinikalıq ordinatura",
+    ],
+    focuses: [
+      "Nevrologiya",
+      "Qabıllaw-diagnostika",
+      "Shańaraq shıpakerligi",
+      "Klinikalıq ordinatura",
+    ],
+    languages: ["Ózbek", "Rus", "Ingliz", "Qırǵız"],
   }, 12, 1),
 )
 doctorProfiles.push(
@@ -764,6 +964,24 @@ doctorProfiles.push(
       'Neurology and psychiatry',
     ],
     languages: ['Uzbek', 'Russian', 'English'],
+  },   {
+    name: "Dr. Nosirov M.M.",
+    role: "Nevrologiya bólimi baslıǵı · stajyor oqıtıwshı",
+    specialty: "Nevrologiya",
+    exp: "5 jıl tájiriybe",
+    about:
+      "Nosirov Muhammadali Maqsudali ulı — FJSTI kóp tarmaqlı klinikasınıń nevrologiya bólimi baslıǵı (2025-jıldan). Nerv keselliklери bóliminde nevrolog; «Nevrologiya hám psixiatriya» kafedrası stajyor oqıtıwshısı (2026-jıl fevraldan). ADTI pediatriya fakulteti hám nevrologiya klinikalıq ordinaturasınıń bitiriwshisi.",
+    education: [
+      "2015–2021 — Andijon mámleket medicina institutı, Pediatriya fakulteti",
+      "2021–2023 — ADTI, Nevrologiya kafedrası, klinikalıq ordinatura",
+    ],
+    focuses: [
+      "Nevrologiya",
+      "Nerv keselliklери",
+      "Qabıllaw-diagnostika",
+      "Nevrologiya hám psixiatriya",
+    ],
+    languages: ["Ózbek", "Rus", "Ingliz"],
   }, 14, 3, 'professor'),
 )
 doctorProfiles.push(
@@ -821,6 +1039,24 @@ doctorProfiles.push(
       'Internal medicine',
     ],
     languages: ['Uzbek', 'Russian', 'English'],
+  },   {
+    name: "Dr. Bobojonov S.S.",
+    role: "Terapiya baǵdarındaǵı pánler kafedrası assistenti · kardiolog",
+    specialty: "Kardiologiya",
+    exp: "9 jıl tájiriybe",
+    about:
+      "Bobojonov Sardorbek Solijon ulı — Farg’ona jámiyet salamatlıǵı medicina institutı «Terapiya baǵdarındaǵı pánler» kafedrası assistenti (2023-jıl 4-sentyabrdan). Kardiolog-mutaxassis; ADTI kardiorevmatologiya klinikalıq ordinaturasınıń bitiriwshisi. Aldın ishki kesellikler kafedrası assistenti hám xalıqaralıq bólim baslıǵı wazıypalarında islegen.",
+    education: [
+      "2019 — Andijon mámleket medicina joqarı oqıw orны",
+      "2017–2019 — ADTI klinikası, «Kardiorevmatologiya» klinikalıq ordinaturası",
+    ],
+    focuses: [
+      "Kardiologiya",
+      "Terapiya",
+      "Kardiorevmatologiya",
+      "Ishki kesellikler",
+    ],
+    languages: ["Ózbek", "Rus", "Ingliz"],
   }, 24, 5, 'professor'),
 )
 doctorProfiles.push(
@@ -884,6 +1120,26 @@ doctorProfiles.push(
       'UASH',
     ],
     languages: ['Uzbek', 'Russian', 'English'],
+  },   {
+    name: "Dr. Shamsutdinova G.B.",
+    role: "Terapiya (UASH) kafedra baslıǵı · PhD · kardiorevmatolog",
+    specialty: "Kardiologiya",
+    exp: "11 jıl tájiriybe",
+    about:
+      "Shamsutdinova Guzel Baxodirovna — FJSTI «Terapiya baǵdarındaǵı pánler (UASH)» kafedrası baslıǵı (2025-jıl 13-yanvardan), PhD, kardiorevmatolog. Andijon DTMI hám magistratura bitiriwshisi; ishki kesellikler boyınsha qayta taярlaw hám klinikalıq ámeliyat tájiriybesine iye.",
+    education: [
+      "2015 — Andijon mámleket medicina institutı",
+      "2015–2018 — ADTI, magistratura",
+      "2019–2020 — Tashkent shıpakerler maliykesin asırıw institutı, «Ishki kesellikler» qayta taярlaw",
+      "PhD — ilimiy dáreje",
+    ],
+    focuses: [
+      "Kardiorevmatologiya",
+      "Terapiya",
+      "Ishki kesellikler",
+      "UASH",
+    ],
+    languages: ["Ózbek", "Rus", "Ingliz"],
   }, 28, 6, 'professor'),
 )
 doctorProfiles.push(
@@ -941,6 +1197,24 @@ doctorProfiles.push(
       'Outpatient endocrinology',
     ],
     languages: ['Uzbek', 'Russian', 'English'],
+  },   {
+    name: "Dr. Isaqjonova M.N.",
+    role: "Stajyor oqıtıwshı · endokrinolog",
+    specialty: "Endokrinologiya",
+    exp: "5 jıl tájiriybe",
+    about:
+      "Isaqjonova Mohinur Nodirjon qızı — Farg’ona jámiyet salamatlıǵı medicina institutı stajyor oqıtıwshısı (2025-jıl 9-dekabrdan), endokrinolog. TTA Termiz filialı endokrinologiya klinikalıq ordinaturasınıń bitiriwshisi; Surxandarya endokrinologiya dispanseri hám Farg’ona qalası 4-shańaraq poliklinikasında ámeliy tájiriybege iye.",
+    education: [
+      "2015–2021 — Tashkent medicina akademiyası, Emlew fakulteti (kúndizgi)",
+      "2022–2024 — TTA Termiz filialı, endokrinologiya klinikalıq ordinaturası",
+    ],
+    focuses: [
+      "Endokrinologiya",
+      "Diabet hám metabolikalıq kesellikler",
+      "Stajyor oqıtıwshılıq",
+      "Ambulator endokrinologiya",
+    ],
+    languages: ["Ózbek", "Rus", "Ingliz"],
   }, 14, 3, 'professor'),
 )
 
@@ -999,6 +1273,24 @@ doctorProfiles.push(
       'Outpatient care',
     ],
     languages: ['Uzbek'],
+  },   {
+    name: "Dr. Xalilov N.A.",
+    role: "Terapevt",
+    specialty: "Terapiya",
+    exp: "2 jıl tájiriybe",
+    about:
+      "Xalilov Nurillo Abdug’ani ulı — Andijon mámleket medicina institutı «Emlew isi» fakulteti (2015–2021) hám terapiya baǵdarlarında magistratura (2021–2024) bitiriwshisi. Ishki kesellikler diagnostikası hám emlewi menen shuǵıllanadı.",
+    education: [
+      "2015–2021 — Andijon mámleket medicina institutı, «Emlew isi» fakulteti",
+      "2021–2024 — Andijon DTMI, terapiya (baǵdarlar boyınsha) magistraturası",
+    ],
+    focuses: [
+      "Terapiya",
+      "Ishki kesellikler",
+      "Klinikalıq diagnostika",
+      "Ambulator járdem",
+    ],
+    languages: ["Ózbek"],
   }, 8, 2),
 )
 
@@ -1057,6 +1349,24 @@ doctorProfiles.push(
       'General practice',
     ],
     languages: ['Uzbek', 'English'],
+  },   {
+    name: "Dr. Davlatov S.Q.",
+    role: "Terapiya (UASh) kafedrası assistenti",
+    specialty: "Kardiologiya",
+    exp: "6 jıl tájiriybe",
+    about:
+      "Davlatov Shohjaxonbek Qurbonbek ulı — Farg’ona jámiyet salamatlıǵı medicina institutı Terapiya baǵdarındaǵı pánler (UASh) kafedrası assistenti (2023-jıl 4-sentyabrdan). Andijon DTMI (2020) hám Tashkent medicina akademiyası kardiologiya magistraturası (2020–2023) bitiriwshisi; Yozyovon rayonı shańaraq poliklinikası hám tez medicinalıq járdem stanciyasında ámeliy tájiriybege iye.",
+    education: [
+      "2020 — Andijon mámleket medicina institutı, ulıwma ámeliyat shıpakeri",
+      "2020–2023 — Tashkent medicina akademiyası, kardiologiya magistraturası",
+    ],
+    focuses: [
+      "Kardiologiya",
+      "Terapiya (UASh)",
+      "Tez medicinalıq járdem",
+      "Ulıwma ámeliyat shıpakerligi",
+    ],
+    languages: ["Ózbek", "Ingliz"],
   }, 12, 3),
 )
 
@@ -1115,6 +1425,24 @@ doctorProfiles.push(
       'Outpatient care',
     ],
     languages: ['Russian', 'English'],
+  },   {
+    name: "Dr. Gayratjonova F.G.",
+    role: "Terapiya (UASh) kafedrası oqıtıwshı stajyorı",
+    specialty: "Terapiya",
+    exp: "4 jıl tájiriybe",
+    about:
+      "Gayratjonova Fotima Gofurjon qızı — Farg’ona jámiyet salamatlıǵı medicina institutı Terapiya baǵdarındaǵı pánler (UASh) kafedrası oqıtıwshı stajyorı (2025-jıl 10-oktyabrdan). 2022-jılda TTA nı «Ulıwma ámeliyat shıpakeri» mамanlıǵı boyınsha tamamlaǵan; Tashkent pediatriya institutı terapiya fakulteti studenti; Farg’ona qalası 1-sanlı shańaraq poliklinikasında ámeliy tájiriybege iye.",
+    education: [
+      "2022 — Tashkent medicina akademiyası, ulıwma ámeliyat shıpakeri",
+      "2022–házir — Tashkent pediatriya institutı, terapiya fakulteti (student)",
+    ],
+    focuses: [
+      "Terapiya (UASh)",
+      "Ulıwma ámeliyat shıpakerligi",
+      "Oqıtıwshı stajyorlıq",
+      "Ambulator járdem",
+    ],
+    languages: ["Rus", "Ingliz"],
   }, 6, 1),
 )
 
@@ -1173,6 +1501,24 @@ doctorProfiles.push(
       'Outpatient care',
     ],
     languages: ['Uzbek', 'Russian'],
+  },   {
+    name: "Dr. Mominov J.Z.",
+    role: "Terapiya baǵdarındaǵı pánler kafedrası assistenti",
+    specialty: "Terapiya",
+    exp: "5 jıl tájiriybe",
+    about:
+      "Mominov Jahongir Zokirjon ulı — Farg’ona jámiyet salamatlıǵı medicina institutı Terapiya baǵdarındaǵı pánler kafedrası assistenti (2025-jıldan). Andijon mámleket medicina institutı «Emlew isi» (2015–2021) hám terapiya magistraturası (2021–2024) bitiriwshisi; 2021–2025-jıllarda Andijon qalası 6-sanlı shańaraq poliklinikasında shańaraq shıpakeri sıpatında islegen.",
+    education: [
+      "2015–2021 — Andijon mámleket medicina institutı, «Emlew isi» fakulteti",
+      "2021–2024 — Andijon DTMI, terapiya (baǵdarlar boyınsha) magistraturası",
+    ],
+    focuses: [
+      "Terapiya",
+      "Shańaraq shıpakerligi",
+      "Ishki kesellikler",
+      "Ambulator járdem",
+    ],
+    languages: ["Ózbek", "Rus"],
   }, 10, 2),
 )
 
@@ -1264,7 +1610,7 @@ export function getStaffByKind(kind: StaffKind | 'all') {
 }
 
 export function getSpecialtiesForStaff(
-  lang: ContentLang,
+  lang: Lang,
   kind: StaffKind | 'all' = 'all',
 ): string[] {
   const list = getStaffByKind(kind)
@@ -1324,7 +1670,7 @@ export function getDoctorBySlug(slug: string) {
 }
 
 export const doctorPageLabels: Record<
-  ContentLang,
+  Lang,
   {
     back: string
     about: string
@@ -1480,6 +1826,45 @@ export const doctorPageLabels: Record<
       successDesc: 'A coordinator will call you to confirm the appointment.',
       successClose: 'Close',
       requestNumber: 'Request ID',
+    },
+  },
+  kaa: {
+    back: 'Barlıq shıpakerler',
+    about: 'Haqqında',
+    education: 'Bilim',
+    focuses: 'Baǵdarlar',
+    languages: 'Tiller',
+    book: 'Qabılǵa jazılıw',
+    papers: 'Maqalalar',
+    studies: 'Izertlewler',
+    experience: 'Tájiriybe',
+    related: 'Basqa mutaxassislar',
+    relatedSame: 'Basqa {specialty} shıpakerleri',
+    relatedEmpty: 'Ázirshe usı baǵdarda basqa shıpaker joq.',
+    reviews: 'Nawqaslar pikirleri',
+    booking: {
+      title: 'Shıpakerge jazılıw',
+      appointment: 'Qabıllaw maǵlıwmatları',
+      patient: 'Nawqas maǵlıwmatları',
+      clinic: 'Klinika',
+      date: 'Sáne',
+      time: 'Waqıt',
+      lastName: 'Familiya',
+      firstName: 'Atı',
+      middleName: 'Ákesiniń atı',
+      noMiddleName: 'Ákesiniń atı joq',
+      birthDate: 'Tuwılǵan sáne',
+      phone: 'Telefon',
+      comment: 'Pikir',
+      privacy: '«Jazılıw» túymesin basıp, siz',
+      privacyLink: 'maxfiylik siyasatın',
+      submit: 'Dawam etiw',
+      submitting: 'Jiberilip atır…',
+      close: 'Jabıw',
+      successTitle: 'Ariza qabıl etildi',
+      successDesc: 'Koordinator tez arada telefon arqalı baylanıp, qabıllawdı tastıyıqlaydı.',
+      successClose: 'Jabıw',
+      requestNumber: 'Ariza nomeri',
     },
   },
 }

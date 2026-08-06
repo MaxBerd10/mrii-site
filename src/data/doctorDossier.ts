@@ -1,4 +1,4 @@
-import type { ContentLang } from '../i18n/types'
+import type { Lang } from '../i18n/types'
 import type { DoctorProfile } from './doctors'
 
 type DossierLocale = {
@@ -64,7 +64,7 @@ export type DoctorDossier = {
   patientCount: string
 }
 
-const locales: Record<ContentLang, DossierLocale> = {
+const locales: Record<Lang, DossierLocale> = {
   uz: {
     profileLabel: 'Klinika mutaxassisi',
     available: 'Qabul uchun ariza ochiq',
@@ -200,6 +200,51 @@ const locales: Record<ContentLang, DossierLocale> = {
       insuranceNote: 'Referrals accepted',
     },
   },
+  kaa: {
+    profileLabel: 'Klinika mutaxassisi',
+    available: 'Qabıllawǵa ariza ashıq',
+    careerTitle: 'Kásiplik jol',
+    careerDescription: 'Tájiriybe, jumıs orınları hám juwapkershilik dárejesi',
+    education: 'Bilim hám maliyke',
+    languages: 'Qabıllaw tilleri',
+    science: 'Ilimiy iskerlik',
+    focus: 'Járdem baǵdarları',
+    current: 'házir',
+    native: 'ana tili',
+    fluent: 'erkin',
+    training: 'Klinikalıq taярlıq',
+    regionalCenter: 'Wálayat medicina orayı',
+    specialistCenter: 'Mamanlasqan klinikalıq ámeliyat',
+    instituteClinic: 'FJSTI kóp tarmaqlı klinikası',
+    seniorSpecialist: 'Jetekshi mutaxassis',
+    demoNote: 'Jumıs orınları demo maǵlıwmat. CMS profili menen jańalanadı.',
+    academicDoctor: 'Klinikalıq mutaxassis',
+    academicNurse: 'Klinikalıq qamqorlıq mutaxassisi',
+    academicProfessor: 'Medicina pánleri doktorı',
+    seniorGrade: 'Joqarı dárejeli',
+    clinicalMentor: 'Ilimiy basshı',
+    patientCount: 'nawqas qabıl etildi',
+    patientPeriod: 'Sońǵı 12 ay · klinika esabatı',
+    quote: 'Nawqasqa tashxis túsindirilmey turıp emlew baslanbaydı. Túsingen nawqas — jobaǵa ámel qılatuǵın nawqas.',
+    visit: {
+      title: 'Qabıllaw qalay ótedi',
+      address: 'Mánzil',
+      addressValue: 'FJSTI klinikası, 2-korpus',
+      addressNote: 'Farg’ona q., Marg’ilon jolı 2A · 3-qabat, 312-bólme',
+      hours: 'Jumıs waqtı',
+      hoursValue: 'Dú–Shá, 08:00–18:00',
+      hoursNote: 'Jeksembi — gezekshi mutaxassis',
+      firstVisit: 'Birinshi qabıllaw',
+      firstVisitValue: '180 000 sum',
+      firstVisitNote: 'Baslanǵısh tallaw baha ishinde · ~40 minut',
+      followUp: 'Qayta qabıllaw',
+      followUpValue: '120 000 sum',
+      followUpNote: '30 kún ishinde — tegin qayta kóriw',
+      insurance: 'Sug’urta',
+      insuranceValue: 'Gross, Apex, Kafolat',
+      insuranceNote: 'Jollama menen qabıl etiledi',
+    },
+  },
 }
 
 function parseExperience(value: string) {
@@ -208,7 +253,7 @@ function parseExperience(value: string) {
 }
 
 const DOSSIER_MILESTONE_OVERRIDES: Partial<
-  Record<ContentLang, Partial<Record<string, CareerMilestone[]>>>
+  Record<Lang, Partial<Record<string, CareerMilestone[]>>>
 > = {
   uz: {
     'xaydaraliyev-s-a': [
@@ -760,7 +805,7 @@ function languageLevel(language: string, ui: DossierLocale) {
  * Existing profile facts (education, languages, papers, studies and focuses)
  * stay source-driven; only workplace chronology is synthesized.
  */
-export function getDoctorDossier(profile: DoctorProfile, lang: ContentLang): DoctorDossier {
+export function getDoctorDossier(profile: DoctorProfile, lang: Lang): DoctorDossier {
   const ui = locales[lang]
   const view = profile.content[lang]
   const experienceYears = parseExperience(view.exp)
@@ -799,6 +844,6 @@ export function getDoctorDossier(profile: DoctorProfile, lang: ContentLang): Doc
       lang === 'ru' ? 'ru-RU' : lang === 'en' ? 'en-US' : 'en-US',
     )
       .format(1200 + experienceYears * 43)
-      .replace(lang === 'uz' ? /,/g : /$^/, ' '),
+      .replace(lang === 'uz' || lang === 'kaa' ? /,/g : /$^/, ' '),
   }
 }

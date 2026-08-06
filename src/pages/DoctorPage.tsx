@@ -2,7 +2,7 @@ import { CLINIC_PHONE_LOCAL, CLINIC_PHONE_TEL } from '../data/clinicContact'
 import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
-import type { ContentLang } from '../i18n/types'
+import type { Lang } from '../i18n/types'
 import DoctorReviews from '../components/DoctorReviews'
 import NotFoundPage from './NotFoundPage'
 import {
@@ -64,7 +64,7 @@ type ProfileUi = {
   footnote: string
 }
 
-const profileUi: Record<ContentLang, ProfileUi> = {
+const profileUi: Record<Lang, ProfileUi> = {
   uz: {
     profile: 'Shifokor profili',
     available: 'Qabul olayapti · Dushanba–Shanba, 09:00–18:00',
@@ -200,6 +200,51 @@ const profileUi: Record<ContentLang, ProfileUi> = {
     callback: 'Request a callback',
     footnote: 'Professional profile details are kept current through the CMS.',
   },
+  kaa: {
+    profile: 'Shıpaker profili',
+    available: 'Qabıllaw ashıq · Dúysenbi–Shánbi, 09:00–18:00',
+    hoursShort: '09:00–18:00 · Dú–Shá',
+    book: 'Qabılǵa jazılıw',
+    booking: 'Jazılıw',
+    schedule: 'Telefon arqalı jazılıw',
+    phoneBookingTitle: 'Bir qońıraq — waqıt tastıyıqlanadı',
+    phoneBookingLead:
+      'Onlayn keste joq. Registratura telefon arqalı isleydi: shıpaker, kún hám waqıttı birge kelisemiz.',
+    phoneSteps: [
+      'Belgilengen nomerge qońıraq etiń yamasa qayta qońıraq sorań.',
+      'Mamanlıq hám shikayatıńızdı aytıń — mos shıpaker tańlanadı.',
+      'Qolay kún hám waqıt tastıyıqlanadı, qabılǵa kele alasız.',
+    ],
+    doctor: 'Shıpaker',
+    direction: 'Baǵdar',
+    hours: 'Jumıs waqtı',
+    price: 'Birinshi qabıllaw bahası',
+    callToBook: 'Qońıraq etiw',
+    contactsCta: 'Baylanıs hám mánzil',
+    bookingNote: 'Jumıs waqtı: Dúysenbi–Shánbi, 09:00–18:00.',
+    about: 'Mutaxassis haqqında',
+    aboutTitle: 'Salamatlıqqa erte itibar — keshiki emlewden nátiyjeli.',
+    focus: 'Járdem baǵdarları',
+    visitCard: 'Qabıllaw kartası',
+    career: 'Kásiplik jol',
+    careerDescription: 'Taярlıqtan jetekshi mamanlıqqa shekem — jumıs orınları hám juwapkershilik dárejesi.',
+    education: 'Bilim hám maliyke',
+    educationTitle: 'Hújjetler menen tastıyıqlanǵan',
+    science: 'Ilimiy iskerlik',
+    scienceTitle: 'Basılımlar dinamikası',
+    languages: 'Qabıllaw tilleri',
+    languagesTitle: 'Awdarıwshısız sóylesiw',
+    papers: 'Maqala',
+    studies: 'Izertlew',
+    reviews: 'Nawqaslar pikiri',
+    reviewsTitle: '128 tastıyıqlanǵan pikir',
+    related: 'Usı baǵdardaǵı basqa shıpakerler',
+    relatedDescription: 'Waqıt sáykes kelmese — kásiplesleri de usı klinikalıq baqlaw kartasın kóredi.',
+    coordinatorTitle: 'Qaysı shıpakerge jazılıwdı bilmeysiz be?',
+    coordinatorText: 'Klinika koordinatorı shikayatıńızdı tıńlap, durıs mutaxassiske jónltedi.',
+    callback: 'Qayta qońıraq soraw',
+    footnote: 'Shıpaker profilindegi kásiplik maǵlıwmatlar CMS arqalı jańalanadı.',
+  },
 }
 
 const barHeights = [42, 55, 47, 73, 86, 88, 82]
@@ -213,9 +258,9 @@ function splitName(name: string) {
 }
 
 export default function DoctorPage({ slug }: { slug: string }) {
-  const { contentLang, t } = useLanguage()
-  const labels = doctorPageLabels[contentLang]
-  const ui = profileUi[contentLang]
+  const { lang, t } = useLanguage()
+  const labels = doctorPageLabels[lang]
+  const ui = profileUi[lang]
   const match = getDoctorBySlug(slug)
   const [dockVisible, setDockVisible] = useState(false)
   const portraitVideoRef = useRef<HTMLVideoElement>(null)
@@ -232,8 +277,8 @@ export default function DoctorPage({ slug }: { slug: string }) {
 
   useEffect(() => {
     if (!match) return
-    document.title = `${match.profile.content[contentLang].name} - ${t.nav.brand}`
-  }, [match, contentLang, t.nav.brand])
+    document.title = `${match.profile.content[lang].name} - ${t.nav.brand}`
+  }, [match, lang, t.nav.brand])
 
   useEffect(() => {
     const video = portraitVideoRef.current
@@ -259,8 +304,8 @@ export default function DoctorPage({ slug }: { slug: string }) {
   if (!match) return <NotFoundPage />
 
   const { profile } = match
-  const view = profile.content[contentLang]
-  const dossier = getDoctorDossier(profile, contentLang)
+  const view = profile.content[lang]
+  const dossier = getDoctorDossier(profile, lang)
   const portrait = getDoctorPortrait(profile.slug, profile.photo)
   const turnMedia = getDoctorTurnMedia(profile.slug)
   const title = splitName(view.name)
@@ -271,7 +316,7 @@ export default function DoctorPage({ slug }: { slug: string }) {
   const aboutText = view.about.startsWith(view.name)
     ? view.about.slice(view.name.length).replace(/^\s*[—–-]\s*/, '')
     : view.about
-  const localeReviewText: Record<ContentLang, [string, string, string]> = {
+  const localeReviewText: Record<Lang, [string, string, string]> = {
     uz: [
       'Natijalarni birinchi marta tushunarli qilib izohlab berdilar. Davolash rejasini yozib berdilar, uyda ham adashmadim.',
       'Har bir savolimga shoshilmasdan javob berdilar. Kuzatuv rejasi aniq va juda qulay bo’ldi.',
@@ -287,27 +332,32 @@ export default function DoctorPage({ slug }: { slug: string }) {
       'Every question was answered without rushing. The follow-up plan was clear and practical.',
       'The visit started a little late, but the doctor gave me enough time and answered every question.',
     ],
+    kaa: [
+      'Nátiyjelerdi birinshi márte túsinikli etip túsindirdi. Emlew jobasın jazıp berdi, úyde de adaspadım.',
+      'Hár bir sorawıma aspalmay juwap berdi. Baqlaw jobası anıq hám ápiwayı boldı.',
+      'Qabıllaw biraz keshikti, biraq shıpaker jeterli waqıt ajıratıp, barlıq sorawlarıma juwap berdi.',
+    ],
   }
   const demoReviews = [
     {
       id: `${slug}-demo-1`,
       name: 'Dilnoza R.',
       rating: 5,
-      text: localeReviewText[contentLang][0],
+      text: localeReviewText[lang][0],
       createdAt: '2026-07-12T10:00:00.000Z',
     },
     {
       id: `${slug}-demo-2`,
       name: 'Sanjar T.',
       rating: 5,
-      text: localeReviewText[contentLang][1],
+      text: localeReviewText[lang][1],
       createdAt: '2026-07-04T10:00:00.000Z',
     },
     {
       id: `${slug}-demo-3`,
       name: 'Malika A.',
       rating: 4,
-      text: localeReviewText[contentLang][2],
+      text: localeReviewText[lang][2],
       createdAt: '2026-06-28T10:00:00.000Z',
     },
   ]
@@ -532,11 +582,13 @@ export default function DoctorPage({ slug }: { slug: string }) {
             <strong>{view.name}</strong> {aboutText}
           </p>
           <p>
-            {contentLang === 'uz'
+            {lang === 'uz'
               ? 'Har bir bemor uchun tekshiruv natijalari bitta kuzatuv kartasiga yig’iladi — shu karta keyingi qabul va davolash rejasining asosi bo’lib qoladi.'
-              : contentLang === 'ru'
+              : lang === 'ru'
                 ? 'Результаты обследований собираются в единую карту наблюдения — она становится основой следующих приёмов и плана лечения.'
-                : 'Every result is collected in one follow-up record, which becomes the basis for future visits and the care plan.'}
+                : lang === 'kaa'
+                  ? 'Hár bir nawqas ushın tekseriw nátiyjeleri bir baqlaw kartasına jıynaladı — usı karta kelesi qabıllaw hám emlew jobasınıń tiykarı bolıp qaladı.'
+                  : 'Every result is collected in one follow-up record, which becomes the basis for future visits and the care plan.'}
           </p>
           <blockquote className="dp-quote">“{dossier.ui.quote}”</blockquote>
           <p className="dp-chan dp-prose__focus">{ui.focus}</p>
@@ -581,11 +633,13 @@ export default function DoctorPage({ slug }: { slug: string }) {
           <div>
             <p className="dp-chan">{ui.career}</p>
             <h2>
-              {contentLang === 'uz'
+              {lang === 'uz'
                 ? `${dossier.experienceYears} yillik amaliyot, bitta chiziqda`
-                : contentLang === 'ru'
+                : lang === 'ru'
                   ? `${dossier.experienceYears} лет практики на одной линии`
-                  : `${dossier.experienceYears} years of practice on one line`}
+                  : lang === 'kaa'
+                    ? `${dossier.experienceYears} jıllıq ámeliyat, bir sızıqta`
+                    : `${dossier.experienceYears} years of practice on one line`}
             </h2>
           </div>
           <p>{ui.careerDescription}</p>
@@ -683,7 +737,7 @@ export default function DoctorPage({ slug }: { slug: string }) {
           description={ui.relatedDescription}
           hoursLabel={ui.hoursShort}
           doctors={relatedDoctors}
-          contentLang={contentLang}
+          contentLang={lang}
         />
       </section>
 
