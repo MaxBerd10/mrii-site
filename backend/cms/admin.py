@@ -173,7 +173,7 @@ class SiteSettingsAdmin(AutoTranslateAdmin):
             ),
         }),
         ('Huquqiy', {
-            'description': 'Footer pastidagi copyright va litsenziya matnlari.',
+            'description': 'Sayt pastidagi mualliflik huquqi va litsenziya matnlari.',
             'fields': (
                 'copyright_uz', 'copyright_ru', 'copyright_en',
                 'license_uz', 'license_ru', 'license_en',
@@ -456,11 +456,11 @@ class AIProductAdmin(AutoTranslateAdmin):
     readonly_fields = ('image_preview',)
     fieldsets = (
         ('Asosiy', {
-            'description': 'Metric — katta raqam (masalan 87%). Rang — teg rangi.',
-            'fields': ('product_key', 'tag_color', 'metric', 'order', 'is_active'),
+            'description': 'Metrika — katta raqam (masalan: 87%).',
+            'fields': ('tag_color', 'metric', 'order', 'is_active'),
         }),
         ('O‘zbekcha', {
-            'description': LANG_UZ + ' Features/outcomes/workflow ni | bilan ajrating.',
+            'description': LANG_UZ + ' Xususiyatlar/natijalar/jarayon ro‘yxatlarini | bilan ajrating.',
             'fields': (
                 'name_uz', 'tag_uz', 'desc_uz', 'features_uz', 'metric_label_uz',
                 'overview_uz', 'audience_uz', 'outcomes_uz', 'workflow_uz',
@@ -486,8 +486,8 @@ class AIProductAdmin(AutoTranslateAdmin):
         }),
         ('Sahifa manzili', {
             'classes': ('collapse',),
-            'description': SLUG_HELP,
-            'fields': ('slug',),
+            'description': SLUG_HELP + ' «Ichki kod» faqat dasturchi uchun — yangi mahsulot qo‘shsangiz ham buni bo‘sh qoldirsa bo‘ladi.',
+            'fields': ('slug', 'product_key'),
         }),
     )
 
@@ -496,7 +496,7 @@ class AIProductAdmin(AutoTranslateAdmin):
 class ResearchSectionAdmin(AutoTranslateAdmin):
     fieldsets = (
         ('O‘zbekcha', {
-            'description': LANG_UZ + ' Why items ni | bilan ajrating.',
+            'description': LANG_UZ + ' “Nima uchun” bandlarini | bilan ajrating.',
             'fields': (
                 'label_uz', 'title1_uz', 'title_em_uz', 'description_uz',
                 'why_title_uz', 'why_items_uz', 'sponsor_btn_uz',
