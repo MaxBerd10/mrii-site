@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { useCms } from '../cms/CmsContext'
 import SectionHeader from './ui/SectionHeader'
 import { staggerContainer, fadeUp, blurUp } from '../lib/animations'
-import { doctorProfiles, getSpecialtyGroup, type SpecialtyGroup, type StaffKind } from '../data/doctors'
+import { getActiveDoctorProfiles, getSpecialtyGroup, type SpecialtyGroup, type StaffKind } from '../data/doctors'
 import { averageRating, getDoctorReviews } from '../lib/doctorReviews'
 import { getDoctorCardPortrait, getDoctorTurnMedia } from '../data/doctorTurnMedia'
 import '../styles/doctor-turn.css'
@@ -44,10 +45,11 @@ const GROUP_COLORS: Record<SpecialtyGroup, string> = {
 
 export default function Doctors() {
   const { contentLang, t } = useLanguage()
+  useCms()
   const [staffFilter, setStaffFilter] = useState<StaffFilter>('all')
   const [groupFilter, setGroupFilter] = useState<GroupFilter>('all')
 
-  const doctors: Doc[] = doctorProfiles.map((p) => {
+  const doctors: Doc[] = getActiveDoctorProfiles().map((p) => {
     const c = p.content[contentLang]
     const turn = getDoctorTurnMedia(p.slug)
     const poster = turn?.poster ?? p.photo

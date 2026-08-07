@@ -56,7 +56,7 @@ function profile(
   }
 }
 
-export const doctorProfiles: DoctorProfile[] = [
+const STATIC_DOCTOR_PROFILES: DoctorProfile[] = [
   profile(0, 'satvoldiyev-d-u', {
     name: 'Dr. Satvoldiyev D.U.',
     role: 'Kardiologiya bo’limi vrachi',
@@ -399,7 +399,7 @@ const REST: Array<{
 for (let i = 0; i < REST.length; i++) {
   const r = REST[i]
   const idx = i + 4
-  doctorProfiles.push(
+  STATIC_DOCTOR_PROFILES.push(
     profile(idx, r.slug, {
       name: r.uzName,
       role: r.roleUz,
@@ -441,9 +441,9 @@ for (let i = 0; i < REST.length; i++) {
 }
 
 {
-  const xojaevaIndex = doctorProfiles.findIndex((p) => p.slug === 'xojaeva-g-a')
+  const xojaevaIndex = STATIC_DOCTOR_PROFILES.findIndex((p) => p.slug === 'xojaeva-g-a')
   if (xojaevaIndex >= 0) {
-    doctorProfiles[xojaevaIndex] = profile(5, 'xojaeva-g-a', {
+    STATIC_DOCTOR_PROFILES[xojaevaIndex] = profile(5, 'xojaeva-g-a', {
       name: 'Dr. Xo’jaeva G.A.',
       role: 'UTT vrachi · Terapiya (UASh) kafedrasi assistenti',
       specialty: 'Ultratovush diagnostikasi',
@@ -520,9 +520,9 @@ for (let i = 0; i < REST.length; i++) {
 }
 
 {
-  const nigmatovaIndex = doctorProfiles.findIndex((p) => p.slug === 'nigmatova-s-a')
+  const nigmatovaIndex = STATIC_DOCTOR_PROFILES.findIndex((p) => p.slug === 'nigmatova-s-a')
   if (nigmatovaIndex >= 0) {
-    doctorProfiles[nigmatovaIndex] = profile(14, 'nigmatova-s-a', {
+    STATIC_DOCTOR_PROFILES[nigmatovaIndex] = profile(14, 'nigmatova-s-a', {
       name: 'Nigmatova S.A.',
       role: 'Kadrlar bo’limi',
       specialty: 'Kadrlar bo’limi',
@@ -574,7 +574,7 @@ for (let i = 0; i < REST.length; i++) {
   }
 }
 
-doctorProfiles.push(
+STATIC_DOCTOR_PROFILES.push(
   profile(33, 'xaydaraliyev-s-a', {
     name: 'Dr. Xaydaraliyev S.A.',
     role: 'Qabul-diagnostika bo’limi mudiri · urolog · UTT shifokor',
@@ -670,7 +670,7 @@ doctorProfiles.push(
   }, 29, 6),
 )
 
-doctorProfiles.push(
+STATIC_DOCTOR_PROFILES.push(
   profile(34, 'azimova-g-r', {
     name: 'Dr. Azimova G.R.',
     role: 'Umumiy xirurgiya kafedrasi katta o’qituvchisi · PhD',
@@ -754,7 +754,7 @@ doctorProfiles.push(
   }, 32, 8, 'professor'),
 )
 
-doctorProfiles.push(
+STATIC_DOCTOR_PROFILES.push(
   profile(35, 'ruzmatov-z-s', {
     name: 'Dr. Ruzmatov Z.S.',
     role: 'Nevrologiya bo’limi vrachi',
@@ -830,7 +830,7 @@ doctorProfiles.push(
   }, 18, 3),
 )
 
-doctorProfiles.push(
+STATIC_DOCTOR_PROFILES.push(
   profile(36, 'kojoeva-f-o', {
     name: 'Dr. Kojoeva F.O.',
     role: 'Qabul-diagnostika bo’limi nevrologi · klinik ordinatur',
@@ -909,7 +909,7 @@ doctorProfiles.push(
     languages: ["Ózbek", "Rus", "Ingliz", "Qırǵız"],
   }, 12, 1),
 )
-doctorProfiles.push(
+STATIC_DOCTOR_PROFILES.push(
   profile(37, 'nosirov-m-m', {
     name: 'Dr. Nosirov M.M.',
     role: 'Nevrologiya bo’limi mudiri · stajyor o’qituvchi',
@@ -984,7 +984,7 @@ doctorProfiles.push(
     languages: ["Ózbek", "Rus", "Ingliz"],
   }, 14, 3, 'professor'),
 )
-doctorProfiles.push(
+STATIC_DOCTOR_PROFILES.push(
   profile(38, 'bobojonov-s-s', {
     name: 'Dr. Bobojonov S.S.',
     role: 'Terapiya yo’nalishidagi fanlar kafedrasi assistenti · kardiolog',
@@ -1059,7 +1059,7 @@ doctorProfiles.push(
     languages: ["Ózbek", "Rus", "Ingliz"],
   }, 24, 5, 'professor'),
 )
-doctorProfiles.push(
+STATIC_DOCTOR_PROFILES.push(
   profile(39, 'shamsutdinova-g-b', {
     name: 'Dr. Shamsutdinova G.B.',
     role: 'Terapiya (UASH) kafedra mudiri · PhD · kardiorevmatolog',
@@ -1142,7 +1142,7 @@ doctorProfiles.push(
     languages: ["Ózbek", "Rus", "Ingliz"],
   }, 28, 6, 'professor'),
 )
-doctorProfiles.push(
+STATIC_DOCTOR_PROFILES.push(
   profile(40, 'isaqjonova-m-n', {
     name: 'Dr. Isaqjonova M.N.',
     role: 'Stajyor o’qituvchi · endokrinolog',
@@ -1218,7 +1218,7 @@ doctorProfiles.push(
   }, 14, 3, 'professor'),
 )
 
-doctorProfiles.push(
+STATIC_DOCTOR_PROFILES.push(
   profile(41, 'xalilov-n-a', {
     name: 'Dr. Xalilov N.A.',
     role: 'Terapevt',
@@ -1294,7 +1294,7 @@ doctorProfiles.push(
   }, 8, 2),
 )
 
-doctorProfiles.push(
+STATIC_DOCTOR_PROFILES.push(
   profile(42, 'davlatov-s-q', {
     name: 'Dr. Davlatov S.Q.',
     role: 'Terapiya (UASh) kafedrasi assistenti',
@@ -1370,7 +1370,7 @@ doctorProfiles.push(
   }, 12, 3),
 )
 
-doctorProfiles.push(
+STATIC_DOCTOR_PROFILES.push(
   profile(43, 'gayratjonova-f-g', {
     name: 'Dr. Gayratjonova F.G.',
     role: 'Terapiya (UASh) kafedrasi o’qituvchi stajyori',
@@ -1446,7 +1446,7 @@ doctorProfiles.push(
   }, 6, 1),
 )
 
-doctorProfiles.push(
+STATIC_DOCTOR_PROFILES.push(
   profile(44, 'mominov-j-z', {
     name: 'Dr. Mominov J.Z.',
     role: 'Terapiya yo’nalishidagi fanlar kafedrasi assistenti',
@@ -1522,6 +1522,75 @@ doctorProfiles.push(
   }, 10, 2),
 )
 
+/**
+ * CMS bridge: the admin panel is the source of truth for doctors once the
+ * backend has data. `CmsProvider` calls `setCmsDoctorProfiles` whenever it
+ * (re)fetches `/api/home/`; every helper below reads through
+ * `getActiveDoctorProfiles()` so the whole module — and every component that
+ * imports from it — picks up CMS content without a separate rewrite.
+ * `STATIC_DOCTOR_PROFILES` remains the fallback when the CMS is unreachable,
+ * empty, or the UI language is Karakalpak (the CMS has no `kaa` content).
+ */
+let cmsDoctorProfiles: DoctorProfile[] | null = null
+
+export function setCmsDoctorProfiles(list: DoctorProfile[] | null): void {
+  cmsDoctorProfiles = list
+}
+
+export function getActiveDoctorProfiles(): DoctorProfile[] {
+  return cmsDoctorProfiles ?? STATIC_DOCTOR_PROFILES
+}
+
+/**
+ * `/api/home/` resolves every text field to a single language per request
+ * (whatever `?lang=` was sent), so one CMS doctor row only ever carries one
+ * language's copy at a time. That's fine here: the same resolved strings are
+ * mirrored into all four `content` keys, and `CmsProvider` re-maps + re-sets
+ * this list whenever the UI language changes, so `content[contentLang]`
+ * always reads the currently-fetched language.
+ */
+export function mapCmsDoctors(
+  rows: Array<{
+    slug: string
+    staff_kind: string
+    name: string
+    role: string
+    specialty: string
+    exp: string
+    about: string
+    education: string[]
+    focuses: string[]
+    languages: string[]
+    papers: string
+    studies: string
+    color: string
+    photo: string
+  }>,
+): DoctorProfile[] {
+  return rows.map((row) => {
+    const staffKind: StaffKind =
+      row.staff_kind === 'professor' || row.staff_kind === 'nurse' ? row.staff_kind : 'doctor'
+    const resolved = {
+      name: row.name,
+      role: row.role,
+      specialty: row.specialty,
+      exp: row.exp,
+      about: row.about,
+      education: row.education,
+      focuses: row.focuses,
+      languages: row.languages,
+    }
+    return {
+      slug: row.slug,
+      photo: row.photo,
+      color: row.color || '#0B3D6B',
+      papers: Number(row.papers) || 0,
+      studies: Number(row.studies) || 0,
+      staffKind,
+      content: { uz: resolved, ru: resolved, en: resolved, kaa: resolved },
+    }
+  })
+}
 
 /** Not shown in homepage doctor wall — Soliyev is center-only; Aliyeva card style mismatches the row. */
 const HIDDEN_FROM_HOME_ORBIT = new Set(['soliyev-m-h', 'aliyeva-z-v'])
@@ -1542,12 +1611,12 @@ export function getHomeFeaturedDoctors(
   count: number = HOME_FEATURED_DOCTOR_SLUGS.length,
 ): DoctorProfile[] {
   return HOME_FEATURED_DOCTOR_SLUGS.slice(0, count)
-    .map((slug) => doctorProfiles.find((p) => p.slug === slug))
+    .map((slug) => getActiveDoctorProfiles().find((p) => p.slug === slug))
     .filter((p): p is DoctorProfile => Boolean(p))
 }
 
 export function getHomeOrbitDoctors(max = 20): DoctorProfile[] {
-  return doctorProfiles
+  return getActiveDoctorProfiles()
     .filter((p) => p.staffKind !== 'nurse' && !HIDDEN_FROM_HOME_ORBIT.has(p.slug))
     .slice(0, max)
 }
@@ -1582,10 +1651,10 @@ export function getDoctorWallPlaybackRate(slug: string): number {
 }
 
 export function getHomeDoctorWallDoctors(count = 7): DoctorProfile[] {
-  const pool = getHomeOrbitDoctors(doctorProfiles.length)
+  const pool = getHomeOrbitDoctors(getActiveDoctorProfiles().length)
   const centerIndex = Math.floor(count / 2)
-  const center = doctorProfiles.find((p) => p.slug === HOME_DOCTOR_WALL_CENTER_SLUG)
-  const pinnedRight = doctorProfiles.find((p) => p.slug === HOME_DOCTOR_WALL_RIGHT_SLUG)
+  const center = getActiveDoctorProfiles().find((p) => p.slug === HOME_DOCTOR_WALL_CENTER_SLUG)
+  const pinnedRight = getActiveDoctorProfiles().find((p) => p.slug === HOME_DOCTOR_WALL_RIGHT_SLUG)
   if (!center) return pool.slice(0, count)
 
   const excluded = new Set<string>([HOME_DOCTOR_WALL_CENTER_SLUG])
@@ -1599,14 +1668,14 @@ export function getHomeDoctorWallDoctors(count = 7): DoctorProfile[] {
 }
 
 export function getDoctorsBySpecialty(specialtyUz: string, excludeSlug?: string) {
-  return doctorProfiles.filter(
+  return getActiveDoctorProfiles().filter(
     (d) => d.content.uz.specialty === specialtyUz && d.slug !== excludeSlug,
   )
 }
 
 export function getStaffByKind(kind: StaffKind | 'all') {
-  if (kind === 'all') return doctorProfiles
-  return doctorProfiles.filter((d) => d.staffKind === kind)
+  if (kind === 'all') return getActiveDoctorProfiles()
+  return getActiveDoctorProfiles().filter((d) => d.staffKind === kind)
 }
 
 export function getSpecialtiesForStaff(
@@ -1664,9 +1733,9 @@ export function getSpecialtyGroup(profile: DoctorProfile): SpecialtyGroup {
 
 export function getDoctorBySlug(slug: string) {
   const resolved = ({ 'qosimov-r-b': 'xaydaraliyev-s-a', 'ganiyeva-z-m': 'azimova-g-r', 'nazarov-i-v': 'ruzmatov-z-s', 'saidova-l-h': 'kojoeva-f-o', 'ergashev-b-m': 'nosirov-m-m', 'xolmatov-s-r': 'bobojonov-s-s', 'rahimova-m-t': 'mamatalieva-z-a', 'toshmatova-g-a': 'abdullayeva-t-y', 'azimova-n-k': 'shamsutdinova-g-b', 'yusupova-n-r': 'aliyeva-z-v', 'ismoilova-z-b': 'isaqjonova-m-n', 'karimov-a-s': 'satvoldiyev-d-u', 'abdullayev-j-o': 'xalilov-n-a', 'rahmonov-d-k': 'davlatov-s-q', 'sultanova-g-m': 'gayratjonova-f-g', 'hasanov-a-m': 'mominov-j-z', 'usmonov-q-a': 'aliyeva-z-v', 'qodirova-m-s': 'xojaeva-g-a' } as Record<string, string>)[slug] ?? slug
-  const index = doctorProfiles.findIndex((d) => d.slug === resolved)
+  const index = getActiveDoctorProfiles().findIndex((d) => d.slug === resolved)
   if (index < 0) return null
-  return { profile: doctorProfiles[index], index }
+  return { profile: getActiveDoctorProfiles()[index], index }
 }
 
 export const doctorPageLabels: Record<

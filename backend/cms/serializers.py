@@ -65,10 +65,18 @@ class DoctorSerializer(LangContextMixin, serializers.ModelSerializer):
     specialty = serializers.SerializerMethodField()
     photo = serializers.SerializerMethodField()
     exp = serializers.SerializerMethodField()
+    about = serializers.SerializerMethodField()
+    education = serializers.SerializerMethodField()
+    focuses = serializers.SerializerMethodField()
+    languages = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Doctor
-        fields = ('id', 'name', 'role', 'specialty', 'exp', 'papers', 'studies', 'color', 'photo', 'order')
+        fields = (
+            'id', 'slug', 'staff_kind', 'name', 'role', 'specialty', 'exp',
+            'about', 'education', 'focuses', 'languages',
+            'papers', 'studies', 'color', 'photo', 'order',
+        )
 
     def get_role(self, obj):
         return pick(obj, 'role', self.lang)
@@ -78,6 +86,18 @@ class DoctorSerializer(LangContextMixin, serializers.ModelSerializer):
 
     def get_exp(self, obj):
         return pick(obj, 'experience', self.lang)
+
+    def get_about(self, obj):
+        return pick(obj, 'about', self.lang)
+
+    def get_education(self, obj):
+        return split_pipe(pick(obj, 'education', self.lang))
+
+    def get_focuses(self, obj):
+        return split_pipe(pick(obj, 'focuses', self.lang))
+
+    def get_languages(self, obj):
+        return split_pipe(pick(obj, 'languages', self.lang))
 
     def get_photo(self, obj):
         return media_url(self.request, obj.photo, obj.photo_url)

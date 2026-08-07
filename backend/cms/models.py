@@ -173,6 +173,15 @@ class Specialty(TimeStampedModel, OrderedModel):
 
 
 class Doctor(TimeStampedModel, OrderedModel):
+    class StaffKind(models.TextChoices):
+        DOCTOR = 'doctor', 'Shifokor'
+        PROFESSOR = 'professor', 'Professor'
+        NURSE = 'nurse', 'Hamshira'
+
+    slug = models.SlugField('Sahifa manzili (URL)', unique=True)
+    staff_kind = models.CharField(
+        'Toifasi', max_length=16, choices=StaffKind.choices, default=StaffKind.DOCTOR,
+    )
     name = models.CharField('Ism', max_length=255)
     role_uz = models.CharField('Lavozim (UZ)', max_length=255, blank=True)
     role_ru = models.CharField('Lavozim (RU)', max_length=255, blank=True)
@@ -183,11 +192,23 @@ class Doctor(TimeStampedModel, OrderedModel):
     experience_uz = models.CharField('Tajriba (UZ)', max_length=64, blank=True)
     experience_ru = models.CharField('Tajriba (RU)', max_length=64, blank=True)
     experience_en = models.CharField('Tajriba (EN)', max_length=64, blank=True)
+    about_uz = models.TextField('Haqida (UZ)', blank=True)
+    about_ru = models.TextField('Haqida (RU)', blank=True)
+    about_en = models.TextField('Haqida (EN)', blank=True)
+    education_uz = models.TextField('Ta’lim | bilan (UZ)', blank=True)
+    education_ru = models.TextField('Ta’lim | bilan (RU)', blank=True)
+    education_en = models.TextField('Ta’lim | bilan (EN)', blank=True)
+    focuses_uz = models.TextField('Yo’nalishlar | bilan (UZ)', blank=True)
+    focuses_ru = models.TextField('Yo’nalishlar | bilan (RU)', blank=True)
+    focuses_en = models.TextField('Yo’nalishlar | bilan (EN)', blank=True)
+    languages_uz = models.TextField('Tillar | bilan (UZ)', blank=True)
+    languages_ru = models.TextField('Tillar | bilan (RU)', blank=True)
+    languages_en = models.TextField('Tillar | bilan (EN)', blank=True)
     papers = models.CharField('Maqolalar', max_length=64, blank=True)
     studies = models.CharField('Tadqiqotlar', max_length=64, blank=True)
     color = models.CharField('Rang', max_length=32, blank=True, default='#0B3D6B')
     photo = models.ImageField('Foto', upload_to='doctors/', blank=True, null=True)
-    photo_url = models.URLField('Yoki foto URL', blank=True)
+    photo_url = models.CharField('Yoki foto yo‘li/URL', max_length=512, blank=True)
     is_active = models.BooleanField('Faol', default=True)
 
     class Meta:

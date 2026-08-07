@@ -319,12 +319,14 @@ class SpecialtyAdmin(AutoTranslateAdmin):
 
 @admin.register(models.Doctor, site=mrii_admin_site)
 class DoctorAdmin(AutoTranslateAdmin):
-    list_display = ('name', 'specialty_uz', 'experience_uz', 'order', 'is_active', 'preview', 'quick_delete')
+    list_display = ('name', 'staff_kind', 'specialty_uz', 'experience_uz', 'order', 'is_active', 'preview', 'quick_delete')
     list_editable = ('order', 'is_active')
     list_display_links = ('name',)
+    list_filter = ('staff_kind',)
     search_fields = ('name', 'specialty_uz', 'specialty_ru', 'specialty_en')
     list_per_page = 25
     actions = ('delete_selected', 'make_inactive', 'make_active')
+    prepopulated_fields = {'slug': ('name',)}
     preview = thumb('photo_url', 'photo')
     image_preview = big_preview('photo_url', 'photo')
     readonly_fields = ('image_preview',)
@@ -335,23 +337,39 @@ class DoctorAdmin(AutoTranslateAdmin):
                 'O‘chirish: pastdagi qizil «O‘chirish» yoki ro‘yxatdagi belgilab «Tanlanganlarni o‘chirish». '
                 'Vaqtincha yashirish uchun «Faol» ni o‘chiring.'
             ),
-            'fields': ('name', 'papers', 'studies', 'is_active'),
+            'fields': ('name', 'staff_kind', 'papers', 'studies', 'is_active'),
         }),
         ('O‘zbekcha', {
-            'description': f'{LANG_UZ} {AUTO_TIP}',
-            'fields': ('role_uz', 'specialty_uz', 'experience_uz'),
+            'description': f'{LANG_UZ} {AUTO_TIP} Ro‘yxat maydonlarida (Ta’lim, Yo‘nalishlar, Tillar) | bilan ajrating.',
+            'fields': (
+                'role_uz', 'specialty_uz', 'experience_uz', 'about_uz',
+                'education_uz', 'focuses_uz', 'languages_uz',
+            ),
         }),
         ('Русский', {
+            'classes': ('collapse',),
             'description': LANG_RU,
-            'fields': ('role_ru', 'specialty_ru', 'experience_ru'),
+            'fields': (
+                'role_ru', 'specialty_ru', 'experience_ru', 'about_ru',
+                'education_ru', 'focuses_ru', 'languages_ru',
+            ),
         }),
         ('English', {
+            'classes': ('collapse',),
             'description': LANG_EN,
-            'fields': ('role_en', 'specialty_en', 'experience_en'),
+            'fields': (
+                'role_en', 'specialty_en', 'experience_en', 'about_en',
+                'education_en', 'focuses_en', 'languages_en',
+            ),
         }),
         ('Rasm', {
             'description': IMG_HELP,
             'fields': ('image_preview', 'photo', 'photo_url'),
+        }),
+        ('Sahifa manzili', {
+            'classes': ('collapse',),
+            'description': SLUG_HELP,
+            'fields': ('slug',),
         }),
         ('Qo‘shimcha (ixtiyoriy)', {
             'classes': ('collapse',),

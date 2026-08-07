@@ -57,10 +57,16 @@ export type CmsHome = {
   }>
   doctors: Array<{
     id: number
+    slug: string
+    staff_kind: 'doctor' | 'professor' | 'nurse'
     name: string
     role: string
     specialty: string
     exp: string
+    about: string
+    education: string[]
+    focuses: string[]
+    languages: string[]
     papers: string
     studies: string
     color: string
@@ -115,8 +121,6 @@ export type CmsHome = {
     programs: Array<{ name: string; duration: string; spots: string }>
   }>
   testimonials: Array<{ quote: string; author: string; role: string }>
-  partners: Array<{ name: string; logo: string }>
-  international: Array<{ title: string; desc: string }>
 }
 
 export type CmsSpecialtyDetail = CmsHome['specialties'][number] & {

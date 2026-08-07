@@ -1,7 +1,7 @@
 import type { ContentLang } from '../i18n/types'
 import { media } from './media'
 import { getClinicSpecialtyImage } from './specialtyImages'
-import { doctorProfiles, type DoctorProfile } from './doctors'
+import { getActiveDoctorProfiles, type DoctorProfile } from './doctors'
 
 export type SpecialtyWorldTheme = {
   accent: string
@@ -305,7 +305,7 @@ export function getSpecialtyDoctors(slug: string): DoctorProfile[] {
     surgery: ['Jarrohlik', 'Travmatologiya'],
   }
   const names = aliases[slug] ?? [world.doctorSpecialtyUz]
-  return doctorProfiles.filter((d) => names.includes(d.content.uz.specialty))
+  return getActiveDoctorProfiles().filter((d) => names.includes(d.content.uz.specialty))
 }
 
 /** Map a doctor's uz specialty label to a clinic slug when possible. */
