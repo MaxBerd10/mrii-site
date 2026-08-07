@@ -186,7 +186,7 @@ function CardFace({ doctor }: { doctor: Doctor }) {
  * The doctors, as a ring that opens into an arch on scroll (desktop only).
  */
 function CareOrbitAnimated() {
-  const { t, contentLang } = useLanguage()
+  const { t, lang } = useLanguage()
   const sectionRef = useRef<HTMLElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
   const [size, setSize] = useState({ w: 0, h: 0 })
@@ -201,8 +201,8 @@ function CareOrbitAnimated() {
 
   const doctors: Doctor[] = getHomeOrbitDoctors(count).map((p) => ({
       slug: p.slug,
-      name: p.content[contentLang].name,
-      specialty: p.content[contentLang].specialty,
+      name: p.content[lang].name,
+      specialty: p.content[lang].specialty,
       photo: p.photo,
     }))
 
@@ -290,7 +290,7 @@ function CareOrbitAnimated() {
 }
 
 function CareOrbitMobile() {
-  const { t, contentLang } = useLanguage()
+  const { t, lang } = useLanguage()
   const copy = t.homeDark.team
   const featured = getHomeFeaturedDoctors(4)
 
@@ -325,7 +325,7 @@ function CareOrbitMobile() {
 
         <div className="hc-docs__grid hc-orbit__mobile-grid">
           {featured.map((doc) => {
-            const info = doc.content[contentLang]
+            const info = doc.content[lang]
             return (
               <a key={doc.slug} className="hc-doc" href={`/doctors/${doc.slug}`}>
                 <span className="hc-doc__media">
@@ -355,7 +355,7 @@ function CareOrbitMobile() {
 }
 
 function CareOrbitStatic() {
-  const { t, contentLang } = useLanguage()
+  const { t, lang } = useLanguage()
   const stageRef = useRef<HTMLDivElement>(null)
   const [size, setSize] = useState({ w: 0, h: 0 })
   const copy = t.homeDark.team
@@ -363,8 +363,8 @@ function CareOrbitStatic() {
   const count = size.w > 0 && size.w < 768 ? 12 : 20
   const doctors: Doctor[] = getHomeOrbitDoctors(count).map((p) => ({
       slug: p.slug,
-      name: p.content[contentLang].name,
-      specialty: p.content[contentLang].specialty,
+      name: p.content[lang].name,
+      specialty: p.content[lang].specialty,
       photo: p.photo,
     }))
 
@@ -418,11 +418,11 @@ function CareOrbitStatic() {
 
 /** A focused doctor picker: selecting a name changes the single lead profile. */
 function CareDoctorNavigator() {
-  const { t, contentLang } = useLanguage()
+  const { t, lang } = useLanguage()
   const doctors = getHomeOrbitDoctors(6).map((doctor) => ({
     slug: doctor.slug,
     photo: getDoctorCardPortrait(doctor.slug, doctor.photo),
-    ...doctor.content[contentLang],
+    ...doctor.content[lang],
   }))
   const [activeSlug, setActiveSlug] = useState(doctors[0]?.slug ?? '')
   const active = doctors.find((doctor) => doctor.slug === activeSlug) ?? doctors[0]
@@ -599,11 +599,11 @@ function DoctorWallCard({
 
 /** A living staff wall: one portrait expands while the rest yield around it. */
 function CareDoctorWall() {
-  const { t, contentLang } = useLanguage()
+  const { t, lang } = useLanguage()
   const doctors = getHomeDoctorWallDoctors(7).map((doctor) => {
     const turn = getDoctorTurnMedia(doctor.slug)
     const portrait = turn?.poster ?? doctor.photo
-    const content = doctor.content[contentLang]
+    const content = doctor.content[lang]
     const wallLabel = doctor.staffKind === 'nurse' ? content.role : content.specialty
     return {
       slug: doctor.slug,

@@ -393,7 +393,7 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
             description={labels.teamNote}
             hoursLabel={labels.hoursShort}
             doctors={doctors}
-            contentLang={contentLang}
+            contentLang={lang}
             action={
               <a href="/doctors" className="specialty-detail__all-doctors">
                 {t.clinic.specialists}

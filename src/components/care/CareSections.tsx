@@ -323,7 +323,7 @@ export function CareServices() {
  * ==================================================================== */
 
 export function CareDoctors() {
-  const { t, contentLang } = useLanguage()
+  const { t, lang } = useLanguage()
   const c = t.homeDark.team
   const featured = getHomeFeaturedDoctors(8)
 
@@ -355,7 +355,7 @@ export function CareDoctors() {
 
         <div className="hc-docs__grid">
           {featured.map((doc, i) => {
-            const info = doc.content[contentLang]
+            const info = doc.content[lang]
             return (
               <Reveal key={doc.slug} delay={Math.min(i, 6) * 60}>
                 <a className="hc-doc" href={`/doctors/${doc.slug}`}>

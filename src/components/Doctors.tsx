@@ -44,13 +44,13 @@ const GROUP_COLORS: Record<SpecialtyGroup, string> = {
 }
 
 export default function Doctors() {
-  const { contentLang, t } = useLanguage()
+  const { lang, t } = useLanguage()
   useCms()
   const [staffFilter, setStaffFilter] = useState<StaffFilter>('all')
   const [groupFilter, setGroupFilter] = useState<GroupFilter>('all')
 
   const doctors: Doc[] = getActiveDoctorProfiles().map((p) => {
-    const c = p.content[contentLang]
+    const c = p.content[lang]
     const turn = getDoctorTurnMedia(p.slug)
     const poster = turn?.poster ?? p.photo
     return {
