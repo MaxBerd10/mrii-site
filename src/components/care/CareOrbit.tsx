@@ -15,6 +15,74 @@ import { isSafari } from '../../lib/browser'
 import { useMobileLayout } from '../../hooks/useMobileLayout'
 import { MaskedText, SectionHead } from './careUi'
 
+/**
+ * Doctor wall cards label each portrait with a role, not a department —
+ * "Kardiolog", not "Kardiologiya" (mirrors how nurses already show a role
+ * like "Bosh hamshira" rather than their department). Doctor.role text is
+ * too inconsistent in length to use directly (some are a single word,
+ * others long institutional phrases), so this maps the specialty text to
+ * a short practitioner title instead. Unmapped specialties — including all
+ * of Karakalpak, which this intentionally doesn't cover — fall back to the
+ * specialty name unchanged, same as before this map existed.
+ */
+const SPECIALTY_PRACTITIONER_TITLE: Partial<Record<'uz' | 'ru' | 'en', Record<string, string>>> = {
+  uz: {
+    'Akusherlik': 'Akusher',
+    'Anesteziologiya': 'Anesteziolog',
+    'Dermatologiya': 'Dermatolog',
+    'Endokrinologiya': 'Endokrinolog',
+    'Jarrohlik': 'Jarroh',
+    'Kardiologiya': 'Kardiolog',
+    'Nevrologiya': 'Nevrolog',
+    'Onkologiya': 'Onkolog',
+    'Ortopediya': 'Ortoped',
+    'Otorinolaringologiya': 'LOR',
+    'Pediatriya': 'Pediatr',
+    'Pulmonologiya': 'Pulmonolog',
+    'Terapiya': 'Terapevt',
+    'Ultratovush diagnostikasi': 'UTT vrachi',
+    'Urologiya': 'Urolog',
+  },
+  ru: {
+    'Акушерство': 'Акушер',
+    'Анестезиология': 'Анестезиолог',
+    'Дерматология': 'Дерматолог',
+    'Эндокринология': 'Эндокринолог',
+    'Хирургия': 'Хирург',
+    'Кардиология': 'Кардиолог',
+    'Неврология': 'Невролог',
+    'Онкология': 'Онколог',
+    'Ортопедия': 'Ортопед',
+    'Оториноларингология': 'ЛОР',
+    'Педиатрия': 'Педиатр',
+    'Пульмонология': 'Пульмонолог',
+    'Терапия': 'Терапевт',
+    'УЗ-диагностика': 'Врач УЗД',
+    'Урология': 'Уролог',
+  },
+  en: {
+    'Obstetrics': 'Obstetrician',
+    'Anesthesiology': 'Anesthesiologist',
+    'Dermatology': 'Dermatologist',
+    'Endocrinology': 'Endocrinologist',
+    'Surgery': 'Surgeon',
+    'Cardiology': 'Cardiologist',
+    'Neurology': 'Neurologist',
+    'Oncology': 'Oncologist',
+    'Orthopedics': 'Orthopedist',
+    'Otolaryngology': 'ENT specialist',
+    'Pediatrics': 'Pediatrician',
+    'Pulmonology': 'Pulmonologist',
+    'Therapy': 'Therapist',
+    'Ultrasound diagnostics': 'Ultrasound specialist',
+    'Urology': 'Urologist',
+  },
+}
+
+function practitionerTitle(specialty: string, lang: string): string {
+  return SPECIALTY_PRACTITIONER_TITLE[lang as 'uz' | 'ru' | 'en']?.[specialty] ?? specialty
+}
+
 const CARD_W = 76
 const CARD_H = 104
 
@@ -604,7 +672,8 @@ function CareDoctorWall() {
     const turn = getDoctorTurnMedia(doctor.slug)
     const portrait = turn?.poster ?? doctor.photo
     const content = doctor.content[lang]
-    const wallLabel = doctor.staffKind === 'nurse' ? content.role : content.specialty
+    const wallLabel =
+      doctor.staffKind === 'nurse' ? content.role : practitionerTitle(content.specialty, lang)
     return {
       slug: doctor.slug,
       portrait,
