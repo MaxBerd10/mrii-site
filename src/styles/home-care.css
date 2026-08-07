@@ -507,11 +507,15 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
 
 .hc-doctor-wall__foot {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 20px;
   margin-top: 20px;
   color: var(--hc-muted);
   font-size: 0.88rem;
+}
+
+.hc-doctor-wall__hint {
+  display: none;
 }
 
 .hc-doctor-wall__foot a {
@@ -529,6 +533,7 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
   .hc-doctor-wall__card { flex: 0 0 76px; min-height: 350px; }
   .hc-doctor-wall__card.is-center { flex-basis: 230px; }
   .hc-doctor-wall__foot { align-items: flex-start; flex-direction: column; }
+  .hc-doctor-wall__hint { display: block; }
 }
 
 @media (prefers-reduced-motion: reduce) {

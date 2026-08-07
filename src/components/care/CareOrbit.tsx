@@ -744,7 +744,7 @@ function CareDoctorWall() {
         </div>
 
         <div className="hc-doctor-wall__foot">
-          <span>{t.homeCare.orbitHint}</span>
+          <span className="hc-doctor-wall__hint">{t.homeCare.orbitHint}</span>
           <a href="/doctors">{t.homeDark.team.viewAll} <span aria-hidden>→</span></a>
         </div>
       </div>
