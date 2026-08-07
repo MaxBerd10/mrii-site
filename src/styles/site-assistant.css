@@ -10,6 +10,11 @@
   align-items: flex-end;
   gap: 12px;
   pointer-events: none;
+  /* This fixed block animates continuously (bob/blink/antenna) on every page.
+     Same fix as .hp-nav__bar: force it onto its own compositor layer so
+     iOS Safari doesn't repaint it against the page on every scroll frame. */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .site-assistant > * {
