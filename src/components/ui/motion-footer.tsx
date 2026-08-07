@@ -262,11 +262,11 @@ export function CinematicFooter() {
             <p className="motion-footer__lead">{t.footer.readyDesc}</p>
 
             <div className="motion-footer__primary-actions">
-              <MagneticLink href={phoneHref} className="motion-footer__pill motion-footer__pill--primary">
+              <MagneticLink href="/contacts?intent=booking" className="motion-footer__pill motion-footer__pill--primary">
                 {t.footer.bookBtn}
                 <span aria-hidden="true">↗</span>
               </MagneticLink>
-              <MagneticLink href="/contacts" className="motion-footer__pill">
+              <MagneticLink href={phoneHref} className="motion-footer__pill">
                 {phone}
               </MagneticLink>
             </div>
