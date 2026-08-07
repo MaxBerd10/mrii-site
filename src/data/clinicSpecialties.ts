@@ -1,15 +1,15 @@
 import type { CmsHome } from '../api/client'
-import type { ClinicSpecialtySlug } from './clinicContact'
 import { CLINIC_SPECIALTY_SLUGS } from './clinicContact'
 import {
   CLINIC_SPECIALTY_CATEGORIES,
+  getClinicSpecialtyCategory,
   getClinicSpecialtyImage,
 } from './specialtyImages'
 
 export type ClinicSpecialtyCategory = (typeof CLINIC_SPECIALTY_CATEGORIES)[number]
 
 export type ClinicSpecialtyListItem = {
-  slug: ClinicSpecialtySlug
+  slug: string
   name: string
   desc: string
   count: number
@@ -25,23 +25,36 @@ type ClinicSpecialtyTranslation = {
 
 type CmsSpecialty = CmsHome['specialties'][number]
 
-/** Canonical 11 departments — signage order, CMS extras ignored. */
+/**
+ * CMS is the source of truth once it has data: every `is_active` Specialty
+ * row shows up, in admin `order`, whether it's one of the original 11 or a
+ * department added later — no frontend redeploy needed. The static
+ * `translations` (11 departments, signage order) only cover the days the
+ * CMS is unreachable or empty.
+ */
 export function buildClinicSpecialties(
   translations: ClinicSpecialtyTranslation[],
   cms?: CmsSpecialty[] | null,
 ): ClinicSpecialtyListItem[] {
-  const cmsBySlug = new Map(cms?.map((item) => [item.slug, item]) ?? [])
+  if (cms && cms.length > 0) {
+    return cms.map((item) => ({
+      slug: item.slug,
+      name: item.name,
+      desc: item.desc,
+      count: item.count,
+      image: item.image || getClinicSpecialtyImage(item.slug),
+      category: getClinicSpecialtyCategory(item.slug),
+    }))
+  }
 
   return CLINIC_SPECIALTY_SLUGS.map((slug, index) => {
     const fallback = translations[index]
-    const fromCms = cmsBySlug.get(slug)
-
     return {
       slug,
-      name: fromCms?.name ?? fallback?.name ?? slug,
-      desc: fromCms?.desc ?? fallback?.desc ?? '',
-      count: fromCms?.count ?? fallback?.count ?? 0,
-      image: fromCms?.image || getClinicSpecialtyImage(slug),
+      name: fallback?.name ?? slug,
+      desc: fallback?.desc ?? '',
+      count: fallback?.count ?? 0,
+      image: getClinicSpecialtyImage(slug),
       category: CLINIC_SPECIALTY_CATEGORIES[index] ?? 'therapy',
     }
   })

@@ -37,4 +37,22 @@ export const CLINIC_SPECIALTY_CATEGORIES = [
   'therapy',
 ] as const
 
+export type ClinicSpecialtyCategoryValue = (typeof CLINIC_SPECIALTY_CATEGORIES)[number]
+
+/** Category for CMS specialties beyond the original 11 (keyed by slug). */
+const EXTRA_SPECIALTY_CATEGORIES: Record<string, ClinicSpecialtyCategoryValue> = {
+  pediatrics: 'women',
+  rehabilitation: 'therapy',
+  diagnostics: 'diagnostics',
+  oncology: 'surgery',
+  urology: 'surgery',
+  endocrinology: 'therapy',
+}
+
+export function getClinicSpecialtyCategory(slug: string): ClinicSpecialtyCategoryValue {
+  const knownIndex = CLINIC_SPECIALTY_SLUGS.indexOf(slug as ClinicSpecialtySlug)
+  if (knownIndex >= 0) return CLINIC_SPECIALTY_CATEGORIES[knownIndex]
+  return EXTRA_SPECIALTY_CATEGORIES[slug] ?? 'therapy'
+}
+
 export { CLINIC_SPECIALTY_SLUGS }
