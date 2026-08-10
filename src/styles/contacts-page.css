@@ -329,6 +329,12 @@
 @media (max-width: 900px) {
   .contacts-page__panels {
     flex-direction: column;
+    /* align-items: flex-start above is for the desktop row (cross axis =
+       vertical, keeps panels top-aligned at different heights). In column
+       direction the cross axis becomes horizontal, so that same value shrinks
+       each panel to its content width instead of stretching it — leaving a
+       gap on the right. Stretch to fill again now that we're stacked. */
+    align-items: stretch;
   }
 }
 
