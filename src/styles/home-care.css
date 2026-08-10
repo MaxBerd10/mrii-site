@@ -525,15 +525,29 @@ html.is-home-care[data-theme='dark'] .hc-hero__card {
 }
 
 @media (max-width: 720px) {
+  /* No horizontal swipe on phones — nothing on an ordinary webpage tells a
+     visitor to scroll sideways, so a swipe-only row just hides doctors.
+     A plain 2-column grid puts all 5 in view with normal vertical scrolling. */
   .hc-doctor-wall__stage {
-    min-height: 390px;
-    overflow-x: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    min-height: 0;
+    overflow: visible;
     padding: 14px;
   }
-  .hc-doctor-wall__card { flex: 0 0 76px; min-height: 350px; }
-  .hc-doctor-wall__card.is-center { flex-basis: 230px; }
+  .hc-doctor-wall__card,
+  .hc-doctor-wall__card.is-center {
+    flex: none;
+    min-height: 220px;
+    /* Per-doctor positions (--wall-photo-position, set inline) were hand-tuned
+       for the wide desktop hover card. On the narrow phone card that same
+       percentage crops some faces off-center; one neutral, face-forward crop
+       for everyone reads as more consistent than each doctor's desktop tuning. */
+    --wall-photo-position: 50% 15% !important;
+  }
   .hc-doctor-wall__foot { align-items: flex-start; flex-direction: column; }
-  .hc-doctor-wall__hint { display: block; }
+  .hc-doctor-wall__hint { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -574,14 +588,15 @@ html.is-safari .hc-doctor-wall__photo {
 }
 
 @media (max-width: 720px) {
-  html.is-safari .hc-doctor-wall__card {
-    flex: 0 0 76px;
-    width: 76px;
-  }
-
+  /* The 76px/230px hover-carousel sizing above is for the desktop flex strip.
+     Phones use a static 2x2 grid (see the max-width: 720px block earlier in
+     this file) — without this reset those fixed widths left each Safari card
+     narrower or wider than its grid cell, showing bare cell background beside
+     the photo. */
+  html.is-safari .hc-doctor-wall__card,
   html.is-safari .hc-doctor-wall__card.is-center {
-    flex: 0 0 230px;
-    width: 230px;
+    flex: none;
+    width: auto;
   }
 }
 
@@ -5606,19 +5621,25 @@ a.hc-card:active {
   mask-image: none;
 }
 
-/* Fallback when sticky viewport math clips the team on Safari. */
-html.is-safari .hc-hero--dna .hc-hero__track {
-  height: max(100svh, 780px);
-}
+/* Fallback when sticky viewport math clips the team on Safari.
+   Desktop only — the sticky scroll-theater it patches is dropped entirely
+   on phones (see the max-width: 760px block below), and without this guard
+   these rules' extra .is-safari specificity was beating the mobile layout's
+   `inset: auto` on iPhone Safari, reintroducing the desktop crop. */
+@media (min-width: 761px) {
+  html.is-safari .hc-hero--dna .hc-hero__track {
+    height: max(100svh, 780px);
+  }
 
-html.is-safari .hc-hero--dna .hc-hero__dna {
-  inset: 5% -2% -2% 39%;
-}
+  html.is-safari .hc-hero--dna .hc-hero__dna {
+    inset: 5% -2% -2% 39%;
+  }
 
-html.is-safari .hc-hero--dna .hc-hero__team img {
-  transform: translate3d(0, 0, 0);
-  -webkit-transform: translate3d(0, 0, 0);
-  will-change: auto;
+  html.is-safari .hc-hero--dna .hc-hero__team img {
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    will-change: auto;
+  }
 }
 
 @supports (-webkit-touch-callout: none) {

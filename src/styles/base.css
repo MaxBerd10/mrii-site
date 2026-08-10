@@ -449,8 +449,26 @@ button { color: inherit; }
 }
 
 @media (max-width: 760px) {
+  html {
+    scroll-padding-block-start: calc(76px + env(safe-area-inset-top));
+  }
+  .page-shell {
+    padding-top: calc(76px + env(safe-area-inset-top));
+  }
+  #clinic,
+  #research,
+  #ai,
+  #education,
+  #doctors,
+  #news,
+  #contacts,
+  #partners,
+  #international {
+    scroll-margin-top: calc(76px + env(safe-area-inset-top));
+  }
   .section-head { grid-template-columns: 1fr; align-items: start; }
   .section-head__action { align-self: start; }
+  .section-head__action > * { min-height: 44px; }
   .section-title { font-size: clamp(36px, 12vw, 52px); }
 }
 

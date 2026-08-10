@@ -668,7 +668,12 @@ function DoctorWallCard({
 /** A living staff wall: one portrait expands while the rest yield around it. */
 function CareDoctorWall() {
   const { t, lang } = useLanguage()
-  const doctors = getHomeDoctorWallDoctors(7).map((doctor) => {
+  const isMobile = useMobileLayout()
+  const reduce = useReducedMotion()
+  const hoverOk = !isMobile && !reduce
+  // Phones show a static 2x2 grid — no video/hover, no horizontal scroll.
+  // 4 fills the grid evenly; 5 would leave an orphan card in its own row.
+  const doctors = getHomeDoctorWallDoctors(isMobile ? 4 : 7).map((doctor) => {
     const turn = getDoctorTurnMedia(doctor.slug)
     const portrait = turn?.poster ?? doctor.photo
     const content = doctor.content[lang]
@@ -678,14 +683,11 @@ function CareDoctorWall() {
       slug: doctor.slug,
       portrait,
       fallbackPortrait: portrait,
-      video: turn?.video,
+      video: isMobile ? undefined : turn?.video,
       wallLabel,
       ...content,
     }
   })
-  const isMobile = useMobileLayout()
-  const reduce = useReducedMotion()
-  const hoverOk = !isMobile && !reduce
   const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({})
 
   const registerVideo = (slug: string, el: HTMLVideoElement | null) => {

@@ -21,6 +21,7 @@ export default function Nav() {
   const [open, setOpen] = useState<number | null>(null)
   const [hovered, setHovered] = useState<number | null>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileExpanded, setMobileExpanded] = useState<number | null>(null)
   const [scrolled, setScrolled] = useState(false)
 
   const navItems: NavItem[] = [
@@ -83,6 +84,7 @@ export default function Nav() {
 
   useEffect(() => {
     setMobileOpen(false)
+    setMobileExpanded(null)
     setOpen(null)
   }, [path])
 
@@ -110,6 +112,7 @@ export default function Nav() {
   const closeMenus = () => {
     setOpen(null)
     setMobileOpen(false)
+    setMobileExpanded(null)
     document.body.style.removeProperty('overflow')
   }
 
@@ -278,15 +281,35 @@ export default function Nav() {
                 <div className="hp-nav__drawer-list">
                   {navItems.map((item, i) => (
                     <div key={i} className="hp-nav__drawer-group">
-                      <a
-                        href={item.href}
-                        onClick={closeMenus}
-                        className={`hp-nav__drawer-link${isActive(item.href) ? ' is-active' : ''}`}
-                      >
-                        {item.label}
-                      </a>
+                      <div className="hp-nav__drawer-row">
+                        <a
+                          href={item.href}
+                          onClick={closeMenus}
+                          className={`hp-nav__drawer-link${isActive(item.href) ? ' is-active' : ''}`}
+                        >
+                          {item.label}
+                        </a>
+                        {item.children.length > 0 ? (
+                          <button
+                            type="button"
+                            className={`hp-nav__drawer-toggle${mobileExpanded === i ? ' is-expanded' : ''}`}
+                            aria-label={item.label}
+                            aria-expanded={mobileExpanded === i}
+                            aria-controls={`hp-mobile-submenu-${i}`}
+                            onClick={() => setMobileExpanded((current) => (current === i ? null : i))}
+                          >
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
+                              <path d="m5 7 4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          </button>
+                        ) : null}
+                      </div>
                       {item.children.length > 0 ? (
-                        <div className="hp-nav__drawer-subs">
+                        <div
+                          id={`hp-mobile-submenu-${i}`}
+                          className={`hp-nav__drawer-subs${mobileExpanded === i ? ' is-expanded' : ''}`}
+                          hidden={mobileExpanded !== i}
+                        >
                           {item.children.map((child, j) => (
                             <a
                               key={j}
