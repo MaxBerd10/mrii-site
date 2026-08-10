@@ -6,7 +6,7 @@ import SectionHeader from './ui/SectionHeader'
 import { staggerContainer, fadeUp, blurUp } from '../lib/animations'
 import { getActiveDoctorProfiles, getSpecialtyGroup, type SpecialtyGroup, type StaffKind } from '../data/doctors'
 import { averageRating, getDoctorReviews } from '../lib/doctorReviews'
-import { getDoctorCardPortrait, getDoctorTurnMedia } from '../data/doctorTurnMedia'
+import { getDoctorTurnMedia } from '../data/doctorTurnMedia'
 import '../styles/doctor-turn.css'
 import '../styles/doctor-filters.css'
 import { accentInk } from '../lib/accent'
@@ -25,8 +25,6 @@ export type DoctorCardDoc = {
   color: string
   /** Full-resolution portrait (desktop hover video poster). */
   photo: string
-  /** Lightweight 4:5 WebP for phone grids. */
-  cardPhoto: string
   video?: string
   staffKind: StaffKind
 }
@@ -65,7 +63,6 @@ export default function Doctors() {
       studies: p.studies,
       color: p.color,
       photo: poster,
-      cardPhoto: getDoctorCardPortrait(p.slug, poster),
       video: turn?.video,
       staffKind: p.staffKind,
     }
@@ -223,14 +220,12 @@ function usePrefersReducedMotion() {
 
 function DoctorPortrait({
   src,
-  cardSrc,
   alt,
   specialty,
   video,
   priority = false,
 }: {
   src: string
-  cardSrc: string
   alt: string
   specialty: string
   video?: string
@@ -241,7 +236,6 @@ function DoctorPortrait({
   const isMobile = useMobileLayout()
   const [failed, setFailed] = useState(false)
   const useVideo = Boolean(video) && !reduceMotion && !failed && !isMobile
-  const stillSrc = isMobile ? cardSrc : src
 
   const playVideo = () => {
     const el = videoRef.current
@@ -301,7 +295,7 @@ function DoctorPortrait({
         </video>
       ) : (
         <img
-          src={stillSrc}
+          src={src}
           alt={alt}
           width={400}
           height={500}
@@ -400,7 +394,6 @@ export function DoctorCard({
       <>
         <DoctorPortrait
           src={doc.photo}
-          cardSrc={doc.cardPhoto}
           alt={doc.name}
           specialty={doc.specialty}
           video={doc.video}
@@ -412,7 +405,6 @@ export function DoctorCard({
       <>
         <DoctorPortrait
           src={doc.photo}
-          cardSrc={doc.cardPhoto}
           alt={doc.name}
           specialty={doc.specialty}
           video={doc.video}
