@@ -193,7 +193,7 @@ export default function FooterSection() {
           <div className="hp-footer__shell">
             <div className="hp-footer__brand">
               <a href="/" className="hp-nav__logo">
-                <img src="/images/fjsti-logo.png" alt="" className="hp-nav__logo-img" width={36} height={36} />
+                <img src="/images/transition-medallion-v1.webp" alt="" className="hp-nav__logo-img" width={36} height={36} />
                 <span className="hp-nav__brand">{t.nav.brand}</span>
               </a>
               <p className="hp-footer__tagline">{t.footer.tagline}</p>

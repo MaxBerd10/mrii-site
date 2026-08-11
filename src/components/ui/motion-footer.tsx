@@ -250,7 +250,7 @@ export function CinematicFooter() {
 
         <div className="motion-footer__main">
           <a href="/" className="motion-footer__brand" aria-label={t.nav.home}>
-            <img src="/images/fjsti-logo.png" alt="" width="42" height="42" />
+            <img src="/images/transition-medallion-v1.webp" alt="" width="42" height="42" />
             <span>{t.nav.brand}</span>
           </a>
 
