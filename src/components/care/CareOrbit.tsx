@@ -403,9 +403,8 @@ function CareOrbitMobile() {
                     alt={info.name}
                     width={400}
                     height={500}
-                    loading="eager"
+                    loading="lazy"
                     decoding="async"
-                    fetchPriority="high"
                   />
                 </span>
                 <span className="hc-doc__body">
@@ -616,7 +615,7 @@ function DoctorWallCard({
             alt=""
             aria-hidden
             className="hc-doctor-wall__photo hc-doctor-wall__poster"
-            loading="eager"
+            loading={isCenter ? 'eager' : 'lazy'}
             decoding={isSafari() ? 'sync' : 'async'}
             onError={() => {
               if (portraitSrc !== doctor.fallbackPortrait) setPortraitSrc(doctor.fallbackPortrait)
@@ -630,7 +629,7 @@ function DoctorWallCard({
             className="hc-doctor-wall__photo hc-doctor-wall__video"
             muted
             playsInline
-            preload="auto"
+            preload="metadata"
             poster={portraitSrc}
             aria-label={doctor.name}
             onLoadedData={(event) => primeWallVideo(event.currentTarget, doctor.slug)}
@@ -643,9 +642,9 @@ function DoctorWallCard({
           src={portraitSrc}
           alt={doctor.name}
           className="hc-doctor-wall__photo hc-doctor-wall__poster"
-          loading="eager"
+          loading={isCenter ? 'eager' : 'lazy'}
           decoding={isSafari() ? 'sync' : 'async'}
-          fetchPriority="high"
+          {...(isCenter ? { fetchPriority: 'high' as const } : {})}
           onError={() => {
             if (portraitSrc !== doctor.fallbackPortrait) setPortraitSrc(doctor.fallbackPortrait)
           }}

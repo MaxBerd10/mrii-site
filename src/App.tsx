@@ -1,28 +1,31 @@
-import type { ReactNode } from 'react'
+import { lazy, Suspense, type ReactNode } from 'react'
 import Nav from './components/Nav'
-import Clinic from './components/Clinic'
-import Research from './components/Research'
-import AISection from './components/AISection'
-import Education from './components/Education'
-import Doctors from './components/Doctors'
-import NewsSection from './components/NewsSection'
-import FooterSection from './components/FooterSection'
 import BackToTop from './components/BackToTop'
 import SiteAssistant from './components/SiteAssistant'
-import SpecialtyPage from './pages/SpecialtyPage'
-import NewsPage from './pages/NewsPage'
 import AiShifokorRedirect from './components/AiShifokorRedirect'
-import DoctorPage from './pages/DoctorPage'
-import NotFoundPage from './pages/NotFoundPage'
 import HomeCarePage from './pages/HomeCarePage'
 import PageShell from './pages/PageShell'
-import PricesPage from './pages/PricesPage'
-import ClinicGalleryPage from './pages/ClinicGalleryPage'
-import ClinicTourPage from './pages/ClinicTourPage'
-import VacanciesPage from './pages/VacanciesPage'
 import { PageTransitionProvider, usePageNav } from './components/PageTransition'
 import PageEnter from './components/PageEnter'
 import { useScrollToTopOnRoute } from './lib/scrollRoute'
+
+// Inner pages are loaded only after the visitor opens their route. The home
+// route remains immediate because it is the primary first-load experience.
+const Clinic = lazy(() => import('./components/Clinic'))
+const Research = lazy(() => import('./components/Research'))
+const AISection = lazy(() => import('./components/AISection'))
+const Education = lazy(() => import('./components/Education'))
+const Doctors = lazy(() => import('./components/Doctors'))
+const NewsSection = lazy(() => import('./components/NewsSection'))
+const FooterSection = lazy(() => import('./components/FooterSection'))
+const SpecialtyPage = lazy(() => import('./pages/SpecialtyPage'))
+const NewsPage = lazy(() => import('./pages/NewsPage'))
+const DoctorPage = lazy(() => import('./pages/DoctorPage'))
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
+const PricesPage = lazy(() => import('./pages/PricesPage'))
+const ClinicGalleryPage = lazy(() => import('./pages/ClinicGalleryPage'))
+const ClinicTourPage = lazy(() => import('./pages/ClinicTourPage'))
+const VacanciesPage = lazy(() => import('./pages/VacanciesPage'))
 
 function AppRoutes() {
   const { path, busy } = usePageNav()
@@ -157,7 +160,9 @@ function AppRoutes() {
       {/* The cinematic footer is the homepage's own closing moment and ships
           with it; no route adds a footer here. Inner pages end on their own
           last section. */}
-      <PageEnter path={path}>{body}</PageEnter>
+      <PageEnter path={path}>
+        <Suspense fallback={null}>{body}</Suspense>
+      </PageEnter>
       {!isDoctorDetail && !isDoctorPortal && !isAiLegacyRoute && <BackToTop />}
       {!isDoctorDetail && !isDoctorPortal && !isAiLegacyRoute && <SiteAssistant />}
     </div>

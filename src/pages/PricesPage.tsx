@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import {
   CHECKUP_DIRECTIONS,
@@ -113,14 +113,12 @@ export default function PricesPage() {
           </button>
         </div>
 
-        <AnimatePresence mode="wait">
-          {tab === 'packages' ? (
+        {tab === 'packages' ? (
             <motion.div
               key="packages"
               className="prices-packages"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="prices-dirs" role="tablist" aria-label={t.prices.directionsLabel}>
@@ -206,7 +204,6 @@ export default function PricesPage() {
               className="prices-catalog"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="prices-catalog__toolbar">
@@ -306,7 +303,6 @@ export default function PricesPage() {
               <p className="prices-catalog__footnote">{t.prices.catalogNote}</p>
             </motion.div>
           )}
-        </AnimatePresence>
       </div>
     </section>
   )
