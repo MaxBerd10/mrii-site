@@ -6288,6 +6288,37 @@ a.hc-card:active {
    content (the comparison and FAQ) intentionally keeps its scan-friendly
    alignment above. */
 @media (max-width: 760px) {
+  /* Phones get the same content, but not the desktop's continuous paint work.
+     Filter / view-timeline effects are expensive during a finger scroll on
+     Safari and mid-range Android devices, so the page uses static accents. */
+  @supports (animation-timeline: view()) {
+    :is(
+      .hc-section--harmony,
+      .hc-section--ai,
+      .hc-section--compare,
+      .hc-section--path,
+      .hc-section--services,
+      .hc-section--voices
+    )::after,
+    .hc-section--path .hc-title em,
+    .hc-step {
+      animation: none;
+    }
+  }
+
+  /* Defer layout and paint for complete sections outside the phone viewport.
+     Intrinsic space keeps the scroll bar stable while images arrive. */
+  .home-care > :is(
+    .hc-section--ai,
+    .hc-section--compare,
+    .hc-section--path,
+    .hc-section--services,
+    .hc-section--voices
+  ) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 860px;
+  }
+
   .home-care .hc-section--ai {
     padding-block-start: 28px;
   }

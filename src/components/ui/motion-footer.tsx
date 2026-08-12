@@ -147,6 +147,14 @@ export function CinematicFooter() {
       })
     }
 
+    // A fixed, scrubbed footer adds continuous layout work while a phone is
+    // scrolling the whole homepage. Keep the complete content and hierarchy,
+    // but let it be a normal static ending on touch-sized screens.
+    if (reduceMotion || isMobile) {
+      revealContent()
+      return
+    }
+
     const context = gsap.context(() => {
       ScrollTrigger.create({
         trigger: wrapper,
@@ -158,11 +166,6 @@ export function CinematicFooter() {
         },
         onEnter: revealContent,
       })
-
-      if (reduceMotion || isMobile) {
-        revealContent()
-        return
-      }
 
       gsap.fromTo(
         giantTextRef.current,

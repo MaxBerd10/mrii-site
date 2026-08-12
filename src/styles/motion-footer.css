@@ -382,6 +382,30 @@
 }
 
 @media (max-width: 820px) {
+  /* A fixed, composited footer is beautiful on desktop but makes the entire
+     document repaint while a phone scrolls. The mobile React component has no
+     ScrollTrigger; keeping this in normal flow completes that light version. */
+  .motion-footer-reveal {
+    height: auto;
+    min-height: 0;
+    clip-path: none;
+  }
+
+  .motion-footer {
+    position: relative;
+    inset: auto;
+  }
+
+  .motion-footer__aurora,
+  .motion-footer__marquee-track {
+    animation: none !important;
+  }
+
+  .motion-footer__marquee {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
   .motion-footer-reveal,
   .motion-footer {
     min-height: 740px;
