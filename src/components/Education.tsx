@@ -5,7 +5,7 @@ import { media } from '../data/media'
 import { ADMISSIONS_PHONES, EDUCATION_COPY } from '../data/educationCopy'
 import '../styles/education-page.css'
 
-const FJSTI_URL = 'https://fjsti.uz'
+const FJSTI_URL = 'https://fermi.uz'
 
 export default function Education() {
   const { lang } = useLanguage()

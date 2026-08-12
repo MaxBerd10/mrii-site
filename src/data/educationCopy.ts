@@ -46,7 +46,7 @@ export const EDUCATION_COPY: Record<Lang, EducationCopy> = {
     description:
       'FJSTI klinik bazasi shifokorlar uchun uchta yo’nalishni bir joyda taklif etadi: klinik ordinatura, malaka oshirish kurslari va tadqiqot amaliyoti.',
     universityNote: 'Asosiy oliy ta’lim — universitetimizda.',
-    universityLink: 'fjsti.uz saytiga o’tish →',
+    universityLink: 'fermi.uz saytiga o’tish →',
 
     ordinaturaTitle: 'Klinik ordinatura (rezidentura)',
     ordinaturaIntro:
@@ -134,7 +134,7 @@ export const EDUCATION_COPY: Record<Lang, EducationCopy> = {
     description:
       'Клиническая база ФЖСТИ объединяет три направления для врачей: клиническая ординатура, курсы повышения квалификации и исследовательская практика.',
     universityNote: 'Основное высшее образование — в нашем университете.',
-    universityLink: 'Перейти на fjsti.uz →',
+    universityLink: 'Перейти на fermi.uz →',
 
     ordinaturaTitle: 'Клиническая ординатура (резидентура)',
     ordinaturaIntro:
@@ -222,7 +222,7 @@ export const EDUCATION_COPY: Record<Lang, EducationCopy> = {
     description:
       'The FJSTI clinical base offers three tracks for physicians: clinical residency, professional development courses, and research practice.',
     universityNote: 'The main degree programmes are at our university.',
-    universityLink: 'Go to fjsti.uz →',
+    universityLink: 'Go to fermi.uz →',
 
     ordinaturaTitle: 'Clinical residency',
     ordinaturaIntro:
@@ -310,7 +310,7 @@ export const EDUCATION_COPY: Record<Lang, EducationCopy> = {
     description:
       'FJSTI klinik bazası shıpakerler ushın úsh baǵdardı bir jerde usınadı: klinik ordinatura, malaka asıńlaw kursları hám izertlew ámeliyatı.',
     universityNote: 'Tiykarǵı joqarı ta’lim — universitetimizde.',
-    universityLink: 'fjsti.uz saytına ótiw →',
+    universityLink: 'fermi.uz saytına ótiw →',
 
     ordinaturaTitle: 'Klinik ordinatura (rezidentura)',
     ordinaturaIntro:
