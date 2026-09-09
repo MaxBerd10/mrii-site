@@ -3716,17 +3716,14 @@ a.hc-card:active {
   0% {
     opacity: 0.08;
     transform: translate3d(0, -8%, 0) scale(0.76);
-    filter: blur(18px) hue-rotate(0deg);
   }
   48% {
     opacity: 0.38;
     transform: translate3d(78vw, 10%, 0) scale(1.06);
-    filter: blur(12px) hue-rotate(42deg);
   }
   100% {
     opacity: 0.1;
     transform: translate3d(24vw, 24%, 0) scale(0.84);
-    filter: blur(20px) hue-rotate(92deg);
   }
 }
 
