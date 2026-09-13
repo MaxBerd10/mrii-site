@@ -705,6 +705,19 @@ class ClinicTourVideoAdmin(AutoTranslateAdmin):
 
 @admin.register(models.Inquiry, site=mrii_admin_site)
 class InquiryAdmin(admin.ModelAdmin):
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        is_hr_only = (
+            not request.user.is_superuser
+            and request.user.groups.filter(name='HR bo‘limi').exists()
+        )
+        if is_hr_only:
+            # HR faqat vakansiyaga kelgan arizalarni ko'radi — bemor tibbiy
+            # ma'lumotlari (allergiya, tibbiy tarix) boshqa maqsaddagi
+            # murojaatlarda bo'lgani uchun ularni umuman ko'rsatmaymiz.
+            qs = qs.filter(intent=models.Inquiry.Intent.CAREER)
+        return qs
+
     list_display = (
         'request_id',
         'intent',

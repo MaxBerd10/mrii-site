@@ -106,6 +106,10 @@ class MriiAdminSite(AdminSite):
             return reverse(f'admin:cms_{name}_add')
 
         new_leads = models.Inquiry.objects.filter(status=models.Inquiry.Status.NEW).count()
+        new_career_leads = models.Inquiry.objects.filter(
+            status=models.Inquiry.Status.NEW,
+            intent=models.Inquiry.Intent.CAREER,
+        ).count()
 
         primary = [
             {
@@ -230,6 +234,12 @@ class MriiAdminSite(AdminSite):
         if is_hr_workspace:
             vacancy_card = next((card for card in secondary if card['title'] == 'Vakansiyalar'), None)
             inquiry_card = next((card for card in primary if card['title'] == 'Murojaatlar'), None)
+            if inquiry_card:
+                inquiry_card = {
+                    **inquiry_card,
+                    'desc': 'Vakansiyaga kelgan arizalar — rezyume, telefon, holat.',
+                    'meta': f'{new_career_leads} yangi' if new_career_leads else 'Arizalar',
+                }
             primary = [card for card in (inquiry_card, vacancy_card) if card]
             secondary = []
 
@@ -241,7 +251,7 @@ class MriiAdminSite(AdminSite):
         ]
         if is_hr_workspace:
             stats = [
-                {'label': 'Yangi murojaat', 'value': new_leads, 'tone': 'mint'},
+                {'label': 'Yangi ariza', 'value': new_career_leads, 'tone': 'mint'},
                 {'label': 'Ochiq vakansiya', 'value': models.Vacancy.objects.filter(is_active=True).count(), 'tone': 'navy'},
             ]
         else:
