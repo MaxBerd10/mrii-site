@@ -26,11 +26,18 @@ class CmsConfig(AppConfig):
             from django.contrib.auth.models import Group, Permission
 
             group, _ = Group.objects.get_or_create(name='HR bo‘limi')
+            codenames = (
+                'view_inquiry',
+                'change_inquiry',
+                'view_vacancy',
+                'add_vacancy',
+                'change_vacancy',
+            )
             permissions = Permission.objects.filter(
                 content_type__app_label='cms',
-                codename__in=('view_inquiry', 'change_inquiry', 'view_vacancy'),
+                codename__in=codenames,
             )
-            if permissions.count() == 3:
+            if permissions.count() == len(codenames):
                 group.permissions.set(permissions)
 
         post_migrate.connect(
