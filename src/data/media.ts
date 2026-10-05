@@ -72,7 +72,7 @@ export const media = {
     neurology: '/images/doctors/doctor-02.png',
     oncology: '/images/doctors/doctor-03.png',
     endocrinology: '/images/doctors/doctor-04.png',
-    turnVideo: '/videos/doctors/doctor-turn.mp4',
+    turnVideo: '/videos/doctors/doctor-turn-v2.mp4',
     turnPoster: '/videos/doctors/doctor-turn-poster.jpg',
     turnVideo2: '/videos/doctors/doctor-turn-2.mp4',
     turnPoster2: '/videos/doctors/doctor-turn-2-poster.jpg',
