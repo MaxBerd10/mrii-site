@@ -84,8 +84,8 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
   const { lang, contentLang, t } = useLanguage()
   const { home } = useCms()
   const reduce = useReducedMotion()
-  const labels = specialtyPageLabels[contentLang]
-  const worldLabels = specialtyWorldLabels[contentLang]
+  const labels = specialtyPageLabels[lang]
+  const worldLabels = specialtyWorldLabels[lang]
   const world = getSpecialtyWorld(slug)
   const staticMatch = getSpecialtyBySlug(slug)
   const [cmsDetail, setCmsDetail] = useState<CmsSpecialtyDetail | null>(null)

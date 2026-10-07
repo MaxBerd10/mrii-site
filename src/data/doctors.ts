@@ -396,8 +396,13 @@ const REST: Array<{
   { slug: 'xolmatov-a-s', uzName: 'Dr. Xolmatov A.S.', ruName: 'Др. Холматов А.С.', roleUz: 'Ortoped', roleRu: 'Ортопед', roleEn: 'Orthopedist', specUz: 'Ortopediya', specRu: 'Ортопедия', specEn: 'Orthopedics', papers: 21, studies: 4 },
 ]
 
+/** 'Hamshira' (nurse) is an Uzbek word: localise the leading staff title for en/kaa. */
+const nurseTitle = (name: string, title: string) => name.replace(/^Hamshira\s/, `${title} `)
+
 for (let i = 0; i < REST.length; i++) {
   const r = REST[i]
+  const enName = nurseTitle(r.uzName, 'Nurse')
+  const kaaName = nurseTitle(r.uzName, 'Hámshire')
   const idx = i + 4
   STATIC_DOCTOR_PROFILES.push(
     profile(idx, r.slug, {
@@ -419,20 +424,20 @@ for (let i = 0; i < REST.length; i++) {
       focuses: ['Диагностика', 'План лечения', 'Наблюдение'],
       languages: ['Узбекский', 'Русский'],
     }, {
-      name: r.uzName,
+      name: enName,
       role: r.roleEn,
       specialty: r.specEn,
       exp: `${10 + (i % 12)} years experience`,
-      about: `${r.uzName} provides clinical care in ${r.specEn.toLowerCase()}, with focus on diagnostics, personal plans, and follow-up.`,
+      about: `${enName} provides clinical care in ${r.specEn.toLowerCase()}, with focus on diagnostics, personal plans, and follow-up.`,
       education: ['Medical university degree', `Clinical training — ${r.specEn}`],
       focuses: ['Diagnostics', 'Treatment planning', 'Follow-up'],
       languages: ['Uzbek', 'Russian'],
     }, {
-      name: r.uzName,
+      name: kaaName,
       role: r.roleUz,
       specialty: r.specUz,
       exp: `${10 + (i % 12)} jıl tájiriybe`,
-      about: `${r.uzName} — ${r.specUz.toLowerCase()} baǵdarında bemarlarǵa klinikalıq járdem kórsetedi. Anıq diagnostika, jeke jantasıw hám turaqlı baqlawǵa itibar beredi.`,
+      about: `${kaaName} — ${r.specUz.toLowerCase()} baǵdarında bemarlarǵa klinikalıq járdem kórsetedi. Anıq diagnostika, jeke jantasıw hám turaqlı baqlawǵa itibar beredi.`,
       education: ['Medicina joqarı oqıw ornı', `${r.specUz} boyınsha klinikalıq tayarlıq`],
       focuses: ['Diagnostika', 'Emlew jobası', 'Baqlaw'],
       languages: ['Ózbek', 'Rus'],

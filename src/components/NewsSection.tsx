@@ -5,7 +5,7 @@ import SectionHeader from './ui/SectionHeader'
 import Reveal from './ui/Reveal'
 import { staggerContainer, rise3d, blurUp } from '../lib/animations'
 import { media } from '../data/media'
-import { newsArticles } from '../data/newsDetails'
+import { DEMO_NEWS_ENABLED, newsArticles } from '../data/newsDetails'
 import { accentInk, accentWash } from '../lib/accent'
 
 const NEWS_IMAGES = Object.values(media.news)
@@ -23,7 +23,7 @@ export default function NewsSection() {
         excerpt: item.excerpt,
         cover: item.cover,
       }))
-    : t.news.items.map((item, i) => ({
+    : (DEMO_NEWS_ENABLED ? t.news.items : []).map((item, i) => ({
         slug: newsArticles[i]?.slug ?? `news-${i}`,
         date: item.date,
         category: item.category,
@@ -44,6 +44,10 @@ export default function NewsSection() {
             action={<a href="/news" className="btn-ghost news-section__all">{t.news.allBtn}</a>}
           />
         </Reveal>
+
+        {items.length === 0 ? (
+          <p className="section-desc" role="status">{t.news.empty}</p>
+        ) : null}
 
         <motion.div
           className="news-grid"

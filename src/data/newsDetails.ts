@@ -1,4 +1,4 @@
-import type { ContentLang } from '../i18n/types'
+import type { ContentLang, Lang } from '../i18n/types'
 
 export type NewsArticleContent = {
   lead: string
@@ -9,6 +9,14 @@ export type NewsArticle = {
   slug: string
   content: Record<ContentLang, NewsArticleContent>
 }
+
+/**
+ * The articles below (and `news.items` in the translations) are demo copy from the
+ * original template: a CAR-T study, an "AI Radiology certified" item, a 48-seat
+ * residency call — all dated 2025 and none about this clinic. They stay in the repo
+ * for layout reference only and are never shown unless this is set to true.
+ */
+export const DEMO_NEWS_ENABLED = false
 
 export const newsArticles: NewsArticle[] = [
   {
@@ -100,7 +108,7 @@ export const newsArticles: NewsArticle[] = [
   },
 ]
 
-export const newsPageLabels: Record<ContentLang, {
+export const newsPageLabels: Record<Lang, {
   back: string
   related: string
   readMore: string
@@ -120,9 +128,15 @@ export const newsPageLabels: Record<ContentLang, {
     related: 'More news',
     readMore: 'Read',
   },
+  kaa: {
+    back: 'Barlıq jańalıqlar',
+    related: 'Basqa jańalıqlar',
+    readMore: 'Oqıw',
+  },
 }
 
 export function getNewsBySlug(slug: string) {
+  if (!DEMO_NEWS_ENABLED) return null
   const index = newsArticles.findIndex((item) => item.slug === slug)
   return index === -1 ? null : { article: newsArticles[index], index }
 }

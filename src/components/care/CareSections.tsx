@@ -394,6 +394,9 @@ export function CareVoices() {
   const { t } = useLanguage()
   const c = t.homeDark.voices
 
+  // No placeholder quotes: the section stays hidden until real testimonials are added.
+  if (t.partners.testimonials.length === 0) return null
+
   return (
     <section className="hc-section hc-section--tint hc-section--voices" aria-labelledby="hc-voices-title">
       <div className="hc-shell">

@@ -1,4 +1,4 @@
-import type { ContentLang } from '../i18n/types'
+import type { ContentLang, Lang } from '../i18n/types'
 import { media } from './media'
 import { getClinicSpecialtyImage } from './specialtyImages'
 import { getActiveDoctorProfiles, type DoctorProfile } from './doctors'
@@ -331,7 +331,7 @@ export function getSpecialtyColleagues(
 }
 
 export const specialtyWorldLabels: Record<
-  ContentLang,
+  Lang,
   {
     enter: string
     team: string
@@ -392,5 +392,20 @@ export const specialtyWorldLabels: Record<
     aiOpen: 'Open AI product →',
     aiSignal: 'Signal',
     aiConfidence: 'Confidence',
+  },
+  kaa: {
+    enter: 'Bólimge kiriw',
+    team: 'Usı baǵdardaǵı shıpakerler',
+    teamEmpty: 'Bul baǵdar ushın shıpakerler tez arada qosıladı.',
+    seeDoctor: 'Profil',
+    book: 'Qabılǵa jazılıw',
+    careTitle: 'Bul ortalıqta sizdi ne kútedi',
+    ambientHint: 'Siz {name} bóliminesiz',
+    aiLive: 'AI Live',
+    aiTitle: 'Klinikalıq AI járdemshi',
+    aiScan: 'Model skanerlep atır…',
+    aiOpen: 'AI ónimdi ashıw →',
+    aiSignal: 'Signal',
+    aiConfidence: 'Isenim',
   },
 }

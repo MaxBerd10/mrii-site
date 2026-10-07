@@ -111,7 +111,7 @@ export const FOOTER_NAV: FooterNavCol[] = [
           uz: 'Bemorlar uchun',
           ru: 'Для пациентов',
           en: 'For patients',
-          kaa: 'Bemorlar ushın',
+          kaa: 'Nawqaslar ushın',
         },
       },
       {

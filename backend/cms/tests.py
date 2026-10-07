@@ -85,3 +85,40 @@ class ResumeAccessTests(TestCase):
     def test_superuser_can_open_any_resume(self):
         self.client.force_login(self.superuser)
         self.assertEqual(self.client.get(self.url(self.booking)).status_code, 200)
+
+
+class RemoveDemoContentTests(TestCase):
+    def _make(self):
+        from .models import NewsArticle, Testimonial
+
+        NewsArticle.objects.create(slug='car-t-therapy-study', title_uz='demo')
+        NewsArticle.objects.create(slug='real-clinic-news', title_uz='real')
+        Testimonial.objects.create(quote_uz='q', author_uz='Elena Kovaleva')
+        Testimonial.objects.create(quote_uz='q2', author_uz='Real Patient')
+        from .models import SiteSettings
+
+        SiteSettings.objects.all().delete()
+        SiteSettings.objects.create(license_uz='Litsenziya LO-77-01-024876', license_ru='Лицензия ЛО-77-01-024876')
+
+    def test_dry_run_changes_nothing_and_apply_keeps_real_rows_and_backs_up(self):
+        import io
+        import os
+
+        from django.core.management import call_command
+
+        from .models import NewsArticle, SiteSettings, Testimonial
+
+        self._make()
+        call_command('remove_demo_content', stdout=io.StringIO())
+        self.assertEqual(NewsArticle.objects.count(), 2)
+        self.assertEqual(Testimonial.objects.count(), 2)
+
+        with tempfile.TemporaryDirectory() as backup:
+            call_command('remove_demo_content', '--apply', f'--backup-dir={backup}', stdout=io.StringIO())
+            self.assertEqual(list(NewsArticle.objects.values_list('slug', flat=True)), ['real-clinic-news'])
+            self.assertEqual(list(Testimonial.objects.values_list('author_uz', flat=True)), ['Real Patient'])
+            self.assertEqual(SiteSettings.objects.get().license_uz, '')
+            (backup_file,) = os.listdir(backup)
+            call_command('remove_demo_content', '--restore', os.path.join(backup, backup_file), stdout=io.StringIO())
+            self.assertEqual(NewsArticle.objects.count(), 2)
+            self.assertEqual(Testimonial.objects.count(), 2)

@@ -211,28 +211,6 @@ export const kaaClinicSpecialties = [
   { icon: '⚕️', name: 'Jarrohlik', count: 10, desc: 'Ulıwma hám laparoskopik jarrohlik' },
   { icon: '🩺', name: 'Terapiya', count: 12, desc: 'Birinshi medicina járdemi hám profilaktika' },
 ] 
-
-export const kaaPartnersTestimonials = [
-  {
-    quote: 'Farg’ona Jámiyet Salamatlıǵı Medicina Institutı aymaqtıǵı isenimli izertlew markazlarından biri. Múddetler hár da orınlanadı.',
-    author: 'Elena Kovaleva',
-    role: 'Clinical Operations Director, Roche',
-    color: '#0EA5E9',
-  },
-  {
-    quote: 'AiShifokor hújjetlestiriw waqtın 87% qısqarttı. Shıpakerler nawqaslarga nazar aylantıradı.',
-    author: 'Dmitriy Volkov',
-    role: 'Bas shıpaker',
-    color: '#10B981',
-  },
-  {
-    quote: 'FJSTI dagı GCP-trening eng jaqsılarından. Amaliy keysler oqıtıwdı óte paydalı etedi.',
-    author: 'Anna Petrova',
-    role: 'Clinical Research Coordinator',
-    color: '#6366F1',
-  },
-]
-
 export const kaaClinicGallery = {
   label: 'Klinika muhiti',
   title: 'Jaqınnan kóriń',
