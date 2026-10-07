@@ -1,6 +1,8 @@
 import type { Lang } from './types'
 import { CLINIC_PHONE_DISPLAY, CLINIC_PHONE_TEL, CLINIC_TELEGRAM_URL } from '../data/clinicContact'
-import { kaaClinicSpecialties, kaaClinicGallery, kaaClinicTour, kaaHomeDark, kaaPartnersTestimonials } from './kaaHomeDark'
+import { kaaClinicSpecialties, kaaClinicGallery, kaaClinicTour, kaaHomeDark } from './kaaHomeDark'
+
+type PartnerTestimonial = { quote: string; author: string; role: string; color: string }
 
 export type Translations = typeof uz
 
@@ -803,6 +805,7 @@ const uz = {
     title2: 'yangiliklar',
     titleEm: 'yangiliklar',
     allBtn: 'Barcha yangiliklar →',
+    empty: 'Hozircha yangiliklar yo’q. Tez orada yangilanadi.',
     items: [
       { date: '12 Iyul 2025', category: 'Tadqiqotlar', categoryColor: '#6366F1', title: 'Farg’ona Jamoat Salomatligi Tibbiyot Instituti CAR-T terapiyasi bo’yicha birinchi tadqiqotni boshladi', excerpt: 'I-bosqich bo’limi xalqaro ko’p markazli tadqiqotda birinchi bemorlarni qabul qilmoqda.' },
       { date: '05 Iyul 2025', category: 'AI', categoryColor: '#F59E0B', title: 'AI Radiology klinik qo’llash uchun sertifikatlandi', excerpt: 'Ko’krak qafasi KT avtomatik tahlili 94% aniqlik bilan tasdiqlandi.' },
@@ -812,12 +815,8 @@ const uz = {
   partners: {
     trusted: 'Bizga ishonishadi',
     reviewsLabel: 'Sharhlar',
-    testimonials: [
-      { quote: 'Farg’ona Jamoat Salomatligi Tibbiyot Instituti mintaqadagi eng ishonchli tadqiqot markazlaridan biri. Muddatlar doimo bajariladi.', author: 'Elena Kovaleva', role: 'Clinical Operations Director, Roche', color: '#0EA5E9' },
-      { quote: 'AiShifokor hujjatlashtirish vaqtini 87% qisqartirdi. Shifokorlar bemorlarga e’tibor qaratishadi.', author: 'Dmitriy Volkov', role: 'Bosh shifokor', color: '#10B981' },
-      { quote: 'Farg’ona Jamoat Salomatligi Tibbiyot Institutidagi GCP-trening eng yaxshisi. Amaliy keyslar o’qitishni juda foydali qiladi.', author: 'Anna Petrova', role: 'Clinical Research Coordinator', color: '#6366F1' },
-    ],
-    partnerNames: ['Roche', 'Novartis', 'Pfizer', 'AstraZeneca', 'Sanofi', 'Bayer', 'Merck', 'GSK'],
+    testimonials: [] as PartnerTestimonial[],
+    partnerNames: [] as string[],
   },
   international: {
     label: '07 / Xalqaro bo’lim',
@@ -919,7 +918,8 @@ const uz = {
       { title: 'Institut', links: ['Biz haqimizda', 'Rahbariyat', 'Litsenziyalar', 'Hamkorlar', 'Investorlar', 'Karyera'] },
     ],
     copyright: '© 2026 Farg’ona Jamoat Salomatligi Tibbiyot Instituti. Barcha huquqlar himoyalangan.',
-    license: 'Litsenziya LO-77-01-024876',
+    // License number intentionally empty until the clinic confirms it (set it in CMS: Sayt sozlamalari).
+    license: '',
     privacy: 'Maxfiylik siyosati',
     terms: 'Foydalanish shartlari',
     contactsLink: 'Aloqa',
@@ -1900,6 +1900,7 @@ const ru: Translations = {
     title2: 'новости',
     titleEm: 'новости',
     allBtn: 'Все новости →',
+    empty: 'Пока новостей нет. Скоро здесь появятся обновления.',
     items: [
       { date: '12 Июл 2025', category: 'Исследования', categoryColor: '#6366F1', title: 'Ферганский медицинский институт общественного здоровья запускает исследование CAR-T терапии', excerpt: 'Отделение I фазы принимает первых пациентов.' },
       { date: '05 Июл 2025', category: 'AI', categoryColor: '#F59E0B', title: 'AI Radiology получил сертификацию', excerpt: 'Система анализа КТ подтвердила точность 94%.' },
@@ -1909,12 +1910,8 @@ const ru: Translations = {
   partners: {
     trusted: 'Нам доверяют',
     reviewsLabel: 'Отзывы',
-    testimonials: [
-      { quote: 'Ферганский медицинский институт общественного здоровья — один из самых надёжных исследовательских центров в регионе.', author: 'Елена Ковалева', role: 'Clinical Operations Director, Roche', color: '#0EA5E9' },
-      { quote: 'AiShifokor сократил время документирования на 87%.', author: 'Дмитрий Волков', role: 'Главный врач', color: '#10B981' },
-      { quote: 'GCP-тренинг в Ферганском медицинском институте общественного здоровья — лучший в стране.', author: 'Анна Петрова', role: 'Clinical Research Coordinator', color: '#6366F1' },
-    ],
-    partnerNames: ['Roche', 'Novartis', 'Pfizer', 'AstraZeneca', 'Sanofi', 'Bayer', 'Merck', 'GSK'],
+    testimonials: [],
+    partnerNames: [],
   },
   international: {
     label: '07 / Международный отдел',
@@ -2011,7 +2008,8 @@ const ru: Translations = {
       { title: 'Институт', links: ['О нас', 'Руководство', 'Лицензии', 'Партнёры', 'Инвесторам', 'Карьера'] },
     ],
     copyright: '© 2026 Ферганский медицинский институт общественного здоровья. Все права защищены.',
-    license: 'Лицензия ЛО-77-01-024876',
+    // License number intentionally empty until the clinic confirms it (set it in CMS: Sayt sozlamalari).
+    license: '',
     privacy: 'Политика конфиденциальности',
     terms: 'Пользовательское соглашение',
     contactsLink: 'Контакты',
@@ -2870,6 +2868,7 @@ const en: Translations = {
     title2: 'news',
     titleEm: 'news',
     allBtn: 'All news →',
+    empty: 'No news yet. Updates will appear here soon.',
     items: [
       { date: 'Jul 12, 2025', category: 'Research', categoryColor: '#6366F1', title: 'Ferghana Medical Institute of Public Health launches first CAR-T therapy study', excerpt: 'Phase I unit enrolling first patients in international trial.' },
       { date: 'Jul 5, 2025', category: 'AI', categoryColor: '#F59E0B', title: 'AI Radiology certified for clinical use', excerpt: 'Chest CT analysis validated at 94% accuracy.' },
@@ -2879,12 +2878,8 @@ const en: Translations = {
   partners: {
     trusted: 'Trusted by',
     reviewsLabel: 'Testimonials',
-    testimonials: [
-      { quote: 'Ferghana Medical Institute of Public Health is one of the most reliable research centers in the region. Timelines are always met.', author: 'Elena Kovaleva', role: 'Clinical Operations Director, Roche', color: '#0EA5E9' },
-      { quote: 'AiShifokor cut documentation time by 87%. Physicians can focus on patients.', author: 'Dmitriy Volkov', role: 'Chief Medical Officer', color: '#10B981' },
-      { quote: 'GCP training at Ferghana Medical Institute of Public Health is the best in the country.', author: 'Anna Petrova', role: 'Clinical Research Coordinator', color: '#6366F1' },
-    ],
-    partnerNames: ['Roche', 'Novartis', 'Pfizer', 'AstraZeneca', 'Sanofi', 'Bayer', 'Merck', 'GSK'],
+    testimonials: [],
+    partnerNames: [],
   },
   international: {
     label: '07 / International',
@@ -2981,7 +2976,8 @@ const en: Translations = {
       { title: 'Institute', links: ['About us', 'Leadership', 'Licenses', 'Partners', 'Investors', 'Careers'] },
     ],
     copyright: '© 2026 Ferghana Medical Institute of Public Health. All rights reserved.',
-    license: 'License LO-77-01-024876',
+    // License number intentionally empty until the clinic confirms it (set it in CMS: Sayt sozlamalari).
+    license: '',
     privacy: 'Privacy policy',
     terms: 'Terms of use',
     contactsLink: 'Contact',
@@ -3280,7 +3276,7 @@ const kaa: Translations = {
     ...uz.partners,
     trusted: 'Bizge isenedi',
     reviewsLabel: 'Pikirler',
-    testimonials: [...kaaPartnersTestimonials],
+    testimonials: [],
   },
   footer: {
     ...uz.footer,
@@ -3291,7 +3287,8 @@ const kaa: Translations = {
     tagline: 'Emlew. Ilim. Klinik baza. AI.',
     copyright:
       '© 2026 Farg’ona Jámiyet Salomatlıǵı Medicina Institutı. Barlıq quqıqlar qorǵalǵan.',
-    license: 'Litsenziya LO-77-01-024876',
+    // License number intentionally empty until the clinic confirms it (set it in CMS: Sayt sozlamalari).
+    license: '',
     privacy: 'Maxfiylik siyasatı',
     terms: 'Paydalanıw shartları',
     contactsLink: 'Baylanıs',
@@ -3690,6 +3687,7 @@ const kaa: Translations = {
     title2: 'jańalıqlar',
     titleEm: 'jańalıqlar',
     allBtn: 'Barlıq jańalıqlar →',
+    empty: 'Házirshe jańalıqlar joq. Tez arada jańalanadı.',
     items: [
       { date: '12 Iyul 2025', category: 'Izertlewler', categoryColor: '#6366F1', title: 'Farg’ona Jámiyet Salamatlıǵı Medicina Institutı CAR-T terapiyası boyınsha birinshi izertlewdi basladı', excerpt: 'I-basqısh bólimi xalıqaralıq kóp oraylı izertlewde birinshi nawqaslardı qabıllap atır.' },
       { date: '05 Iyul 2025', category: 'AI', categoryColor: '#F59E0B', title: 'AI Radiology klinikalıq qollanıw ushın sertifikatlandırıldı', excerpt: 'Kókirek qapası KT avtomatik tallawı 94% anıqlıq penen tastıyıqlandı.' },

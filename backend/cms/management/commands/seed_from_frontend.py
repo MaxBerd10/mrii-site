@@ -45,11 +45,11 @@ class Command(BaseCommand):
         self.seed_settings()
         self.seed_hero()
         self.seed_specialties()
-        self.seed_news()
+        # News and testimonials are NOT seeded: the template's items (CAR-T study, "AI Radiology
+        # certified", quotes attributed to a Roche director) are fabricated for this clinic.
         self.seed_ai()
         self.seed_research()
         self.seed_education()
-        self.seed_testimonials()
         self.seed_clinic_tour()
         self.seed_vacancies()
         if options['superuser']:

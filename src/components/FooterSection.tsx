@@ -222,7 +222,8 @@ export default function FooterSection() {
 
           <div className="hp-footer__bottom">
             <span>
-              {copyright} · {license}
+              {copyright}
+              {license ? ` · ${license}` : ''}
             </span>
             <div className="hp-footer__legal">
               <a href="/contacts">{t.footer.privacy}</a>

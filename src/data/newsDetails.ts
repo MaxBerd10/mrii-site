@@ -10,6 +10,14 @@ export type NewsArticle = {
   content: Record<ContentLang, NewsArticleContent>
 }
 
+/**
+ * The articles below (and `news.items` in the translations) are demo copy from the
+ * original template: a CAR-T study, an "AI Radiology certified" item, a 48-seat
+ * residency call — all dated 2025 and none about this clinic. They stay in the repo
+ * for layout reference only and are never shown unless this is set to true.
+ */
+export const DEMO_NEWS_ENABLED = false
+
 export const newsArticles: NewsArticle[] = [
   {
     slug: 'car-t-therapy-study',
@@ -123,6 +131,7 @@ export const newsPageLabels: Record<ContentLang, {
 }
 
 export function getNewsBySlug(slug: string) {
+  if (!DEMO_NEWS_ENABLED) return null
   const index = newsArticles.findIndex((item) => item.slug === slug)
   return index === -1 ? null : { article: newsArticles[index], index }
 }

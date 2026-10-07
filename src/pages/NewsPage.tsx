@@ -4,7 +4,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
 import { fetchNewsArticle, isCmsEnabled, type CmsNewsDetail } from '../api/client'
 import { media } from '../data/media'
-import { getNewsBySlug, newsArticles, newsPageLabels } from '../data/newsDetails'
+import { DEMO_NEWS_ENABLED, getNewsBySlug, newsArticles, newsPageLabels } from '../data/newsDetails'
 import { blurUp, rise3d, staggerContainer } from '../lib/animations'
 import SectionBackLink from '../components/ui/SectionBackLink'
 import NotFoundPage from './NotFoundPage'
@@ -123,7 +123,7 @@ export default function NewsPage({ slug }: { slug: string }) {
         excerpt: item.excerpt,
         cover: item.cover || NEWS_IMAGES[i] || NEWS_IMAGES[0],
       }))
-    : newsArticles
+    : (DEMO_NEWS_ENABLED ? newsArticles : [])
         .map((entry, entryIndex) => ({ ...entry, index: entryIndex }))
         .filter((entry) => entry.slug !== slug)
         .map((entry) => {

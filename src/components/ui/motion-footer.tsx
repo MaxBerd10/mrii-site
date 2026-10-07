@@ -129,7 +129,7 @@ export function CinematicFooter() {
     t.nav.ai,
     t.nav.research,
     license,
-  ]
+  ].filter(Boolean)
 
   useEffect(() => {
     const wrapper = wrapperRef.current
