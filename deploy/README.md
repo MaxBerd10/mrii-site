@@ -33,7 +33,9 @@ DJANGO_ALLOWED_HOSTS=fermiclinic.uz,www.fermiclinic.uz,localhost,127.0.0.1
 CORS_ALLOWED_ORIGINS=https://fermiclinic.uz,https://www.fermiclinic.uz
 FRONTEND_URL=https://fermiclinic.uz
 CSRF_TRUSTED_ORIGINS=https://fermiclinic.uz,https://www.fermiclinic.uz
-SEED_SUPERUSER=1
+SEED_SUPERUSER=0
+# 1 bo‘lsa har safar konteyner ishga tushganda demo ma’lumotlar CMS’dagi tahrirlarni ustiga yozadi/o‘chiradi.
+# Faqat birinchi o‘rnatishda 1 qiling, keyin 0 qilib qo‘ying.
 # Nginx HTTPS beradi; to‘g‘ridan-to‘g‘ri :8001 curl uchun ixtiyoriy:
 # SECURE_SSL_REDIRECT=False
 ```
@@ -83,8 +85,10 @@ sudo certbot --nginx -d fermiclinic.uz -d www.fermiclinic.uz
 
 ## 5. Xavfsizlik
 
-1. Oching: https://fermiclinic.uz/admin/
-2. Default `admin` / `admin123` ni **darhol** o‘zgartiring (Parol)
+1. Birinchi marta: `.env` ga `SEED_SUPERUSER=1` va kuchli `DJANGO_SUPERUSER_PASSWORD=...` yozing, `docker compose up -d --build` qiling (admin yaratiladi). Shundan so‘ng **`SEED_SUPERUSER=0`** qiling — aks holda har deploy demo ma’lumotlar CMS tahrirlarini ustiga yozadi.
+2. Oching: https://fermiclinic.uz/admin/ — parolni o‘zgartiring (`DJANGO_SUPERUSER_PASSWORD` bermagan bo‘lsangiz, logda bir marta chop etilgan tasodifiy parol bor).
+3. HR xodimi uchun: Foydalanuvchilar → Qo‘shish → *Staff status* belgilab, guruh sifatida **HR bo‘limi** ni tanlang. U faqat vakansiyalar va vakansiya arizalarini (rezyume bilan) ko‘radi.
+4. Rezyumelar ochiq `/media/resumes/` orqali berilmaydi; faqat admin ichidagi «Yuklab olish» havolasi orqali, tizimga kirgan xodimga.
 
 ## Yangilash (keyingi deploy)
 
