@@ -564,7 +564,7 @@ class Command(BaseCommand):
                 'category': models.Vacancy.Category.OTHER,
                 'employment': models.Vacancy.Employment.FULL_TIME,
                 'title_uz': 'Laboratoriya mutaxassisi',
-                'title_ru': 'Лaborant',
+                'title_ru': 'Лаборант',
                 'title_en': 'Laboratory specialist',
                 'department_uz': 'Laboratoriya',
                 'department_ru': 'Лаборатория',

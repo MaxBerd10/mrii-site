@@ -235,7 +235,7 @@ const STATIC_DOCTOR_PROFILES: DoctorProfile[] = [
     specialty: 'Неврология',
     exp: 'PhD · 11 лет опыта',
     about:
-      'Мамatalieva Жanona Alimzhanovna — PhD, ассистент кафедры «Неврология и психиатрия» FJSTI (с октября 2025 г.). Врач-невролог клиники (с апреля 2026 г.). Резидент EAN RRFS Европейской академии неврологов (с января 2026 г.). Невrolog, исследователь-педагог.',
+      'Маматалиева Жанона Алимжановна — PhD, ассистент кафедры «Неврология и психиатрия» FJSTI (с октября 2025 г.). Врач-невролог клиники (с апреля 2026 г.). Резидент EAN RRFS Европейской академии неврологов (с января 2026 г.). Невролог, исследователь-педагог.',
     education: [
       '2009–2015 — Кемеровская государственная медицинская академия',
       '2017–2020 — ADTI, магистратура',
@@ -433,7 +433,7 @@ for (let i = 0; i < REST.length; i++) {
       specialty: r.specUz,
       exp: `${10 + (i % 12)} jıl tájiriybe`,
       about: `${r.uzName} — ${r.specUz.toLowerCase()} baǵdarında bemarlarǵa klinikalıq járdem kórsetedi. Anıq diagnostika, jeke jantasıw hám turaqlı baqlawǵa itibar beredi.`,
-      education: ['Medicina joqarı oqıw orны', `${r.specUz} boyınsha klinikalıq taярlıq`],
+      education: ['Medicina joqarı oqıw ornı', `${r.specUz} boyınsha klinikalıq tayarlıq`],
       focuses: ['Diagnostika', 'Emlew jobası', 'Baqlaw'],
       languages: ['Ózbek', 'Rus'],
     }, r.papers, r.studies, r.staffKind),
@@ -500,16 +500,16 @@ for (let i = 0; i < REST.length; i++) {
     },     {
       name: "Dr. Xo’jaeva G.A.",
       role: "UTT shıpakeri · Terapiya (UASh) kafedrası assistenti",
-      specialty: "Ultrадыбыс diagnostikası",
+      specialty: "Ultradıbıs diagnostikası",
       exp: "32 jıl tájiriybe",
       about:
-        "Xo’jaeva Gulnora Abdubannonovna — Farg’ona jámiyet salamatlıǵı medicina institutınıń kóp tarmaqlı klinikasında ultrадыбыс diagnostikası shıpakeri (2025-jıldan) hám Terapiya baǵdarındaǵı pánler (UASh) kafedrası assistenti (2020-jıldan). 1994-jılda Andijon mámleket medicina institutın tamamlaǵan; terapevt, oqıtıwshı, medicina kolleji bólim baslıǵı hám direktorı sıpatında uzaq jıllıq ámeliy tájiriybege iye.",
+        "Xo’jaeva Gulnora Abdubannonovna — Farg’ona jámiyet salamatlıǵı medicina institutınıń kóp tarmaqlı klinikasında ultradıbıs diagnostikası shıpakeri (2025-jıldan) hám Terapiya baǵdarındaǵı pánler (UASh) kafedrası assistenti (2020-jıldan). 1994-jılda Andijon mámleket medicina institutın tamamlaǵan; terapevt, oqıtıwshı, medicina kolleji bólim baslıǵı hám direktorı sıpatında uzaq jıllıq ámeliy tájiriybege iye.",
       education: [
         "1994 — Andijon mámleket medicina institutı (kúndizgi), «Emlew isi»",
         "1994–1995 — Farg’ona medicina-sanitariya bólimi internaturası",
       ],
       focuses: [
-        "Ultrадыбыс diagnostikası",
+        "Ultradıbıs diagnostikası",
         "Terapiya (UASh)",
         "Ishki kesellikler",
         "Ambulator hám klinikalıq járdem",
@@ -606,7 +606,7 @@ STATIC_DOCTOR_PROFILES.push(
     about:
       'Хайдаралиев Сухробжон Абдулнасирович — заведующий приёмно-диагностическим отделением многопрофильной клиники. Врач-уролог, детский уролог-андролог и врач ультразвуковой диагностики. Общий медицинский стаж — 15 лет; в урологии — 15 лет.',
     education: [
-      '2010 — Кырgyzская государственная медицинская академия им. И.К. Ахунбаева, «Лечебное дело»',
+      '2010 — Кыргызская государственная медицинская академия им. И.К. Ахунбаева, «Лечебное дело»',
       '2011–2012 — Интернатура «Урология», южный филиал КГМИППВ (г. Ош)',
       '2017–2019 — Ординатура «Урология», южный филиал КГМИППВ (г. Ош)',
       '2019 — Омск, «Академия дополнительного образования», «УЗ-диагностика»',
@@ -650,20 +650,20 @@ STATIC_DOCTOR_PROFILES.push(
     specialty: "Urologiya",
     exp: "15 jıl tájiriybe",
     about:
-      "Xaydaraliyev Suxrobjon Abdulnasirovich — kóp tarmaqlı klinikanıń Qabıllaw-diagnostika bólimi baslıǵı. Urolog shıpaker, balalar urolog-andrologı hám ultrадыбыс diagnostikası shıpakeri. Ulıwma medicinalıq staj — 15 jıl; urologiya boyınsha — 15 jıl.",
+      "Xaydaraliyev Suxrobjon Abdulnasirovich — kóp tarmaqlı klinikanıń Qabıllaw-diagnostika bólimi baslıǵı. Urolog shıpaker, balalar urolog-andrologı hám ultradıbıs diagnostikası shıpakeri. Ulıwma medicinalıq staj — 15 jıl; urologiya boyınsha — 15 jıl.",
     education: [
       "2010 — I.K. Axunbaev atındaǵı Qırǵız mámleket medicina akademiyası, «Emlew isi»",
-      "2011–2012 — Qırǵız DTQTM va MO Qublа filialı (Osh), «Urologiya» internaturası",
-      "2017–2019 — Qırǵız DTQTM va MO Qublа filialı (Osh), «Urologiya» ordinaturası",
-      "2019 — Omsk, «Qosımsha bilimlendiriw akademiyası», «Ultrадыбыс diagnostikası»",
+      "2011–2012 — Qırǵız DTQTM va MO Qubla filialı (Osh), «Urologiya» internaturası",
+      "2017–2019 — Qırǵız DTQTM va MO Qubla filialı (Osh), «Urologiya» ordinaturası",
+      "2019 — Omsk, «Qosımsha bilimlendiriw akademiyası», «Ultradıbıs diagnostikası»",
       "2019 — «Professional» NKT, «Balalar urologiyası-andrologiyası»",
-      "2025 — Moskva RUKTA, «Ultrадыбыс diagnostikası» maliykesin tastıyıqlaw",
+      "2025 — Moskva RUKTA, «Ultradıbıs diagnostikası» maliykesin tastıyıqlaw",
       "2025 — Moskva Urologiya ilimiy-izertlew institutı, urologiya boyınsha maliyke asırıw kursı",
     ],
     focuses: [
       "Urologiya",
       "Balalar urologiyası-andrologiyası",
-      "Ultrадыбыs diagnostikası",
+      "Ultradıbıs diagnostikası",
       "Qabıllaw-diagnostika bólimi",
     ],
     languages: ["Ózbek", "Rus"],
@@ -734,7 +734,7 @@ STATIC_DOCTOR_PROFILES.push(
   },   {
     name: "Dr. Azimova G.R.",
     role: "Ulıwma xirurgiya kafedrası úlken oqıtıwshısı · PhD",
-    specialty: "Jarrаhlıq",
+    specialty: "Jarrahlıq",
     exp: "17 jıl tájiriybe",
     about:
       "Azimova Gulnoza Ravshanovna — FJSTI Ulıwma xirurgiya kafedrasınıń úlken oqıtıwshısı, PhD. 2008-jılda Andijon mámleket medicina institutın tamamlaǵan. Birinshi medicinalıq járdem, akusher-ginekologiya hám xirurgiya baǵdarlarında ámeliy jumıs tájiriybesi; házir klinikalıq hám oqıw jumısların birlestiredi.",
@@ -970,14 +970,14 @@ STATIC_DOCTOR_PROFILES.push(
     specialty: "Nevrologiya",
     exp: "5 jıl tájiriybe",
     about:
-      "Nosirov Muhammadali Maqsudali ulı — FJSTI kóp tarmaqlı klinikasınıń nevrologiya bólimi baslıǵı (2025-jıldan). Nerv keselliklери bóliminde nevrolog; «Nevrologiya hám psixiatriya» kafedrası stajyor oqıtıwshısı (2026-jıl fevraldan). ADTI pediatriya fakulteti hám nevrologiya klinikalıq ordinaturasınıń bitiriwshisi.",
+      "Nosirov Muhammadali Maqsudali ulı — FJSTI kóp tarmaqlı klinikasınıń nevrologiya bólimi baslıǵı (2025-jıldan). Nerv kesellikleri bóliminde nevrolog; «Nevrologiya hám psixiatriya» kafedrası stajyor oqıtıwshısı (2026-jıl fevraldan). ADTI pediatriya fakulteti hám nevrologiya klinikalıq ordinaturasınıń bitiriwshisi.",
     education: [
       "2015–2021 — Andijon mámleket medicina institutı, Pediatriya fakulteti",
       "2021–2023 — ADTI, Nevrologiya kafedrası, klinikalıq ordinatura",
     ],
     focuses: [
       "Nevrologiya",
-      "Nerv keselliklери",
+      "Nerv kesellikleri",
       "Qabıllaw-diagnostika",
       "Nevrologiya hám psixiatriya",
     ],
@@ -1047,7 +1047,7 @@ STATIC_DOCTOR_PROFILES.push(
     about:
       "Bobojonov Sardorbek Solijon ulı — Farg’ona jámiyet salamatlıǵı medicina institutı «Terapiya baǵdarındaǵı pánler» kafedrası assistenti (2023-jıl 4-sentyabrdan). Kardiolog-mutaxassis; ADTI kardiorevmatologiya klinikalıq ordinaturasınıń bitiriwshisi. Aldın ishki kesellikler kafedrası assistenti hám xalıqaralıq bólim baslıǵı wazıypalarında islegen.",
     education: [
-      "2019 — Andijon mámleket medicina joqarı oqıw orны",
+      "2019 — Andijon mámleket medicina joqarı oqıw ornı",
       "2017–2019 — ADTI klinikası, «Kardiorevmatologiya» klinikalıq ordinaturası",
     ],
     focuses: [
@@ -1126,11 +1126,11 @@ STATIC_DOCTOR_PROFILES.push(
     specialty: "Kardiologiya",
     exp: "11 jıl tájiriybe",
     about:
-      "Shamsutdinova Guzel Baxodirovna — FJSTI «Terapiya baǵdarındaǵı pánler (UASH)» kafedrası baslıǵı (2025-jıl 13-yanvardan), PhD, kardiorevmatolog. Andijon DTMI hám magistratura bitiriwshisi; ishki kesellikler boyınsha qayta taярlaw hám klinikalıq ámeliyat tájiriybesine iye.",
+      "Shamsutdinova Guzel Baxodirovna — FJSTI «Terapiya baǵdarındaǵı pánler (UASH)» kafedrası baslıǵı (2025-jıl 13-yanvardan), PhD, kardiorevmatolog. Andijon DTMI hám magistratura bitiriwshisi; ishki kesellikler boyınsha qayta tayarlaw hám klinikalıq ámeliyat tájiriybesine iye.",
     education: [
       "2015 — Andijon mámleket medicina institutı",
       "2015–2018 — ADTI, magistratura",
-      "2019–2020 — Tashkent shıpakerler maliykesin asırıw institutı, «Ishki kesellikler» qayta taярlaw",
+      "2019–2020 — Tashkent shıpakerler maliykesin asırıw institutı, «Ishki kesellikler» qayta tayarlaw",
       "PhD — ilimiy dáreje",
     ],
     focuses: [
@@ -1431,7 +1431,7 @@ STATIC_DOCTOR_PROFILES.push(
     specialty: "Terapiya",
     exp: "4 jıl tájiriybe",
     about:
-      "Gayratjonova Fotima Gofurjon qızı — Farg’ona jámiyet salamatlıǵı medicina institutı Terapiya baǵdarındaǵı pánler (UASh) kafedrası oqıtıwshı stajyorı (2025-jıl 10-oktyabrdan). 2022-jılda TTA nı «Ulıwma ámeliyat shıpakeri» mамanlıǵı boyınsha tamamlaǵan; Tashkent pediatriya institutı terapiya fakulteti studenti; Farg’ona qalası 1-sanlı shańaraq poliklinikasında ámeliy tájiriybege iye.",
+      "Gayratjonova Fotima Gofurjon qızı — Farg’ona jámiyet salamatlıǵı medicina institutı Terapiya baǵdarındaǵı pánler (UASh) kafedrası oqıtıwshı stajyorı (2025-jıl 10-oktyabrdan). 2022-jılda TTA nı «Ulıwma ámeliyat shıpakeri» mamanlıǵı boyınsha tamamlaǵan; Tashkent pediatriya institutı terapiya fakulteti studenti; Farg’ona qalası 1-sanlı shańaraq poliklinikasında ámeliy tájiriybege iye.",
     education: [
       "2022 — Tashkent medicina akademiyası, ulıwma ámeliyat shıpakeri",
       "2022–házir — Tashkent pediatriya institutı, terapiya fakulteti (student)",

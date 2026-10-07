@@ -3367,7 +3367,7 @@ const kaa: Translations = {
     title1: 'Klinikamız ushın',
     titleEm: 'AI platforma',
     description: 'Radiologiya, UTT hám klinikalıq izertlew — bir kiriwde, shıpaker basqarıwında.',
-    demoBtn: 'Demo sorаw',
+    demoBtn: 'Demo soraw',
     platformBtn: 'AiShifokorǵa kiriw',
     platformNote: 'AiShifokor — Radiology, Ultrasound hám basqa AI modulleri birdey platformada:',
     casesBtn: 'Keysılardı kóriw',
@@ -3590,7 +3590,7 @@ const kaa: Translations = {
     doctors: {
       label: 'Shıpakerler',
       title1: 'Mutaxassislar',
-      titleEm: 'jamааtı',
+      titleEm: 'jamaatı',
       description: 'Tájiriybeli shıpakerler — profildi ashıń yamasa qabılǵa jazılıń.',
       viewAll: 'Barlıq shıpakerler',
     },

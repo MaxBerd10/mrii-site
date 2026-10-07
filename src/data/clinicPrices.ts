@@ -420,7 +420,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 7,
-    "name": "SMА spinomozgovoy Vrach Anestiziya 1 soat uchun",
+    "name": "SMA spinomozgovoy Vrach Anestiziya 1 soat uchun",
     "citizen": 702000,
     "foreign": 912600,
     "location": "Davolash binosi 1-2 qavat",
@@ -1004,7 +1004,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 79,
-    "name": "Аntrogratka plyonka (bez kontrast)",
+    "name": "Antrogratka plyonka (bez kontrast)",
     "citizen": 150000,
     "foreign": 195000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -1012,7 +1012,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 80,
-    "name": "Аntrogratka plyonka foto qog’oz",
+    "name": "Antrogratka plyonka foto qog’oz",
     "citizen": 130000,
     "foreign": 169000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -1124,7 +1124,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 94,
-    "name": "АLT ni aniqlash",
+    "name": "ALT ni aniqlash",
     "citizen": 35000,
     "foreign": 45500,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -1132,7 +1132,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 95,
-    "name": "АST ni aniqlash",
+    "name": "AST ni aniqlash",
     "citizen": 35000,
     "foreign": 45500,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -1180,7 +1180,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 101,
-    "name": "Аyollar surtmasini tekshirish",
+    "name": "Ayollar surtmasini tekshirish",
     "citizen": 30000,
     "foreign": 39000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -1204,7 +1204,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 104,
-    "name": "Qondagi Аlfa Аmilaza tekshiruvi (diastaza)",
+    "name": "Qondagi Alfa Amilaza tekshiruvi (diastaza)",
     "citizen": 40000,
     "foreign": 52000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -1308,7 +1308,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 117,
-    "name": "АSLO tekshiruvi (Revmaproba)",
+    "name": "ASLO tekshiruvi (Revmaproba)",
     "citizen": 40000,
     "foreign": 52000,
     "location": "Diagnostika binosi 1-2 qavat",
@@ -1556,7 +1556,7 @@ export const PRICE_CATALOG: CatalogItem[] = [
   },
   {
     "id": 136,
-    "name": "Аnaliz SPID",
+    "name": "Analiz SPID",
     "citizen": 60000,
     "foreign": 118000,
     "location": "OITS markazi binosi",

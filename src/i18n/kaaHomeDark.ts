@@ -64,7 +64,7 @@ export const kaaHomeDark = {
         after: 'Qaralama tayın — shıpaker tekseredi hám qol qoyadı',
       },
       {
-        label: 'Medicinalıq kartа',
+        label: 'Medicinalıq karta',
         before: 'Qag’azlar bólinip ketedi',
         after: 'Barlıq baǵdarlar ushın birlikte jazıw',
       },
