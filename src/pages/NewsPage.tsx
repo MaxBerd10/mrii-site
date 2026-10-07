@@ -34,7 +34,7 @@ function formatDate(value: string | null | undefined) {
 export default function NewsPage({ slug }: { slug: string }) {
   const { lang, contentLang, t } = useLanguage()
   const { home } = useCms()
-  const labels = newsPageLabels[contentLang]
+  const labels = newsPageLabels[lang]
   const staticMatch = getNewsBySlug(slug)
   const [cmsDetail, setCmsDetail] = useState<CmsNewsDetail | null>(null)
   const [triedCms, setTriedCms] = useState(!isCmsEnabled())

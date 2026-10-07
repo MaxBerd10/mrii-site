@@ -1,4 +1,4 @@
-import type { ContentLang } from '../i18n/types'
+import type { ContentLang, Lang } from '../i18n/types'
 import { CLINIC_SPECIALTY_SLUGS } from './clinicContact'
 
 type SpecialtyContent = {
@@ -273,7 +273,7 @@ if (import.meta.env.DEV && specialtyDetails.length !== CLINIC_SPECIALTY_SLUGS.le
   console.warn('specialtyDetails length does not match clinic signage order')
 }
 
-export const specialtyPageLabels: Record<ContentLang, {
+export const specialtyPageLabels: Record<Lang, {
   back: string
   expertise: string
   conditions: string
@@ -340,6 +340,24 @@ export const specialtyPageLabels: Record<ContentLang, {
     hoursShort: '09:00–18:00 · Mon–Sat',
     closingTitle: 'Your next step is to call and book',
     closingText: 'Call the clinic number — patient service will match a doctor and set your visit time.',
+  },
+  // Karakalpak chrome (long-form specialty text still falls back to Uzbek via contentLang).
+  kaa: {
+    back: 'Klinika baǵdarları',
+    expertise: 'Baǵdar haqqında',
+    conditions: 'Qanday jaǵdaylarda járdem beremiz',
+    services: 'Xızmetler hám emlew',
+    diagnostics: 'Diagnostika múmkinshilikleri',
+    pathway: 'Jeke emlew jolı',
+    pathwayText: 'Birinshi konsultaciyadan nátiyjelerdi qadaǵalawǵa shekem barlıq basqıshlardı birdey úylestirilgen jamaat basqaradı.',
+    accredited: 'Xalıqaralıq klinikalıq protokollar',
+    available: 'Telefon arqalı jazılıw',
+    related: 'Basqa klinikalıq baǵdarlar',
+    teamText: 'Mutaxassis profilin kóriń hám sizge mos shıpakerdi tańlań.',
+    teamNote: 'Waqıt tuwra kelmese — kásiplesleri de usı klinikalıq baqlaw kartasın kóredi.',
+    hoursShort: '09:00–18:00 · Dúy–Shan',
+    closingTitle: 'Keyingi qádem — qabılǵa qońıraq etiń',
+    closingText: 'Belgilengen nomerge qońıraq etiń — bemar xızmeti mos shıpaker hám waqıttı belgileydi.',
   },
 }
 

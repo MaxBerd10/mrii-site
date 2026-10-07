@@ -5,7 +5,7 @@ export const CLINIC_PHONE_LOCAL = '245-58-20'
 export const CLINIC_PHONE_TEL = '+998732455820'
 export const CLINIC_TELEGRAM_URL = 'https://t.me/ferghana_medical_institute'
 export const CLINIC_TELEGRAM_HANDLE = '@ferghana_medical_institute'
-export const CLINIC_WEBSITE = 'https://fjsti.uz'
+export const CLINIC_WEBSITE = 'https://fermi.uz'
 export const CLINIC_SPECIALTY_COUNT = 11
 
 /** Slugs in the order shown on clinic signage. */

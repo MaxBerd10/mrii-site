@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
+import type { Lang } from '../i18n/types'
 import { usePageNav } from '../components/PageTransition'
 import '../styles/clinic-gallery.css'
 
@@ -35,8 +36,15 @@ function Arrow({ direction }: { direction: 'left' | 'right' }) {
   return <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d={direction === 'left' ? 'M16 10H5m4-4-4 4 4 4' : 'M4 10h11m-4-4 4 4-4 4'} stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg>
 }
 
+const SECTION_TITLE: Record<Lang, string> = {
+  uz: 'Klinikani bo’limma-bo’lim ko’ring',
+  ru: 'Клиника по отделениям',
+  en: 'The clinic, department by department',
+  kaa: 'Klinikanı bólim-bólim kóriń',
+}
+
 export default function ClinicGalleryPage() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const { routeEnter } = usePageNav()
   const reduceMotion = useReducedMotion()
   const shouldAnimate = routeEnter && !reduceMotion
@@ -85,7 +93,7 @@ export default function ClinicGalleryPage() {
       <section className="clinic-gallery-page__selector" aria-label={t.clinic.gallery.title}>
         <div className="clinic-gallery-page__selector-copy">
           <span>{t.clinic.gallery.label}</span>
-          <h2>Klinikani bo’limma-bo’lim ko’ring</h2>
+          <h2>{SECTION_TITLE[lang]}</h2>
         </div>
         <div className="clinic-gallery-page__image-list">
           {GALLERY_IMAGES.map((image, index) => {

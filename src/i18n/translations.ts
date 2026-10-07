@@ -663,7 +663,7 @@ const uz = {
       'Bu klinikada universitetning asosiy darajasi berilmaydi. Bu yerda — ordinatura rotatsiyasi, talabalar amaliyoti va amaliyotdagi shifokorlar uchun CME/malaka oshirish.',
     universityNote: 'Asosiy oliy ta’lim — FJSTI universitetida.',
     universityLink: 'Universitet saytiga o’tish →',
-    universityHref: 'https://fjsti.uz',
+    universityHref: 'https://fermi.uz',
     stats: [['11', 'yo’nalish'], ['Rotatsiya', 'ordinatura'], ['CME', 'shifokorlar']],
     programsLabel: 'Klinik dasturlar',
     tracks: [
@@ -1812,7 +1812,7 @@ const ru: Translations = {
     description: 'В этой клинике не выдаётся основное высшее образование. Здесь — ротация ординаторов, практика студентов и CME для практикующих врачей.',
     universityNote: 'Основное высшее образование — в университете FJSTI.',
     universityLink: 'Перейти на сайт университета →',
-    universityHref: 'https://fjsti.uz',
+    universityHref: 'https://fermi.uz',
     stats: [['11', 'направлений'], ['Ротация', 'ординатура'], ['CME', 'врачам']],
     programsLabel: 'Клинические программы',
     tracks: [
@@ -2120,7 +2120,7 @@ const en: Translations = {
     packagesHint: 'Each package includes physician visits and diagnostics.',
     recommended: 'Recommended',
     perPerson: 'per person',
-    currency: "so’m",
+    currency: "UZS",
     book: 'Book a visit',
     showMore: '{n} more',
     showLess: 'Show less',
@@ -2780,7 +2780,7 @@ const en: Translations = {
     description: 'This clinic does not award university degrees. Here you will find residency rotations, student placements, and CME for practicing physicians.',
     universityNote: 'Degree education is provided by FJSTI University.',
     universityLink: 'Go to the university website →',
-    universityHref: 'https://fjsti.uz',
+    universityHref: 'https://fermi.uz',
     stats: [['11', 'departments'], ['Rotation', 'residency'], ['CME', 'physicians']],
     programsLabel: 'Clinical programs',
     tracks: [
@@ -3071,7 +3071,7 @@ const kaa: Translations = {
     filters: {
       all: 'Barlıǵı',
       doctor: 'Shıpakerler',
-      nurse: 'Hamshiralar',
+      nurse: 'Hámshireler',
       admin: 'Ma’muriy',
       residency: 'Ordinatura',
       other: 'Basqa',
@@ -3234,6 +3234,11 @@ const kaa: Translations = {
   homeDark: kaaHomeDark,
   clinic: {
     ...uz.clinic,
+    detailLabel: 'Jetekshi ekspertiza',
+    backToSpecialties: 'Barlıq baǵdarlar',
+    detailBody:
+      'Farg’ona Jámiyet Salamatlıǵı Medicina Institutı mutaxassisleri anıq diagnostika, kóp tarawlı konsilium hám xalıqaralıq klinikalıq protokollar tiykarında jeke emlew rejesin dúzedi.',
+    detailFeatures: ['Anıq diagnostika', 'Jeke emlew rejesi', 'Kóp tarawlı jamaat'],
     label: 'Klinikamız',
     title1: 'Kerekli medicina járdemin',
     title2: 'oson tabıń',
@@ -3261,7 +3266,7 @@ const kaa: Translations = {
     filters: {
       all: 'Barlıq',
       therapy: 'Terapevtik',
-      surgery: 'Jarrohlik',
+      surgery: 'Jarrahlıq',
       women: 'Hayallar hám balalar',
       diagnostics: 'Diagnostika',
       emergency: 'Shoshılınsh',
@@ -3280,6 +3285,56 @@ const kaa: Translations = {
   },
   footer: {
     ...uz.footer,
+    // Contact/booking form copy. Reviewed against existing Karakalpak vocabulary in this file;
+    // a native speaker should still proof-read it.
+    serviceField: 'Xızmetti tańlań',
+    successDesc:
+      'Farg’ona Jámiyet Salamatlıǵı Medicina Institutı koordinatorı maǵlıwmatlardı tekserip, qabıl waqtın tastıyıqlaw ushın siz benen baylanısadı.',
+    requestNumber: 'Soraw nomeri',
+    selectedService: 'Tańlanǵan xızmet',
+    callbackTime: 'Baylanısıw waqtı',
+    intents: {
+      booking: {
+        label: 'Qabılǵa jazılıw',
+        title: 'Qabılǵa jazılıń',
+        desc: 'Baǵdardı tańlań — koordinator 15 minut ishinde baylanısadı.',
+        topicField: 'Xızmetti tańlań',
+        submit: 'Qabılǵa jazılıw',
+        successDesc: 'Koordinator maǵlıwmatlardı tekserip, qabıl waqtın tastıyıqlaw ushın siz benen baylanısadı.',
+      },
+      sponsor: {
+        label: 'Homıy / izertlew',
+        title: 'Homıy sorawın jiberiń',
+        desc: 'Klinikalıq izertlew, I-basqısh yamasa CRO menen hámkarlıq — izertlew bólimi juwap beredi.',
+        topicField: 'Tema (mısalı: I-basqısh, CRO)',
+        submit: 'Sorawdı jiberiw',
+        successDesc: 'Izertlew bólimi sorawıńızdı kórip shıǵıp, keyingi qádemler ushın baylanısadı.',
+      },
+      education: {
+        label: 'Klinik baza',
+        title: 'Klinik baza boyınsha ariza',
+        desc: 'Ordinatura, ámeliyat yamasa CME — oqıw bólimine jiberiń.',
+        topicField: 'Dástúr (ordinatura, CME, ámeliyat)',
+        submit: 'Arizanı jiberiw',
+        successDesc: 'Klinik baza bólimi arizańızdı kórip shıǵıp, orın hám múddetti tastıyıqlaw ushın baylanısadı.',
+      },
+      ai: {
+        label: 'AI demo',
+        title: 'AI demo soraw',
+        desc: 'AI ónimleri boyınsha demo hám integraciya — AI jamaatı baylanısadı.',
+        topicField: 'Qızıqqan ónim',
+        submit: 'Demo soraw',
+        successDesc: 'AI jamaatı maǵlıwmatlardı kórip shıǵıp, demo waqtın tastıyıqlaw ushın baylanısadı.',
+      },
+      international: {
+        label: 'Xalıqaralıq bólim',
+        title: 'Xalıqaralıq nawqaslar ushın',
+        desc: 'Viza, awdarmashı, jaylasıw — xalıqaralıq bólim sizge járdem beredi.',
+        topicField: 'Mámleket / mútájlik',
+        submit: 'Baylanısıw',
+        successDesc: 'Xalıqaralıq bólim 15 minut ishinde baylanısıp, keyingi qádemlerdi túsindiredi.',
+      },
+    },
     ready: 'Baslaw ushın tayınsız ba?',
     readyDesc: 'Qońıraq etiń — bemar xızmeti mos shıpaker hám qabıl waqtın darhal tastıyıqlaydı.',
     bookBtn: 'Qabılǵa jazılıw',
@@ -3651,7 +3706,7 @@ const kaa: Translations = {
       'Bul klinikada universitettiń tiykarǵı dárejesi berilmeydi. Bul jerde — ordinatura rotaciyası, studentler ámeliyatı hám ámeliyattaǵı shıpakerler ushın CME/maliyke asırıw.',
     universityNote: 'Tiykarǵı joqarı bilim — FJSTI universitetinde.',
     universityLink: 'Universitet saytına ótiw →',
-    universityHref: 'https://fjsti.uz',
+    universityHref: 'https://fermi.uz',
     stats: [['11', 'baǵdar'], ['Rotaciya', 'ordinatura'], ['CME', 'shıpakerler']],
     programsLabel: 'Klinikalıq baǵdarlamalar',
     tracks: [
