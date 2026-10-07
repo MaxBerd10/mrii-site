@@ -1,6 +1,7 @@
 from django.contrib import admin, messages
 from django.contrib.auth.admin import GroupAdmin, UserAdmin
 from django.contrib.auth.models import Group, User
+from django.urls import reverse
 from django.utils.html import format_html
 
 from . import models
@@ -794,7 +795,8 @@ class InquiryAdmin(admin.ModelAdmin):
     def resume_link(self, obj):
         if not obj.resume:
             return '—'
-        return format_html('<a href="{}" target="_blank" rel="noopener">Yuklab olish</a>', obj.resume.url)
+        url = reverse('admin:cms_inquiry_resume', args=[obj.pk])
+        return format_html('<a href="{}" target="_blank" rel="noopener">Yuklab olish</a>', url)
 
     def has_add_permission(self, request):
         return False
