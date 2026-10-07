@@ -124,6 +124,7 @@ export default function Doctors() {
           animate="show"
         >
           <SectionHeader
+            as="h1"
             label={t.doctors.label}
             title={
               <>

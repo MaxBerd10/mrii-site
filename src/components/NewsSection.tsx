@@ -38,6 +38,7 @@ export default function NewsSection() {
       <div className="container-main">
         <Reveal variants={blurUp}>
           <SectionHeader
+            as="h1"
             label={t.news.label}
             title={<>{t.news.title1} <em>{t.news.titleEm}</em></>}
             action={<a href="/news" className="btn-ghost news-section__all">{t.news.allBtn}</a>}
