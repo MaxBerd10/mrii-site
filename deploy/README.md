@@ -83,6 +83,8 @@ sudo certbot --nginx -d fermiclinic.uz -d www.fermiclinic.uz
 
 **Muhim:** Admin CSS uchun conf ichida `location ^~ /static/` bo‘lishi shart (Django WhiteNoise).
 
+**Ogohlantirish — conf’ni ko‘r-ko‘rona nusxalamang.** Bu fayl shablon. Serverdagi `/etc/nginx/sites-enabled/fermiclinic.uz` dan farq qiladi: u yerda `listen 192.168.0.101:443 ssl http2;` qatorlari bor (server boshqa saytlarni ham shu IP’da tinglaydi) va `client_max_body_size` boshqacha. Faylni to‘g‘ridan-to‘g‘ri almashtirsangiz fermiclinic.uz so‘rovlari boshqa saytga tushib qoladi (2026-10-07 da shunday bo‘lgan). Doim avval `diff` qiling, zaxira oling, faqat kerakli qatorlarni qo‘shing, so‘ng `nginx -t` va tekshiruvni **serverning o‘zidan emas, tashqaridan** (`curl -sI https://fermiclinic.uz/`) bajaring.
+
 ## 5. Xavfsizlik
 
 1. Birinchi marta: `.env` ga `SEED_SUPERUSER=1` va kuchli `DJANGO_SUPERUSER_PASSWORD=...` yozing, `docker compose up -d --build` qiling (admin yaratiladi). Shundan so‘ng **`SEED_SUPERUSER=0`** qiling — aks holda har deploy demo ma’lumotlar CMS tahrirlarini ustiga yozadi.
