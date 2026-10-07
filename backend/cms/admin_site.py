@@ -27,8 +27,48 @@ class MriiAdminSite(AdminSite):
                 self.admin_view(self.translate_api),
                 name='cms_translate',
             ),
+            path(
+                'cms/inquiry/<int:pk>/resume/',
+                self.admin_view(self.resume_download),
+                name='cms_inquiry_resume',
+            ),
         ]
         return custom + urls
+
+    def resume_download(self, request, pk):
+        """Authenticated download of an applicant's resume (HR sees career leads only)."""
+        import os
+
+        from django.core.exceptions import PermissionDenied
+        from django.http import FileResponse, Http404
+        from django.shortcuts import get_object_or_404
+        from django.utils.text import slugify
+
+        from . import models
+
+        if not (
+            request.user.has_perm('cms.view_inquiry')
+            or request.user.has_perm('cms.change_inquiry')
+        ):
+            raise PermissionDenied
+
+        qs = models.Inquiry.objects.exclude(resume='').exclude(resume__isnull=True)
+        is_hr_only = (
+            not request.user.is_superuser
+            and request.user.groups.filter(name='HR bo‘limi').exists()
+        )
+        if is_hr_only:
+            qs = qs.filter(intent=models.Inquiry.Intent.CAREER)
+        inquiry = get_object_or_404(qs, pk=pk)
+
+        try:
+            handle = inquiry.resume.open('rb')
+        except (FileNotFoundError, ValueError):
+            raise Http404('Fayl topilmadi.')
+
+        ext = os.path.splitext(inquiry.resume.name)[1].lower()
+        stem = slugify(inquiry.name) or inquiry.request_id
+        return FileResponse(handle, as_attachment=True, filename=f'{stem}-rezyume{ext}')
 
     def translate_api(self, request):
         """JSON: { fields: { role_uz: '...', ... } } → { translations, errors }"""

@@ -23,12 +23,9 @@ import {
   IconSend,
 } from './contacts/ContactIcons'
 
+// Only real profiles belong here. Facebook/LinkedIn were placeholders linking to the
+// networks' home pages; add them back once the clinic has actual pages.
 const SOCIALS = [
-  {
-    label: 'Facebook',
-    href: 'https://facebook.com/',
-    path: 'M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0022 12z',
-  },
   {
     label: 'Instagram',
     href: 'https://instagram.com/ferghana_medical_institute',
@@ -38,11 +35,6 @@ const SOCIALS = [
     label: 'Telegram',
     href: CLINIC_TELEGRAM_URL,
     path: 'M21.5 4.3 2.9 11.4c-1.1.4-1.1 1.1-.2 1.4l4.7 1.5 1.8 5.5c.2.6.4.8 1 .8.4 0 .6-.2.9-.5l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.5c.3-1.2-.5-1.8-1.4-1.4z',
-  },
-  {
-    label: 'LinkedIn',
-    href: 'https://linkedin.com/',
-    path: 'M6.5 9.5H3.5v11h3v-11zM5 3.5a1.8 1.8 0 110 3.6 1.8 1.8 0 010-3.6zM20.5 20.5h-3v-5.3c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.4h-3v-11h2.9v1.5h.1c.4-.8 1.4-1.7 2.9-1.7 3.1 0 3.7 2 3.7 4.7V20.5z',
   },
 ]
 

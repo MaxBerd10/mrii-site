@@ -212,7 +212,7 @@ const locales: Record<Lang, DossierLocale> = {
     current: 'házir',
     native: 'ana tili',
     fluent: 'erkin',
-    training: 'Klinikalıq taярlıq',
+    training: 'Klinikalıq tayarlıq',
     regionalCenter: 'Wálayat medicina orayı',
     specialistCenter: 'Mamanlasqan klinikalıq ámeliyat',
     instituteClinic: 'FJSTI kóp tarmaqlı klinikası',
@@ -509,7 +509,7 @@ const DOSSIER_MILESTONE_OVERRIDES: Partial<
     ],
     'nosirov-m-m': [
       { range: '2015–2021', place: 'ADTI, педиатрический факультет', role: 'Студент' },
-      { range: '2021–2023', place: 'Мархамат · Джалаquduq · ADTI', role: 'Дежурный врач · клин. ординатура' },
+      { range: '2021–2023', place: 'Мархамат · Джалакудук · ADTI', role: 'Дежурный врач · клин. ординатура' },
       { range: '2023–2025', place: 'RShTYIM · FJSTIKT', role: 'Приём-диагностика · невролог нервных болезней' },
       {
         range: '2025–н.в.',

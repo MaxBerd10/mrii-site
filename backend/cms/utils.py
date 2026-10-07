@@ -1,11 +1,21 @@
+import os
+import uuid
+
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 
 def validate_resume_size(value, max_mb: int = 5):
     limit = max_mb * 1024 * 1024
     if value.size > limit:
         raise ValidationError(f'Fayl hajmi {max_mb}MB dan oshmasligi kerak.')
+
+
+def resume_upload_path(instance, filename):
+    """Random file name: applicant CVs hold personal data and must not be guessable."""
+    ext = os.path.splitext(filename or '')[1].lower()
+    return f'resumes/{timezone.now():%Y/%m}/{uuid.uuid4().hex}{ext}'
 
 
 def resolve_lang(request) -> str:

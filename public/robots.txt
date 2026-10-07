@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /media/
+
+Sitemap: https://fermiclinic.uz/sitemap.xml

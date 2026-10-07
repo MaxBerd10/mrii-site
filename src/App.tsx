@@ -8,6 +8,7 @@ import PageShell from './pages/PageShell'
 import { PageTransitionProvider, usePageNav } from './components/PageTransition'
 import PageEnter from './components/PageEnter'
 import { useScrollToTopOnRoute } from './lib/scrollRoute'
+import { usePageMeta } from './lib/usePageMeta'
 
 // Inner pages are loaded only after the visitor opens their route. The home
 // route remains immediate because it is the primary first-load experience.
@@ -30,6 +31,7 @@ const VacanciesPage = lazy(() => import('./pages/VacanciesPage'))
 function AppRoutes() {
   const { path, busy } = usePageNav()
   useScrollToTopOnRoute(path)
+  usePageMeta(path)
 
   const isClinicServices = path === '/clinic/services'
   const isClinicDiagnostics = path === '/clinic/diagnostics'

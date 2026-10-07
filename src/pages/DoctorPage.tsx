@@ -227,7 +227,7 @@ const profileUi: Record<Lang, ProfileUi> = {
     focus: 'Járdem baǵdarları',
     visitCard: 'Qabıllaw kartası',
     career: 'Kásiplik jol',
-    careerDescription: 'Taярlıqtan jetekshi mamanlıqqa shekem — jumıs orınları hám juwapkershilik dárejesi.',
+    careerDescription: 'Tayarlıqtan jetekshi mamanlıqqa shekem — jumıs orınları hám juwapkershilik dárejesi.',
     education: 'Bilim hám maliyke',
     educationTitle: 'Hújjetler menen tastıyıqlanǵan',
     science: 'Ilimiy iskerlik',

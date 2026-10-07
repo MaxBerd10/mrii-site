@@ -7,6 +7,8 @@ type SectionHeaderProps = {
   action?: ReactNode
   accent?: string
   stack?: boolean
+  /** Page-level headers (own route) should pass "h1"; embedded sections keep h2. */
+  as?: 'h1' | 'h2'
 }
 
 export default function SectionHeader({
@@ -16,6 +18,7 @@ export default function SectionHeader({
   action,
   accent = 'var(--accent)',
   stack = false,
+  as: Heading = 'h2',
 }: SectionHeaderProps) {
   const style = { '--section-accent': accent } as CSSProperties
 
@@ -26,7 +29,7 @@ export default function SectionHeader({
           <span className="section-label__dot" />
           {label}
         </span>
-        <h2 className="section-title">{title}</h2>
+        <Heading className="section-title">{title}</Heading>
         {description && <p className="section-desc section-head__desc">{description}</p>}
       </div>
       {action && <div className="section-head__action">{action}</div>}

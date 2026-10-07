@@ -129,7 +129,7 @@ const uz = {
       'Kerakli mutaxassisni tanlang va qabulga yoziling — diagnostika va davolash bitta klinikada.',
     buttons: ['Qabulga yozilish', 'Tadqiqotlar', 'Klinik baza', 'AI'],
     slideLabel: 'Slayd',
-    copyright: 'Farg’ona Jamoat Salomatligi Tibbiyot Instituti © 2025 — Toshkent, O’zbekiston',
+    copyright: 'Farg’ona Jamoat Salomatligi Tibbiyot Instituti © 2026 — Farg’ona, O’zbekiston',
     certs: 'ISO 9001:2015 · GCP · ICH E6',
     scrollDown: 'Batafsil',
     since: '2008 yildan beri',
@@ -1267,7 +1267,7 @@ const ru: Translations = {
     instituteName: 'FJSTI МНОГОПРОФИЛЬНАЯ КЛИНИКА',
     instituteSlogan: 'Современная диагностика и клиническая помощь — в одном центре.',
     slides: [
-      { caption: 'Клиническая помощь', alt: 'Современная клиника Ферганский медицинский институт общественного здоровья' },
+      { caption: 'Клиническая помощь', alt: 'Современная клиника Ферганского медицинского института общественного здоровья' },
       { caption: 'Клинические исследования', alt: 'Научная лаборатория' },
       { caption: 'Медицинское образование', alt: 'Образовательный центр' },
       { caption: 'Искусственный интеллект', alt: 'AI решения для здравоохранения' },
@@ -1279,7 +1279,7 @@ const ru: Translations = {
     description: 'Выберите нужного специалиста и запишитесь на приём — диагностика и лечение в одной клинике.',
     buttons: ['Записаться на приём', 'Исследования', 'Клиническая база', 'AI'],
     slideLabel: 'Слайд',
-    copyright: 'Ферганский медицинский институт общественного здоровья © 2025 — Москва, Россия',
+    copyright: 'Ферганский медицинский институт общественного здоровья © 2026 — Фергана, Узбекистан',
     certs: 'ISO 9001:2015 · GCP · ICH E6',
     scrollDown: 'Подробнее',
     since: 'С 2008 года',
@@ -1551,7 +1551,7 @@ const ru: Translations = {
         },
         {
           q: 'Нужно ли направление?',
-          a: 'Нет. Записаться можно напрямую в любое из двенадцати направлений. Если не знаете, какой специалист нужен, начните с терапевта — он направит к нужному врачу.',
+          a: 'Нет. Записаться можно напрямую в любое из одиннадцати направлений. Если не знаете, какой специалист нужен, начните с терапевта — он направит к нужному врачу.',
         },
         {
           q: 'Диагноз ставит искусственный интеллект?',
@@ -1615,7 +1615,7 @@ const ru: Translations = {
     secondaryDescription:
       'Помимо клиники — исследования, практика ординаторов и AI-решения для медицины.',
     items: [
-      { num: '01', title: 'Клиника', subtitle: 'Клиническая помощь', desc: 'Многопрофильная клиника с 12 специализациями. Более 50 000 пациентов в год.', link: 'Перейти в клинику', color: '#0EA5E9' },
+      { num: '01', title: 'Клиника', subtitle: 'Клиническая помощь', desc: 'Многопрофильная клиника с 11 специализациями. Более 50 000 пациентов в год.', link: 'Перейти в клинику', color: '#0EA5E9' },
       { num: '02', title: 'Исследования', subtitle: 'Центр клинических исследований', desc: 'Проведение исследований I–IV фаз. GCP-сертифицированная команда.', link: 'Центр исследований', color: '#6366F1' },
       { num: '03', title: 'Клиническая база', subtitle: 'Практика и CME', desc: 'Ротация ординаторов, база практики и повышение квалификации врачей (CME). Основное высшее образование — в университете.', link: 'Смотреть базу', color: '#10B981' },
       { num: '04', title: 'AI', subtitle: 'AI-решения для медицины', desc: 'AiShifokor, AI Radiology, AI Ultrasound, AI Clinical Research.', link: 'AI продукты', color: '#F59E0B' },
@@ -1696,7 +1696,7 @@ const ru: Translations = {
     specialists: 'Специалисты',
     backToSpecialties: 'Все направления',
     detailLabel: 'Ведущая экспертиза',
-    detailBody: 'Специалисты Ферганский медицинский институт общественного здоровья разрабатывают индивидуальный план лечения на основе точной диагностики, мультидисциплинарного консилиума и международных клинических протоколов.',
+    detailBody: 'Специалисты Ферганского медицинского института общественного здоровья разрабатывают индивидуальный план лечения на основе точной диагностики, мультидисциплинарного консилиума и международных клинических протоколов.',
     detailFeatures: ['Точная диагностика', 'Индивидуальный план лечения', 'Мультидисциплинарная команда'],
     filters: {
       all: 'Все',
@@ -1912,7 +1912,7 @@ const ru: Translations = {
     testimonials: [
       { quote: 'Ферганский медицинский институт общественного здоровья — один из самых надёжных исследовательских центров в регионе.', author: 'Елена Ковалева', role: 'Clinical Operations Director, Roche', color: '#0EA5E9' },
       { quote: 'AiShifokor сократил время документирования на 87%.', author: 'Дмитрий Волков', role: 'Главный врач', color: '#10B981' },
-      { quote: 'GCP-тренинг в Ферганский медицинский институт общественного здоровья — лучший в стране.', author: 'Анна Петрова', role: 'Clinical Research Coordinator', color: '#6366F1' },
+      { quote: 'GCP-тренинг в Ферганском медицинском институте общественного здоровья — лучший в стране.', author: 'Анна Петрова', role: 'Clinical Research Coordinator', color: '#6366F1' },
     ],
     partnerNames: ['Roche', 'Novartis', 'Pfizer', 'AstraZeneca', 'Sanofi', 'Bayer', 'Merck', 'GSK'],
   },
@@ -1934,7 +1934,7 @@ const ru: Translations = {
       { title: 'Медицинский туризм', desc: 'Организация полного медицинского тура — от записи до выписки.' },
       { title: 'Визовая поддержка', desc: 'Подготовка приглашений, помощь в оформлении медицинских виз.' },
       { title: 'Переводчики', desc: 'Профессиональные медицинские переводчики на 12 языках.' },
-      { title: 'Телемедицина', desc: 'Консультации с ведущими специалистами Ферганский медицинский институт общественного здоровья по видеосвязи.' },
+      { title: 'Телемедицина', desc: 'Консультации с ведущими специалистами Ферганского медицинского института общественного здоровья по видеосвязи.' },
     ],
     contactBtn: 'Связаться с международным отделом',
     telemedBtn: 'Телемедицина',
@@ -1951,7 +1951,7 @@ const ru: Translations = {
     submitting: 'Отправляем...',
     submitError: 'Ошибка отправки. Попробуйте ещё раз или позвоните.',
     successTitle: 'Ваша заявка принята',
-    successDesc: 'Координатор Ферганский медицинский институт общественного здоровья проверит данные и свяжется с вами для подтверждения времени приёма.',
+    successDesc: 'Координатор Ферганского медицинского института общественного здоровья проверит данные и свяжется с вами для подтверждения времени приёма.',
     requestNumber: 'Номер обращения',
     selectedService: 'Выбранная услуга',
     contactPhone: 'Телефон',
@@ -2011,7 +2011,7 @@ const ru: Translations = {
       { title: 'Институт', links: ['О нас', 'Руководство', 'Лицензии', 'Партнёры', 'Инвесторам', 'Карьера'] },
     ],
     copyright: '© 2026 Ферганский медицинский институт общественного здоровья. Все права защищены.',
-    license: 'Лицензия МЗ РФ ЛО-77-01-024876',
+    license: 'Лицензия ЛО-77-01-024876',
     privacy: 'Политика конфиденциальности',
     terms: 'Пользовательское соглашение',
     contactsLink: 'Контакты',
@@ -2237,7 +2237,7 @@ const en: Translations = {
     instituteName: 'FJSTI MULTIDISCIPLINARY CLINIC',
     instituteSlogan: 'Modern diagnostics and clinical care — in one center.',
     slides: [
-      { caption: 'Clinical care', alt: 'Modern Ferghana Medical Institute of Public Health clinic' },
+      { caption: 'Clinical care', alt: 'Modern clinic of the Ferghana Medical Institute of Public Health' },
       { caption: 'Clinical research', alt: 'Research laboratory' },
       { caption: 'Clinical base', alt: 'Practice and residency base' },
       { caption: 'Artificial intelligence', alt: 'AI healthcare solutions' },
@@ -2249,7 +2249,7 @@ const en: Translations = {
     description: 'Choose the right specialist and book a visit — diagnostics and treatment in one clinic.',
     buttons: ['Book appointment', 'Research', 'Clinical base', 'AI'],
     slideLabel: 'Slide',
-    copyright: 'Ferghana Medical Institute of Public Health © 2025 — Tashkent, Uzbekistan',
+    copyright: 'Ferghana Medical Institute of Public Health © 2026 — Fergana, Uzbekistan',
     certs: 'ISO 9001:2015 · GCP · ICH E6',
     scrollDown: 'Learn more',
     since: 'Since 2008',
@@ -2521,7 +2521,7 @@ const en: Translations = {
         },
         {
           q: 'Do I need a referral?',
-          a: 'No. You can book directly into any of the twelve departments. If you are not sure which specialist you need, start with a general physician and they will point you to the right one.',
+          a: 'No. You can book directly into any of the eleven departments. If you are not sure which specialist you need, start with a general physician and they will point you to the right one.',
         },
         {
           q: 'Does the AI make my diagnosis?',
@@ -2585,7 +2585,7 @@ const en: Translations = {
     secondaryDescription:
       'Beyond the clinic — research, residency practice, and AI tools for medicine.',
     items: [
-      { num: '01', title: 'Clinic', subtitle: 'Clinical care', desc: 'Multidisciplinary clinic with 12 specialties. Over 50,000 patients per year.', link: 'Go to clinic', color: '#0EA5E9' },
+      { num: '01', title: 'Clinic', subtitle: 'Clinical care', desc: 'Multidisciplinary clinic with 11 specialties. Over 50,000 patients per year.', link: 'Go to clinic', color: '#0EA5E9' },
       { num: '02', title: 'Research', subtitle: 'Clinical research center', desc: 'Phase I–IV trials. Own Phase I unit, GCP-certified team.', link: 'Research center', color: '#6366F1' },
       { num: '03', title: 'Clinical base', subtitle: 'Practice & CME', desc: 'Residency rotations, student placements, and CME for practicing physicians. Degree education is at the university.', link: 'View clinical base', color: '#10B981' },
       { num: '04', title: 'AI', subtitle: 'AI for medicine', desc: 'AiShifokor, AI Radiology, AI Ultrasound, AI Clinical Research.', link: 'AI products', color: '#F59E0B' },
@@ -2787,7 +2787,7 @@ const en: Translations = {
     programsLabel: 'Clinical programs',
     tracks: [
       { audience: 'Residency rotations', color: '#0EA5E9', icon: '🩺', cta: 'Send request', programs: [
-        { name: 'Clinical rotation (departments)', duration: 'Modular', spots: '12 departments' },
+        { name: 'Clinical rotation (departments)', duration: 'Modular', spots: '11 departments' },
         { name: 'Practice placement', duration: 'Semester', spots: 'Students' },
         { name: 'Clinical mentoring', duration: 'Ongoing', spots: 'Physician mentors' },
       ]},
@@ -2921,7 +2921,7 @@ const en: Translations = {
     submitting: 'Sending...',
     submitError: 'Could not send. Please try again or call us.',
     successTitle: 'Your request has been received',
-    successDesc: 'An Ferghana Medical Institute of Public Health coordinator will review your details and contact you to confirm the appointment time.',
+    successDesc: 'A Ferghana Medical Institute of Public Health coordinator will review your details and contact you to confirm the appointment time.',
     requestNumber: 'Request number',
     selectedService: 'Selected service',
     contactPhone: 'Phone',
@@ -3363,11 +3363,11 @@ const kaa: Translations = {
   },
   ai: {
     ...uz.ai,
-    label: '04 / AI sheshimler',
+    label: '05 / AI sheshimler',
     title1: 'Klinikamız ushın',
     titleEm: 'AI platforma',
     description: 'Radiologiya, UTT hám klinikalıq izertlew — bir kiriwde, shıpaker basqarıwında.',
-    demoBtn: 'Demo sorаw',
+    demoBtn: 'Demo soraw',
     platformBtn: 'AiShifokorǵa kiriw',
     platformNote: 'AiShifokor — Radiology, Ultrasound hám basqa AI modulleri birdey platformada:',
     casesBtn: 'Keysılardı kóriw',
@@ -3573,7 +3573,7 @@ const kaa: Translations = {
       'Kerekli mutaxassisti tańlań hám qabılǵa jazılıń — diagnostika hám emlew bir klinikada.',
     buttons: ['Qabılǵa jazılıw', 'Izertlewler', 'Klinikalıq baza', 'AI'],
     slideLabel: 'Slayd',
-    copyright: 'Farg’ona Jámiyet Salamatlıǵı Medicina Institutı © 2025 — Tashkent, Ózbekstan',
+    copyright: 'Farg’ona Jámiyet Salamatlıǵı Medicina Institutı © 2026 — Farg’ona, Ózbekstan',
     certs: 'ISO 9001:2015 · GCP · ICH E6',
     scrollDown: 'Tolıǵıraq',
     since: '2008-jıldan beri',
@@ -3590,7 +3590,7 @@ const kaa: Translations = {
     doctors: {
       label: 'Shıpakerler',
       title1: 'Mutaxassislar',
-      titleEm: 'jamааtı',
+      titleEm: 'jamaatı',
       description: 'Tájiriybeli shıpakerler — profildi ashıń yamasa qabılǵa jazılıń.',
       viewAll: 'Barlıq shıpakerler',
     },
