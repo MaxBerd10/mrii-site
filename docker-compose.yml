@@ -17,11 +17,15 @@ services:
   web:
     build: ./backend
     ports:
-      - "8001:8000"
+      # Loopback only: nginx proxies to 127.0.0.1:8001. Publishing on 0.0.0.0 would expose
+      # the app (plain HTTP, trusted X-Forwarded-* headers) to anyone who bypasses nginx.
+      - "127.0.0.1:8001:8000"
     environment:
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-mrii-docker-dev-change-me-please}
-      DJANGO_DEBUG: ${DJANGO_DEBUG:-True}
-      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-localhost,127.0.0.1,*}
+      # Fail closed: production must never run with DEBUG on by accident. For a local compose
+      # run put DJANGO_DEBUG=True (and a dev DJANGO_SECRET_KEY) in .env.
+      DJANGO_DEBUG: ${DJANGO_DEBUG:-False}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-fermiclinic.uz,www.fermiclinic.uz,localhost,127.0.0.1}
       POSTGRES_DB: ${POSTGRES_DB:-mrii}
       POSTGRES_USER: ${POSTGRES_USER:-mrii}
       # Change this in production via a .env file — the default is dev-only.

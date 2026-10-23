@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import os
+import tempfile
 
 from django.core.exceptions import ImproperlyConfigured
 from dotenv import load_dotenv
@@ -192,6 +193,20 @@ CORS_ALLOW_CREDENTIALS = True
 # Admindagi «Sayt» tugmasi — ochiq frontend (Vite / production domen)
 FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://127.0.0.1:8443').rstrip('/')
 
+# Number of reverse proxies in front of Django (nginx = 1). DRF and our own login lockout
+# then trust only the address nginx appended to X-Forwarded-For; entries a client sends
+# itself are ignored. Without this, rotating that header bypassed every rate limit.
+TRUSTED_PROXY_COUNT = int(os.getenv('TRUSTED_PROXY_COUNT', '1'))
+
+# Counters for DRF throttling and the admin-login lockout must be shared by all gunicorn
+# workers (the default per-process LocMemCache split them and reset on every restart).
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.getenv('CACHE_DIR', str(Path(tempfile.gettempdir()) / 'fjsti-django-cache')),
+    }
+}
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
@@ -204,6 +219,7 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.ScopedRateThrottle',
     ],
+    'NUM_PROXIES': TRUSTED_PROXY_COUNT,
     'DEFAULT_THROTTLE_RATES': {
         'inquiry_create': os.getenv('THROTTLE_INQUIRY_CREATE', '12/hour'),
         'inquiry_advice': os.getenv('THROTTLE_INQUIRY_ADVICE', '40/hour'),
@@ -234,9 +250,12 @@ if not DEBUG:
         '1', 'true', 'yes',
     )
 
-# Admin video uploads (clinic tour, etc.) — nginx client_max_body_size bilan mos bo‘lsin
-_UPLOAD_MAX_MB = int(os.getenv('DJANGO_UPLOAD_MAX_MB', '512'))
-_UPLOAD_MAX_BYTES = _UPLOAD_MAX_MB * 1024 * 1024
-DATA_UPLOAD_MAX_MEMORY_SIZE = _UPLOAD_MAX_BYTES
-FILE_UPLOAD_MAX_MEMORY_SIZE = _UPLOAD_MAX_BYTES
+# Non-file request bodies (JSON/forms) are capped small: this applies to the public
+# endpoints too. File uploads (admin videos) are not counted here and, above Django's
+# default 2.5 MB threshold, are streamed to a temp file instead of held in memory —
+# their size is limited by nginx client_max_body_size.
+DATA_UPLOAD_MAX_MEMORY_SIZE = int(os.getenv('DATA_UPLOAD_MAX_MEMORY_MB', '10')) * 1024 * 1024
 
+# Uploaded files (applicant resumes!) must not be world-readable on the volume.
+FILE_UPLOAD_PERMISSIONS = 0o640
+FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o750
