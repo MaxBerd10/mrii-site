@@ -7,6 +7,7 @@ gunicorn>=22.0
 whitenoise>=6.6
 python-dotenv>=1.0
 deep-translator>=1.11
+requests>=2.32  # Telegram Bot API client (also a deep-translator dependency)
 psycopg[binary]>=3.1
 # Transitive packages with recent security fixes — keep floors explicit.
 sqlparse>=0.6.0

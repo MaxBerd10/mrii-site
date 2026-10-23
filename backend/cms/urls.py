@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import api
+from . import api, hr_api
 
 urlpatterns = [
     path('settings/', api.SettingsAPI.as_view()),
@@ -18,4 +18,11 @@ urlpatterns = [
     path('vacancies/', api.VacancyListAPI.as_view()),
     path('inquiries/', api.InquiryCreateAPI.as_view()),
     path('inquiries/<str:request_id>/', api.InquiryAdviceAPI.as_view()),
+    # Telegram HR Mini App (initData-authenticated, allow-listed accounts only)
+    path('hr/me/', hr_api.HrMeAPI.as_view()),
+    path('hr/vacancies/', hr_api.HrVacancyListAPI.as_view()),
+    path('hr/vacancies/<int:pk>/', hr_api.HrVacancyDetailAPI.as_view()),
+    path('hr/applications/', hr_api.HrApplicationListAPI.as_view()),
+    path('hr/applications/<int:pk>/', hr_api.HrApplicationDetailAPI.as_view()),
+    path('hr/applications/<int:pk>/resume/', hr_api.HrApplicationResumeAPI.as_view()),
 ]

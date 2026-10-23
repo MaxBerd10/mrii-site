@@ -223,10 +223,17 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'inquiry_create': os.getenv('THROTTLE_INQUIRY_CREATE', '12/hour'),
         'inquiry_advice': os.getenv('THROTTLE_INQUIRY_ADVICE', '40/hour'),
+        'hr_api': os.getenv('THROTTLE_HR_API', '600/hour'),
     },
 }
 
 CMS_LANGS = ('uz', 'ru', 'en')
+
+# —— Telegram HR Mini App ——
+# Bot token comes ONLY from the environment (never commit it, never expose it to the frontend).
+TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', '').strip()
+# How long a Mini App session (initData auth_date) stays valid; reopening the app refreshes it.
+TELEGRAM_INITDATA_MAX_AGE = int(os.getenv('TELEGRAM_INITDATA_MAX_AGE', str(6 * 60 * 60)))
 
 # —— Auth / session security ——
 SESSION_COOKIE_HTTPONLY = True

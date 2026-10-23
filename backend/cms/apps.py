@@ -12,6 +12,8 @@ class CmsConfig(AppConfig):
         from .i18n_fill import autofill_from_uz
 
         def _autofill(sender, instance, **kwargs):
+            if getattr(instance, '_skip_autofill', False):
+                return  # caller translates later (e.g. in a background thread)
             if (
                 getattr(sender._meta, 'app_label', None) != 'cms'
                 or getattr(sender, '__module__', '') == '__fake__'

@@ -486,7 +486,12 @@ class InquiryCreateSerializer(serializers.Serializer):
             request_id = f'{prefix}-{year}-{secrets.token_hex(6).upper()}'
             if not models.Inquiry.objects.filter(request_id=request_id).exists():
                 break
-        return models.Inquiry.objects.create(request_id=request_id, **validated_data)
+        inquiry = models.Inquiry.objects.create(request_id=request_id, **validated_data)
+        if inquiry.intent == models.Inquiry.Intent.CAREER:
+            from .telegram_bot import notify_new_application
+
+            notify_new_application(inquiry)  # fire-and-forget; never raises
+        return inquiry
 
 
 class InquiryAdviceSerializer(serializers.Serializer):

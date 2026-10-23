@@ -221,3 +221,191 @@ class PublicMediaAndUploadTests(TestCase):
         self.assertRegex(real.json()['request_id'], r'^HR-\d{4}-[0-9A-F]{12}$')
         long_text = self.client.post('/api/inquiries/', {**base, 'message': 'x' * 5001})
         self.assertEqual(long_text.status_code, 400)
+
+
+# ───────────────────────── Telegram HR Mini App ─────────────────────────
+BOT = '123456:TEST-TOKEN-for-unit-tests'
+
+
+def make_init_data(user_id=777, token=BOT, age=0, tamper=False):
+    import hashlib
+    import hmac
+    import json
+    import time
+    from urllib.parse import urlencode
+
+    fields = {
+        'auth_date': str(int(time.time()) - age),
+        'query_id': 'AAH-test',
+        'user': json.dumps({'id': user_id, 'first_name': 'Hr'}, separators=(',', ':')),
+    }
+    dcs = '\n'.join(f'{k}={v}' for k, v in sorted(fields.items()))
+    secret = hmac.new(b'WebAppData', token.encode(), hashlib.sha256).digest()
+    fields['hash'] = hmac.new(secret, dcs.encode(), hashlib.sha256).hexdigest()
+    if tamper:
+        fields['user'] = fields['user'].replace(str(user_id), '999')
+    return urlencode(fields)
+
+
+@override_settings(
+    CACHES=LOCMEM, DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False,
+    TELEGRAM_BOT_TOKEN=BOT, TELEGRAM_INITDATA_MAX_AGE=3600,
+)
+class TelegramHrApiTests(TestCase):
+    def setUp(self):
+        from django.core.cache import cache
+
+        from .models import HRTelegramUser
+
+        cache.clear()
+        self.hr = HRTelegramUser.objects.create(telegram_id=777, name='HR Xodim')
+
+    def call(self, method, path, body=None, init=None, **kw):
+        headers = {}
+        if init is not None:
+            headers['HTTP_AUTHORIZATION'] = f'tma {init}'
+        kwargs = {'content_type': 'application/json', **headers}
+        data = body if body is None else __import__('json').dumps(body)
+        return getattr(self.client, method)(path, data=data, **kwargs) if data is not None else getattr(self.client, method)(path, **kwargs)
+
+    # ---- authentication
+    def test_rejects_missing_forged_expired_and_unknown_users(self):
+        self.assertEqual(self.call('get', '/api/hr/me/').status_code, 401)
+        self.assertEqual(self.call('get', '/api/hr/me/', init=make_init_data(tamper=True)).status_code, 401)
+        self.assertEqual(self.call('get', '/api/hr/me/', init=make_init_data(token='1:other-bot')).status_code, 401)
+        self.assertEqual(self.call('get', '/api/hr/me/', init=make_init_data(age=7200)).status_code, 401)
+        self.assertEqual(self.call('get', '/api/hr/me/', init=make_init_data(user_id=555)).status_code, 403)
+        from .models import HRTelegramUser
+
+        HRTelegramUser.objects.filter(pk=self.hr.pk).update(is_active=False)
+        self.assertEqual(self.call('get', '/api/hr/me/', init=make_init_data()).status_code, 403)
+
+    def test_valid_allow_listed_user_gets_in(self):
+        r = self.call('get', '/api/hr/me/', init=make_init_data())
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.json()['name'], 'HR Xodim')
+
+    @override_settings(TELEGRAM_BOT_TOKEN='')
+    def test_returns_503_when_bot_not_configured(self):
+        self.assertEqual(self.call('get', '/api/hr/me/', init=make_init_data()).status_code, 503)
+
+    # ---- vacancies
+    def test_create_edit_toggle_delete_vacancy(self):
+        from unittest import mock
+
+        from .models import Vacancy
+
+        init = make_init_data()
+        with mock.patch('cms.hr_api._translate_in_background') as bg:
+            r = self.call('post', '/api/hr/vacancies/', {
+                'title': 'Kardiolog', 'category': 'doctor', 'employment': 'full_time',
+                'department': 'Kardiologiya', 'location': 'Farg’ona', 'experience': '3 yil',
+                'description': 'Klinikada ishlash', 'requirements': ['Oliy ma’lumot', 'Sertifikat'],
+                'deadline': '2026-12-31',
+            }, init=init)
+            self.assertEqual(r.status_code, 201, r.content)
+            bg.assert_called_once()
+        vac = Vacancy.objects.get(title_uz='Kardiolog')
+        self.assertEqual(vac.requirements_uz, 'Oliy ma’lumot|Sertifikat')
+        self.assertTrue(vac.is_active and vac.slug.startswith('kardiolog'))
+        # public site shows it
+        pub = self.client.get('/api/vacancies/?lang=uz').json()
+        self.assertIn('Kardiolog', [v['title'] for v in pub])
+
+        # edit title clears stale translations of that field only
+        Vacancy.objects.filter(pk=vac.pk).update(title_ru='Кардиолог', department_ru='Кардиология')
+        with mock.patch('cms.hr_api._translate_in_background'):
+            r = self.call('patch', f'/api/hr/vacancies/{vac.pk}/', {'title': 'Katta kardiolog'}, init=init)
+        self.assertEqual(r.status_code, 200)
+        vac.refresh_from_db()
+        self.assertEqual((vac.title_uz, vac.title_ru, vac.department_ru), ('Katta kardiolog', '', 'Кардиология'))
+
+        # deactivate -> disappears from public site
+        with mock.patch('cms.hr_api._translate_in_background'):
+            self.call('patch', f'/api/hr/vacancies/{vac.pk}/', {'is_active': False}, init=init)
+        pub = self.client.get('/api/vacancies/?lang=uz').json()
+        self.assertNotIn('Katta kardiolog', [v['title'] for v in pub])
+
+        self.assertEqual(self.call('delete', f'/api/hr/vacancies/{vac.pk}/', init=init).status_code, 204)
+        self.assertFalse(Vacancy.objects.filter(pk=vac.pk).exists())
+
+    def test_vacancy_validation_and_slug_uniqueness(self):
+        from unittest import mock
+
+        init = make_init_data()
+        self.assertEqual(self.call('post', '/api/hr/vacancies/', {'category': 'doctor'}, init=init).status_code, 400)
+        self.assertEqual(self.call('post', '/api/hr/vacancies/', {'title': 'X', 'requirements': ['a|b']}, init=init).status_code, 400)
+        self.assertEqual(self.call('post', '/api/hr/vacancies/', {'title': 'X', 'category': 'hacker'}, init=init).status_code, 400)
+        with mock.patch('cms.hr_api._translate_in_background'):
+            a = self.call('post', '/api/hr/vacancies/', {'title': 'Hamshira'}, init=init).json()
+            b = self.call('post', '/api/hr/vacancies/', {'title': 'Hamshira'}, init=init).json()
+        self.assertNotEqual(a['slug'], b['slug'])
+
+    # ---- applications
+    def _inquiries(self):
+        from django.core.files.uploadedfile import SimpleUploadedFile
+
+        from .models import Inquiry
+
+        career = Inquiry.objects.create(
+            request_id='HR-2026-AAAAAAAAAAAA', intent='career', name='Ali', phone='+998901', topic='Terapevt',
+            resume=SimpleUploadedFile('cv.pdf', b'%PDF-1.4 hello'),
+        )
+        patient = Inquiry.objects.create(
+            request_id='FJSTI-2026-BBBBBBBBBBBB', intent='booking', name='Bemor', phone='+998902',
+            medical_history='secret history', allergies='penicillin',
+        )
+        return career, patient
+
+    def test_hr_sees_only_career_applications_and_can_set_status(self):
+        career, patient = self._inquiries()
+        init = make_init_data()
+        rows = self.call('get', '/api/hr/applications/', init=init).json()
+        self.assertEqual([r['name'] for r in rows], ['Ali'])
+        self.assertNotIn('medical_history', rows[0])
+        self.assertEqual(self.call('patch', f'/api/hr/applications/{patient.pk}/', {'status': 'closed'}, init=init).status_code, 404)
+        r = self.call('patch', f'/api/hr/applications/{career.pk}/', {'status': 'contacted'}, init=init)
+        self.assertEqual(r.json()['status'], 'contacted')
+        self.assertEqual(self.call('patch', f'/api/hr/applications/{career.pk}/', {'status': 'x'}, init=init).status_code, 400)
+
+    def test_resume_is_sent_to_the_hr_chat_not_exposed_as_url(self):
+        from unittest import mock
+
+        career, patient = self._inquiries()
+        init = make_init_data()
+        with mock.patch('cms.telegram_bot.send_document', return_value=True) as send:
+            r = self.call('post', f'/api/hr/applications/{career.pk}/resume/', init=init)
+        self.assertEqual(r.status_code, 200)
+        chat_id, filename, content = send.call_args.args[:3]
+        self.assertEqual((chat_id, content), (777, b'%PDF-1.4 hello'))
+        self.assertTrue(filename.endswith('.pdf'))
+        with mock.patch('cms.telegram_bot.send_document') as send:
+            self.assertEqual(self.call('post', f'/api/hr/applications/{patient.pk}/resume/', init=init).status_code, 404)
+            send.assert_not_called()
+        with mock.patch('cms.telegram_bot.send_document', return_value=False):
+            self.assertEqual(self.call('post', f'/api/hr/applications/{career.pk}/resume/', init=init).status_code, 502)
+
+    def test_new_career_application_notifies_hr_but_other_intents_do_not(self):
+        from unittest import mock
+
+        with mock.patch('cms.telegram_bot.notify_new_application') as notify:
+            self.client.post('/api/inquiries/', {'intent': 'career', 'name': 'Vali', 'phone': '+99890111223'})
+            self.client.post('/api/inquiries/', {'intent': 'booking', 'name': 'Bemor', 'phone': '+99890111224'})
+        self.assertEqual(notify.call_count, 1)
+
+    def test_notification_text_escapes_html_and_targets_active_hr_only(self):
+        from unittest import mock
+
+        from . import telegram_bot
+        from .models import HRTelegramUser, Inquiry
+
+        HRTelegramUser.objects.create(telegram_id=888, name='Off', is_active=False)
+        inquiry = Inquiry(name='<b>Eve</b>', phone='1', topic='A&B', message='<script>x</script>', resume=None)
+        sent = []
+        with mock.patch.object(telegram_bot, 'send_message', side_effect=lambda cid, text, **kw: sent.append((cid, text))), \
+                mock.patch('threading.Thread') as T:
+            telegram_bot.notify_new_application(inquiry)
+            T.call_args.kwargs['target']()
+        self.assertEqual([c for c, _ in sent], [777])
+        self.assertNotIn('<script>', sent[0][1])
+        self.assertIn('&lt;b&gt;Eve&lt;/b&gt;', sent[0][1])
