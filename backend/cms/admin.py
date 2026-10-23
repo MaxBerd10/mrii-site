@@ -802,6 +802,16 @@ class InquiryAdmin(admin.ModelAdmin):
         return False
 
 
+@admin.register(models.HRTelegramUser, site=mrii_admin_site)
+class HRTelegramUserAdmin(admin.ModelAdmin):
+    """Who may use the HR Telegram Mini App. Superusers only (not in the HR group's permissions)."""
+
+    list_display = ('name', 'telegram_id', 'is_active', 'created_at')
+    list_editable = ('is_active',)
+    search_fields = ('name', 'telegram_id')
+    fields = ('name', 'telegram_id', 'is_active')
+
+
 # Keep default site labels in sync if anything still references admin.site
 admin.site.site_header = mrii_admin_site.site_header
 admin.site.site_title = mrii_admin_site.site_title

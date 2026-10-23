@@ -609,3 +609,29 @@ class Inquiry(TimeStampedModel):
 
     def __str__(self):
         return f'{self.request_id} — {self.name}'
+
+
+class HRTelegramUser(TimeStampedModel):
+    """Telegram accounts allowed to use the HR Mini App (vacancies + applications)."""
+
+    telegram_id = models.BigIntegerField('Telegram ID', unique=True)
+    name = models.CharField('Ism', max_length=255, blank=True)
+    is_active = models.BooleanField('Faol', default=True)
+
+    class Meta:
+        verbose_name = 'HR Telegram foydalanuvchi'
+        verbose_name_plural = 'HR Telegram foydalanuvchilar'
+        ordering = ['name', 'telegram_id']
+
+    def __str__(self):
+        return self.name or str(self.telegram_id)
+
+    # DRF/Django expect a "user"-like object on request.user
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+

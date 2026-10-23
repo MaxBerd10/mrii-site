@@ -1,0 +1,196 @@
+/* HR Telegram Mini App — mobile-first, follows the Telegram theme with safe fallbacks. */
+.hr-app {
+  --hr-bg: var(--tg-theme-bg-color, #f4f5f7);
+  --hr-surface: var(--tg-theme-secondary-bg-color, #ffffff);
+  --hr-text: var(--tg-theme-text-color, #17181c);
+  --hr-hint: var(--tg-theme-hint-color, #6b7080);
+  --hr-accent: var(--tg-theme-button-color, #5b4cdb);
+  --hr-accent-text: var(--tg-theme-button-text-color, #ffffff);
+  --hr-danger: #d1344a;
+  --hr-line: color-mix(in srgb, var(--hr-text) 12%, transparent);
+
+  width: 100%;
+  min-height: 100vh;
+  padding: 16px 14px 96px;
+  margin: 0 auto;
+  max-width: 560px;
+  background: var(--hr-bg);
+  color: var(--hr-text);
+  font: 15px/1.45 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hr-app *,
+.hr-app *::before,
+.hr-app *::after { box-sizing: border-box; }
+
+.hr-head h1 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+.hr-head p { margin: 2px 0 14px; color: var(--hr-hint); font-size: 13px; }
+
+.hr-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 14px;
+  background: var(--hr-surface);
+  border: 1px solid var(--hr-line);
+  border-radius: 12px;
+}
+.hr-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 8px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--hr-hint);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.hr-tabs button[aria-selected='true'] { background: var(--hr-accent); color: var(--hr-accent-text); }
+.hr-badge {
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  background: var(--hr-danger);
+  color: #fff;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.hr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 9px 14px;
+  border: 1px solid var(--hr-line);
+  border-radius: 11px;
+  background: var(--hr-surface);
+  color: var(--hr-text);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.hr-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.hr-btn--primary { background: var(--hr-accent); border-color: transparent; color: var(--hr-accent-text); }
+.hr-btn--danger { color: var(--hr-danger); }
+.hr-btn--block { width: 100%; margin-bottom: 14px; }
+
+.hr-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.hr-card {
+  padding: 14px;
+  background: var(--hr-surface);
+  border: 1px solid var(--hr-line);
+  border-radius: 14px;
+}
+.hr-card--off { opacity: 0.72; }
+.hr-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.hr-card h2 { margin: 0; font-size: 16px; font-weight: 700; overflow-wrap: anywhere; }
+.hr-meta { margin: 4px 0 0; color: var(--hr-hint); font-size: 13px; }
+.hr-msg { margin: 8px 0 0; padding: 8px 10px; border-radius: 9px; background: var(--hr-bg); font-size: 14px; overflow-wrap: anywhere; }
+.hr-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.hr-actions .hr-btn { flex: 1 1 auto; min-height: 38px; padding: 7px 10px; font-size: 14px; }
+
+.hr-pill {
+  flex: none;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--hr-bg);
+  color: var(--hr-hint);
+  font-size: 12px;
+  font-weight: 600;
+}
+.hr-pill--on, .hr-pill--contacted { background: #dcf5e7; color: #14753f; }
+.hr-pill--new { background: #fde8cf; color: #9a5300; }
+.hr-pill--closed { background: #e6e8ee; color: #565b6b; }
+
+.hr-chips { display: flex; gap: 8px; margin-bottom: 12px; }
+.hr-chips button {
+  padding: 7px 13px;
+  border: 1px solid var(--hr-line);
+  border-radius: 999px;
+  background: var(--hr-surface);
+  color: var(--hr-text);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.hr-chips button[aria-pressed='true'] { background: var(--hr-accent); border-color: transparent; color: var(--hr-accent-text); }
+
+.hr-seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 10px; padding: 3px; border-radius: 10px; background: var(--hr-bg); }
+.hr-seg button {
+  padding: 8px 4px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--hr-hint);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.hr-seg button[aria-pressed='true'] { background: var(--hr-surface); color: var(--hr-text); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); }
+
+.hr-form { display: grid; gap: 12px; }
+.hr-form h2 { margin: 0 0 2px; font-size: 18px; }
+.hr-form label { display: grid; gap: 5px; color: var(--hr-hint); font-size: 13px; font-weight: 600; }
+.hr-form small { font-weight: 400; }
+.hr-form input:not([type='checkbox']),
+.hr-form select,
+.hr-form textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--hr-line);
+  border-radius: 11px;
+  background: var(--hr-surface);
+  color: var(--hr-text);
+  font: inherit;
+  font-size: 16px; /* prevents iOS zoom on focus */
+}
+.hr-form textarea { resize: vertical; }
+.hr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.hr-check { display: flex !important; align-items: center; gap: 10px; color: var(--hr-text) !important; font-size: 15px !important; }
+.hr-check input { width: 20px; height: 20px; accent-color: var(--hr-accent); }
+.hr-hint { margin: 0; color: var(--hr-hint); font-size: 12.5px; }
+.hr-bar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 10px;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+  background: var(--hr-bg);
+  border-top: 1px solid var(--hr-line);
+}
+
+.hr-note { margin: 18px 0; color: var(--hr-hint); text-align: center; }
+.hr-note--error { color: var(--hr-danger); }
+.hr-note code { padding: 2px 8px; border-radius: 6px; background: var(--hr-surface); color: var(--hr-text); font-size: 16px; user-select: all; }
+
+.hr-toast {
+  position: fixed;
+  right: 14px;
+  bottom: 84px;
+  left: 14px;
+  max-width: 532px;
+  margin: 0 auto;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #1f2937;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+.hr-toast--error { background: var(--hr-danger); }

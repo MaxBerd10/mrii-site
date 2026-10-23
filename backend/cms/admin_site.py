@@ -292,6 +292,12 @@ class MriiAdminSite(AdminSite):
                 'url': url('testimonial'),
             },
             {
+                'title': 'HR Telegram',
+                'desc': 'HR Mini App’ga kirish ruxsati berilgan Telegram akkauntlar',
+                'icon': 'doctor',
+                'url': url('hrtelegramuser'),
+            },
+            {
                 'title': 'Klinika sayohati',
                 'desc': 'Virtual tur va tadbir videolari',
                 'icon': 'clinic',
@@ -317,6 +323,7 @@ class MriiAdminSite(AdminSite):
             'Tadqiqotlar matni': models.ResearchSection,
             'Vakansiyalar': models.Vacancy,
             'Sharhlar': models.Testimonial,
+            'HR Telegram': models.HRTelegramUser,
             'Klinika sayohati': models.ClinicTourVideo,
             'Tadqiqot imkoniyatlari': models.ResearchCapability,
         }
