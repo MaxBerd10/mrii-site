@@ -38,6 +38,11 @@ HR xodimi admin panelga kirmasdan, Telegram ichida:
 
 Ruxsati bo'lmagan odam Mini App'ni ochsa, ekranda o'zining Telegram ID'si chiqadi — uni administratorga yuboradi.
 
+## Ariza beruvchi qanday fayl yuborishi mumkin
+PDF, Word (DOC/DOCX), RTF, ODT, matn (TXT), **rasm** (JPG, PNG, WebP, iPhone HEIC) — 10 MB gacha. Qog'ozdagi rezyumeni telefon bilan suratga olib yuborsa ham bo'ladi (telefonda formadagi tugma kamerani ham ochadi). Fayl bo'lmasa ham ariza qabul qilinadi, xabar maydoniga rezyumeni matn qilib yopishtirish mumkin (10 000 belgigacha). Boshqa turlar (EXE, ZIP, SVG, HTML, Pages…) va kengaytmasiga mos kelmaydigan fayllar (masalan HTML'ni .pdf deb nomlash) aniq xabar bilan rad etiladi. Fayl serverga tasodifiy nom bilan saqlanadi.
+
+Hamma yo'llarni qayta tekshirish: `tests/applicant-flow/README.md` (brauzerda 34 + 34 + 28 tekshiruv, soxta Telegram bilan).
+
 ## Muammolar
 | Alomat | Sabab |
 |---|---|
