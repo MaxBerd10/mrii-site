@@ -122,3 +122,102 @@ class RemoveDemoContentTests(TestCase):
             call_command('remove_demo_content', '--restore', os.path.join(backup, backup_file), stdout=io.StringIO())
             self.assertEqual(NewsArticle.objects.count(), 2)
             self.assertEqual(Testimonial.objects.count(), 2)
+
+
+LOCMEM = {'default': {'BACKEND': 'django.core.cache.backends.locmem.LocMemCache', 'LOCATION': 'sec-tests'}}
+
+
+@override_settings(CACHES=LOCMEM, DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class ThrottleAndLoginSecurityTests(TestCase):
+    def setUp(self):
+        from django.core.cache import cache
+
+        cache.clear()
+
+    def test_advice_throttle_cannot_be_bypassed_by_rotating_x_forwarded_for(self):
+        # nginx appends the real client ip; anything the client prepends must not count.
+        codes = []
+        for i in range(45):
+            r = self.client.get(
+                '/api/inquiries/NOPE-2026-DEADBEEF0000/',
+                HTTP_X_FORWARDED_FOR=f'10.9.{i}.1, 203.0.113.7',
+            )
+            codes.append(r.status_code)
+        self.assertEqual(codes.count(404), 40)
+        self.assertEqual(codes.count(429), 5)
+
+    def test_client_ip_uses_last_forwarded_entry_only_when_proxied(self):
+        from django.test import RequestFactory
+
+        from .utils import client_ip
+
+        req = RequestFactory().get('/', HTTP_X_FORWARDED_FOR='1.2.3.4, 203.0.113.7', REMOTE_ADDR='127.0.0.1')
+        self.assertEqual(client_ip(req), '203.0.113.7')
+        self.assertEqual(client_ip(RequestFactory().get('/', REMOTE_ADDR='198.51.100.9')), '198.51.100.9')
+
+    def test_admin_login_locks_out_after_repeated_failures(self):
+        statuses = [
+            self.client.post('/admin/login/', {'username': 'ghost', 'password': 'bad'},
+                             HTTP_X_FORWARDED_FOR='203.0.113.50').status_code
+            for _ in range(12)
+        ]
+        self.assertEqual(statuses[:10], [200] * 10)
+        self.assertEqual(statuses[10:], [429, 429])
+        # a different client address is unaffected
+        other = self.client.post('/admin/login/', {'username': 'ghost', 'password': 'bad'},
+                                 HTTP_X_FORWARDED_FOR='203.0.113.51')
+        self.assertEqual(other.status_code, 200)
+
+    def test_successful_login_still_works_below_the_limit(self):
+        User.objects.create_user('staffer', password='correct-horse-battery', is_staff=True, is_superuser=True)
+        for _ in range(3):
+            self.client.post('/admin/login/', {'username': 'staffer', 'password': 'nope'},
+                             HTTP_X_FORWARDED_FOR='203.0.113.60')
+        ok = self.client.post('/admin/login/', {'username': 'staffer', 'password': 'correct-horse-battery'},
+                              HTTP_X_FORWARDED_FOR='203.0.113.60')
+        self.assertEqual(ok.status_code, 302)
+
+
+@override_settings(CACHES=LOCMEM, DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class PublicMediaAndUploadTests(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls._media = tempfile.mkdtemp()
+        cls._override = override_settings(MEDIA_ROOT=cls._media)
+        cls._override.enable()
+        super().setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
+        cls._override.disable()
+        shutil.rmtree(cls._media, ignore_errors=True)
+
+    def _write(self, rel, data=b'x'):
+        import os
+
+        path = os.path.join(self._media, rel)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, 'wb') as fh:
+            fh.write(data)
+
+    def test_only_public_folders_are_served(self):
+        self._write('doctors/a.webp')
+        self._write('backups/demo_content_backup.json', b'{}')
+        self._write('resumes/2026/10/x.pdf', b'%PDF-')
+        self._write('stray.txt')
+        self.assertEqual(self.client.get('/media/doctors/a.webp').status_code, 200)
+        for rel in ('backups/demo_content_backup.json', 'resumes/2026/10/x.pdf', 'stray.txt', '../etc/passwd'):
+            self.assertEqual(self.client.get('/media/' + rel).status_code, 404, rel)
+
+    def test_inquiry_endpoint_rejects_disguised_resume_and_oversized_text(self):
+        from django.core.files.uploadedfile import SimpleUploadedFile
+
+        base = {'intent': 'career', 'name': 'Ali', 'phone': '+998901112233'}
+        fake = self.client.post('/api/inquiries/', {**base, 'resume': SimpleUploadedFile('cv.pdf', b'<html><script>alert(1)</script>')})
+        self.assertEqual(fake.status_code, 400)
+        real = self.client.post('/api/inquiries/', {**base, 'resume': SimpleUploadedFile('cv.pdf', b'%PDF-1.4 ok')})
+        self.assertEqual(real.status_code, 201)
+        self.assertRegex(real.json()['request_id'], r'^HR-\d{4}-[0-9A-F]{12}$')
+        long_text = self.client.post('/api/inquiries/', {**base, 'message': 'x' * 5001})
+        self.assertEqual(long_text.status_code, 400)

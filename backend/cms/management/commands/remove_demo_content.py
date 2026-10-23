@@ -3,8 +3,8 @@
 Dry-run by default. ``--apply`` writes a JSON backup first; ``--restore FILE`` puts it back.
 
     docker compose exec web python manage.py remove_demo_content            # preview
-    docker compose exec web python manage.py remove_demo_content --apply    # delete (backup in /app/media/backups)
-    docker compose exec web python manage.py remove_demo_content --restore /app/media/backups/<file>.json
+    docker compose exec web python manage.py remove_demo_content --apply    # delete (backup in /app/backups, outside the public media folder)
+    docker compose exec web python manage.py remove_demo_content --restore /app/backups/<file>.json
 """
 import os
 import time
@@ -45,7 +45,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('--apply', action='store_true', help='Actually delete (writes a backup first).')
         parser.add_argument('--restore', metavar='FILE', help='Restore objects from a backup written by --apply.')
-        parser.add_argument('--backup-dir', default='/app/media/backups')
+        parser.add_argument('--backup-dir', default='/app/backups')
 
     def handle(self, *args, **options):
         if options['restore']:

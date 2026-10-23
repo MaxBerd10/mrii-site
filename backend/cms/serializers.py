@@ -3,7 +3,7 @@ from django.core.validators import FileExtensionValidator
 from rest_framework import serializers
 
 from . import models
-from .utils import media_url, pick, split_pipe, validate_resume_size
+from .utils import media_url, pick, split_pipe, validate_resume_signature, validate_resume_size
 
 
 class LangContextMixin:
@@ -432,9 +432,9 @@ class InquiryCreateSerializer(serializers.Serializer):
     topic = serializers.CharField(max_length=255, required=False, allow_blank=True, default='')
     clinic = serializers.CharField(max_length=255, required=False, allow_blank=True, default='')
     product_slug = serializers.SlugField(max_length=128, required=False, allow_blank=True, default='')
-    medical_history = serializers.CharField(required=False, allow_blank=True, default='')
-    allergies = serializers.CharField(required=False, allow_blank=True, default='')
-    message = serializers.CharField(required=False, allow_blank=True, default='')
+    medical_history = serializers.CharField(max_length=5000, required=False, allow_blank=True, default='')
+    allergies = serializers.CharField(max_length=2000, required=False, allow_blank=True, default='')
+    message = serializers.CharField(max_length=5000, required=False, allow_blank=True, default='')
     resume = serializers.FileField(required=False, allow_null=True)
     lang = serializers.CharField(max_length=8, required=False, allow_blank=True, default='')
     source_path = serializers.CharField(max_length=512, required=False, allow_blank=True, default='')
@@ -451,6 +451,7 @@ class InquiryCreateSerializer(serializers.Serializer):
         try:
             FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx'])(value)
             validate_resume_size(value)
+            validate_resume_signature(value)
         except DjangoValidationError as exc:
             raise serializers.ValidationError(exc.messages)
         return value
@@ -479,9 +480,10 @@ class InquiryCreateSerializer(serializers.Serializer):
 
         # Random, non-guessable suffix. The old time-based (HHMMSS) id let anyone
         # enumerate other patients' request ids and read their name/advice via the
-        # public advice endpoint. token_hex(4) → 8 hex chars = ~4.3B space.
+        # public advice endpoint. token_hex(6) → 12 hex chars = 48 bits (~2.8e14);
+        # older 8-char ids stay valid. Throttling is the second line of defence.
         for _ in range(6):
-            request_id = f'{prefix}-{year}-{secrets.token_hex(4).upper()}'
+            request_id = f'{prefix}-{year}-{secrets.token_hex(6).upper()}'
             if not models.Inquiry.objects.filter(request_id=request_id).exists():
                 break
         return models.Inquiry.objects.create(request_id=request_id, **validated_data)

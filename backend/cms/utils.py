@@ -12,6 +12,39 @@ def validate_resume_size(value, max_mb: int = 5):
         raise ValidationError(f'Fayl hajmi {max_mb}MB dan oshmasligi kerak.')
 
 
+def client_ip(request) -> str:
+    """Address of the real client behind TRUSTED_PROXY_COUNT proxies (spoof-resistant)."""
+    remote = request.META.get('REMOTE_ADDR', '') or ''
+    forwarded = request.META.get('HTTP_X_FORWARDED_FOR', '')
+    proxies = getattr(settings, 'TRUSTED_PROXY_COUNT', 0)
+    if not proxies or not forwarded:
+        return remote
+    parts = [p.strip() for p in forwarded.split(',') if p.strip()]
+    if not parts:
+        return remote
+    return parts[-min(proxies, len(parts))]
+
+
+_RESUME_SIGNATURES = {
+    '.pdf': (b'%PDF-',),
+    '.docx': (b'PK\x03\x04',),
+    '.doc': (b'\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1', b'PK\x03\x04', b'{\\rtf'),
+}
+
+
+def validate_resume_signature(value):
+    """The file's first bytes must match its extension (blocks HTML/EXE renamed to .pdf)."""
+    ext = os.path.splitext(getattr(value, 'name', '') or '')[1].lower()
+    allowed = _RESUME_SIGNATURES.get(ext)
+    if not allowed:
+        return
+    position = value.tell() if hasattr(value, 'tell') else 0
+    head = value.read(8)
+    value.seek(position)
+    if not any(head.startswith(sig) for sig in allowed):
+        raise ValidationError('Fayl mazmuni uning kengaytmasiga mos kelmaydi.')
+
+
 def resume_upload_path(instance, filename):
     """Random file name: applicant CVs hold personal data and must not be guessable."""
     ext = os.path.splitext(filename or '')[1].lower()

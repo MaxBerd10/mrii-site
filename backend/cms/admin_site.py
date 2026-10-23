@@ -1,6 +1,52 @@
 from django.contrib.admin import AdminSite
-from django.http import JsonResponse
+from django.contrib.auth.signals import user_logged_in, user_login_failed
+from django.core.cache import cache
+from django.dispatch import receiver
+from django.http import HttpResponse, JsonResponse
 from django.urls import path, reverse
+
+from .utils import client_ip
+
+# Admin login brute-force protection (shared across workers via the file cache).
+LOGIN_WINDOW_SECONDS = 15 * 60
+LOGIN_MAX_FAILS_PER_IP = 10
+LOGIN_MAX_FAILS_PER_USER = 25
+
+
+def _login_keys(request, username):
+    keys = [f'adminlogin:ip:{client_ip(request)}']
+    if username:
+        keys.append(f'adminlogin:user:{username.strip().lower()[:150]}')
+    return keys
+
+
+def _bump(key):
+    # add() sets the window once; incr() keeps counting inside it.
+    cache.add(key, 0, LOGIN_WINDOW_SECONDS)
+    try:
+        cache.incr(key)
+    except ValueError:
+        cache.set(key, 1, LOGIN_WINDOW_SECONDS)
+
+
+@receiver(user_login_failed)
+def _count_failed_login(sender, credentials, request=None, **kwargs):
+    if request is None:
+        return
+    for key in _login_keys(request, (credentials or {}).get('username', '')):
+        _bump(key)
+
+
+@receiver(user_logged_in)
+def _reset_user_counter(sender, request, user, **kwargs):
+    cache.delete(f'adminlogin:user:{user.get_username().strip().lower()[:150]}')
+
+
+def login_locked(request, username=''):
+    ip_key, *user_key = _login_keys(request, username)
+    if (cache.get(ip_key) or 0) >= LOGIN_MAX_FAILS_PER_IP:
+        return True
+    return bool(user_key) and (cache.get(user_key[0]) or 0) >= LOGIN_MAX_FAILS_PER_USER
 
 
 class MriiAdminSite(AdminSite):
@@ -11,6 +57,16 @@ class MriiAdminSite(AdminSite):
     site_url = None
     # Dashboard kartalari navigatsiya vazifasini bajaradi — sidebar klientni chalkashtiradi
     enable_nav_sidebar = False
+
+    def login(self, request, extra_context=None):
+        if request.method == 'POST' and login_locked(request, request.POST.get('username', '')):
+            return HttpResponse(
+                'Juda ko‘p muvaffaqiyatsiz urinish. 15 daqiqadan keyin qayta urinib ko‘ring.',
+                status=429,
+                content_type='text/plain; charset=utf-8',
+                headers={'Retry-After': str(LOGIN_WINDOW_SECONDS)},
+            )
+        return super().login(request, extra_context)
 
     def each_context(self, request):
         context = super().each_context(request)
