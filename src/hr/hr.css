@@ -146,14 +146,31 @@
 .hr-form select,
 .hr-form textarea {
   width: 100%;
-  padding: 11px 12px;
+  min-height: 50px;
+  padding: 12px 14px;
   border: 1px solid var(--hr-line);
   border-radius: 11px;
   background: var(--hr-surface);
   color: var(--hr-text);
   font: inherit;
   font-size: 16px; /* prevents iOS zoom on focus */
+  line-height: 1.3;
 }
+/* Phones draw native <select>/<input type=date> smaller than text fields: normalise them. */
+.hr-form select,
+.hr-form input[type='date'] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+.hr-form select {
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%238b8fa0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 6l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+}
+.hr-form input[type='date'] { display: block; text-align: left; }
+.hr-form input[type='date']::-webkit-date-and-time-value { text-align: left; }
 .hr-form textarea { resize: vertical; }
 .hr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .hr-check { display: flex !important; align-items: center; gap: 10px; color: var(--hr-text) !important; font-size: 15px !important; }
