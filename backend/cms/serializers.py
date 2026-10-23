@@ -3,7 +3,7 @@ from django.core.validators import FileExtensionValidator
 from rest_framework import serializers
 
 from . import models
-from .utils import media_url, pick, split_pipe, validate_resume_signature, validate_resume_size
+from .utils import RESUME_EXTENSIONS, media_url, pick, split_pipe, validate_resume_signature, validate_resume_size
 
 
 class LangContextMixin:
@@ -434,7 +434,7 @@ class InquiryCreateSerializer(serializers.Serializer):
     product_slug = serializers.SlugField(max_length=128, required=False, allow_blank=True, default='')
     medical_history = serializers.CharField(max_length=5000, required=False, allow_blank=True, default='')
     allergies = serializers.CharField(max_length=2000, required=False, allow_blank=True, default='')
-    message = serializers.CharField(max_length=5000, required=False, allow_blank=True, default='')
+    message = serializers.CharField(max_length=10000, required=False, allow_blank=True, default='')
     resume = serializers.FileField(required=False, allow_null=True)
     lang = serializers.CharField(max_length=8, required=False, allow_blank=True, default='')
     source_path = serializers.CharField(max_length=512, required=False, allow_blank=True, default='')
@@ -449,7 +449,7 @@ class InquiryCreateSerializer(serializers.Serializer):
         if value is None:
             return value
         try:
-            FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx'])(value)
+            FileExtensionValidator(allowed_extensions=list(RESUME_EXTENSIONS))(value)
             validate_resume_size(value)
             validate_resume_signature(value)
         except DjangoValidationError as exc:
@@ -488,9 +488,14 @@ class InquiryCreateSerializer(serializers.Serializer):
                 break
         inquiry = models.Inquiry.objects.create(request_id=request_id, **validated_data)
         if inquiry.intent == models.Inquiry.Intent.CAREER:
-            from .telegram_bot import notify_new_application
+            try:
+                from .telegram_bot import notify_new_application
 
-            notify_new_application(inquiry)  # fire-and-forget; never raises
+                notify_new_application(inquiry)  # fire-and-forget
+            except Exception:  # an applicant must never see an error because Telegram is down
+                import logging
+
+                logging.getLogger(__name__).exception('HR notification failed')
         return inquiry
 
 

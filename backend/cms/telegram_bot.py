@@ -10,7 +10,7 @@ import requests
 from django.conf import settings
 
 logger = logging.getLogger(__name__)
-API = 'https://api.telegram.org'
+API = getattr(settings, 'TELEGRAM_API_BASE', 'https://api.telegram.org').rstrip('/')
 TIMEOUT = 10
 
 
