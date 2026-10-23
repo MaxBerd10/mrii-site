@@ -1,0 +1,22 @@
+# Exact, audited pins (python 3.12/3.13). Regenerate: pip install -r requirements.txt && pip freeze.
+# Docker builds install from this file so a rebuild can never silently pull a newer/compromised release.
+asgiref==3.13.0
+beautifulsoup4==4.15.0
+certifi==2026.10.23
+charset-normalizer==3.5.2
+deep-translator==1.11.4
+django-cors-headers==4.9.0
+Django==5.2.18
+djangorestframework==3.18.3
+gunicorn==26.2.0
+idna==3.20
+pillow==13.0.0
+psycopg-binary==3.3.6
+psycopg==3.3.6
+python-dotenv==1.2.4
+requests==2.34.2
+soupsieve==3.0.4
+sqlparse==0.6.0
+typing_extensions==4.16.0
+urllib3==2.8.0
+whitenoise==6.12.0
