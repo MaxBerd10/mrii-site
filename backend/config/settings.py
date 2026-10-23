@@ -232,6 +232,8 @@ CMS_LANGS = ('uz', 'ru', 'en')
 # —— Telegram HR Mini App ——
 # Bot token comes ONLY from the environment (never commit it, never expose it to the frontend).
 TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', '').strip()
+# Only for tests/staging (a fake Bot API). Leave unset in production.
+TELEGRAM_API_BASE = os.getenv('TELEGRAM_API_BASE', 'https://api.telegram.org')
 # How long a Mini App session (initData auth_date) stays valid; reopening the app refreshes it.
 TELEGRAM_INITDATA_MAX_AGE = int(os.getenv('TELEGRAM_INITDATA_MAX_AGE', str(6 * 60 * 60)))
 

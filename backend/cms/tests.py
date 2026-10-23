@@ -219,7 +219,7 @@ class PublicMediaAndUploadTests(TestCase):
         real = self.client.post('/api/inquiries/', {**base, 'resume': SimpleUploadedFile('cv.pdf', b'%PDF-1.4 ok')})
         self.assertEqual(real.status_code, 201)
         self.assertRegex(real.json()['request_id'], r'^HR-\d{4}-[0-9A-F]{12}$')
-        long_text = self.client.post('/api/inquiries/', {**base, 'message': 'x' * 5001})
+        long_text = self.client.post('/api/inquiries/', {**base, 'message': 'x' * 10001})
         self.assertEqual(long_text.status_code, 400)
 
 
@@ -409,3 +409,210 @@ class TelegramHrApiTests(TestCase):
         self.assertEqual([c for c, _ in sent], [777])
         self.assertNotIn('<script>', sent[0][1])
         self.assertIn('&lt;b&gt;Eve&lt;/b&gt;', sent[0][1])
+
+
+# ───────────────── Applicant submission matrix: every kind of resume ─────────────────
+def _zip_bytes(files):
+    import io
+    import zipfile
+
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, 'w') as z:
+        for name, data in files.items():
+            z.writestr(name, data)
+    return buf.getvalue()
+
+
+def _image_bytes(fmt, size=(64, 48)):
+    import io
+
+    from PIL import Image
+
+    buf = io.BytesIO()
+    Image.new('RGB', size, (250, 250, 250)).save(buf, fmt)
+    return buf.getvalue()
+
+
+def _padded(head: bytes, total: int) -> bytes:
+    return head + b'0' * (total - len(head))
+
+
+VALID_RESUMES = {
+    'pdf': ('Rezyume.pdf', b'%PDF-1.4\n1 0 obj<<>>endobj\ntrailer<<>>\n%%EOF'),
+    'pdf_with_leading_junk': ('cv.pdf', b'\xef\xbb\xbf\n\n%PDF-1.7\n%%EOF'),
+    'docx': ('Resume.docx', _zip_bytes({'[Content_Types].xml': '<x/>', 'word/document.xml': '<w:document/>'})),
+    'doc_ole': ('eski.doc', b'\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1' + b'\x00' * 512),
+    'doc_actually_docx': ('word97.doc', _zip_bytes({'word/document.xml': '<w/>'})),
+    'rtf': ('cv.rtf', b'{\\rtf1\\ansi\\deff0 {\\fonttbl{\\f0 Arial;}} Salom \\par }'),
+    'odt': ('cv.odt', _zip_bytes({'mimetype': 'application/vnd.oasis.opendocument.text', 'content.xml': '<o/>'})),
+    'txt_uz': ('cv.txt', 'Men Valiyev Ali, 5 yillik tajriba. Oʻzbekcha: oʻgʻil, gʻoya.'.encode()),
+    'txt_cyrillic': ('резюме.txt', 'Иванов Иван. Опыт 5 лет. Ўзбекча: қ, ғ, ҳ'.encode()),
+    'jpg_photo': ('IMG_2041.JPG', _image_bytes('JPEG')),
+    'png_scan': ('scan.png', _image_bytes('PNG')),
+    'webp': ('photo.webp', _image_bytes('WEBP')),
+    'heic_iphone': ('IMG_0001.HEIC', b'\x00\x00\x00\x18ftypheic\x00\x00\x00\x00mif1heic' + b'\x00' * 64),
+    'uppercase_ext': ('CV.PDF', b'%PDF-1.4 %%EOF'),
+    'cyrillic_name': ('Резюме Алишер (1).pdf', b'%PDF-1.4 %%EOF'),
+    'spaces_apostrophes': ("Ali o'g'li  rezyume   final .pdf", b'%PDF-1.4 %%EOF'),
+    'emoji_name': ('cv 📄✅.pdf', b'%PDF-1.4 %%EOF'),
+    'very_long_name': (('a' * 250) + '.pdf', b'%PDF-1.4 %%EOF'),
+    'path_traversal_name': ('../../etc/passwd.pdf', b'%PDF-1.4 %%EOF'),
+    'exactly_10mb': ('big.pdf', _padded(b'%PDF-1.4\n', 10 * 1024 * 1024)),
+}
+
+INVALID_RESUMES = {
+    'exe': ('virus.exe', b'MZ\x90\x00' + b'\x00' * 64),
+    'exe_disguised_as_pdf': ('cv.pdf', b'MZ\x90\x00' + b'\x00' * 64),
+    'html_as_pdf': ('cv.pdf', b'<html><script>alert(1)</script></html>'),
+    'svg': ('logo.svg', b'<svg xmlns="http://www.w3.org/2000/svg"><script>1</script></svg>'),
+    'zip_archive': ('cv.zip', _zip_bytes({'cv.pdf': '%PDF-'})),
+    'no_extension': ('resume', b'%PDF-1.4'),
+    'double_extension_exe': ('cv.pdf.exe', b'MZ\x90\x00'),
+    'png_renamed_pdf': ('cv.pdf', _image_bytes('PNG')),
+    'binary_renamed_txt': ('cv.txt', b'\x00\x01\x02\x03binary'),
+    'empty_file': ('empty.pdf', b''),
+    'over_10mb': ('huge.pdf', _padded(b'%PDF-1.4\n', 10 * 1024 * 1024 + 1)),
+    'pages_apple': ('cv.pages', _zip_bytes({'index.xml': '<p/>'})),
+}
+
+
+@override_settings(CACHES=LOCMEM, DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class ApplicantSubmissionMatrixTests(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls._media = tempfile.mkdtemp()
+        cls._override = override_settings(MEDIA_ROOT=cls._media)
+        cls._override.enable()
+        super().setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
+        cls._override.disable()
+        shutil.rmtree(cls._media, ignore_errors=True)
+
+    base = {'intent': 'career', 'name': 'Ali Valiyev', 'phone': '+998901234567', 'topic': 'Terapevt'}
+
+    def post(self, **extra):
+        from django.core.cache import cache
+
+        cache.clear()  # these tests are about validation, not the hourly rate limit
+        return self.client.post('/api/inquiries/', {**self.base, **extra})
+
+    def upload(self, name, data):
+        from django.core.files.uploadedfile import SimpleUploadedFile
+
+        return self.post(resume=SimpleUploadedFile(name, data))
+
+    def test_every_valid_kind_is_accepted_stored_safely_and_retrievable(self):
+        from unittest import mock
+
+        from django.contrib.auth.models import User
+
+        from .models import Inquiry
+
+        admin = User.objects.create_superuser('root2', 'r@x.y', 'x')
+        self.client.force_login(admin)
+        for label, (name, data) in VALID_RESUMES.items():
+            with self.subTest(label):
+                response = self.upload(name, data)
+                self.assertEqual(response.status_code, 201, (label, response.content[:200]))
+                inquiry = Inquiry.objects.get(request_id=response.json()['request_id'])
+                # stored under an unguessable name, extension lower-cased, nothing from the client's name
+                self.assertRegex(inquiry.resume.name, r'^resumes/\d{4}/\d{2}/[0-9a-f]{32}\.[a-z]+$', label)
+                with inquiry.resume.open('rb') as fh:
+                    self.assertEqual(fh.read(), data)
+                # staff can download it with a sensible filename and the exact bytes
+                dl = self.client.get(f'/admin/cms/inquiry/{inquiry.pk}/resume/')
+                self.assertEqual(dl.status_code, 200, label)
+                self.assertEqual(b''.join(dl.streaming_content), data)
+                self.assertIn('attachment', dl['Content-Disposition'])
+                self.assertEqual(dl['X-Content-Type-Options'], 'nosniff')
+
+    def test_every_invalid_kind_is_rejected_with_a_resume_error_and_nothing_is_stored(self):
+        import os
+
+        from .models import Inquiry
+
+        for label, (name, data) in INVALID_RESUMES.items():
+            with self.subTest(label):
+                before = Inquiry.objects.count()
+                response = self.upload(name, data)
+                self.assertEqual(response.status_code, 400, (label, response.content[:200]))
+                self.assertIn('resume', response.json(), label)
+                self.assertEqual(Inquiry.objects.count(), before, label)
+        stored = [f for _, _, files in os.walk(self._media) for f in files]
+        self.assertEqual([f for f in stored if f.endswith(('.exe', '.svg', '.zip', '.pages'))], [])
+
+    def test_application_without_a_file_or_with_pasted_text_works(self):
+        r = self.post()
+        self.assertEqual(r.status_code, 201)
+        self.assertEqual(self.post(message='x' * 10000).status_code, 201)  # CV pasted into the message box
+        self.assertEqual(self.post(message='x' * 10001).status_code, 400)
+        self.assertEqual(self.post(message='Резюме: Иванов 🙂 <script>x</script>').status_code, 201)
+
+    def test_bad_form_fields_never_create_a_row(self):
+        from .models import Inquiry
+
+        before = Inquiry.objects.count()
+        self.assertEqual(self.post(name='').status_code, 400)
+        self.assertEqual(self.post(phone='12').status_code, 400)
+        self.assertEqual(self.post(email='not-an-email').status_code, 400)
+        self.assertEqual(self.post(intent='hacker').status_code, 400)
+        self.assertEqual(Inquiry.objects.count(), before)
+
+    def test_a_telegram_outage_never_breaks_the_applicant(self):
+        from unittest import mock
+
+        import requests
+
+        from .models import HRTelegramUser
+
+        class SyncThread:  # run the notifier inline so the test is deterministic
+            def __init__(self, target, daemon=None, **kw):
+                self.target = target
+
+            def start(self):
+                self.target()
+
+        HRTelegramUser.objects.create(telegram_id=777, name='HR')
+        with override_settings(TELEGRAM_BOT_TOKEN='1:x'), \
+                mock.patch('cms.telegram_bot.threading.Thread', SyncThread), \
+                mock.patch('requests.post', side_effect=requests.ConnectionError('boom https://api.telegram.org/bot1:x/')) as post:
+            self.assertEqual(self.upload('cv.pdf', b'%PDF-1.4 %%EOF').status_code, 201)
+            self.assertTrue(post.called)  # we really tried to reach Telegram, it failed, the applicant never noticed
+        # and even if the notifier itself blows up
+        with mock.patch('cms.telegram_bot.notify_new_application', side_effect=RuntimeError('x')):
+            self.assertEqual(self.upload('cv.pdf', b'%PDF-1.4 %%EOF').status_code, 201)
+
+    def test_resume_of_each_kind_reaches_the_hr_chat_with_the_right_bytes_and_extension(self):
+        from unittest import mock
+
+        from .models import HRTelegramUser, Inquiry
+
+        HRTelegramUser.objects.create(telegram_id=777, name='HR')
+        for label in ('pdf', 'docx', 'jpg_photo', 'heic_iphone', 'txt_cyrillic', 'cyrillic_name'):
+            name, data = VALID_RESUMES[label]
+            with self.subTest(label), override_settings(TELEGRAM_BOT_TOKEN=BOT):
+                with mock.patch('cms.telegram_bot.notify_new_application'):  # no real thread/network here
+                    response = self.upload(name, data)
+                inquiry = Inquiry.objects.get(request_id=response.json()['request_id'])
+                with mock.patch('cms.telegram_bot.send_document', return_value=True) as send:
+                    r = self.client.post(
+                        f'/api/hr/applications/{inquiry.pk}/resume/',
+                        HTTP_AUTHORIZATION=f'tma {make_init_data()}',
+                    )
+                self.assertEqual(r.status_code, 200, label)
+                chat_id, filename, content = send.call_args.args[:3]
+                self.assertEqual((chat_id, content), (777, data), label)
+                ext = name.rsplit('.', 1)[-1].lower()
+                self.assertTrue(filename.endswith(f'.{ext}'), (label, filename))
+                self.assertNotIn('/', filename)
+
+    def test_hourly_limit_returns_429_and_the_form_can_explain_it(self):
+        from django.core.cache import cache
+
+        cache.clear()
+        codes = [self.client.post('/api/inquiries/', {**self.base}).status_code for _ in range(14)]
+        self.assertEqual(codes[:12], [201] * 12)
+        self.assertEqual(codes[12:], [429, 429])

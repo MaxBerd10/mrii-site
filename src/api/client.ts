@@ -235,6 +235,17 @@ export type InquiryAdvice = {
   created_at: string
 }
 
+/** Submission failure with enough detail for the form to explain what went wrong. */
+export class InquiryError extends Error {
+  status: number
+  fields: Record<string, string>
+  constructor(status: number, message: string, fields: Record<string, string> = {}) {
+    super(message)
+    this.status = status
+    this.fields = fields
+  }
+}
+
 export async function submitInquiry(payload: InquiryPayload): Promise<InquiryResponse | null> {
   if (!API_URL) return null
   const { resume, ...rest } = payload
@@ -256,13 +267,18 @@ export async function submitInquiry(payload: InquiryPayload): Promise<InquiryRes
   const res = await fetch(`${API_URL}/api/inquiries/`, init)
   if (!res.ok) {
     let detail = 'Submit failed'
+    const fields: Record<string, string> = {}
     try {
-      const data = (await res.json()) as { detail?: string }
-      if (data.detail) detail = data.detail
+      const data = (await res.json()) as Record<string, unknown>
+      if (typeof data.detail === 'string') detail = data.detail
+      for (const [key, value] of Object.entries(data)) {
+        const first = Array.isArray(value) ? value[0] : value
+        if (key !== 'detail' && typeof first === 'string') fields[key] = first
+      }
     } catch {
-      /* ignore */
+      /* not JSON (e.g. an nginx 413 page) */
     }
-    throw new Error(detail)
+    throw new InquiryError(res.status, detail, fields)
   }
   return (await res.json()) as InquiryResponse
 }

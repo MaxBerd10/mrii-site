@@ -6,6 +6,7 @@ import {
   fetchVacancies,
   isCmsEnabled,
   submitInquiry,
+  InquiryError,
   type CmsVacancy,
   type VacancyCategory,
 } from '../api/client'
@@ -20,6 +21,10 @@ const HR_CONTACT_PHOTO = getDoctorCardPortrait(
 )
 
 type FilterId = 'all' | VacancyCategory
+
+// Keep in sync with RESUME_EXTENSIONS in backend/cms/utils.py
+const RESUME_EXTENSIONS = ['.pdf', '.doc', '.docx', '.rtf', '.odt', '.txt', '.jpg', '.jpeg', '.png', '.webp', '.heic', '.heif']
+const RESUME_ACCEPT = `${RESUME_EXTENSIONS.join(',')},image/*`
 
 function formatDeadline(value: string | null, lang: string) {
   if (!value) return ''
@@ -57,8 +62,7 @@ export default function VacanciesPage() {
   const applicationHeadingRef = useRef<HTMLHeadingElement>(null)
   const resumeInputRef = useRef<HTMLInputElement>(null)
 
-  const RESUME_MAX_BYTES = 5 * 1024 * 1024
-  const RESUME_EXTENSIONS = ['.pdf', '.doc', '.docx']
+  const RESUME_MAX_BYTES = 10 * 1024 * 1024
 
   const handleResumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? null
@@ -66,8 +70,9 @@ export default function VacanciesPage() {
       setResume(null)
       return
     }
-    const ext = file.name.slice(file.name.lastIndexOf('.')).toLowerCase()
-    if (!RESUME_EXTENSIONS.includes(ext) || file.size > RESUME_MAX_BYTES) {
+    const dot = file.name.lastIndexOf('.')
+    const ext = dot >= 0 ? file.name.slice(dot).toLowerCase() : ''
+    if (!RESUME_EXTENSIONS.includes(ext) || file.size > RESUME_MAX_BYTES || file.size === 0) {
       setError(t.vacancies.resumeError)
       setResume(null)
       if (resumeInputRef.current) resumeInputRef.current.value = ''
@@ -159,8 +164,14 @@ export default function VacanciesPage() {
       setMessage('')
       setResume(null)
       if (resumeInputRef.current) resumeInputRef.current.value = ''
-    } catch {
-      setError(t.vacancies.submitError)
+    } catch (err) {
+      if (err instanceof InquiryError) {
+        if (err.fields.resume || err.status === 413) setError(t.vacancies.resumeError)
+        else if (err.status === 429) setError(t.vacancies.tooManyError)
+        else setError(t.vacancies.submitError)
+      } else {
+        setError(t.vacancies.submitError)
+      }
     } finally {
       setSubmitting(false)
     }
@@ -315,7 +326,7 @@ export default function VacanciesPage() {
               <input
                 ref={resumeInputRef}
                 type="file"
-                accept=".pdf,.doc,.docx"
+                accept={RESUME_ACCEPT}
                 onChange={handleResumeChange}
               />
               <span className="vacancies-form__hint">

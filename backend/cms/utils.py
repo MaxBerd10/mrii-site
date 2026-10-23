@@ -6,10 +6,18 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 
 
-def validate_resume_size(value, max_mb: int = 5):
+# Applicants send whatever they have: PDF/Word, a phone photo of a paper CV (JPG/PNG, iPhone HEIC),
+# or plain text. Anything else is rejected with a clear message.
+RESUME_EXTENSIONS = ('pdf', 'doc', 'docx', 'rtf', 'odt', 'txt', 'jpg', 'jpeg', 'png', 'webp', 'heic', 'heif')
+RESUME_MAX_MB = 10
+
+
+def validate_resume_size(value, max_mb: int = RESUME_MAX_MB):
     limit = max_mb * 1024 * 1024
     if value.size > limit:
         raise ValidationError(f'Fayl hajmi {max_mb}MB dan oshmasligi kerak.')
+    if value.size == 0:
+        raise ValidationError('Fayl bo‘sh.')
 
 
 def client_ip(request) -> str:
@@ -25,23 +33,42 @@ def client_ip(request) -> str:
     return parts[-min(proxies, len(parts))]
 
 
-_RESUME_SIGNATURES = {
-    '.pdf': (b'%PDF-',),
-    '.docx': (b'PK\x03\x04',),
-    '.doc': (b'\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1', b'PK\x03\x04', b'{\\rtf'),
-}
+_OLE = b'\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1'
+_ZIP = b'PK\x03\x04'
+_HEIF_BRANDS = (b'heic', b'heix', b'heim', b'heis', b'hevc', b'hevx', b'mif1', b'msf1')
+
+
+def _looks_like(ext: str, head: bytes) -> bool:
+    if ext == 'pdf':
+        return b'%PDF-' in head[:1024]  # the spec allows junk before the header
+    if ext == 'docx' or ext == 'odt':
+        return head.startswith(_ZIP)
+    if ext == 'doc':
+        return head.startswith((_OLE, _ZIP, b'{\\rtf'))
+    if ext == 'rtf':
+        return head.lstrip().startswith(b'{\\rtf')
+    if ext in ('jpg', 'jpeg'):
+        return head.startswith(b'\xff\xd8\xff')
+    if ext == 'png':
+        return head.startswith(b'\x89PNG\r\n\x1a\n')
+    if ext == 'webp':
+        return head[:4] == b'RIFF' and head[8:12] == b'WEBP'
+    if ext in ('heic', 'heif'):
+        return head[4:8] == b'ftyp' and head[8:12] in _HEIF_BRANDS
+    if ext == 'txt':
+        return b'\x00' not in head  # text only: no binary files renamed to .txt
+    return False
 
 
 def validate_resume_signature(value):
     """The file's first bytes must match its extension (blocks HTML/EXE renamed to .pdf)."""
-    ext = os.path.splitext(getattr(value, 'name', '') or '')[1].lower()
-    allowed = _RESUME_SIGNATURES.get(ext)
-    if not allowed:
-        return
+    ext = os.path.splitext(getattr(value, 'name', '') or '')[1].lower().lstrip('.')
+    if ext not in RESUME_EXTENSIONS:
+        return  # the extension validator reports this
     position = value.tell() if hasattr(value, 'tell') else 0
-    head = value.read(8)
+    head = value.read(2048)
     value.seek(position)
-    if not any(head.startswith(sig) for sig in allowed):
+    if not _looks_like(ext, head):
         raise ValidationError('Fayl mazmuni uning kengaytmasiga mos kelmaydi.')
 
 

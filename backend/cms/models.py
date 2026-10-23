@@ -1,7 +1,7 @@
 from django.core.validators import FileExtensionValidator
 from django.db import models
 
-from .utils import resume_upload_path, validate_resume_size
+from .utils import RESUME_EXTENSIONS, resume_upload_path, validate_resume_size
 
 
 class TimeStampedModel(models.Model):
@@ -583,15 +583,15 @@ class Inquiry(TimeStampedModel):
     allergies = models.TextField('Allergiya', blank=True)
     message = models.TextField('Shikoyat / xabar', blank=True)
     resume = models.FileField(
-        'Rezyume (PDF/DOC)',
+        'Rezyume (fayl yoki rasm)',
         upload_to=resume_upload_path,
         blank=True,
         null=True,
         validators=[
-            FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx']),
+            FileExtensionValidator(allowed_extensions=list(RESUME_EXTENSIONS)),
             validate_resume_size,
         ],
-        help_text='PDF, DOC yoki DOCX, 5MB gacha.',
+        help_text='PDF, Word, rasm (JPG/PNG/HEIC) yoki matn, 10MB gacha.',
     )
     advice = models.TextField(
         'Javob / maslahat',

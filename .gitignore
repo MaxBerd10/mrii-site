@@ -31,3 +31,6 @@ backend/db.sqlite3
 backend/media/
 backend/staticfiles/
 backend/.env
+
+# generated e2e fixtures
+tests/applicant-flow/fx/
