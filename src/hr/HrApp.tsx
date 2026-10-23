@@ -27,17 +27,40 @@ declare global {
 
 const TELEGRAM_SCRIPT = 'https://telegram.org/js/telegram-web-app.js'
 
+/** Launch data Telegram puts in the URL hash (#tgWebAppData=...) — used if telegram-web-app.js can't load. */
+function webAppFromHash(): TgWebApp | null {
+  try {
+    const params = new URLSearchParams(window.location.hash.replace(/^#/, ''))
+    const initData = params.get('tgWebAppData')
+    if (!initData) return null
+    const rawUser = new URLSearchParams(initData).get('user')
+    const user = rawUser ? (JSON.parse(rawUser) as { id: number; first_name?: string }) : undefined
+    return { initData, initDataUnsafe: { user }, ready() {}, expand() {} }
+  } catch {
+    return null
+  }
+}
+
 function loadTelegram(): Promise<TgWebApp | null> {
-  if (window.Telegram?.WebApp) return Promise.resolve(window.Telegram.WebApp)
+  const usable = () => {
+    const tg = window.Telegram?.WebApp
+    return tg && tg.initData ? tg : null
+  }
+  if (usable()) return Promise.resolve(usable())
   return new Promise((resolve) => {
+    let settled = false
+    const done = () => {
+      if (settled) return
+      settled = true
+      resolve(usable() ?? webAppFromHash())
+    }
     const script = document.createElement('script')
     script.src = TELEGRAM_SCRIPT
     script.async = true
-    const done = () => resolve(window.Telegram?.WebApp ?? null)
     script.onload = done
-    script.onerror = () => resolve(null)
+    script.onerror = done
     document.head.appendChild(script)
-    window.setTimeout(done, 5000)
+    window.setTimeout(done, 4000)
   })
 }
 

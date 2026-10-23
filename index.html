@@ -38,6 +38,9 @@
         window.scrollTo(0, 0)
         document.documentElement.scrollTop = 0
         if (!location.hash || location.hash === '#') return
+        // Telegram Mini Apps (/hr) receive their launch data in the hash (#tgWebAppData=...).
+        // Stripping it here made the Mini App think it was opened outside Telegram.
+        if (/^#tgWebApp/.test(location.hash)) return
         document.documentElement.classList.add('no-smooth-scroll')
         try {
           sessionStorage.setItem('fjsti-hash', location.hash)
