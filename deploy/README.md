@@ -103,3 +103,9 @@ npm ci
 npm run build
 sudo systemctl reload nginx
 ```
+
+## Xavfsizlik sozlamalari (nginx) — qo'lda qo'shiladigan qatorlar
+
+`nginx-fermiclinic.uz.conf` shablonida endi: `server_tokens off`, `/api/` uchun `limit_req` (10r/s) va 8 MB tana limiti, `/admin/login/` uchun `limit_req` (30r/min), `/media/` faqat GET/HEAD, SPA va fayllar uchun xavfsizlik sarlavhalari. Serverdagi faylga bularni **faqat shu qatorlarni qo'shib** kiriting (faylni almashtirmang), so'ng `nginx -t && systemctl reload nginx`. `limit_req_zone` qatorlari fayl boshida (http konteksti) turishi kerak. Django tomonida (`TRUSTED_PROXY_COUNT=1`) nginx oldida aynan **bitta** proksi bo'lishi nazarda tutilgan; Cloudflare kabi ikkinchi proksi qo'shsangiz `TRUSTED_PROXY_COUNT=2` qiling.
+
+To'liq audit: `docs/security-audit-2026-10-23.md`.
