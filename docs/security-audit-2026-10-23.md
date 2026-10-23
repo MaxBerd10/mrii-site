@@ -19,7 +19,7 @@ Holat belgilari: **Tuzatildi** (kodda, shu branch'da) · **Serverda amal kerak**
 | M-5 | O'rta | docker-compose `8001`ni `0.0.0.0` da ochadi (hozir tashqaridan yopiq — tekshirildi) | Tuzatildi (127.0.0.1) |
 | M-6 | O'rta | compose'da `DEBUG=True` va `ALLOWED_HOSTS=*` default (fail-open) | Tuzatildi (compose) |
 | M-7 | O'rta | nginx shablonida /media va /admin uchun 512 MB, /api uchun limit yo'q | Shablon tuzatildi · **serverda qo'lda qo'shish** |
-| M-8 | O'rta | Sayt (SPA) javoblarida HSTS/X-Frame-Options/nosniff yo'q | Shablonda bor · **serverda qo'llanmagan** |
+| M-8 | O'rta | Sayt (SPA) javoblarida HSTS/nosniff yo'q | Shablonda bor · serverda qo'llanmagan (qaror: nginx'ga tegilmaydi). `X-Frame-Options` ataylab qo'yilmagan: Telegram Web Mini App'ni iframe'da ochadi |
 | M-9 | O'rta | Rezyume faqat kengaytma bo'yicha tekshirilardi | Tuzatildi (fayl imzosi) |
 | L-1 | Past | `Server: nginx/1.24.0` versiyasi ko'rinadi | Shablonda `server_tokens off` |
 | L-2 | Past | Server IP'sida 21-port (FTP) tashqaridan TCP qabul qiladi (banner yo'q) | **Serverda tekshirish kerak** |

@@ -2,6 +2,11 @@ import type { Lang } from '../i18n/types'
 
 const API_URL = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, '') ?? ''
 
+/** API origin (empty string = same origin / not configured). Used by the HR Mini App client. */
+export function apiBase() {
+  return API_URL
+}
+
 export function isCmsEnabled() {
   return Boolean(API_URL)
 }

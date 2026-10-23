@@ -27,6 +27,8 @@ const PricesPage = lazy(() => import('./pages/PricesPage'))
 const ClinicGalleryPage = lazy(() => import('./pages/ClinicGalleryPage'))
 const ClinicTourPage = lazy(() => import('./pages/ClinicTourPage'))
 const VacanciesPage = lazy(() => import('./pages/VacanciesPage'))
+// Telegram Mini App for HR (vacancies + applications); opened from the bot, never linked from the site.
+const HrApp = lazy(() => import('./hr/HrApp'))
 
 function AppRoutes() {
   const { path, busy } = usePageNav()
@@ -51,12 +53,15 @@ function AppRoutes() {
   const isAiLegacyRoute = aiSlug !== null
   const isDoctorDetail = doctorSlug !== null
 
+  const isHr = path === '/hr' || path === '/hr/'
   const isHome = path === '/'
   const isContacts = path === '/contacts'
 
   let body: ReactNode
 
-  if (specialtySlug) {
+  if (isHr) {
+    body = <HrApp />
+  } else if (specialtySlug) {
     body = <SpecialtyPage slug={specialtySlug} />
   } else if (newsSlug) {
     body = <NewsPage slug={newsSlug} />
@@ -158,15 +163,15 @@ function AppRoutes() {
       style={{ backgroundColor: 'var(--background)', color: 'var(--foreground)' }}
       aria-hidden={busy || undefined}
     >
-      {!isDoctorDetail && !isDoctorPortal && !isAiLegacyRoute && <Nav />}
+      {!isDoctorDetail && !isDoctorPortal && !isAiLegacyRoute && !isHr && <Nav />}
       {/* The cinematic footer is the homepage's own closing moment and ships
           with it; no route adds a footer here. Inner pages end on their own
           last section. */}
       <PageEnter path={path}>
         <Suspense fallback={null}>{body}</Suspense>
       </PageEnter>
-      {!isDoctorDetail && !isDoctorPortal && !isAiLegacyRoute && <BackToTop />}
-      {!isDoctorDetail && !isDoctorPortal && !isAiLegacyRoute && <SiteAssistant />}
+      {!isDoctorDetail && !isDoctorPortal && !isAiLegacyRoute && !isHr && <BackToTop />}
+      {!isDoctorDetail && !isDoctorPortal && !isAiLegacyRoute && !isHr && <SiteAssistant />}
     </div>
   )
 }
