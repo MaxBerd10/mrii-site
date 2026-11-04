@@ -1,0 +1,4094 @@
+{
+ "updated": "2026-05-12",
+ "categories": [
+  {
+   "uz": "Anesteziya",
+   "ru": "Анестезия",
+   "en": "Anesthesia",
+   "kaa": "Anesteziya"
+  },
+  {
+   "uz": "Dori-darmon",
+   "ru": "Лекарства",
+   "en": "Medicines",
+   "kaa": "Dári-darman"
+  },
+  {
+   "uz": "EKG",
+   "ru": "ЭКГ",
+   "en": "ECG",
+   "kaa": "EKG"
+  },
+  {
+   "uz": "Fizioterapiya",
+   "ru": "Физиотерапия",
+   "en": "Physiotherapy",
+   "kaa": "Fizioterapiya"
+  },
+  {
+   "uz": "Ginekologik operatsiya",
+   "ru": "Гинекологическая хирургия",
+   "en": "Gynecological surgery",
+   "kaa": "Ginekologiyalıq operaciya"
+  },
+  {
+   "uz": "Ginekologiya",
+   "ru": "Гинекология",
+   "en": "Gynecology",
+   "kaa": "Ginekologiya"
+  },
+  {
+   "uz": "Gistologiya",
+   "ru": "Гистология",
+   "en": "Histology",
+   "kaa": "Gistologiya"
+  },
+  {
+   "uz": "Jarrohlik operatsiyasi",
+   "ru": "Хирургическая операция",
+   "en": "Surgical operation",
+   "kaa": "Jarrahlıq operaciyası"
+  },
+  {
+   "uz": "Jarrohlik qabul",
+   "ru": "Приём хирурга",
+   "en": "Surgeon consultation",
+   "kaa": "Jarrahlıq qabıllaw"
+  },
+  {
+   "uz": "Kir yuvish",
+   "ru": "Прачечная",
+   "en": "Laundry",
+   "kaa": "Kir juwıw"
+  },
+  {
+   "uz": "Konsentrator",
+   "ru": "Концентратор",
+   "en": "Concentrator",
+   "kaa": "Konsentrator"
+  },
+  {
+   "uz": "LOR",
+   "ru": "ЛОР",
+   "en": "ENT",
+   "kaa": "LOR"
+  },
+  {
+   "uz": "LOR operatsiyasi",
+   "ru": "ЛОР-операция",
+   "en": "ENT operation",
+   "kaa": "LOR operaciyası"
+  },
+  {
+   "uz": "Laboratoriya",
+   "ru": "Лаборатория",
+   "en": "Laboratory",
+   "kaa": "Laboratoriya"
+  },
+  {
+   "uz": "MSB",
+   "ru": "MSB",
+   "en": "MSB",
+   "kaa": "MSB"
+  },
+  {
+   "uz": "Ovqatlanish",
+   "ru": "Питание",
+   "en": "Meals",
+   "kaa": "Tamaqlanıw"
+  },
+  {
+   "uz": "Qabul / diagnostika",
+   "ru": "Приём / диагностика",
+   "en": "Consultation / diagnostics",
+   "kaa": "Qabıllaw / diagnostika"
+  },
+  {
+   "uz": "Rentgen",
+   "ru": "Рентген",
+   "en": "X-ray",
+   "kaa": "Rentgen"
+  },
+  {
+   "uz": "Servis",
+   "ru": "Услуга",
+   "en": "Service",
+   "kaa": "Servis"
+  },
+  {
+   "uz": "Stasionar — anesteziologiya",
+   "ru": "Стационар - анестезиология",
+   "en": "Inpatient - anesthesiology",
+   "kaa": "Stacionar — anesteziologiya"
+  },
+  {
+   "uz": "Stasionar — jarrohlik",
+   "ru": "Стационар - хирургия",
+   "en": "Inpatient - surgery",
+   "kaa": "Stacionar — jarrahlıq"
+  },
+  {
+   "uz": "Stasionar — pediatriya",
+   "ru": "Стационар - педиатрия",
+   "en": "Inpatient - pediatrics",
+   "kaa": "Stacionar — pediatriya"
+  },
+  {
+   "uz": "Stasionar — terapiya",
+   "ru": "Стационар — терапия",
+   "en": "Inpatient — therapy",
+   "kaa": "Stacionar — terapiya"
+  },
+  {
+   "uz": "Tahlil olib borish",
+   "ru": "Забор анализа",
+   "en": "Sample collection",
+   "kaa": "Tallaw alıp barıw"
+  },
+  {
+   "uz": "UZI",
+   "ru": "УЗИ",
+   "en": "Ultrasound",
+   "kaa": "UTT"
+  },
+  {
+   "uz": "Yangi texnologiya jarrohlik",
+   "ru": "Новые технологии хирургии",
+   "en": "New technology surgery",
+   "kaa": "Jańa tehnologiyalı jarrahlıq"
+  },
+  {
+   "uz": "Yoqish",
+   "ru": "Сжигание",
+   "en": "Incineration",
+   "kaa": "Kúydiriw"
+  },
+  {
+   "uz": "Yotoq joy",
+   "ru": "Койко-место",
+   "en": "Bed space",
+   "kaa": "Jataq orın"
+  }
+ ],
+ "items": [
+  {
+   "name": {
+    "uz": "1-darajalik operatsiya 1 soat uchun",
+    "ru": "Операция 1 уровня на 1 час",
+    "en": "Level 1 operation for 1 hour",
+    "kaa": "1-dárejeli operaciya 1 saat ushın"
+   },
+   "category": "Yangi texnologiya jarrohlik",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 802000,
+   "foreign": 1042600
+  },
+  {
+   "name": {
+    "uz": "2 darajalik operatsiya 1 soat uchun",
+    "ru": "Операция 2 уровня на 1 час",
+    "en": "Level 2 operation for 1 hour",
+    "kaa": "2-dárejeli operaciya 1 saat ushın"
+   },
+   "category": "Yangi texnologiya jarrohlik",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 1088000,
+   "foreign": 1414400
+  },
+  {
+   "name": {
+    "uz": "3 darajalik operatsiya 1 soat uchun",
+    "ru": "Операция 3 уровня на 1 час",
+    "en": "Level 3 operation for 1 hour",
+    "kaa": "3-dárejeli operaciya 1 saat ushın"
+   },
+   "category": "Yangi texnologiya jarrohlik",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 1374000,
+   "foreign": 1786200
+  },
+  {
+   "name": {
+    "uz": "1-darajalik operatsiya 1 soat uchun",
+    "ru": "Операция 1 уровня на 1 час",
+    "en": "Level 1 operation for 1 hour",
+    "kaa": "1-dárejeli operaciya 1 saat ushın"
+   },
+   "category": "Jarrohlik operatsiyasi",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 758000,
+   "foreign": 985400
+  },
+  {
+   "name": {
+    "uz": "2 darajalik operatsiya 1 soat uchun",
+    "ru": "Операция 2 уровня на 1 час",
+    "en": "Level 2 operation for 1 hour",
+    "kaa": "2-dárejeli operaciya 1 saat ushın"
+   },
+   "category": "Jarrohlik operatsiyasi",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 1044000,
+   "foreign": 1357200
+  },
+  {
+   "name": {
+    "uz": "3 darajalik operatsiya 1 soat uchun",
+    "ru": "Операция 3 уровня на 1 час",
+    "en": "Level 3 operation for 1 hour",
+    "kaa": "3-dárejeli operaciya 1 saat ushın"
+   },
+   "category": "Jarrohlik operatsiyasi",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 1330000,
+   "foreign": 1729000
+  },
+  {
+   "name": {
+    "uz": "SMA spinomozgovoy Vrach Anestiziya 1 soat uchun",
+    "ru": "СМА — спинномозговая анестезия (врач), 1 час",
+    "en": "Spinal anesthesia (SMA), physician, per 1 hour",
+    "kaa": "SMA spinomozg dárigeri Anesteziyası 1 saat ushın"
+   },
+   "category": "Anesteziya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 702000,
+   "foreign": 912600
+  },
+  {
+   "name": {
+    "uz": "ETN endotraxialiniy Vrach Anestiziya 1 soat uchun",
+    "ru": "ЭТН эндотрахеальный врач Анестезия 1 час",
+    "en": "ETN endotracheal Doctor Anesthesia for 1 hour",
+    "kaa": "ETN endotraxeal Dáriger Anesteziyası 1 saat ushın"
+   },
+   "category": "Anesteziya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 702000,
+   "foreign": 912600
+  },
+  {
+   "name": {
+    "uz": "VV vnutri venniy anesteziya 1 soat uchun",
+    "ru": "ВВ внутривенный наркоз 1 час",
+    "en": "VV intravenous anesthesia for 1 hour",
+    "kaa": "VV — tamır ishi anesteziya 1 saat ushın"
+   },
+   "category": "Anesteziya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 702000,
+   "foreign": 912600
+  },
+  {
+   "name": {
+    "uz": "1 darajalik operatsiya 1 soat uchun",
+    "ru": "Операция 1 уровня на 1 час",
+    "en": "Level 1 operation for 1 hour",
+    "kaa": "1-dárejeli operaciya 1 saat ushın"
+   },
+   "category": "Ginekologik operatsiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 635000,
+   "foreign": 825500
+  },
+  {
+   "name": {
+    "uz": "2 darajalik operatsiya 1 soat uchun",
+    "ru": "Операция 2 уровня на 1 час",
+    "en": "Level 2 operation for 1 hour",
+    "kaa": "2-dárejeli operaciya 1 saat ushın"
+   },
+   "category": "Ginekologik operatsiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 921000,
+   "foreign": 1197300
+  },
+  {
+   "name": {
+    "uz": "3 darajalik operatsiya 1 soat uchun",
+    "ru": "Операция 3 уровня на 1 час",
+    "en": "Level 3 operation for 1 hour",
+    "kaa": "3-dárejeli operaciya 1 saat ushın"
+   },
+   "category": "Ginekologik operatsiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 1207000,
+   "foreign": 1569100
+  },
+  {
+   "name": {
+    "uz": "1 darajalik operatsiya 1 soat uchun",
+    "ru": "Операция 1 уровня на 1 час",
+    "en": "Level 1 operation for 1 hour",
+    "kaa": "1-dárejeli operaciya 1 saat ushın"
+   },
+   "category": "LOR operatsiyasi",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 635000,
+   "foreign": 825500
+  },
+  {
+   "name": {
+    "uz": "2 darajalik operatsiya 1 soat uchun",
+    "ru": "Операция 2 уровня на 1 час",
+    "en": "Level 2 operation for 1 hour",
+    "kaa": "2-dárejeli operaciya 1 saat ushın"
+   },
+   "category": "LOR operatsiyasi",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 921000,
+   "foreign": 1197300
+  },
+  {
+   "name": {
+    "uz": "3 darajalik operatsiya 1 soat uchun",
+    "ru": "Операция 3 уровня на 1 час",
+    "en": "Level 3 operation for 1 hour",
+    "kaa": "3-dárejeli operaciya 1 saat ushın"
+   },
+   "category": "LOR operatsiyasi",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 1207000,
+   "foreign": 1569100
+  },
+  {
+   "name": {
+    "uz": "Vrach ginekolog ko’rigi",
+    "ru": "Осмотр гинеколога",
+    "en": "Gynecologist examination",
+    "kaa": "Ginekolog dárigerdiń kórigi"
+   },
+   "category": "Ginekologiya",
+   "location": null,
+   "citizen": 81000,
+   "foreign": 105300
+  },
+  {
+   "name": {
+    "uz": "Surtma olish",
+    "ru": "Получение мазка",
+    "en": "Getting a smear",
+    "kaa": "Surtpe alıw"
+   },
+   "category": "Ginekologiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 40000,
+   "foreign": 52000
+  },
+  {
+   "name": {
+    "uz": "Tampon qo’yish",
+    "ru": "Установка тампона",
+    "en": "Tampon placement",
+    "kaa": "Tampon qoyıw"
+   },
+   "category": "Ginekologiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 24000,
+   "foreign": 31200
+  },
+  {
+   "name": {
+    "uz": "Biopsiya olish",
+    "ru": "Взятие биопсии",
+    "en": "Biopsy sampling",
+    "kaa": "Biopsiya alıw"
+   },
+   "category": "Ginekologiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 65000,
+   "foreign": 84500
+  },
+  {
+   "name": {
+    "uz": "Bachadon bo’shlig’idan aspirat olish",
+    "ru": "Взятие аспирата из полости матки",
+    "en": "Taking an aspirate from the uterine cavity",
+    "kaa": "Jatır qustan aspirat alıw"
+   },
+   "category": "Ginekologiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 43000,
+   "foreign": 55900
+  },
+  {
+   "name": {
+    "uz": "Kolposkopiya",
+    "ru": "Кольпоскопия",
+    "en": "Colposcopy",
+    "kaa": "Kolposkopiya"
+   },
+   "category": "Ginekologiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 120000,
+   "foreign": 156000
+  },
+  {
+   "name": {
+    "uz": "Bog’lov xona xizmati (Jaroxat bog’lamini alishtirish) dori-darmonsiz",
+    "ru": "Обслуживание перевязочной (смена повязки на рану) без медикаментов",
+    "en": "Dressing room service (wound dressing change) without medication",
+    "kaa": "Baylaw bólmesi xızmeti (Jaraqat baylawın almastırıw) dári-darmansız"
+   },
+   "category": "Jarrohlik qabul",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 65000,
+   "foreign": 84500
+  },
+  {
+   "name": {
+    "uz": "Bog’lov xona xizmati (Jaroxat bog’lamini alishtirish) dori-darmon bilan",
+    "ru": "Обслуживание перевязочной (замена раневой повязки) с лекарствами",
+    "en": "Dressing room service (Wound dressing replacement) with medicine",
+    "kaa": "Baylaw bólmesi xızmeti (Jaraqat baylawın almastırıw) dári-darman menen"
+   },
+   "category": "Jarrohlik qabul",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 90000,
+   "foreign": 117000
+  },
+  {
+   "name": {
+    "uz": "Burunni Proets usulda yuvish",
+    "ru": "Промывание носа по методу Проца",
+    "en": "Washing the nose in the Proets method",
+    "kaa": "Murındı Proets ádisinde juwıw"
+   },
+   "category": "LOR",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 50000,
+   "foreign": 65000
+  },
+  {
+   "name": {
+    "uz": "Lakuna yuvish",
+    "ru": "Мойка лакун",
+    "en": "Lacuna washing",
+    "kaa": "Lakunanı juwıw"
+   },
+   "category": "LOR",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 50000,
+   "foreign": 65000
+  },
+  {
+   "name": {
+    "uz": "Quloqni yuvish",
+    "ru": "Промывание ушей",
+    "en": "Washing the ear",
+    "kaa": "Qulaqtı juwıw"
+   },
+   "category": "LOR",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 50000,
+   "foreign": 65000
+  },
+  {
+   "name": {
+    "uz": "Quoloq ortiga inektsiya",
+    "ru": "Инъекция за ухом",
+    "en": "Injection behind the ear",
+    "kaa": "Qulaq artına ineksiya"
+   },
+   "category": "LOR",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 50000,
+   "foreign": 65000
+  },
+  {
+   "name": {
+    "uz": "Tomoqqa inektsiya",
+    "ru": "Инъекция в горло",
+    "en": "Throat injection",
+    "kaa": "Tamaqqa ineksiya"
+   },
+   "category": "LOR",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 50000,
+   "foreign": 65000
+  },
+  {
+   "name": {
+    "uz": "Yuqori jag’ bo’shlig’i punksiyasi",
+    "ru": "Пункция полости верхней челюсти",
+    "en": "Puncture of the upper jaw cavity",
+    "kaa": "Joqarı jaq qusınıń punkciyası"
+   },
+   "category": "LOR",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 100000,
+   "foreign": 130000
+  },
+  {
+   "name": {
+    "uz": "Yevstaxiy truba kateterizatsiyasi",
+    "ru": "Катетеризация евстахиевой трубы",
+    "en": "Eustachian tube catheterization",
+    "kaa": "Evstaxiy trubası kateterizaciyası"
+   },
+   "category": "LOR",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 50000,
+   "foreign": 65000
+  },
+  {
+   "name": {
+    "uz": "Xoltir EKG 24 soat",
+    "ru": "Холтир ЭКГ 24 часа",
+    "en": "Holtir ECG 24 hours",
+    "kaa": "Xolter EKG 24 saat"
+   },
+   "category": "Qabul / diagnostika",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 250000,
+   "foreign": 325000
+  },
+  {
+   "name": {
+    "uz": "Multispiral kompyuter tomografiyasi",
+    "ru": "Мультиспиральная компьютерная томография",
+    "en": "Multispiral computed tomography",
+    "kaa": "Multispiral kompyuter tomografiyası"
+   },
+   "category": "Qabul / diagnostika",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 250000,
+   "foreign": 325000
+  },
+  {
+   "name": {
+    "uz": "Vrach fizioterapevt maslaxati",
+    "ru": "Консультации физиотерапевта",
+    "en": "Physiotherapist advice",
+    "kaa": "Fizioterapevt dárigerdiń maslahatı"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "Toki Bernara,ampli -pulus,",
+    "ru": "Токи Бернарда, ампли-пульс,",
+    "en": "Toki Bernarda, ampli-pulse,",
+    "kaa": "Bernar toki, ampli-pulus"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 20000,
+   "foreign": 26000
+  },
+  {
+   "name": {
+    "uz": "Darsenval,UZK",
+    "ru": "Дарсенваль, УЗК",
+    "en": "Darsenval, UZK",
+    "kaa": "Darsenval, UZK"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 20000,
+   "foreign": 26000
+  },
+  {
+   "name": {
+    "uz": "Darsenval,UZK joylariga borib",
+    "ru": "Дарсенваль, УЗК (с выездом на место)",
+    "en": "Darsenval, UZK (on-site visit)",
+    "kaa": "Darsenval, UZK — orınǵa barıp"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "Solyuks,MT",
+    "ru": "Солюкс, МТ",
+    "en": "Solyuks, MT",
+    "kaa": "Solyuks, MT"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 20000,
+   "foreign": 26000
+  },
+  {
+   "name": {
+    "uz": "El.farez",
+    "ru": "Электрофорез",
+    "en": "Electrophoresis",
+    "kaa": "Elektroforez"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 20000,
+   "foreign": 26000
+  },
+  {
+   "name": {
+    "uz": "Svetovaya vanna",
+    "ru": "Световая ванна",
+    "en": "Light bath",
+    "kaa": "Jaqtılıq vannası"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 20000,
+   "foreign": 26000
+  },
+  {
+   "name": {
+    "uz": "Kvarts,KUF",
+    "ru": "Кварц, КУФ",
+    "en": "Quartz, KUF",
+    "kaa": "Kvarts, KUF"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 20000,
+   "foreign": 26000
+  },
+  {
+   "name": {
+    "uz": "Elektrouyqu",
+    "ru": "Электросон",
+    "en": "Electrosleep",
+    "kaa": "Elektr uyqı"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "UVCh, Ranet",
+    "ru": "УВЧ, Ранет",
+    "en": "UHF therapy, Ranet",
+    "kaa": "UVCh, Ranet"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 20000,
+   "foreign": 26000
+  },
+  {
+   "name": {
+    "uz": "Parafin 2 birlik",
+    "ru": "Парафин 2 ед.",
+    "en": "Paraffin 2 units",
+    "kaa": "Parafin 2 birlik"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 25000,
+   "foreign": 32500
+  },
+  {
+   "name": {
+    "uz": "Parafin.trusi 4 birlik",
+    "ru": "Парафин. Трусы 4 ед.",
+    "en": "Paraffin, “briefs” zone, 4 units",
+    "kaa": "Parafin.trusi 4 birlik"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 40000,
+   "foreign": 52000
+  },
+  {
+   "name": {
+    "uz": "Massaj 1 dona (10 daqiqa)",
+    "ru": "Массаж 1 шт. (10 минут)",
+    "en": "Massage 1 piece (10 minutes)",
+    "kaa": "Massaj 1 dana (10 minut)"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 25000,
+   "foreign": 32500
+  },
+  {
+   "name": {
+    "uz": "LFK",
+    "ru": "ЛФК",
+    "en": "Therapeutic exercise (LFK)",
+    "kaa": "LFK"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 20000,
+   "foreign": 26000
+  },
+  {
+   "name": {
+    "uz": "Elektrofarez,Toki Bernara joylariga borib",
+    "ru": "Электрофорез, токи Бернара (с выездом на место)",
+    "en": "Electrophoresis, Bernard currents (on-site visit)",
+    "kaa": "Elektroforez, Bernar toki — orınǵa barıp"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 25000,
+   "foreign": 32500
+  },
+  {
+   "name": {
+    "uz": "Parafin 2 birlik .joylariga borib",
+    "ru": "Парафин 2 ед. (с выездом на место)",
+    "en": "Paraffin, 2 units (on-site visit)",
+    "kaa": "Parafin 2 birlik — orınǵa barıp"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "Parafin.trusi 4 birlik. joylariga borib",
+    "ru": "Парафин. Трусы 4 ед. (с выездом на место)",
+    "en": "Paraffin, “briefs” zone, 4 units (on-site visit)",
+    "kaa": "Parafin.trusi 4 birlik — orınǵa barıp"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 50000,
+   "foreign": 65000
+  },
+  {
+   "name": {
+    "uz": "Joylariga borib Massaj 1 dona.",
+    "ru": "Массаж 1 шт. (с выездом на место)",
+    "en": "Massage, 1 unit (on-site visit)",
+    "kaa": "Orınǵa barıp massaj 1 dana"
+   },
+   "category": "Fizioterapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "EKG xizmati",
+    "ru": "Услуга ЭКГ",
+    "en": "ECG service",
+    "kaa": "EKG xızmeti"
+   },
+   "category": "EKG",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "EKG xizmati bo’limga borib",
+    "ru": "Услуга ЭКГ с выездом в отделение",
+    "en": "ECG service with a visit to the department",
+    "kaa": "EKG xızmeti — bólimge barıp"
+   },
+   "category": "EKG",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 40000,
+   "foreign": 52000
+  },
+  {
+   "name": {
+    "uz": "EXO EG xizmati",
+    "ru": "Услуга ЭхоКГ",
+    "en": "Echocardiography service",
+    "kaa": "EXO EG xızmeti"
+   },
+   "category": "EKG",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 50000,
+   "foreign": 65000
+  },
+  {
+   "name": {
+    "uz": "UZI xizmati bo’limga borganda har bir ko’ruv uchun qo’shimcha",
+    "ru": "Услуга УЗИ оплачивается дополнительно за каждое посещение отделения",
+    "en": "Ultrasound service is charged additionally for each visit to the department",
+    "kaa": "UTT xızmeti bólimge barǵanda hár bir kóriw ushın qosımsha"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 19000,
+   "foreign": 24700
+  },
+  {
+   "name": {
+    "uz": "O’t pufagi + jigar",
+    "ru": "Желчный пузырь + печень",
+    "en": "Gallbladder + liver",
+    "kaa": "Ót qawı + bawır"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 70000,
+   "foreign": 91000
+  },
+  {
+   "name": {
+    "uz": "Oshqozon osti bezi",
+    "ru": "Поджелудочная железа",
+    "en": "Pancreas",
+    "kaa": "Asqazan astı bezi"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 55000,
+   "foreign": 71500
+  },
+  {
+   "name": {
+    "uz": "Taloq",
+    "ru": "Селезёнка",
+    "en": "Spleen",
+    "kaa": "Talaq"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 55000,
+   "foreign": 71500
+  },
+  {
+   "name": {
+    "uz": "Murakkab: jigar + o’t pufagi + oshqozon osti bezi + taloq",
+    "ru": "Комплекс: печень + желчный пузырь + поджелудочная железа + селезенка.",
+    "en": "Complex: liver + gall bladder + pancreas + spleen",
+    "kaa": "Quramalı: bawır + ót qawı + asqazan astı bezi + talaq"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 150000,
+   "foreign": 195000
+  },
+  {
+   "name": {
+    "uz": "Siydik pufagi bilan qoldiq siydik",
+    "ru": "Остаточная моча с мочевым пузырем",
+    "en": "Residual urine with bladder",
+    "kaa": "Siydik qawı menen qaldıq siydik"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 55000,
+   "foreign": 71500
+  },
+  {
+   "name": {
+    "uz": "Buyraklar",
+    "ru": "Почки",
+    "en": "Kidneys",
+    "kaa": "Búyrekler"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 70000,
+   "foreign": 91000
+  },
+  {
+   "name": {
+    "uz": "Kompleks:buyraklar, siydik pufagi, prostata bezi,",
+    "ru": "Комплекс: почки, мочевой пузырь, предстательная железа,",
+    "en": "Complex: kidneys, bladder, prostate gland,",
+    "kaa": "Kompleks: búyrekler, siydik qawı, prostata bezi"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 170000,
+   "foreign": 221000
+  },
+  {
+   "name": {
+    "uz": "Kompleks:buyraklar, siydik pufagi, bilan.",
+    "ru": "Комплекс: почки, мочевой пузырь, с.",
+    "en": "Complex: kidneys, bladder, with.",
+    "kaa": "Kompleks: búyrekler, siydik qawı menen"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 100000,
+   "foreign": 130000
+  },
+  {
+   "name": {
+    "uz": "Plevra qavati",
+    "ru": "Плевральный слой",
+    "en": "Pleural layer",
+    "kaa": "Plevra qabatı"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 60000,
+   "foreign": 78000
+  },
+  {
+   "name": {
+    "uz": "ExoKG",
+    "ru": "ЭхоКГ",
+    "en": "Echocardiography",
+    "kaa": "ExoKG"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 100000,
+   "foreign": 130000
+  },
+  {
+   "name": {
+    "uz": "Ginekologik kasalliklar uchun",
+    "ru": "При гинекологических заболеваниях",
+    "en": "For gynecological diseases",
+    "kaa": "Ginekologiyalıq kesellikler ushın"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 70000,
+   "foreign": 91000
+  },
+  {
+   "name": {
+    "uz": "Prostata bezi, tuxumdonlar",
+    "ru": "Предстательная железа, яичники",
+    "en": "Prostate gland, ovaries",
+    "kaa": "Prostata bezi, jumırtqalıqlar"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 70000,
+   "foreign": 91000
+  },
+  {
+   "name": {
+    "uz": "Bo’g’im 1 dona oyoq (tizza bo’g’im)",
+    "ru": "Сустав 1 ноги (коленный сустав)",
+    "en": "Joint 1 leg (knee joint)",
+    "kaa": "Buwın 1 dana ayaq (tize buwını)"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 80000,
+   "foreign": 104000
+  },
+  {
+   "name": {
+    "uz": "Bo’g’im bir juft (tizza bo’g’im)",
+    "ru": "Пара суставов (коленный сустав)",
+    "en": "A pair of joints (knee joint)",
+    "kaa": "Buwın bir jup (tize buwını)"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 140000,
+   "foreign": 182000
+  },
+  {
+   "name": {
+    "uz": "Homiladorlik 3 oygacha",
+    "ru": "Беременность до 3 месяцев",
+    "en": "Pregnancy up to 3 months",
+    "kaa": "Júklilik 3 ayǵa shekem"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 60000,
+   "foreign": 78000
+  },
+  {
+   "name": {
+    "uz": "Homiladorlik 3 oydan keyin",
+    "ru": "После 3 месяцев беременности",
+    "en": "After 3 months of pregnancy",
+    "kaa": "Júklilik 3 aydan keyin"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 80000,
+   "foreign": 104000
+  },
+  {
+   "name": {
+    "uz": "Sut Bezi",
+    "ru": "Молочная железа",
+    "en": "Mammary gland",
+    "kaa": "Sút bezi"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 60000,
+   "foreign": 78000
+  },
+  {
+   "name": {
+    "uz": "Qalqonsimon bez",
+    "ru": "Щитовидная железа",
+    "en": "Thyroid gland",
+    "kaa": "Qalqonsha bez"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 60000,
+   "foreign": 78000
+  },
+  {
+   "name": {
+    "uz": "Vaginal tekshiruv",
+    "ru": "Вагинальное обследование",
+    "en": "Vaginal examination",
+    "kaa": "Vaginal tekseriw"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 80000,
+   "foreign": 104000
+  },
+  {
+   "name": {
+    "uz": "BSA tomirlari tekshiruvi",
+    "ru": "BSA сосудистое исследование",
+    "en": "BSA vascular examination",
+    "kaa": "BSA tamırların tekseriw"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 80000,
+   "foreign": 104000
+  },
+  {
+   "name": {
+    "uz": "Yumshoq to’qima",
+    "ru": "Мягкие ткани",
+    "en": "Soft tissue",
+    "kaa": "Jumsaq toqıma"
+   },
+   "category": "UZI",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 60000,
+   "foreign": 78000
+  },
+  {
+   "name": {
+    "uz": "Entorka plyonka (bez kontrast)",
+    "ru": "Пленка Энторка (без контраста)",
+    "en": "Entorka film (without contrast)",
+    "kaa": "Enterografiya plyonka (kontrastsız)"
+   },
+   "category": "Rentgen",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 150000,
+   "foreign": 195000
+  },
+  {
+   "name": {
+    "uz": "Entorka foto qog’oz",
+    "ru": "Фотобумага Энторка",
+    "en": "Entorka photo paper",
+    "kaa": "Enterografiya foto qaǵaz"
+   },
+   "category": "Rentgen",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 130000,
+   "foreign": 169000
+  },
+  {
+   "name": {
+    "uz": "Uretra grafiya plyonka (bez kontrast)",
+    "ru": "Плёнка для уретрографии (без контраста)",
+    "en": "Urethrography film (without contrast)",
+    "kaa": "Uretrografiya plyonka (kontrastsız)"
+   },
+   "category": "Rentgen",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 150000,
+   "foreign": 195000
+  },
+  {
+   "name": {
+    "uz": "Uretra grafiya foto qog’oz",
+    "ru": "Фотобумага для уретрографии",
+    "en": "Urethrography photo paper",
+    "kaa": "Uretrografiya foto qaǵaz"
+   },
+   "category": "Rentgen",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 130000,
+   "foreign": 169000
+  },
+  {
+   "name": {
+    "uz": "Antrogratka plyonka (bez kontrast)",
+    "ru": "Плёнка Антрогратка (без контраста)",
+    "en": "Antrogratka film (without contrast)",
+    "kaa": "Antrogretroproektsiya plyonka (kontrastsız)"
+   },
+   "category": "Rentgen",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 150000,
+   "foreign": 195000
+  },
+  {
+   "name": {
+    "uz": "Antrogratka plyonka foto qog’oz",
+    "ru": "Фотобумага пленочная Антрогратка",
+    "en": "Antrogratka film photo paper",
+    "kaa": "Antrogretroprojektsiya foto qaǵaz"
+   },
+   "category": "Rentgen",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 130000,
+   "foreign": 169000
+  },
+  {
+   "name": {
+    "uz": "Getro solpingo grafiya plyonka (bez kontrast)",
+    "ru": "Плёнка для гистеросальпингографии (без контраста)",
+    "en": "Hysterosalpingography film (without contrast)",
+    "kaa": "Gisterosalpingografiya plyonka (kontrastsız)"
+   },
+   "category": "Rentgen",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 200000,
+   "foreign": 260000
+  },
+  {
+   "name": {
+    "uz": "Getro solpingo grafiya foto qog’oz",
+    "ru": "Фотобумага для гистеросальпингографии",
+    "en": "Hysterosalpingography photo paper",
+    "kaa": "Gisterosalpingografiya foto qaǵaz"
+   },
+   "category": "Rentgen",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 170000,
+   "foreign": 221000
+  },
+  {
+   "name": {
+    "uz": "Irigo grafiya plyonka (bez kontrast)",
+    "ru": "Плёнка для ирригографии (без контраста)",
+    "en": "Irrigography film (without contrast)",
+    "kaa": "Irrigografiya plyonka (kontrastsız)"
+   },
+   "category": "Rentgen",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 200000,
+   "foreign": 260000
+  },
+  {
+   "name": {
+    "uz": "Irigo grafiya foto qog’oz",
+    "ru": "Фотобумага для ирригографии",
+    "en": "Irrigography photo paper",
+    "kaa": "Irrigografiya foto qaǵaz"
+   },
+   "category": "Rentgen",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 170000,
+   "foreign": 221000
+  },
+  {
+   "name": {
+    "uz": "Tana a’zosi 1 ko’rinishi plyonka",
+    "ru": "Часть тела, 1 проекция, плёнка",
+    "en": "Body part, 1 view, film",
+    "kaa": "Dene aǵzasınıń 1 kórinisi plyonka"
+   },
+   "category": "Rentgen",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 90000,
+   "foreign": 117000
+  },
+  {
+   "name": {
+    "uz": "Tana a’zosi 2 ko’rinishi plyonka",
+    "ru": "Часть тела, 2 проекции, плёнка",
+    "en": "Body part, 2 views, film",
+    "kaa": "Dene aǵzasınıń 2 kórinisi plyonka"
+   },
+   "category": "Rentgen",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 110000,
+   "foreign": 143000
+  },
+  {
+   "name": {
+    "uz": "Flyurografiya plyonka",
+    "ru": "Флюорографическая пленка",
+    "en": "Fluorography film",
+    "kaa": "Flyuorografiya plyonka"
+   },
+   "category": "Rentgen",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "Tana a’zosi 1 ko’rinishi foto qog’oz",
+    "ru": "Часть тела, 1 проекция, фотобумага",
+    "en": "Body part, 1 view, photo paper",
+    "kaa": "Dene aǵzasınıń 1 kórinisi foto qaǵaz"
+   },
+   "category": "Rentgen",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 50000,
+   "foreign": 65000
+  },
+  {
+   "name": {
+    "uz": "Tana a’zosi 2 ko’rinishi foto qog’oz",
+    "ru": "Часть тела, 2 проекции, фотобумага",
+    "en": "Body part, 2 views, photo paper",
+    "kaa": "Dene aǵzasınıń 2 kórinisi foto qaǵaz"
+   },
+   "category": "Rentgen",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 90000,
+   "foreign": 117000
+  },
+  {
+   "name": {
+    "uz": "Flyurografiya foto qog’oz",
+    "ru": "Фотобумага для флюорографии",
+    "en": "Fluorography photo paper",
+    "kaa": "Flyuorografiya foto qaǵaz"
+   },
+   "category": "Rentgen",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 20000,
+   "foreign": 26000
+  },
+  {
+   "name": {
+    "uz": "Qondagi SRB ( «S» reaktiv oqsil) tekshiruvi",
+    "ru": "Исследование СРБ («S»-реактивного белка) в крови.",
+    "en": "Examination of SRB (\"S\" reactive protein) in the blood",
+    "kaa": "Qandaǵı SRB («S» reaktiv aqsil) tekseriwi"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "Umumiy siydik tahlili",
+    "ru": "Общий анализ мочи",
+    "en": "General urinalysis",
+    "kaa": "Ulıwma siydik tallawı"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 20000,
+   "foreign": 26000
+  },
+  {
+   "name": {
+    "uz": "Qondagi kreatinini aniqlash",
+    "ru": "Определение креатинина в крови",
+    "en": "Determination of creatinine in blood",
+    "kaa": "Qandaǵı kreatinindi anıqlaw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "ALT ni aniqlash",
+    "ru": "Определение АЛТ",
+    "en": "Determination of ALT",
+    "kaa": "ALT ni anıqlaw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 35000,
+   "foreign": 45500
+  },
+  {
+   "name": {
+    "uz": "AST ni aniqlash",
+    "ru": "Определение АСТ",
+    "en": "Determination of AST",
+    "kaa": "AST ni anıqlaw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 35000,
+   "foreign": 45500
+  },
+  {
+   "name": {
+    "uz": "Qondagi glyukozani aniqlash",
+    "ru": "Определение глюкозы в крови",
+    "en": "Determination of glucose in the blood",
+    "kaa": "Qandaǵı glyukozanı anıqlaw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "Qondagi mochevini aniqlash",
+    "ru": "Определение мочевины в крови",
+    "en": "Determination of urea in the blood",
+    "kaa": "Qandaǵı mochevinanı anıqlaw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 40000,
+   "foreign": 52000
+  },
+  {
+   "name": {
+    "uz": "Qondagi bilirubinni aniqlash",
+    "ru": "Определение билирубина в крови",
+    "en": "Determination of bilirubin in the blood",
+    "kaa": "Qandaǵı bilirubindi anıqlaw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "Ca+1 tekshiruvi",
+    "ru": "Анализ Са+1",
+    "en": "Ca+1 assay",
+    "kaa": "Ca+1 tekseriwi"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "Qondagi xolesterinni aniqlash",
+    "ru": "Определение холестерина в крови",
+    "en": "Determination of cholesterol in the blood",
+    "kaa": "Qandaǵı xolesterindi anıqlaw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 35000,
+   "foreign": 45500
+  },
+  {
+   "name": {
+    "uz": "Ayollar surtmasini tekshirish",
+    "ru": "Исследование женского мазка",
+    "en": "Women's smear test",
+    "kaa": "Ayallar surtpesin tekseriw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "Umumiy oqsil tekshiruvi",
+    "ru": "Общий анализ белка",
+    "en": "Total protein assay",
+    "kaa": "Ulıwma aqsil tekseriwi"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "Qondagi timolni aniqlash",
+    "ru": "Определение тимола в крови",
+    "en": "Determination of thymol in blood",
+    "kaa": "Qandaǵı timoldı anıqlaw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 20000,
+   "foreign": 26000
+  },
+  {
+   "name": {
+    "uz": "Qondagi Alfa Amilaza tekshiruvi (diastaza)",
+    "ru": "Анализ крови на альфа-амилазу (диастазу)",
+    "en": "Alpha-amylase blood test (diastase)",
+    "kaa": "Qandaǵı Alfa Amilaza tekseriwi (diastaza)"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 40000,
+   "foreign": 52000
+  },
+  {
+   "name": {
+    "uz": "Qondagi PTI tekshiruvi + MNO",
+    "ru": "ПТИ тест в крови + МНО",
+    "en": "PTI test in blood + MNO",
+    "kaa": "Qandaǵı PTI tekseriwi + MNO"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 40000,
+   "foreign": 52000
+  },
+  {
+   "name": {
+    "uz": "Fibrinogen tekshiruvi +MNO",
+    "ru": "Тест на фибриноген +МНО",
+    "en": "Fibrinogen test +MNO",
+    "kaa": "Fibrinogen tekseriwi +MNO"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 40000,
+   "foreign": 52000
+  },
+  {
+   "name": {
+    "uz": "Qondagi mochavaya kislotasini aniqlash",
+    "ru": "Определение мочевой кислоты в крови",
+    "en": "Determination of uric acid in blood",
+    "kaa": "Qandaǵı zásarap kislotasın anıqlaw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 35000,
+   "foreign": 45500
+  },
+  {
+   "name": {
+    "uz": "Umumiy qon taxlili",
+    "ru": "Общий анализ крови",
+    "en": "General blood analysis",
+    "kaa": "Ulıwma qan tallawı"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 50000,
+   "foreign": 65000
+  },
+  {
+   "name": {
+    "uz": "Qondagi gemoglobinni aniqlash",
+    "ru": "Определение гемоглобина в крови",
+    "en": "Determination of hemoglobin in blood",
+    "kaa": "Qandaǵı gemoglobindi anıqlaw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "Qondagi leykotsitlarni aniqlash",
+    "ru": "Определение лейкоцитов в крови",
+    "en": "Determination of leukocytes in the blood",
+    "kaa": "Qandaǵı leykocitlerdi anıqlaw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 25000,
+   "foreign": 32500
+  },
+  {
+   "name": {
+    "uz": "Qondagi EChV(SOE)ni aniqlash",
+    "ru": "Определение СОЭ в крови",
+    "en": "Determination of ESR in blood",
+    "kaa": "Qandaǵı EShT (SOE) ni anıqlaw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 25000,
+   "foreign": 32500
+  },
+  {
+   "name": {
+    "uz": "Qonni ivish tezligini aniqlash",
+    "ru": "Определение скорости свертывания крови",
+    "en": "Determination of blood clotting speed",
+    "kaa": "Qannıń iyilew tezligin anıqlaw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 25000,
+   "foreign": 32500
+  },
+  {
+   "name": {
+    "uz": "Gepatit B (HBs Ag) antigenini aniqlash (ekspress test)",
+    "ru": "Выявление антигена гепатита В (HBs Ag) (экспресс-тест)",
+    "en": "Detection of hepatitis B (HBs Ag) antigen (express test)",
+    "kaa": "Gepatit B (HBs Ag) antigenin anıqlaw (ekspress test)"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 45000,
+   "foreign": 58500
+  },
+  {
+   "name": {
+    "uz": "Gepatit S antigenini aniqlash (ekspress test)",
+    "ru": "Выявление антигена гепатита С (экспресс-тест)",
+    "en": "Detection of hepatitis C antigen (express test)",
+    "kaa": "Gepatit C antigenin anıqlaw (ekspress test)"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 45000,
+   "foreign": 58500
+  },
+  {
+   "name": {
+    "uz": "Qon guruxini aniqlash (rezus faktor)",
+    "ru": "Определение группы крови (резус-фактора)",
+    "en": "Determination of blood group (rhesus factor)",
+    "kaa": "Qan gruppasın anıqlaw (rezus faktor)"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "Qondagi revma-faktorni aniqlash",
+    "ru": "Определение ревматоидного фактора в крови",
+    "en": "Determination of rheumatoid factor in blood",
+    "kaa": "Qandaǵı revma-faktordı anıqlaw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 25000,
+   "foreign": 32500
+  },
+  {
+   "name": {
+    "uz": "ASLO tekshiruvi (Revmaproba)",
+    "ru": "АСЛО тест (Ревмапроба)",
+    "en": "ASLO test (Revmaproba)",
+    "kaa": "ASLO tekseriwi (Revmaproba)"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 40000,
+   "foreign": 52000
+  },
+  {
+   "name": {
+    "uz": "Tekshiruv Covit-19 Ekspress test + MG %",
+    "ru": "Экспресс-тест на COVID-19 + МГ %",
+    "en": "COVID-19 express test + MG %",
+    "kaa": "Tekseriw Covid-19 ekspress test + MG %"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 60000,
+   "foreign": 78000
+  },
+  {
+   "name": {
+    "uz": "Xolesterin LPVP aniqlash",
+    "ru": "Определение ЛПВП-холестерина",
+    "en": "Determination of HDL cholesterol",
+    "kaa": "Xolesterin LPVP anıqlaw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 35000,
+   "foreign": 45500
+  },
+  {
+   "name": {
+    "uz": "Xolesterin LPNP aniqlash",
+    "ru": "Определение ЛПНП-холестерина",
+    "en": "Determination of LDL cholesterol",
+    "kaa": "Xolesterin LPNP anıqlaw"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 30000,
+   "foreign": 39000
+  },
+  {
+   "name": {
+    "uz": "Trigliseridlar",
+    "ru": "Триглицериды",
+    "en": "Triglycerides",
+    "kaa": "Trigliseridler"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 20000,
+   "foreign": 26000
+  },
+  {
+   "name": {
+    "uz": "Express-test sifilis (TP)",
+    "ru": "Экспресс-тест на сифилис (ТП)",
+    "en": "Express-test syphilis (TP)",
+    "kaa": "Express-test sifilis (TP)"
+   },
+   "category": "Laboratoriya",
+   "location": {
+    "uz": "Diagnostika binosi 1-2 qavat",
+    "ru": "Диагностический корпус 1-2 этажа",
+    "en": "Diagnostic building 1-2 floors",
+    "kaa": "Diagnostika imaratı 1-2 qabat"
+   },
+   "citizen": 40000,
+   "foreign": 52000
+  },
+  {
+   "name": {
+    "uz": "Oliy toifali shifokor maslaxati",
+    "ru": "Консультация врача высшей категории",
+    "en": "Consultation with a highest-category physician",
+    "kaa": "Joqarı dárejeli shıpaker maslahatı"
+   },
+   "category": "Stasionar — jarrohlik",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 122000,
+   "foreign": 158600
+  },
+  {
+   "name": {
+    "uz": "Birinchi toifali shifokor maslaxati",
+    "ru": "Консультация врача первой категории",
+    "en": "Consultation with a first-category physician",
+    "kaa": "Birinshi dárejeli shıpaker maslahatı"
+   },
+   "category": "Stasionar — jarrohlik",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 110000,
+   "foreign": 143000
+  },
+  {
+   "name": {
+    "uz": "Ikkinchi toifali shifokor maslaxati",
+    "ru": "Консультация врача второй категории",
+    "en": "Consultation with a second-category physician",
+    "kaa": "Ekinshi dárejeli shıpaker maslahatı"
+   },
+   "category": "Stasionar — jarrohlik",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 95000,
+   "foreign": 123500
+  },
+  {
+   "name": {
+    "uz": "Toifasiz shifokor maslaxati",
+    "ru": "Консультация врача без категории",
+    "en": "Consultation with a physician (no category)",
+    "kaa": "Dárejesiz shıpaker maslahatı"
+   },
+   "category": "Stasionar — jarrohlik",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 86000,
+   "foreign": 111800
+  },
+  {
+   "name": {
+    "uz": "Oliy toifali shifokor maslaxati",
+    "ru": "Консультация врача высшей категории",
+    "en": "Consultation with a highest-category physician",
+    "kaa": "Joqarı dárejeli shıpaker maslahatı"
+   },
+   "category": "Stasionar — anesteziologiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 113000,
+   "foreign": 146900
+  },
+  {
+   "name": {
+    "uz": "Birinchi toifali shifokor maslaxati",
+    "ru": "Консультация врача первой категории",
+    "en": "Consultation with a first-category physician",
+    "kaa": "Birinshi dárejeli shıpaker maslahatı"
+   },
+   "category": "Stasionar — anesteziologiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 102000,
+   "foreign": 132600
+  },
+  {
+   "name": {
+    "uz": "Ikkinchi toifali shifokor maslaxati",
+    "ru": "Консультация врача второй категории",
+    "en": "Consultation with a second-category physician",
+    "kaa": "Ekinshi dárejeli shıpaker maslahatı"
+   },
+   "category": "Stasionar — anesteziologiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 88000,
+   "foreign": 114400
+  },
+  {
+   "name": {
+    "uz": "Toifasiz shifokor maslaxati",
+    "ru": "Консультация врача без категории",
+    "en": "Consultation with a physician (no category)",
+    "kaa": "Dárejesiz shıpaker maslahatı"
+   },
+   "category": "Stasionar — anesteziologiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 79000,
+   "foreign": 102700
+  },
+  {
+   "name": {
+    "uz": "Oliy toifali shifokor maslaxati",
+    "ru": "Консультация врача высшей категории",
+    "en": "Consultation with a highest-category physician",
+    "kaa": "Joqarı dárejeli shıpaker maslahatı"
+   },
+   "category": "Stasionar — terapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 65000,
+   "foreign": 84500
+  },
+  {
+   "name": {
+    "uz": "Birinchi toifali shifokor maslaxati",
+    "ru": "Консультация врача первой категории",
+    "en": "Consultation with a first-category physician",
+    "kaa": "Birinshi dárejeli shıpaker maslahatı"
+   },
+   "category": "Stasionar — terapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 60000,
+   "foreign": 78000
+  },
+  {
+   "name": {
+    "uz": "Ikkinchi toifali shifokor maslaxati",
+    "ru": "Консультация врача второй категории",
+    "en": "Consultation with a second-category physician",
+    "kaa": "Ekinshi dárejeli shıpaker maslahatı"
+   },
+   "category": "Stasionar — terapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 50000,
+   "foreign": 65000
+  },
+  {
+   "name": {
+    "uz": "Toifasiz shifokor maslaxati",
+    "ru": "Консультация врача без категории",
+    "en": "Consultation with a physician (no category)",
+    "kaa": "Dárejesiz shıpaker maslahatı"
+   },
+   "category": "Stasionar — terapiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 45000,
+   "foreign": 58500
+  },
+  {
+   "name": {
+    "uz": "Oliy toifali shifokor",
+    "ru": "Врач высшей категории",
+    "en": "Physician, highest category",
+    "kaa": "Joqarı dárejeli shıpaker"
+   },
+   "category": "Stasionar — pediatriya",
+   "location": null,
+   "citizen": 66000,
+   "foreign": 82500
+  },
+  {
+   "name": {
+    "uz": "Birinchi toifali shifokor",
+    "ru": "Врач первой категории",
+    "en": "Physician, first category",
+    "kaa": "Birinshi dárejeli shıpaker"
+   },
+   "category": "Stasionar — pediatriya",
+   "location": null,
+   "citizen": 60000,
+   "foreign": 75000
+  },
+  {
+   "name": {
+    "uz": "Ikkinchi toifali shifokor",
+    "ru": "Врач второй категории",
+    "en": "Physician, second category",
+    "kaa": "Ekinshi dárejeli shıpaker"
+   },
+   "category": "Stasionar — pediatriya",
+   "location": null,
+   "citizen": 56000,
+   "foreign": 70000
+  },
+  {
+   "name": {
+    "uz": "Toifasiz shifokor",
+    "ru": "Врач без категории",
+    "en": "Physician, no category",
+    "kaa": "Dárejesiz shıpaker"
+   },
+   "category": "Stasionar — pediatriya",
+   "location": null,
+   "citizen": 50000,
+   "foreign": 62500
+  },
+  {
+   "name": {
+    "uz": "Oliy toifali jarrox shifokor",
+    "ru": "Врач-хирург высшей категории",
+    "en": "Surgeon, highest category",
+    "kaa": "Joqarı dárejeli jarrah shıpaker"
+   },
+   "category": "Stasionar — jarrohlik",
+   "location": null,
+   "citizen": 85000,
+   "foreign": 106250
+  },
+  {
+   "name": {
+    "uz": "Birinchi toifali jarrox shifokor",
+    "ru": "Врач-хирург первой категории",
+    "en": "Surgeon, first category",
+    "kaa": "Birinshi dárejeli jarrah shıpaker"
+   },
+   "category": "Stasionar — jarrohlik",
+   "location": null,
+   "citizen": 77000,
+   "foreign": 96250
+  },
+  {
+   "name": {
+    "uz": "Ikkinchi toifali jarrox shifokor",
+    "ru": "Врач-хирург второй категории",
+    "en": "Surgeon, second category",
+    "kaa": "Ekinshi dárejeli jarrah shıpaker"
+   },
+   "category": "Stasionar — jarrohlik",
+   "location": null,
+   "citizen": 68000,
+   "foreign": 85000
+  },
+  {
+   "name": {
+    "uz": "Toifasiz jarrox shifokor",
+    "ru": "Врач-хирург без категории",
+    "en": "Surgeon, no category",
+    "kaa": "Dárejesiz jarrah shıpaker"
+   },
+   "category": "Stasionar — jarrohlik",
+   "location": null,
+   "citizen": 56000,
+   "foreign": 70000
+  },
+  {
+   "name": {
+    "uz": "Oliy toifali anesteziolog shifokor",
+    "ru": "Врач-анестезиолог высшей категории",
+    "en": "Anesthesiologist, highest category",
+    "kaa": "Joqarı dárejeli anesteziolog shıpaker"
+   },
+   "category": "Stasionar — anesteziologiya",
+   "location": null,
+   "citizen": 86000,
+   "foreign": 107500
+  },
+  {
+   "name": {
+    "uz": "Birinchi toifali anesteziolog shifokor",
+    "ru": "Врач-анестезиолог первой категории",
+    "en": "Anesthesiologist, first category",
+    "kaa": "Birinshi dárejeli anesteziolog shıpaker"
+   },
+   "category": "Stasionar — anesteziologiya",
+   "location": null,
+   "citizen": 77000,
+   "foreign": 96250
+  },
+  {
+   "name": {
+    "uz": "Ikkinchi toifali anesteziolog shifokor",
+    "ru": "Врач-анестезиолог второй категории",
+    "en": "Anesthesiologist, second category",
+    "kaa": "Ekinshi dárejeli anesteziolog shıpaker"
+   },
+   "category": "Stasionar — anesteziologiya",
+   "location": null,
+   "citizen": 66000,
+   "foreign": 82500
+  },
+  {
+   "name": {
+    "uz": "Toifasiz anesteziolog shifokor",
+    "ru": "Врач-анестезиолог без категории",
+    "en": "Anesthesiologist, no category",
+    "kaa": "Dárejesiz anesteziolog shıpaker"
+   },
+   "category": "Stasionar — anesteziologiya",
+   "location": null,
+   "citizen": 60000,
+   "foreign": 75000
+  },
+  {
+   "name": {
+    "uz": "Yoqish xizmati 1 kg uchun (mufel pech) da",
+    "ru": "Услуга сжигания за 1 кг (муфельная печь)",
+    "en": "Incineration service per 1 kg (muffle furnace)",
+    "kaa": "Kúydiriw xızmeti 1 kg ushın (mufel pesh) de"
+   },
+   "category": "Yoqish",
+   "location": null,
+   "citizen": 40000,
+   "foreign": 52000
+  },
+  {
+   "name": {
+    "uz": "Analiz SPID",
+    "ru": "Анализ на СПИД",
+    "en": "AIDS test",
+    "kaa": "Analiz SPID"
+   },
+   "category": "Tahlil olib borish",
+   "location": {
+    "uz": "OITS markazi binosi",
+    "ru": "Здание СПИД-центра",
+    "en": "AIDS center building",
+    "kaa": "OITS orayı imaratı"
+   },
+   "citizen": 60000,
+   "foreign": 118000
+  },
+  {
+   "name": {
+    "uz": "Kir yuvish xizmati bir (kg) uchun",
+    "ru": "Услуги прачечной за (кг).",
+    "en": "Laundry service per (kg).",
+    "kaa": "Kir juwıw xızmeti bir (kg) ushın"
+   },
+   "category": "Kir yuvish",
+   "location": null,
+   "citizen": 10000,
+   "foreign": 13000
+  },
+  {
+   "name": {
+    "uz": "Tibbiy asbob uskunalarni sterilizatsiyalash (1 dona biks tuplami uchun)",
+    "ru": "Стерилизация медицинского оборудования (за 1 упаковку бикса)",
+    "en": "Sterilization of medical equipment (for 1 pack of bix)",
+    "kaa": "Medicinalıq ásbap-úskenelerdi sterilizaciyalaw (1 dana biks toplamı ushın)"
+   },
+   "category": "MSB",
+   "location": {
+    "uz": "Sterilizatsiya binosi 1 qavat",
+    "ru": "Стерилизационный корпус 1 этаж",
+    "en": "Sterilization building 1 floor",
+    "kaa": "Sterilizaciya imaratı 1 qabat"
+   },
+   "citizen": 120000,
+   "foreign": 156000
+  },
+  {
+   "name": {
+    "uz": "Sariflangan dori-darmon uchun o’rtacha (dez modda, spirt va paxta) xirurgik bo’limlar uchun",
+    "ru": "Среднее значение по перечисленным препаратам (одноразовая субстанция, спирт и вата) для хирургических отделений",
+    "en": "The average for the listed drugs (disposable substance, alcohol and cotton) for surgical departments",
+    "kaa": "Sarplanǵan dári-darman ushın ortasha (dez zat, spirt hám maqta) xirurgiyalıq bólimler ushın"
+   },
+   "category": "Dori-darmon",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 12000,
+   "foreign": 12000
+  },
+  {
+   "name": {
+    "uz": "Sariflangan dori-darmon uchun o’rtacha (dez modda, spirt va paxta) terapevtik bo’limlar uchun",
+    "ru": "Среднее значение по перечисленным лекарственным средствам (дезактивным веществам, спирту и вате) по терапевтическим отделениям",
+    "en": "Average for listed drugs (dez substance, alcohol and cotton) for therapeutic departments",
+    "kaa": "Sarplanǵan dári-darman ushın ortasha (dez zat, spirt hám maqta) terapevtik bólimler ushın"
+   },
+   "category": "Dori-darmon",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 10000,
+   "foreign": 10000
+  },
+  {
+   "name": {
+    "uz": "Gistologik tekshiruv",
+    "ru": "Гистологическое исследование",
+    "en": "Histological examination",
+    "kaa": "Gistologiyalıq tekseriw"
+   },
+   "category": "Gistologiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 190000,
+   "foreign": 237500
+  },
+  {
+   "name": {
+    "uz": "Gistologik tekshiruv 1 ta bo’lak uchun",
+    "ru": "Гистологическое исследование за 1 шт.",
+    "en": "Histological examination for 1 piece",
+    "kaa": "Gistologiyalıq tekseriw 1 bólek ushın"
+   },
+   "category": "Gistologiya",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 10000,
+   "foreign": 12500
+  },
+  {
+   "name": {
+    "uz": "Jarroxlik bo’limida bir o’rin-joy xizmati lyuks jixozlangan xona uchun (xojatxona,televizor, Muzlatgich, va boshqalar )",
+    "ru": "Одноместное обслуживание в хирургическом отделении в палате с элитным оборудованием (туалет, телевизор, холодильник и т.д.)",
+    "en": "One-bed service in the surgical department for a room with luxury equipment (toilet, TV, refrigerator, etc.)",
+    "kaa": "Jarrahlıq bóliminde lyuks jabdıqlanǵan bólme ushın bir orın-jay xızmeti (hájetxana, televizor, muzlatqısh, hám basqalar)"
+   },
+   "category": "Yotoq joy",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 480000,
+   "foreign": 624000
+  },
+  {
+   "name": {
+    "uz": "Terapiya bo’limida bir o’rin-joy xizmati uchun lyuks jixozlangan xona uchun (xojatxona,televizor, Muzlatgich, va boshqalar )",
+    "ru": "При одноместном обслуживании в терапевтическом отделении в палате, оборудованной люксом (туалет, телевизор, холодильник и т.п.)",
+    "en": "For one-bed service in the therapy department for a suite equipped room (toilet, TV, refrigerator, etc.)",
+    "kaa": "Terapiya bóliminde lyuks jabdıqlanǵan bólme ushın bir orın-jay xızmeti (hájetxana, televizor, muzlatqısh, hám basqalar)"
+   },
+   "category": "Yotoq joy",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 440000,
+   "foreign": 572000
+  },
+  {
+   "name": {
+    "uz": "Kunduzgi o’rin-joy 10 soatgacha",
+    "ru": "Дневное размещение до 10 часов",
+    "en": "Daytime accommodation up to 10 hours",
+    "kaa": "Kúndizgi orın-jay 10 saatqa shekem"
+   },
+   "category": "Yotoq joy",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 150000,
+   "foreign": 195000
+  },
+  {
+   "name": {
+    "uz": "Kunduzgi o’rin-joy 5 soatgacha",
+    "ru": "Дневное размещение до 5 часов",
+    "en": "Daytime accommodation up to 5 hours",
+    "kaa": "Kúndizgi orın-jay 5 saatqa shekem"
+   },
+   "category": "Yotoq joy",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 75000,
+   "foreign": 97500
+  },
+  {
+   "name": {
+    "uz": "Kunduzgi o’rin-joy bir marotaba muolaja uchun",
+    "ru": "Дневное размещение предусмотрено для разового лечения.",
+    "en": "Daytime accommodation is for a one-time treatment",
+    "kaa": "Kúndizgi orın-jay bir márte procedura ushın"
+   },
+   "category": "Yotoq joy",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 50000,
+   "foreign": 65000
+  },
+  {
+   "name": {
+    "uz": "Intensiv reanimatsiya bo’limida bir kunlik o’rin-joy xizmati",
+    "ru": "Услуга однодневного проживания в отделении интенсивной терапии",
+    "en": "One-day accommodation service in the intensive care unit",
+    "kaa": "Intensiv reanimaciya bóliminde bir kúnlik orın-jay xızmeti"
+   },
+   "category": "Yotoq joy",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 660000,
+   "foreign": 858000
+  },
+  {
+   "name": {
+    "uz": "Kislorod konsentratorida foydalanish tibbiy xizmat 1 soat uchun",
+    "ru": "Использование медицинских услуг кислородного концентратора в течение 1 часа.",
+    "en": "Use of oxygen concentrator medical service for 1 hour",
+    "kaa": "Kislorod konsentratorınan paydalanıw medicinalıq xızmeti 1 saat ushın"
+   },
+   "category": "Konsentrator",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 5000,
+   "foreign": 6500
+  },
+  {
+   "name": {
+    "uz": "Bir kunlik ovqatlanish (nonushta,tushlik 1-2 taom va kechki ovqat)",
+    "ru": "Питание на один день (завтрак, обед 1-2 приема пищи и ужин)",
+    "en": "Meals for one day (breakfast, lunch 1-2 meals and dinner)",
+    "kaa": "Bir kúnlik tamaqlanıw (nan uwsatıw, túslik 1-2 tağam hám keshki tamaq)"
+   },
+   "category": "Ovqatlanish",
+   "location": {
+    "uz": "Davolash binosi 1-2 qavat",
+    "ru": "Лечебный корпус 1-2 этажа",
+    "en": "Treatment building 1-2 floors",
+    "kaa": "Emlew imaratı 1-2 qabat"
+   },
+   "citizen": 40000,
+   "foreign": 40000
+  },
+  {
+   "name": {
+    "uz": "Kserokopiya (1 list A5 yoki A4 format)",
+    "ru": "Ксерокопия (1 лист формата А5 или А4)",
+    "en": "Photocopy (1 sheet A5 or A4 format)",
+    "kaa": "Kserokopiya (1 varaq A5 yamasa A4 format)"
+   },
+   "category": "Servis",
+   "location": {
+    "uz": "Ma’muriyat binosi 1 qavat",
+    "ru": "Административное здание 1 этаж",
+    "en": "Administration building 1 floor",
+    "kaa": "Basqarma imaratı 1 qabat"
+   },
+   "citizen": 1000,
+   "foreign": 1000
+  }
+ ],
+ "checkups": [
+  {
+   "id": "gastro",
+   "title": {
+    "uz": "Gastroenterologiya",
+    "ru": "Гастроэнтерология",
+    "en": "Gastroenterology",
+    "kaa": "Gastroenterologiya"
+   },
+   "accent": "#0EA5E9",
+   "tiers": [
+    {
+     "tier": "Layt",
+     "price": 300000,
+     "includes": {
+      "uz": [
+       "Umumiy amaliyot shifokori",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarroh",
+       "Urolog",
+       "Umumiy qon taxlili",
+       "Qorin bo’shlig’ining ultratovush tekshiruv"
+      ],
+      "ru": [
+       "Врач общей практики",
+       "Гастроэнтеролог",
+       "Кардиолог",
+       "Пульмонолог",
+       "Акушер-гинеколог",
+       "Невролог",
+       "Врач-оториноларинголог",
+       "Офтальмолог",
+       "Проктолог",
+       "Флеболог",
+       "Травматолог-ортопед",
+       "Дерматовенеролог",
+       "Хирург",
+       "Уролог",
+       "Общий анализ крови",
+       "Ультразвуковое исследование брюшной полости"
+      ],
+      "en": [
+       "General Practitioner",
+       "Gastroenterologist",
+       "Cardiologist",
+       "Pulmonologist",
+       "Obstetrician-gynecologist",
+       "Neurologist",
+       "Otorhinolaryngologist",
+       "Ophthalmologist",
+       "Proctologist",
+       "Phlebologist",
+       "Traumatologist-orthopedic",
+       "Dermatovenereologist",
+       "Surgeon",
+       "Urologist",
+       "General blood analysis",
+       "Ultrasound examination of the abdominal cavity"
+      ],
+      "kaa": [
+       "Ulıwma ámeliyat shıpakeri",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarrah",
+       "Urolog",
+       "Ulıwma qan tallawı",
+       "Qarın qusınıń ultradıbıs tekseriwi"
+      ]
+     },
+     "notes": {
+      "uz": [
+       "Biokimyoviy qon testi (yorug’lik): ALT, AST (jigar testlari), bilirubin (jami, to’g’ridan-to’g’ri), gidroksidi fosfataza (ALP)).",
+       "Biokimyoviy qon testi"
+      ],
+      "ru": [
+       "Биохимический анализ крови (световой): АЛТ, АСТ (печеночные пробы), билирубин (общий, прямой), щелочная фосфатаза (ЩФ)).",
+       "Биохимический анализ крови"
+      ],
+      "en": [
+       "Biochemical blood test (light): ALT, AST (liver tests), bilirubin (total, direct), alkaline phosphatase (ALP)).",
+       "Biochemical blood test"
+      ],
+      "kaa": [
+       "Biokimyalıq qan testi (jeńil): ALT, AST (bawır testleri), bilirubin (jámi, tikkeley), gidroksidi fosfataza (ALP)).",
+       "Biokimyalıq qan testi"
+      ]
+     }
+    },
+    {
+     "tier": "Standart",
+     "price": 400000,
+     "includes": {
+      "uz": [
+       "Umumiy amaliyot shifokori",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarroh",
+       "Urolog",
+       "Umumiy qon taxlili",
+       "Qorin bo’shlig’ining ultratovush tekshiruv",
+       "FGDS"
+      ],
+      "ru": [
+       "Врач общей практики",
+       "Гастроэнтеролог",
+       "Кардиолог",
+       "Пульмонолог",
+       "Акушер-гинеколог",
+       "Невролог",
+       "Врач-оториноларинголог",
+       "Офтальмолог",
+       "Проктолог",
+       "Флеболог",
+       "Травматолог-ортопед",
+       "Дерматовенеролог",
+       "Хирург",
+       "Уролог",
+       "Общий анализ крови",
+       "Ультразвуковое исследование брюшной полости",
+       "ФГДС"
+      ],
+      "en": [
+       "General Practitioner",
+       "Gastroenterologist",
+       "Cardiologist",
+       "Pulmonologist",
+       "Obstetrician-gynecologist",
+       "Neurologist",
+       "Otorhinolaryngologist",
+       "Ophthalmologist",
+       "Proctologist",
+       "Phlebologist",
+       "Traumatologist-orthopedic",
+       "Dermatovenereologist",
+       "Surgeon",
+       "Urologist",
+       "General blood analysis",
+       "Ultrasound examination of the abdominal cavity",
+       "FGDS"
+      ],
+      "kaa": [
+       "Ulıwma ámeliyat shıpakeri",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarrah",
+       "Urolog",
+       "Ulıwma qan tallawı",
+       "Qarın qusınıń ultradıbıs tekseriwi",
+       "FGDS"
+      ]
+     },
+     "notes": {
+      "uz": [
+       "Biokimyoviy qon testi (asosiy): ALT, AST (jigar testlari), bilirubin (jami, bevosita), gidroksidi fosfataza (ALP), GGT, alfa-amilaza (oshqozon osti bezi), kreatinin, glyukoza.",
+       "Biokimyoviy qon testi"
+      ],
+      "ru": [
+       "Биохимический анализ крови (основной): АЛТ, АСТ (печеночные пробы), билирубин (общий, прямой), щелочная фосфатаза (ЩФ), ГГТ, альфа-амилаза (поджелудочная), креатинин, глюкоза.",
+       "Биохимический анализ крови"
+      ],
+      "en": [
+       "Biochemical blood test (basic): ALT, AST (liver tests), bilirubin (total, direct), alkaline phosphatase (ALP), GGT, alpha-amylase (pancreatic), creatinine, glucose.",
+       "Biochemical blood test"
+      ],
+      "kaa": [
+       "Biokimyalıq qan testi (tiykarǵı): ALT, AST (bawır testleri), bilirubin (jámi, bevasite), gidroksidi fosfataza (ALP), GGT, alfa-amilaza (asqazan astı bezi), kreatinin, glyukoza.",
+       "Biokimyalıq qan testi"
+      ]
+     }
+    },
+    {
+     "tier": "Premium",
+     "price": 505000,
+     "includes": {
+      "uz": [
+       "Umumiy amaliyot shifokori",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarroh",
+       "Urolog",
+       "Umumiy qon taxlili+Umumiy siydik taxlili",
+       "Qorin bo’shlig’ining ultratovush tekshiruv",
+       "FGDS",
+       "koprogramma",
+       "Najasda yashirin qon testi"
+      ],
+      "ru": [
+       "Врач общей практики",
+       "Гастроэнтеролог",
+       "Кардиолог",
+       "Пульмонолог",
+       "Акушер-гинеколог",
+       "Невролог",
+       "Врач-оториноларинголог",
+       "Офтальмолог",
+       "Проктолог",
+       "Флеболог",
+       "Травматолог-ортопед",
+       "Дерматовенеролог",
+       "Хирург",
+       "Уролог",
+       "Общий анализ крови + Общий анализ мочи",
+       "Ультразвуковое исследование брюшной полости",
+       "ФГДС",
+       "Копрограмма",
+       "Анализ кала на скрытую кровь"
+      ],
+      "en": [
+       "General Practitioner",
+       "Gastroenterologist",
+       "Cardiologist",
+       "Pulmonologist",
+       "Obstetrician-gynecologist",
+       "Neurologist",
+       "Otorhinolaryngologist",
+       "Ophthalmologist",
+       "Proctologist",
+       "Phlebologist",
+       "Traumatologist-orthopedic",
+       "Dermatovenereologist",
+       "Surgeon",
+       "Urologist",
+       "General blood analysis + General urine analysis",
+       "Ultrasound examination of the abdominal cavity",
+       "FGDS",
+       "Coprogram (stool analysis)",
+       "Fecal occult blood test"
+      ],
+      "kaa": [
+       "Ulıwma ámeliyat shıpakeri",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarrah",
+       "Urolog",
+       "Ulıwma qan tallawı + Ulıwma siydik tallawı",
+       "Qarın qusınıń ultradıbıs tekseriwi",
+       "FGDS",
+       "koprogramma",
+       "Nájiste jasırın qan testi"
+      ]
+     },
+     "notes": {
+      "uz": [
+       "Biokimyoviy qon testi (asosiy): ALT, AST (jigar testlari), bilirubin (jami, bevosita), gidroksidi fosfataza (ALP), GGT, alfa-amilaza (oshqozon osti bezi), kreatinin, glyukoza.",
+       "Biokimyoviy qon testi"
+      ],
+      "ru": [
+       "Биохимический анализ крови (основной): АЛТ, АСТ (печеночные пробы), билирубин (общий, прямой), щелочная фосфатаза (ЩФ), ГГТ, альфа-амилаза (поджелудочная), креатинин, глюкоза.",
+       "Биохимический анализ крови"
+      ],
+      "en": [
+       "Biochemical blood test (basic): ALT, AST (liver tests), bilirubin (total, direct), alkaline phosphatase (ALP), GGT, alpha-amylase (pancreatic), creatinine, glucose.",
+       "Biochemical blood test"
+      ],
+      "kaa": [
+       "Biokimyalıq qan testi (tiykarǵı): ALT, AST (bawır testleri), bilirubin (jámi, bevasite), gidroksidi fosfataza (ALP), GGT, alfa-amilaza (asqazan astı bezi), kreatinin, glyukoza.",
+       "Biokimyalıq qan testi"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "cardio",
+   "title": {
+    "uz": "Kardiologiya",
+    "ru": "Кардиология",
+    "en": "Cardiology",
+    "kaa": "Kardiologiya"
+   },
+   "accent": "#EF4444",
+   "tiers": [
+    {
+     "tier": "Layt",
+     "price": 110000,
+     "includes": {
+      "uz": [
+       "Umumiy amaliyot shifokori",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarroh",
+       "Urolog",
+       "EKG",
+       "Umumiy qon taxlili",
+       "Xolestirin"
+      ],
+      "ru": [
+       "Врач общей практики",
+       "Гастроэнтеролог",
+       "Кардиолог",
+       "Пульмонолог",
+       "Акушер-гинеколог",
+       "Невролог",
+       "Врач-оториноларинголог",
+       "Офтальмолог",
+       "Проктолог",
+       "Флеболог",
+       "Травматолог-ортопед",
+       "Дерматовенеролог",
+       "Хирург",
+       "Уролог",
+       "ЭКГ",
+       "Общий анализ крови",
+       "Холестерин"
+      ],
+      "en": [
+       "General Practitioner",
+       "Gastroenterologist",
+       "Cardiologist",
+       "Pulmonologist",
+       "Obstetrician-gynecologist",
+       "Neurologist",
+       "Otorhinolaryngologist",
+       "Ophthalmologist",
+       "Proctologist",
+       "Phlebologist",
+       "Traumatologist-orthopedic",
+       "Dermatovenereologist",
+       "Surgeon",
+       "Urologist",
+       "ECG",
+       "General blood analysis",
+       "Cholesterol"
+      ],
+      "kaa": [
+       "Ulıwma ámeliyat shıpakeri",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarrah",
+       "Urolog",
+       "EKG",
+       "Ulıwma qan tallawı",
+       "Xolesterin"
+      ]
+     },
+     "notes": {
+      "uz": [],
+      "ru": [],
+      "en": [],
+      "kaa": []
+     }
+    },
+    {
+     "tier": "Standart",
+     "price": 230000,
+     "includes": {
+      "uz": [
+       "Umumiy amaliyot shifokori",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarroh",
+       "Urolog",
+       "EKG",
+       "Umumiy qon taxlili+Umumiy siydik taxlili",
+       "Xolestirin",
+       "EXO-KG"
+      ],
+      "ru": [
+       "Врач общей практики",
+       "Гастроэнтеролог",
+       "Кардиолог",
+       "Пульмонолог",
+       "Акушер-гинеколог",
+       "Невролог",
+       "Врач-оториноларинголог",
+       "Офтальмолог",
+       "Проктолог",
+       "Флеболог",
+       "Травматолог-ортопед",
+       "Дерматовенеролог",
+       "Хирург",
+       "Уролог",
+       "ЭКГ",
+       "Общий анализ крови + Общий анализ мочи",
+       "Холестерин",
+       "ЭхоКГ"
+      ],
+      "en": [
+       "General Practitioner",
+       "Gastroenterologist",
+       "Cardiologist",
+       "Pulmonologist",
+       "Obstetrician-gynecologist",
+       "Neurologist",
+       "Otorhinolaryngologist",
+       "Ophthalmologist",
+       "Proctologist",
+       "Phlebologist",
+       "Traumatologist-orthopedic",
+       "Dermatovenereologist",
+       "Surgeon",
+       "Urologist",
+       "ECG",
+       "General blood analysis + General urine analysis",
+       "Cholesterol",
+       "Echocardiography"
+      ],
+      "kaa": [
+       "Ulıwma ámeliyat shıpakeri",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarrah",
+       "Urolog",
+       "EKG",
+       "Ulıwma qan tallawı + Ulıwma siydik tallawı",
+       "Xolesterin",
+       "EXO-KG"
+      ]
+     },
+     "notes": {
+      "uz": [],
+      "ru": [],
+      "en": [],
+      "kaa": []
+     }
+    },
+    {
+     "tier": "Premium",
+     "price": 370000,
+     "includes": {
+      "uz": [
+       "Umumiy amaliyot shifokori",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Lipid profili - LDL, VLDL, HDL, triglitseridlar, aterogenlik indeksi",
+       "Dermatovenerolog",
+       "Jarroh",
+       "Urolog",
+       "EKG",
+       "Umumiy qon taxlili+Umumiy siydik taxlili",
+       "Xolestirin",
+       "EXO-KG"
+      ],
+      "ru": [
+       "Врач общей практики",
+       "Гастроэнтеролог",
+       "Кардиолог",
+       "Пульмонолог",
+       "Акушер-гинеколог",
+       "Невролог",
+       "Врач-оториноларинголог",
+       "Офтальмолог",
+       "Проктолог",
+       "Флеболог",
+       "Травматолог-ортопед",
+       "Липидный профиль - ЛПНП, ЛПОНП, ЛПВП, триглицериды, индекс атерогенности",
+       "Дерматовенеролог",
+       "Хирург",
+       "Уролог",
+       "ЭКГ",
+       "Общий анализ крови + Общий анализ мочи",
+       "Холестерин",
+       "ЭхоКГ"
+      ],
+      "en": [
+       "General Practitioner",
+       "Gastroenterologist",
+       "Cardiologist",
+       "Pulmonologist",
+       "Obstetrician-gynecologist",
+       "Neurologist",
+       "Otorhinolaryngologist",
+       "Ophthalmologist",
+       "Proctologist",
+       "Phlebologist",
+       "Traumatologist-orthopedic",
+       "Lipid profile - LDL, VLDL, HDL, triglycerides, atherogenic index",
+       "Dermatovenereologist",
+       "Surgeon",
+       "Urologist",
+       "ECG",
+       "General blood analysis + General urine analysis",
+       "Cholesterol",
+       "Echocardiography"
+      ],
+      "kaa": [
+       "Ulıwma ámeliyat shıpakeri",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Lipid profili — LDL, VLDL, HDL, trigliseridler, aterogenlik indeksi",
+       "Dermatovenerolog",
+       "Jarrah",
+       "Urolog",
+       "EKG",
+       "Ulıwma qan tallawı + Ulıwma siydik tallawı",
+       "Xolesterin",
+       "EXO-KG"
+      ]
+     },
+     "notes": {
+      "uz": [
+       "Lipid profil"
+      ],
+      "ru": [
+       "Липидный профиль"
+      ],
+      "en": [
+       "Lipid profile"
+      ],
+      "kaa": [
+       "Lipid profili"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "gyno",
+   "title": {
+    "uz": "Ginekologiya",
+    "ru": "Гинекология",
+    "en": "Gynecology",
+    "kaa": "Ginekologiya"
+   },
+   "accent": "#EC4899",
+   "tiers": [
+    {
+     "tier": "Layt",
+     "price": 130000,
+     "includes": {
+      "uz": [
+       "Umumiy amaliyot shifokori",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarroh",
+       "Urolog",
+       "Surtma olish",
+       "Tos a’zolarining ultratovush tekshiruvi"
+      ],
+      "ru": [
+       "Врач общей практики",
+       "Гастроэнтеролог",
+       "Кардиолог",
+       "Пульмонолог",
+       "Акушер-гинеколог",
+       "Невролог",
+       "Врач-оториноларинголог",
+       "Офтальмолог",
+       "Проктолог",
+       "Флеболог",
+       "Травматолог-ортопед",
+       "Дерматовенеролог",
+       "Хирург",
+       "Уролог",
+       "Получение мазка",
+       "Ультразвуковое исследование органов малого таза"
+      ],
+      "en": [
+       "General Practitioner",
+       "Gastroenterologist",
+       "Cardiologist",
+       "Pulmonologist",
+       "Obstetrician-gynecologist",
+       "Neurologist",
+       "Otorhinolaryngologist",
+       "Ophthalmologist",
+       "Proctologist",
+       "Phlebologist",
+       "Traumatologist-orthopedic",
+       "Dermatovenereologist",
+       "Surgeon",
+       "Urologist",
+       "Getting a smear",
+       "Ultrasound examination of pelvic organs"
+      ],
+      "kaa": [
+       "Ulıwma ámeliyat shıpakeri",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarrah",
+       "Urolog",
+       "Surtpe alıw",
+       "Jambas aǵzalarınıń ultradıbıs tekseriwi"
+      ]
+     },
+     "notes": {
+      "uz": [],
+      "ru": [],
+      "en": [],
+      "kaa": []
+     }
+    },
+    {
+     "tier": "Standart",
+     "price": 180000,
+     "includes": {
+      "uz": [
+       "Umumiy amaliyot shifokori",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarroh",
+       "Urolog",
+       "Surtma olish",
+       "Tos a’zolarining ultratovush tekshiruvi",
+       "Pap testi"
+      ],
+      "ru": [
+       "Врач общей практики",
+       "Гастроэнтеролог",
+       "Кардиолог",
+       "Пульмонолог",
+       "Акушер-гинеколог",
+       "Невролог",
+       "Врач-оториноларинголог",
+       "Офтальмолог",
+       "Проктолог",
+       "Флеболог",
+       "Травматолог-ортопед",
+       "Дерматовенеролог",
+       "Хирург",
+       "Уролог",
+       "Получение мазка",
+       "Ультразвуковое исследование органов малого таза",
+       "Мазок из шейки матки (Пап-тест)"
+      ],
+      "en": [
+       "General Practitioner",
+       "Gastroenterologist",
+       "Cardiologist",
+       "Pulmonologist",
+       "Obstetrician-gynecologist",
+       "Neurologist",
+       "Otorhinolaryngologist",
+       "Ophthalmologist",
+       "Proctologist",
+       "Phlebologist",
+       "Traumatologist-orthopedic",
+       "Dermatovenereologist",
+       "Surgeon",
+       "Urologist",
+       "Getting a smear",
+       "Ultrasound examination of pelvic organs",
+       "Pap test"
+      ],
+      "kaa": [
+       "Ulıwma ámeliyat shıpakeri",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarrah",
+       "Urolog",
+       "Surtpe alıw",
+       "Jambas aǵzalarınıń ultradıbıs tekseriwi",
+       "Pap testi"
+      ]
+     },
+     "notes": {
+      "uz": [],
+      "ru": [],
+      "en": [],
+      "kaa": []
+     }
+    },
+    {
+     "tier": "Premium",
+     "price": 900000,
+     "includes": {
+      "uz": [
+       "Umumiy amaliyot shifokori",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarroh",
+       "Urolog",
+       "Surtma olish",
+       "Tos a’zolarining ultratovush tekshiruvi",
+       "Pap testi",
+       "Femoflor surtma olish",
+       "Mammografiya"
+      ],
+      "ru": [
+       "Врач общей практики",
+       "Гастроэнтеролог",
+       "Кардиолог",
+       "Пульмонолог",
+       "Акушер-гинеколог",
+       "Невролог",
+       "Врач-оториноларинголог",
+       "Офтальмолог",
+       "Проктолог",
+       "Флеболог",
+       "Травматолог-ортопед",
+       "Дерматовенеролог",
+       "Хирург",
+       "Уролог",
+       "Получение мазка",
+       "Ультразвуковое исследование органов малого таза",
+       "Мазок из шейки матки (Пап-тест)",
+       "Взятие мазка на Фемофлор",
+       "Маммография"
+      ],
+      "en": [
+       "General Practitioner",
+       "Gastroenterologist",
+       "Cardiologist",
+       "Pulmonologist",
+       "Obstetrician-gynecologist",
+       "Neurologist",
+       "Otorhinolaryngologist",
+       "Ophthalmologist",
+       "Proctologist",
+       "Phlebologist",
+       "Traumatologist-orthopedic",
+       "Dermatovenereologist",
+       "Surgeon",
+       "Urologist",
+       "Getting a smear",
+       "Ultrasound examination of pelvic organs",
+       "Pap test",
+       "Femoflor smear sampling",
+       "Mammography"
+      ],
+      "kaa": [
+       "Ulıwma ámeliyat shıpakeri",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarrah",
+       "Urolog",
+       "Surtpe alıw",
+       "Jambas aǵzalarınıń ultradıbıs tekseriwi",
+       "Pap testi",
+       "Femoflor surtpe alıw",
+       "Mammografiya"
+      ]
+     },
+     "notes": {
+      "uz": [],
+      "ru": [],
+      "en": [],
+      "kaa": []
+     }
+    }
+   ]
+  },
+  {
+   "id": "uro",
+   "title": {
+    "uz": "Urologiya",
+    "ru": "Урология",
+    "en": "Urology",
+    "kaa": "Urologiya"
+   },
+   "accent": "#8B5CF6",
+   "tiers": [
+    {
+     "tier": "Layt",
+     "price": 190000,
+     "includes": {
+      "uz": [
+       "Umumiy amaliyot shifokori",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarroh",
+       "Urolog",
+       "Siydik tizimi ultratovush tekshiruvi",
+       "Umumiy siydik taxlili",
+       "PSA umumiy"
+      ],
+      "ru": [
+       "Врач общей практики",
+       "Гастроэнтеролог",
+       "Кардиолог",
+       "Пульмонолог",
+       "Акушер-гинеколог",
+       "Невролог",
+       "Врач-оториноларинголог",
+       "Офтальмолог",
+       "Проктолог",
+       "Флеболог",
+       "Травматолог-ортопед",
+       "Дерматовенеролог",
+       "Хирург",
+       "Уролог",
+       "Ультразвуковое исследование мочевыделительной системы",
+       "Общий анализ мочи",
+       "ПСА всего"
+      ],
+      "en": [
+       "General Practitioner",
+       "Gastroenterologist",
+       "Cardiologist",
+       "Pulmonologist",
+       "Obstetrician-gynecologist",
+       "Neurologist",
+       "Otorhinolaryngologist",
+       "Ophthalmologist",
+       "Proctologist",
+       "Phlebologist",
+       "Traumatologist-orthopedic",
+       "Dermatovenereologist",
+       "Surgeon",
+       "Urologist",
+       "Ultrasound examination of the urinary system",
+       "General urinalysis",
+       "PSA total"
+      ],
+      "kaa": [
+       "Ulıwma ámeliyat shıpakeri",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarrah",
+       "Urolog",
+       "Siydik sistemasınıń ultradıbıs tekseriwi",
+       "Ulıwma siydik tallawı",
+       "PSA jalpı"
+      ]
+     },
+     "notes": {
+      "uz": [],
+      "ru": [],
+      "en": [],
+      "kaa": []
+     }
+    },
+    {
+     "tier": "Standart",
+     "price": 310000,
+     "includes": {
+      "uz": [
+       "Umumiy amaliyot shifokori",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarroh",
+       "Urolog",
+       "Siydik tizimi ultratovush tekshiruvi",
+       "Transabdominal prostata ultratovush tekshiruvi",
+       "Umumiy qon taxlili+Umumiy siydik taxlili",
+       "PSA umumiy"
+      ],
+      "ru": [
+       "Врач общей практики",
+       "Гастроэнтеролог",
+       "Кардиолог",
+       "Пульмонолог",
+       "Акушер-гинеколог",
+       "Невролог",
+       "Врач-оториноларинголог",
+       "Офтальмолог",
+       "Проктолог",
+       "Флеболог",
+       "Травматолог-ортопед",
+       "Дерматовенеролог",
+       "Хирург",
+       "Уролог",
+       "Ультразвуковое исследование мочевыделительной системы",
+       "Трансабдоминальное УЗИ простаты",
+       "Общий анализ крови + Общий анализ мочи",
+       "ПСА всего"
+      ],
+      "en": [
+       "General Practitioner",
+       "Gastroenterologist",
+       "Cardiologist",
+       "Pulmonologist",
+       "Obstetrician-gynecologist",
+       "Neurologist",
+       "Otorhinolaryngologist",
+       "Ophthalmologist",
+       "Proctologist",
+       "Phlebologist",
+       "Traumatologist-orthopedic",
+       "Dermatovenereologist",
+       "Surgeon",
+       "Urologist",
+       "Ultrasound examination of the urinary system",
+       "Transabdominal prostate ultrasound",
+       "General blood analysis + General urine analysis",
+       "PSA total"
+      ],
+      "kaa": [
+       "Ulıwma ámeliyat shıpakeri",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Dermatovenerolog",
+       "Jarrah",
+       "Urolog",
+       "Siydik sistemasınıń ultradıbıs tekseriwi",
+       "Transabdominal prostata ultradıbıs tekseriwi",
+       "Ulıwma qan tallawı + Ulıwma siydik tallawı",
+       "PSA jalpı"
+      ]
+     },
+     "notes": {
+      "uz": [],
+      "ru": [],
+      "en": [],
+      "kaa": []
+     }
+    },
+    {
+     "tier": "Premium",
+     "price": 460000,
+     "includes": {
+      "uz": [
+       "Umumiy amaliyot shifokori",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Davolash ishlari bo’yicha bosh vrach o’rinbosari :",
+       "Iqtisodchi:",
+       "Dermatovenerolog",
+       "Jarroh",
+       "Urolog",
+       "Siydik tizimi ultratovush tekshiruvi",
+       "Transrektal prostata ultratovush tekshiruvi",
+       "Yorg’oqning ultratovush tekshiruvi",
+       "Umumiy qon taxlili+Umumiy siydik taxlili",
+       "PSA umumiy+PSA b.",
+       "S.S.Askarov",
+       "F.I.Abdullajonov"
+      ],
+      "ru": [
+       "Врач общей практики",
+       "Гастроэнтеролог",
+       "Кардиолог",
+       "Пульмонолог",
+       "Акушер-гинеколог",
+       "Невролог",
+       "Врач-оториноларинголог",
+       "Офтальмолог",
+       "Проктолог",
+       "Флеболог",
+       "Травматолог-ортопед",
+       "Заместитель главного врача по лечению:",
+       "Экономист:",
+       "Дерматовенеролог",
+       "Хирург",
+       "Уролог",
+       "Ультразвуковое исследование мочевыделительной системы",
+       "Трансректальное УЗИ простаты",
+       "Ультразвуковое исследование мошонки",
+       "Общий анализ крови + Общий анализ мочи",
+       "Общий ПСА + ПСА b.",
+       "Аскаров С.С.",
+       "Ф.И. Абдуллажонов"
+      ],
+      "en": [
+       "General Practitioner",
+       "Gastroenterologist",
+       "Cardiologist",
+       "Pulmonologist",
+       "Obstetrician-gynecologist",
+       "Neurologist",
+       "Otorhinolaryngologist",
+       "Ophthalmologist",
+       "Proctologist",
+       "Phlebologist",
+       "Traumatologist-orthopedic",
+       "Deputy chief physician for treatment:",
+       "Economist:",
+       "Dermatovenereologist",
+       "Surgeon",
+       "Urologist",
+       "Ultrasound examination of the urinary system",
+       "Transrectal prostate ultrasound",
+       "Ultrasound examination of the scrotum",
+       "General blood analysis + General urine analysis",
+       "PSA total+PSA b.",
+       "S.S. Askarov",
+       "F.I. Abdullajonov"
+      ],
+      "kaa": [
+       "Ulıwma ámeliyat shıpakeri",
+       "Gastroenterolog",
+       "Kardiolog",
+       "Pulmonolog",
+       "Akusher-ginekolog",
+       "Nevrolog",
+       "Otorinolaringolog",
+       "Oftalmolog",
+       "Proktolog",
+       "Flebolog",
+       "Travmatolog-ortoped",
+       "Emlew isleri boyınsha bas dárigerdiń orınbasarı:",
+       "Ekonomist:",
+       "Dermatovenerolog",
+       "Jarrah",
+       "Urolog",
+       "Siydik sistemasınıń ultradıbıs tekseriwi",
+       "Transrektal prostata ultradıbıs tekseriwi",
+       "Erindiktiń ultradıbıs tekseriwi",
+       "Ulıwma qan tallawı + Ulıwma siydik tallawı",
+       "PSA jalpı + PSA b.",
+       "S.S.Askarov",
+       "F.I.Abdullajonov"
+      ]
+     },
+     "notes": {
+      "uz": [
+       "Biokimyoviy qon testi Mochavina-Kreatin"
+      ],
+      "ru": [
+       "Биохимический анализ крови Мочевина-Креатин"
+      ],
+      "en": [
+       "Biochemical blood test Urea-Creatine"
+      ],
+      "kaa": [
+       "Biokimyalıq qan testi Mochevina-Kreatinin"
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -21,6 +21,17 @@ class TextsAPI(APIView):
         return response
 
 
+class PricesAPI(APIView):
+    """Price list edited in the admin. A section that has no rows yet is null, so the website keeps its built-in data."""
+
+    def get(self, request):
+        from .site_texts import prices_payload
+
+        response = Response(prices_payload())
+        response['Cache-Control'] = 'public, max-age=60'
+        return response
+
+
 class SettingsAPI(APIView):
     def get(self, request):
         lang = resolve_lang(request)

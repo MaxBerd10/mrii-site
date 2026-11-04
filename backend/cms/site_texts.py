@@ -126,3 +126,81 @@ def contacts_payload() -> dict[str, object]:
     if phones:
         out['admissionsPhones'] = phones
     return out
+
+
+def prices_payload() -> dict[str, object]:
+    """Price list in the shape the website already uses, plus a {uz text: {ru,en,kaa}} dictionary."""
+    from .models import CheckupDirection, PriceCategory, PriceItem
+
+    translations: dict[str, dict[str, str]] = {}
+
+    def remember(row, field: str, uz: str | None = None) -> str:
+        uz = (uz if uz is not None else getattr(row, f'{field}_uz') or '').strip()
+        if uz:
+            entry = {lang: (getattr(row, f'{field}_{lang}', '') or '').strip() for lang in ('ru', 'en', 'kaa')}
+            entry = {k: v for k, v in entry.items() if v}
+            if entry:
+                translations.setdefault(uz, {}).update(entry)
+        return uz
+
+    def lines(value: str) -> list[str]:
+        return [line.strip() for line in (value or '').splitlines() if line.strip()]
+
+    def remember_lines(row, field: str) -> list[str]:
+        uz_lines = lines(getattr(row, f'{field}_uz'))
+        per_lang = {lang: lines(getattr(row, f'{field}_{lang}')) for lang in ('ru', 'en', 'kaa')}
+        for i, uz in enumerate(uz_lines):
+            entry = {lang: vals[i] for lang, vals in per_lang.items() if len(vals) == len(uz_lines)}
+            if entry:
+                translations.setdefault(uz, {}).update(entry)
+        return uz_lines
+
+    items = list(PriceItem.objects.filter(is_active=True).select_related('category'))
+    catalog = None
+    categories: list[str] = []
+    newest = None
+    if items:
+        catalog = []
+        for item in items:
+            category = remember(item.category, 'name')
+            if category not in categories:
+                categories.append(category)
+            catalog.append({
+                'id': item.pk,
+                'name': remember(item, 'name'),
+                'citizen': item.price_citizen,
+                'foreign': item.price_foreign,
+                'location': remember(item, 'location') or None,
+                'category': category,
+            })
+            newest = max(filter(None, [newest, item.updated_at]))
+
+    directions = list(CheckupDirection.objects.filter(is_active=True).prefetch_related('tiers'))
+    checkups = None
+    if directions:
+        checkups = []
+        for direction in directions:
+            tiers = []
+            for tier in sorted(direction.tiers.all(), key=lambda t: ['Layt', 'Standart', 'Premium'].index(t.tier)):
+                tiers.append({
+                    'tier': tier.tier,
+                    'price': tier.price,
+                    'includes': remember_lines(tier, 'includes'),
+                    'notes': remember_lines(tier, 'notes'),
+                })
+                newest = max(filter(None, [newest, tier.updated_at]))
+            checkups.append({
+                'id': direction.slug,
+                'title': remember(direction, 'title'),
+                'accent': direction.accent if re.match(r'^#[0-9A-Fa-f]{6}$', direction.accent or '') else '#0EA5E9',
+                'tiers': tiers,
+            })
+            newest = max(filter(None, [newest, direction.updated_at]))
+
+    return {
+        'catalog': catalog,
+        'categories': categories if catalog is not None else None,
+        'checkups': checkups,
+        'translations': translations,
+        'updated': newest.date().isoformat() if newest else None,
+    }

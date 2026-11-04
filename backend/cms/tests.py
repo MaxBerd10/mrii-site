@@ -1,4 +1,5 @@
 import shutil
+from unittest import mock
 import tempfile
 
 from django.contrib.auth.models import Group, User
@@ -717,3 +718,66 @@ class SiteContactsTests(TestCase):
             obj.full_clean()
         obj.save()  # even if saved around validation (shell/import), the API drops them
         self.assertEqual(self.client.get('/api/texts/').json()['contacts'], {})
+
+
+@override_settings(DEBUG=False, ALLOWED_HOSTS=["testserver"], SECURE_SSL_REDIRECT=False)
+class PriceListTests(TestCase):
+    """Prices are edited in the admin and served at /api/prices/; empty tables fall back to the built-in list."""
+
+    def setUp(self):
+        patcher = mock.patch('cms.i18n_fill.translate_text', return_value='')
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def test_seed_migration_loaded_the_whole_builtin_list(self):
+        from .models import CheckupDirection, PriceItem
+
+        self.assertGreaterEqual(PriceItem.objects.count(), 160)
+        self.assertEqual(CheckupDirection.objects.count(), 4)
+        data = self.client.get('/api/prices/').json()
+        self.assertEqual(len(data['catalog']), PriceItem.objects.count())
+        self.assertEqual(data['updated'], '2026-05-12')
+        self.assertIn('Anesteziya', data['categories'])
+        self.assertEqual(len(data['checkups']), 4)
+        self.assertEqual([t['tier'] for t in data['checkups'][0]['tiers']], ['Layt', 'Standart', 'Premium'])
+        self.assertTrue(data['translations']['Anesteziya']['ru'])
+
+    def test_edits_inactive_rows_and_import_safety(self):
+        from django.core.management import call_command
+
+        from .models import PriceItem
+
+        item = PriceItem.objects.first()
+        item.price_citizen = 123000
+        item.price_foreign = None
+        item.save()
+        hidden = PriceItem.objects.exclude(pk=item.pk).first()
+        hidden.is_active = False
+        hidden.save()
+        rows = {row['id']: row for row in self.client.get('/api/prices/').json()['catalog']}
+        self.assertEqual(rows[item.pk]['citizen'], 123000)
+        self.assertIsNone(rows[item.pk]['foreign'])
+        self.assertNotIn(hidden.pk, rows)
+        # a plain re-import must never overwrite what the clinic edited
+        call_command('import_prices', stdout=mock.MagicMock())
+        item.refresh_from_db()
+        self.assertEqual(item.price_citizen, 123000)
+
+    def test_empty_tables_mean_use_builtin_data(self):
+        from .models import CheckupDirection, PriceCategory, PriceItem
+
+        PriceItem.objects.all().delete()
+        PriceCategory.objects.all().delete()
+        CheckupDirection.objects.all().delete()
+        data = self.client.get('/api/prices/').json()
+        self.assertIsNone(data['catalog'])
+        self.assertIsNone(data['checkups'])
+        self.assertIsNone(data['categories'])
+
+    def test_price_admin_pages_open_for_superuser(self):
+        user = User.objects.create_superuser('boss', 'b@example.uz', 'pw-12345-xyz')
+        self.client.force_login(user)
+        for name in ('priceitem', 'pricecategory', 'checkupdirection'):
+            self.assertEqual(self.client.get(f'/admin/cms/{name}/').status_code, 200, name)
+        direction = __import__('cms.models', fromlist=['CheckupDirection']).CheckupDirection.objects.first()
+        self.assertEqual(self.client.get(f'/admin/cms/checkupdirection/{direction.pk}/change/').status_code, 200)

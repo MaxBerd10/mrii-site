@@ -325,6 +325,14 @@ class MriiAdminSite(AdminSite):
                 'url': reverse('admin:cms_texts'),
             },
             {
+                'title': 'Narxlar',
+                'desc': 'Xizmatlar narxi va check-up paketlari — narxni jadvalda to‘g‘ridan-to‘g‘ri o‘zgartirasiz.',
+                'meta': 'Narxnoma',
+                'icon': 'chart',
+                'tone': 'teal',
+                'url': url('priceitem'),
+            },
+            {
                 'title': 'Murojaatlar',
                 'desc': 'Kontakt, AI demo va ishga arizalar — telefon, holat, izoh.',
                 'meta': f'{new_leads} yangi' if new_leads else 'Leadlar',
@@ -358,7 +366,7 @@ class MriiAdminSite(AdminSite):
             },
             {
                 'title': 'Sayt sozlamalari',
-                'desc': 'Telefon, ish vaqti, copyright.',
+                'desc': 'Telefon, Telegram, Instagram, pochta, xarita manzili, copyright.',
                 'meta': 'Aloqa',
                 'icon': 'settings',
                 'tone': 'slate',
@@ -402,6 +410,18 @@ class MriiAdminSite(AdminSite):
                 'url': url('vacancy'),
             },
             {
+                'title': 'Check-up paketlari',
+                'desc': 'Layt / Standart / Premium paketlar tarkibi va narxi',
+                'icon': 'clinic',
+                'url': url('checkupdirection'),
+            },
+            {
+                'title': 'Narx bo‘limlari',
+                'desc': 'Narxnoma bo‘limlari (Laboratoriya, UZI…)',
+                'icon': 'doc',
+                'url': url('pricecategory'),
+            },
+            {
                 'title': 'Sharhlar',
                 'desc': 'Mijoz va hamkor fikrlari',
                 'icon': 'quote',
@@ -429,6 +449,9 @@ class MriiAdminSite(AdminSite):
 
         card_models = {
             'Sayt matnlari': models.TextOverride,
+            'Narxlar': models.PriceItem,
+            'Check-up paketlari': models.CheckupDirection,
+            'Narx bo‘limlari': models.PriceCategory,
             'Murojaatlar': models.Inquiry,
             'Yangiliklar': models.NewsArticle,
             'Shifokorlar': models.Doctor,

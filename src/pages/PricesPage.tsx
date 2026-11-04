@@ -1,23 +1,15 @@
 import { useMemo, useState } from 'react'
 import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
-import {
-  CHECKUP_DIRECTIONS,
-  PRICE_CATALOG,
-  PRICE_CATEGORIES,
-  PRICE_LIST_UPDATED,
-  formatSom,
-  type CheckupTier,
-  type PriceTier,
-} from '../data/clinicPrices'
-import { PRICE_TRANSLATIONS } from '../data/clinicPricesTranslations'
+import { formatSom, type CheckupTier, type PriceTier } from '../data/clinicPrices'
+import { usePriceData, type PriceData } from '../hooks/usePriceData'
 import type { Lang } from '../i18n/types'
 import '../styles/prices.css'
 
-/** Display-only lookup — ru/en/kaa pull from the generated dictionary, uz keeps the source text. */
-function tr(text: string, lang: Lang): string {
+/** Display-only lookup — ru/en/kaa come from the translations table, uz keeps the source text. */
+function translate(table: PriceData['translations'], text: string, lang: Lang): string {
   if (lang === 'uz') return text
-  return PRICE_TRANSLATIONS[text]?.[lang] ?? text
+  return table[text]?.[lang] ?? text
 }
 
 type Tab = 'packages' | 'catalog'
@@ -33,13 +25,16 @@ const TIER_LABELS: Record<string, Record<PriceTier, string>> = {
 
 export default function PricesPage() {
   const { lang, t } = useLanguage()
+  const { catalog, categories, checkups, updated, translations, status } = usePriceData()
+  const tr = (text: string, l: Lang) => translate(translations, text, l)
   const [tab, setTab] = useState<Tab>('catalog')
-  const [directionId, setDirectionId] = useState(CHECKUP_DIRECTIONS[0].id)
+  const [pickedDirection, setDirectionId] = useState<string | null>(null)
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState('all')
   const [expandedTier, setExpandedTier] = useState<Record<string, boolean>>({})
 
-  const direction = CHECKUP_DIRECTIONS.find((d) => d.id === directionId) ?? CHECKUP_DIRECTIONS[0]
+  const direction = checkups.find((d) => d.id === pickedDirection) ?? checkups[0]
+  const directionId = direction.id
 
   const tiers = useMemo(() => {
     const map = new Map(direction.tiers.map((tier) => [tier.tier, tier]))
@@ -48,7 +43,7 @@ export default function PricesPage() {
 
   const filteredCatalog = useMemo(() => {
     const q = query.trim().toLocaleLowerCase()
-    return PRICE_CATALOG.filter((item) => {
+    return catalog.filter((item) => {
       if (category !== 'all' && item.category !== category) return false
       if (!q) return true
       return (
@@ -56,7 +51,7 @@ export default function PricesPage() {
         item.category.toLocaleLowerCase().includes(q)
       )
     })
-  }, [query, category])
+  }, [catalog, query, category])
 
   const catalogGroups = useMemo(() => {
     const map = new Map<string, typeof filteredCatalog>()
@@ -69,7 +64,7 @@ export default function PricesPage() {
   }, [filteredCatalog])
 
   const updatedLabel = useMemo(() => {
-    const [y, m, d] = PRICE_LIST_UPDATED.split('-')
+    const [y, m, d] = updated.split('-')
     if (lang === 'en') {
       return `${d} ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][Number(m) - 1]} ${y}`
     }
@@ -77,7 +72,17 @@ export default function PricesPage() {
       return `${Number(d)} ${['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'][Number(m) - 1]} ${y}`
     }
     return `${Number(d)}.${m}.${y}`
-  }, [lang])
+  }, [lang, updated])
+
+  if (status === 'loading') {
+    return (
+      <section id="prices" className="prices-page">
+        <div className="container-main prices-page__inner">
+          <p className="prices-page__empty" role="status">…</p>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section id="prices" className="prices-page">
@@ -122,7 +127,7 @@ export default function PricesPage() {
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="prices-dirs" role="tablist" aria-label={t.prices.directionsLabel}>
-                {CHECKUP_DIRECTIONS.map((dir) => (
+                {checkups.map((dir) => (
                   <button
                     key={dir.id}
                     type="button"
@@ -243,7 +248,7 @@ export default function PricesPage() {
                     aria-label={t.prices.categoryLabel}
                   >
                     <option value="all">{t.prices.allCategories}</option>
-                    {PRICE_CATEGORIES.map((cat) => (
+                    {categories.map((cat) => (
                       <option key={cat} value={cat}>
                         {tr(cat, lang)}
                       </option>

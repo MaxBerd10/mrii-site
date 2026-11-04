@@ -836,3 +836,77 @@ class TextOverrideAdmin(admin.ModelAdmin):
 admin.site.site_header = mrii_admin_site.site_header
 admin.site.site_title = mrii_admin_site.site_title
 admin.site.index_title = mrii_admin_site.index_title
+
+
+@admin.register(models.PriceCategory, site=mrii_admin_site)
+class PriceCategoryAdmin(AutoTranslateAdmin):
+    list_display = ('name_uz', 'name_ru', 'name_en', 'order', 'service_count')
+    list_editable = ('order',)
+    search_fields = ('name_uz', 'name_ru', 'name_en')
+    fieldsets = (
+        (None, {
+            'description': 'Narxlar ro‘yxatidagi bo‘lim nomi (masalan «Laboratoriya»). Xizmatlar shu bo‘lim ostida chiqadi.',
+            'fields': ('name_uz', 'name_ru', 'name_en', 'name_kaa', 'order'),
+        }),
+    )
+
+    @admin.display(description='Xizmatlar soni')
+    def service_count(self, obj):
+        return obj.items.count()
+
+
+@admin.register(models.PriceItem, site=mrii_admin_site)
+class PriceItemAdmin(AutoTranslateAdmin):
+    list_display = ('name_uz', 'category', 'price_citizen', 'price_foreign', 'is_active')
+    list_editable = ('price_citizen', 'price_foreign', 'is_active')
+    list_filter = ('category', 'is_active')
+    search_fields = ('name_uz', 'name_ru', 'name_en')
+    list_per_page = 60
+    autocomplete_fields = ()
+    fieldsets = (
+        ('Xizmat', {
+            'description': 'Narxlar sahifasidagi bitta qator. RU/EN ni bo‘sh qoldirsangiz, saqlashda o‘zbekchadan avtomatik tarjima qilinadi.',
+            'fields': ('category', 'name_uz', 'name_ru', 'name_en', 'name_kaa'),
+        }),
+        ('Narx', {
+            'fields': ('price_citizen', 'price_foreign', 'is_active', 'order'),
+        }),
+        ('Joylashuvi (ixtiyoriy)', {
+            'classes': ('collapse',),
+            'fields': ('location_uz', 'location_ru', 'location_en', 'location_kaa'),
+        }),
+    )
+
+
+class CheckupTierInline(admin.StackedInline):
+    model = models.CheckupTier
+    extra = 0
+    max_num = 3
+    fieldsets = (
+        (None, {
+            'fields': ('tier', 'price'),
+        }),
+        ('Nimalar kiradi (har qatorga bitta band)', {
+            'fields': ('includes_uz', 'includes_ru', 'includes_en', 'includes_kaa'),
+        }),
+        ('Izoh (har qatorga bitta; saytda birinchisi chiqadi)', {
+            'classes': ('collapse',),
+            'fields': ('notes_uz', 'notes_ru', 'notes_en', 'notes_kaa'),
+        }),
+    )
+
+
+@admin.register(models.CheckupDirection, site=mrii_admin_site)
+class CheckupDirectionAdmin(AutoTranslateAdmin):
+    list_display = ('title_uz', 'slug', 'accent', 'order', 'is_active')
+    list_editable = ('order', 'is_active')
+    inlines = [CheckupTierInline]
+    fieldsets = (
+        (None, {
+            'description': 'Check-up paketi: yo‘nalish (masalan «Kardiologiya») va uning 3 ta paketi — Layt, Standart, Premium. Narx va tarkibni pastdan o‘zgartiring.',
+            'fields': ('title_uz', 'title_ru', 'title_en', 'title_kaa', 'slug', 'accent', 'order', 'is_active'),
+        }),
+    )
+
+    def get_readonly_fields(self, request, obj=None):
+        return ('slug',) if obj else ()

@@ -691,3 +691,102 @@ class TextOverride(TimeStampedModel):
     def __str__(self):
         return self.key
 
+
+
+class PriceCategory(TimeStampedModel):
+    """A group in the price list («Laboratoriya», «UZI»…)."""
+
+    name_uz = models.CharField('Nomi (UZ)', max_length=200)
+    name_ru = models.CharField('Nomi (RU)', max_length=200, blank=True)
+    name_en = models.CharField('Nomi (EN)', max_length=200, blank=True)
+    name_kaa = models.CharField('Nomi (Qoraqalpoq)', max_length=200, blank=True)
+    order = models.PositiveIntegerField('Tartib raqami', default=1, help_text='1 = ro‘yxatning eng boshida.')
+
+    class Meta:
+        verbose_name = 'Narx bo‘limi'
+        verbose_name_plural = 'Narx bo‘limlari'
+        ordering = ('order', 'id')
+
+    def __str__(self):
+        return self.name_uz
+
+
+class PriceItem(TimeStampedModel):
+    """One service in the price list."""
+
+    category = models.ForeignKey(
+        PriceCategory, on_delete=models.PROTECT, related_name='items', verbose_name='Bo‘lim',
+    )
+    name_uz = models.CharField('Xizmat nomi (UZ)', max_length=400)
+    name_ru = models.CharField('Xizmat nomi (RU)', max_length=400, blank=True)
+    name_en = models.CharField('Xizmat nomi (EN)', max_length=400, blank=True)
+    name_kaa = models.CharField('Xizmat nomi (Qoraqalpoq)', max_length=400, blank=True)
+    location_uz = models.CharField('Joylashuvi (UZ)', max_length=255, blank=True, help_text='Masalan: Davolash binosi 1-2 qavat. Bo‘sh qolsa ko‘rsatilmaydi.')
+    location_ru = models.CharField('Joylashuvi (RU)', max_length=255, blank=True)
+    location_en = models.CharField('Joylashuvi (EN)', max_length=255, blank=True)
+    location_kaa = models.CharField('Joylashuvi (Qoraqalpoq)', max_length=255, blank=True)
+    price_citizen = models.PositiveBigIntegerField('Narxi (O‘zbekiston fuqarolari, so‘m)')
+    price_foreign = models.PositiveBigIntegerField(
+        'Narxi (chet el fuqarolari, so‘m)', null=True, blank=True,
+        help_text='Bo‘sh qolsa saytda «—» ko‘rinadi.',
+    )
+    order = models.PositiveIntegerField('Tartib raqami', default=1)
+    is_active = models.BooleanField('Saytda ko‘rsatilsin', default=True)
+
+    class Meta:
+        verbose_name = 'Xizmat narxi'
+        verbose_name_plural = 'Xizmatlar narxi'
+        ordering = ('category__order', 'category_id', 'order', 'id')
+
+    def __str__(self):
+        return self.name_uz
+
+
+class CheckupDirection(TimeStampedModel):
+    """A check-up programme family («Gastroenterologiya», «Kardiologiya»…) with Light/Standard/Premium tiers."""
+
+    slug = models.SlugField('Texnik nom', max_length=40, unique=True, help_text='Lotin harflari, masalan: gastro. Keyin o‘zgartirmang.')
+    title_uz = models.CharField('Nomi (UZ)', max_length=200)
+    title_ru = models.CharField('Nomi (RU)', max_length=200, blank=True)
+    title_en = models.CharField('Nomi (EN)', max_length=200, blank=True)
+    title_kaa = models.CharField('Nomi (Qoraqalpoq)', max_length=200, blank=True)
+    accent = models.CharField(
+        'Rangi', max_length=7, default='#0EA5E9',
+        validators=[RegexValidator(r'^#[0-9A-Fa-f]{6}$', 'Rang #RRGGBB ko‘rinishida bo‘lsin, masalan #0EA5E9')],
+        help_text='Masalan: #0EA5E9',
+    )
+    order = models.PositiveIntegerField('Tartib raqami', default=1)
+    is_active = models.BooleanField('Saytda ko‘rsatilsin', default=True)
+
+    class Meta:
+        verbose_name = 'Check-up yo‘nalishi'
+        verbose_name_plural = 'Check-up paketlari'
+        ordering = ('order', 'id')
+
+    def __str__(self):
+        return self.title_uz
+
+
+class CheckupTier(TimeStampedModel):
+    TIERS = (('Layt', 'Layt'), ('Standart', 'Standart'), ('Premium', 'Premium'))
+
+    direction = models.ForeignKey(CheckupDirection, on_delete=models.CASCADE, related_name='tiers', verbose_name='Yo‘nalish')
+    tier = models.CharField('Paket', max_length=12, choices=TIERS)
+    price = models.PositiveBigIntegerField('Narxi (so‘m)')
+    includes_uz = models.TextField('Nimalarni o‘z ichiga oladi (UZ)', blank=True, help_text='Har qatorga bitta band.')
+    includes_ru = models.TextField('Nimalarni o‘z ichiga oladi (RU)', blank=True, help_text='UZ bilan bir xil tartibda va bir xil qatorlar soni bilan yozing. UZ ni o‘zgartirsangiz, RU/EN ni ham yangilang yoki tozalang (tozalansa, saqlashda avtomatik tarjima qilinadi).')
+    includes_en = models.TextField('Nimalarni o‘z ichiga oladi (EN)', blank=True)
+    includes_kaa = models.TextField('Nimalarni o‘z ichiga oladi (Qoraqalpoq)', blank=True)
+    notes_uz = models.TextField('Izoh (UZ)', blank=True, help_text='Har qatorga bitta izoh; saytda birinchisi ko‘rsatiladi.')
+    notes_ru = models.TextField('Izoh (RU)', blank=True)
+    notes_en = models.TextField('Izoh (EN)', blank=True)
+    notes_kaa = models.TextField('Izoh (Qoraqalpoq)', blank=True)
+
+    class Meta:
+        verbose_name = 'Check-up paketi'
+        verbose_name_plural = 'Check-up paketlari'
+        unique_together = (('direction', 'tier'),)
+        ordering = ('direction__order', 'direction_id', 'id')
+
+    def __str__(self):
+        return f'{self.direction} — {self.tier}'
