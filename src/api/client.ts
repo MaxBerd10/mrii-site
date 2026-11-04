@@ -7,12 +7,19 @@ export function apiBase() {
   return API_URL
 }
 
-export async function fetchTextOverrides(): Promise<Record<string, Record<string, string>> | null> {
+/** What the clinic edited in the admin outside CMS content: texts + contact details. */
+export type SiteConfig = {
+  texts: Record<string, Record<string, string>>
+  contacts: Record<string, unknown>
+}
+
+export async function fetchSiteConfig(): Promise<SiteConfig | null> {
   if (!API_URL) return null
   try {
     const res = await fetch(`${API_URL}/api/texts/`, { headers: { Accept: 'application/json' } })
     if (!res.ok) return null
-    return (await res.json()) as Record<string, Record<string, string>>
+    const data = (await res.json()) as Partial<SiteConfig>
+    return { texts: data.texts ?? {}, contacts: data.contacts ?? {} }
   } catch {
     return null
   }

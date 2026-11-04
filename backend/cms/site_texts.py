@@ -82,3 +82,47 @@ def overrides_payload() -> dict[str, dict[str, str]]:
         if values:
             out[row.key] = values
     return out
+
+
+def contacts_payload() -> dict[str, object]:
+    """Contact details the clinic set in the admin (only non-blank, sanitised values).
+
+    Anything blank is omitted so the website keeps its built-in default for it.
+    """
+    import re
+
+    from .models import SiteSettings
+
+    obj = SiteSettings.objects.first()
+    if obj is None:
+        return {}
+    out: dict[str, object] = {}
+
+    def url(value: str) -> str:
+        value = (value or '').strip()
+        return value if re.match(r'^https?://', value, re.I) else ''
+
+    phone = (obj.contact_phone or '').strip()
+    if re.match(r'^\+?[\d\s().-]{7,}$', phone):
+        out['phone'] = phone
+    for field, key in (
+        ('contact_telegram_url', 'telegramUrl'),
+        ('contact_instagram_url', 'instagramUrl'),
+        ('contact_website', 'website'),
+    ):
+        value = url(getattr(obj, field))
+        if value:
+            out[key] = value
+    email = (obj.contact_email or '').strip()
+    if email:
+        out['email'] = email
+    map_query = (obj.contact_map_query or '').strip()
+    if map_query:
+        out['mapQuery'] = map_query
+    phones = [
+        line.strip() for line in (obj.contact_admissions_phones or '').splitlines()
+        if re.match(r'^\+?[\d\s().-]{7,}$', line.strip())
+    ]
+    if phones:
+        out['admissionsPhones'] = phones
+    return out

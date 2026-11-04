@@ -1,4 +1,4 @@
-from django.core.validators import FileExtensionValidator
+from django.core.validators import FileExtensionValidator, RegexValidator, URLValidator
 from django.db import models
 
 from .utils import RESUME_EXTENSIONS, resume_upload_path, validate_resume_size
@@ -20,6 +20,9 @@ class OrderedModel(models.Model):
         ordering = ['order', 'id']
 
 
+_HTTP_ONLY = URLValidator(schemes=['http', 'https'])
+
+
 class SiteSettings(TimeStampedModel):
     """Singleton site-wide settings."""
 
@@ -38,6 +41,37 @@ class SiteSettings(TimeStampedModel):
     license_uz = models.CharField('Litsenziya (UZ)', max_length=255, blank=True)
     license_ru = models.CharField('Litsenziya (RU)', max_length=255, blank=True)
     license_en = models.CharField('Litsenziya (EN)', max_length=255, blank=True)
+
+    # Contact details used everywhere on the website. Blank = the built-in default stays.
+    contact_phone = models.CharField(
+        'Asosiy telefon (qabulga yozilish)', max_length=64, blank=True,
+        validators=[RegexValidator(r'^\+?[\d\s().-]{7,}$', 'Faqat raqam, probel, + va tire yozing. Masalan: +998 73 245-58-20')],
+        help_text='Masalan: +998 73 245-58-20. Saytdagi barcha telefon yozuvlari va «Qo‘ng‘iroq» tugmalari shu raqamga o‘tadi.',
+    )
+    contact_telegram_url = models.URLField(
+        'Telegram havolasi', max_length=255, blank=True, validators=[_HTTP_ONLY],
+        help_text='Masalan: https://t.me/ferghana_medical_institute',
+    )
+    contact_instagram_url = models.URLField(
+        'Instagram havolasi', max_length=255, blank=True, validators=[_HTTP_ONLY],
+        help_text='Masalan: https://instagram.com/ferghana_medical_institute',
+    )
+    contact_website = models.URLField(
+        'Rasmiy sayt', max_length=255, blank=True, validators=[_HTTP_ONLY],
+        help_text='Masalan: https://fermi.uz',
+    )
+    contact_email = models.EmailField(
+        'Elektron pochta', blank=True,
+        help_text='Masalan: info@fjsti.uz',
+    )
+    contact_map_query = models.CharField(
+        'Xaritadagi manzil', max_length=255, blank=True,
+        help_text='Google xaritasida qidiriladigan manzil, masalan: Farg‘ona Yangi Turon 2a. Xarita va «Xaritada ochish» tugmasi shuni ko‘rsatadi.',
+    )
+    contact_admissions_phones = models.TextField(
+        'Qabul komissiyasi telefonlari', blank=True,
+        help_text='«Klinik baza» sahifasidagi telefonlar. Har qatorga bitta raqam yozing. Bo‘sh qolsa, hozirgi 4 ta raqam saqlanadi.',
+    )
 
     class Meta:
         verbose_name = 'Sayt sozlamalari'

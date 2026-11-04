@@ -659,11 +659,11 @@ class SiteTextsTests(TestCase):
         self.assertTrue(body['overridden'])
         self.assertEqual(body['values']['ru'], e['ru'])  # blank = keep default
         api = self.client.get('/api/texts/')
-        self.assertEqual(api.json(), {e['key']: {'uz': 'Yangi sarlavha'}})  # default-equal en not stored
+        self.assertEqual(api.json()['texts'], {e['key']: {'uz': 'Yangi sarlavha'}})  # default-equal en not stored
         self.assertIn('max-age', api['Cache-Control'])
         reset = self.save(e['key'], {'uz': '', 'ru': '', 'en': '', 'kaa': ''})
         self.assertFalse(reset.json()['overridden'])
-        self.assertEqual(self.client.get('/api/texts/').json(), {})
+        self.assertEqual(self.client.get('/api/texts/').json(), {'texts': {}, 'contacts': {}})
 
     def test_validation_and_permissions(self):
         e = self.entry()
@@ -685,3 +685,35 @@ class SiteTextsTests(TestCase):
 
         TextOverride.objects.create(key='removed.in.a.later.release', uz='x')
         self.assertEqual(overrides_payload(), {})
+
+
+class SiteContactsTests(TestCase):
+    def test_blank_contacts_change_nothing_and_filled_ones_are_published(self):
+        from .models import SiteSettings
+
+        self.assertEqual(self.client.get('/api/texts/').json()['contacts'], {})
+        obj = SiteSettings.load()
+        obj.contact_phone = '+998 90 111-22-33'
+        obj.contact_telegram_url = 'https://t.me/new_clinic'
+        obj.contact_email = 'hello@example.uz'
+        obj.contact_map_query = 'Fargona Test 1'
+        obj.contact_admissions_phones = '+998 95 000-00-01\nnot a phone\n+998 95 000-00-02'
+        obj.save()
+        contacts = self.client.get('/api/texts/').json()['contacts']
+        self.assertEqual(contacts['phone'], '+998 90 111-22-33')
+        self.assertEqual(contacts['telegramUrl'], 'https://t.me/new_clinic')
+        self.assertEqual(contacts['mapQuery'], 'Fargona Test 1')
+        self.assertEqual(contacts['admissionsPhones'], ['+998 95 000-00-01', '+998 95 000-00-02'])
+
+    def test_dangerous_values_never_reach_the_website(self):
+        from django.core.exceptions import ValidationError
+
+        from .models import SiteSettings
+
+        obj = SiteSettings.load()
+        obj.contact_telegram_url = 'javascript:alert(1)'
+        obj.contact_phone = '<script>'
+        with self.assertRaises(ValidationError):
+            obj.full_clean()
+        obj.save()  # even if saved around validation (shell/import), the API drops them
+        self.assertEqual(self.client.get('/api/texts/').json()['contacts'], {})

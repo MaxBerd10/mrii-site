@@ -1,4 +1,4 @@
-import { CLINIC_PHONE_LOCAL, CLINIC_PHONE_TEL } from '../data/clinicContact'
+import { useContacts } from '../i18n/useCopy'
 import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
@@ -259,6 +259,7 @@ function splitName(name: string) {
 
 export default function DoctorPage({ slug }: { slug: string }) {
   const { lang, t } = useLanguage()
+  const contacts = useContacts()
   const labels = doctorPageLabels[lang]
   const ui = profileUi[lang]
   const match = getDoctorBySlug(slug)
@@ -442,7 +443,7 @@ export default function DoctorPage({ slug }: { slug: string }) {
                 <button type="button" className="dp-btn dp-btn--primary" onClick={scrollToBooking}>
                   {ui.book} <span className="dp-btn__arrow" aria-hidden>→</span>
                 </button>
-                <a className="dp-btn dp-btn--ghost" href={`tel:${CLINIC_PHONE_TEL}`}>
+                <a className="dp-btn dp-btn--ghost" href={`tel:${contacts.phoneTel}`}>
                   {t.topBar.phone}
                 </a>
               </div>
@@ -562,9 +563,9 @@ export default function DoctorPage({ slug }: { slug: string }) {
                 <div><dt>{ui.price}</dt><dd>{dossier.ui.visit.firstVisitValue}</dd></div>
               </dl>
             </div>
-            <a className="dp-btn dp-btn--solid dp-booking__call" href={`tel:${CLINIC_PHONE_TEL}`}>
+            <a className="dp-btn dp-btn--solid dp-booking__call" href={`tel:${contacts.phoneTel}`}>
               <span className="dp-booking__call-label">{ui.callToBook}</span>
-              <span className="dp-booking__call-number">{CLINIC_PHONE_LOCAL}</span>
+              <span className="dp-booking__call-number">{contacts.phoneLocal}</span>
             </a>
             <a className="dp-btn dp-booking__contacts" href="/contacts?intent=booking">
               {ui.contactsCta} <span className="dp-btn__arrow" aria-hidden>→</span>
@@ -748,7 +749,7 @@ export default function DoctorPage({ slug }: { slug: string }) {
             <p>{ui.coordinatorText}</p>
           </div>
           <div className="dp-close__actions">
-            <a className="dp-btn dp-btn--primary" href={`tel:${CLINIC_PHONE_TEL}`}>{t.topBar.phone}</a>
+            <a className="dp-btn dp-btn--primary" href={`tel:${contacts.phoneTel}`}>{t.topBar.phone}</a>
             <a className="dp-btn dp-btn--ghost" href="/contacts?intent=booking">
               {ui.callback}
             </a>

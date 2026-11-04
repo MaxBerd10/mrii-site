@@ -3,10 +3,11 @@ import type { ContentLang, Lang } from './types'
 import { toContentLang } from './types'
 import { translations, type Translations } from './translations'
 import { applyTextOverrides, type TextOverrides } from './textOverrides'
-import { fetchTextOverrides } from '../api/client'
+import { fetchSiteConfig, type SiteConfig } from '../api/client'
+import { applyContacts, resolveContacts, type ContactOverrides, type Contacts } from '../lib/contacts'
 
 const STORAGE_KEY = 'fjsti-lang'
-const OVERRIDES_KEY = 'fjsti-text-overrides-v1'
+const OVERRIDES_KEY = 'fjsti-site-config-v2'
 
 type LanguageContextValue = {
   lang: Lang
@@ -15,6 +16,8 @@ type LanguageContextValue = {
   t: Translations
   /** Texts edited in the admin; other static copy modules apply them with useCopy(). */
   textOverrides: TextOverrides | null
+  /** Phone / Telegram / site / email / map address (admin-set values over the built-in ones). */
+  contacts: Contacts
 }
 
 const LanguageContext = createContext<LanguageContextValue | null>(null)
@@ -25,10 +28,10 @@ function detectLang(): Lang {
   return 'uz'
 }
 
-function readCachedOverrides(): TextOverrides | null {
+function readCachedConfig(): SiteConfig | null {
   try {
     const raw = localStorage.getItem(OVERRIDES_KEY)
-    return raw ? (JSON.parse(raw) as TextOverrides) : null
+    return raw ? (JSON.parse(raw) as SiteConfig) : null
   } catch {
     return null
   }
@@ -37,13 +40,13 @@ function readCachedOverrides(): TextOverrides | null {
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(detectLang)
   // Last known admin edits are applied instantly (no flash of old text), then refreshed.
-  const [textOverrides, setTextOverrides] = useState<TextOverrides | null>(readCachedOverrides)
+  const [config, setConfig] = useState<SiteConfig | null>(readCachedConfig)
 
   useEffect(() => {
     let cancelled = false
-    fetchTextOverrides().then((data) => {
+    fetchSiteConfig().then((data) => {
       if (cancelled || !data) return
-      setTextOverrides(data as TextOverrides)
+      setConfig(data)
       try {
         localStorage.setItem(OVERRIDES_KEY, JSON.stringify(data))
       } catch {
@@ -55,7 +58,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const t = useMemo(() => applyTextOverrides(translations[lang], textOverrides, lang), [lang, textOverrides])
+  const textOverrides = (config?.texts as TextOverrides | undefined) ?? null
+  const contacts = useMemo(() => resolveContacts(config?.contacts as ContactOverrides | undefined), [config])
+  const t = useMemo(
+    () => applyContacts(applyTextOverrides(translations[lang], textOverrides, lang), contacts),
+    [lang, textOverrides, contacts],
+  )
 
   const setLang = (next: Lang) => {
     setLangState(next)
@@ -69,7 +77,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   return (
     <LanguageContext.Provider
-      value={{ lang, contentLang: toContentLang(lang), setLang, t, textOverrides }}
+      value={{ lang, contentLang: toContentLang(lang), setLang, t, textOverrides, contacts }}
     >
       {children}
     </LanguageContext.Provider>

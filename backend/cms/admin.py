@@ -161,9 +161,17 @@ class EducationProgramInline(admin.TabularInline):
 @admin.register(models.SiteSettings, site=mrii_admin_site)
 class SiteSettingsAdmin(AutoTranslateAdmin):
     fieldsets = (
-        ('Aloqa', {
-            'description': 'Telefon va ish vaqti — yuqori panel va Hero da ko‘rinadi.',
-            'fields': ('phone', 'hours'),
+        ('Aloqa ma’lumotlari', {
+            'description': (
+                'Sayt bo‘ylab ishlatiladigan telefon, Telegram, Instagram, pochta va xarita manzili. '
+                'O‘zgartirsangiz, saytdagi hamma joyda (yuqori panel, pastki qism, shifokor sahifalari, tugmalar, chat yordamchi) yangilanadi. '
+                'Maydonni bo‘sh qoldirsangiz, hozirgi qiymat saqlanadi.'
+            ),
+            'fields': (
+                'contact_phone', 'contact_telegram_url', 'contact_instagram_url',
+                'contact_website', 'contact_email', 'contact_map_query',
+                'contact_admissions_phones',
+            ),
         }),
         ('Institut', {
             'description': 'Institut nomi va shior — bosh sahifa brendi.',

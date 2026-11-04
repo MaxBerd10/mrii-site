@@ -1,17 +1,9 @@
 import { motion } from 'motion/react'
-import { useCopy, useComputedCopy } from '../i18n/useCopy'
+import { useContacts, useCopy, useComputedCopy } from '../i18n/useCopy'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
 import { rise3d } from '../lib/animations'
-import {
-  CONTACT_ADDRESS_QUERY,
-  CONTACT_COPY,
-  CONTACT_EMAIL,
-  CONTACT_TELEGRAM_URL,
-  CONTACT_WEBSITE,
-  SPONSOR_EMAIL_SUBJECT,
-} from '../data/contactCopy'
-import { CLINIC_PHONE_DISPLAY, CLINIC_PHONE_TEL, CLINIC_TELEGRAM_URL } from '../data/clinicContact'
+import { CONTACT_COPY, SPONSOR_EMAIL_SUBJECT } from '../data/contactCopy'
 import { getFooterNav } from '../data/footerNav'
 import { cmsLocalizedText, useCmsContent } from '../lib/cmsLocalized'
 import {
@@ -29,12 +21,12 @@ import {
 const SOCIALS = [
   {
     label: 'Instagram',
-    href: 'https://instagram.com/ferghana_medical_institute',
+    key: 'instagram' as const,
     path: 'M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.9c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.9-.1c-3.2-.1-4.8-1.7-4.9-4.9-.1-1.3-.1-1.6-.1-4.9s0-3.6.1-4.9C2.3 4 3.9 2.4 7.1 2.3c1.3-.1 1.7-.1 4.9-.1zm0 3.4a6.4 6.4 0 100 12.8 6.4 6.4 0 000-12.8zm0 10.5a4.1 4.1 0 110-8.2 4.1 4.1 0 010 8.2zm6.6-10.8a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z',
   },
   {
     label: 'Telegram',
-    href: CLINIC_TELEGRAM_URL,
+    key: 'telegram' as const,
     path: 'M21.5 4.3 2.9 11.4c-1.1.4-1.1 1.1-.2 1.4l4.7 1.5 1.8 5.5c.2.6.4.8 1 .8.4 0 .6-.2.9-.5l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.5c.3-1.2-.5-1.8-1.4-1.4z',
   },
 ]
@@ -47,10 +39,11 @@ export default function FooterSection() {
   const license = cmsLocalizedText(lang, settings?.license, t.footer.license)
   const copy = useCopy('contactCopy', CONTACT_COPY)
   const footerCols = useComputedCopy('footerNav', (l) => ({ cols: getFooterNav(l) })).cols
-  const phoneDisplay = CLINIC_PHONE_DISPLAY
-  const phoneHref = CLINIC_PHONE_TEL
-  const mapEmbed = `https://maps.google.com/maps?q=${encodeURIComponent(CONTACT_ADDRESS_QUERY)}&output=embed`
-  const mapExternal = `https://maps.google.com/?q=${encodeURIComponent(CONTACT_ADDRESS_QUERY)}`
+  const contacts = useContacts()
+  const phoneDisplay = contacts.phoneDisplay
+  const phoneHref = contacts.phoneTel
+  const mapEmbed = `https://maps.google.com/maps?q=${encodeURIComponent(contacts.mapQuery)}&output=embed`
+  const mapExternal = `https://maps.google.com/?q=${encodeURIComponent(contacts.mapQuery)}`
 
   return (
     <footer id="contacts" className="contacts-page">
@@ -95,7 +88,7 @@ export default function FooterSection() {
               <p className="contacts-panel__text">{copy.sponsorDesc}</p>
               <div className="contacts-tile-row">
                 <a
-                  href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(SPONSOR_EMAIL_SUBJECT)}`}
+                  href={`mailto:${contacts.email}?subject=${encodeURIComponent(SPONSOR_EMAIL_SUBJECT)}`}
                   className="contacts-tile"
                 >
                   <span className="contacts-tile__icon contacts-tile__icon--mail">
@@ -103,7 +96,7 @@ export default function FooterSection() {
                   </span>
                   <span className="contacts-tile__body">
                     <span className="contacts-tile__label">{copy.sponsorEmailLabel}</span>
-                    <span className="contacts-tile__value">{CONTACT_EMAIL}</span>
+                    <span className="contacts-tile__value">{contacts.email}</span>
                     <span className="contacts-tile__hint">{copy.sponsorEmailHint}</span>
                   </span>
                 </a>
@@ -143,7 +136,7 @@ export default function FooterSection() {
                 <span className="contacts-strip__value">{copy.hoursValue}</span>
               </div>
             </div>
-            <a className="contacts-strip__item contacts-strip__item--link" href={CONTACT_TELEGRAM_URL} target="_blank" rel="noreferrer">
+            <a className="contacts-strip__item contacts-strip__item--link" href={contacts.telegramUrl} target="_blank" rel="noreferrer">
               <span className="contacts-strip__icon">
                 <IconSend />
               </span>
@@ -152,16 +145,16 @@ export default function FooterSection() {
                 <span className="contacts-strip__value">{copy.telegramLabel}</span>
               </div>
             </a>
-            <a className="contacts-strip__item contacts-strip__item--link" href={`mailto:${CONTACT_EMAIL}`}>
+            <a className="contacts-strip__item contacts-strip__item--link" href={`mailto:${contacts.email}`}>
               <span className="contacts-strip__icon">
                 <IconMail />
               </span>
               <div className="contacts-strip__body">
                 <span className="contacts-strip__label">{copy.emailLabel}</span>
-                <span className="contacts-strip__value">{CONTACT_EMAIL}</span>
+                <span className="contacts-strip__value">{contacts.email}</span>
               </div>
             </a>
-            <a className="contacts-strip__item contacts-strip__item--link" href={CONTACT_WEBSITE}>
+            <a className="contacts-strip__item contacts-strip__item--link" href={contacts.website}>
               <span className="contacts-strip__icon">
                 <IconGlobe />
               </span>
@@ -194,7 +187,7 @@ export default function FooterSection() {
                 {SOCIALS.map((social) => (
                   <a
                     key={social.label}
-                    href={social.href}
+                    href={social.key === 'telegram' ? contacts.telegramUrl : contacts.instagramUrl}
                     aria-label={social.label}
                     target="_blank"
                     rel="noreferrer noopener"

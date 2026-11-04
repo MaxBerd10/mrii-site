@@ -3,7 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useCms } from '../../cms/CmsContext'
 import { useLanguage } from '../../i18n/LanguageContext'
-import { CLINIC_PHONE_TEL } from '../../data/clinicContact'
+import { useContacts } from '../../i18n/useCopy'
 import { refreshScrollTriggersPreservingScroll } from '../../lib/scrollRoute'
 import { cn } from '../../lib/utils'
 import { cmsLocalizedText, useCmsContent } from '../../lib/cmsLocalized'
@@ -119,10 +119,11 @@ export function CinematicFooter() {
   const headingRef = useRef<HTMLHeadingElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
-  const phone = settings?.phone || t.topBar.phone
+  const contacts = useContacts()
+  const phone = t.topBar.phone
   const copyright = cmsLocalizedText(lang, settings?.copyright, t.footer.copyright)
   const license = cmsLocalizedText(lang, settings?.license, t.footer.license)
-  const phoneHref = `tel:${CLINIC_PHONE_TEL}`
+  const phoneHref = `tel:${contacts.phoneTel}`
   const marqueeItems = [
     t.nav.clinic,
     t.nav.children.doctors,

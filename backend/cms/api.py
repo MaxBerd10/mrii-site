@@ -10,12 +10,13 @@ def ctx(request, lang: str) -> dict:
 
 
 class TextsAPI(APIView):
-    """Admin-edited website texts: {key: {lang: text}} (only what differs from the built-in defaults)."""
+    """Everything the clinic edited in the admin that is not CMS content:
+    {texts: {key: {lang: text}}, contacts: {phone, telegramUrl, …}}. Only differences from the built-in defaults."""
 
     def get(self, request):
-        from .site_texts import overrides_payload
+        from .site_texts import contacts_payload, overrides_payload
 
-        response = Response(overrides_payload())
+        response = Response({'texts': overrides_payload(), 'contacts': contacts_payload()})
         response['Cache-Control'] = 'public, max-age=60'
         return response
 
