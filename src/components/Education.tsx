@@ -1,15 +1,15 @@
-import { useLanguage } from '../i18n/LanguageContext'
+import { useContacts, useCopy } from '../i18n/useCopy'
 import Reveal from './ui/Reveal'
 import { blurUp } from '../lib/animations'
 import { media } from '../data/media'
-import { ADMISSIONS_PHONES, EDUCATION_COPY } from '../data/educationCopy'
+import { EDUCATION_COPY } from '../data/educationCopy'
 import '../styles/education-page.css'
 
-const FJSTI_URL = 'https://fermi.uz'
 
 export default function Education() {
-  const { lang } = useLanguage()
-  const copy = EDUCATION_COPY[lang]
+  const copy = useCopy('educationCopy', EDUCATION_COPY)
+  const contacts = useContacts()
+  const admissionsPhones = contacts.admissionsPhones
 
   return (
     <section id="education" className="education-section education-section--page">
@@ -27,7 +27,7 @@ export default function Education() {
               <p className="education-hero__desc">{copy.description}</p>
               <p className="education-hero__uni">
                 {copy.universityNote}{' '}
-                <a href={FJSTI_URL} target="_blank" rel="noopener noreferrer">
+                <a href={contacts.website} target="_blank" rel="noopener noreferrer">
                   {copy.universityLink}
                 </a>
               </p>
@@ -91,7 +91,7 @@ export default function Education() {
             <h3 className="edu-subhead">{copy.phonesTitle}</h3>
             <p className="edu-subhead__hint">{copy.phonesSubtitle}</p>
             <ul className="edu-phones" aria-label={copy.phonesTitle}>
-              {ADMISSIONS_PHONES.map((phone) => (
+              {admissionsPhones.map((phone) => (
                 <li key={phone.tel}>
                   <a href={`tel:${phone.tel}`} className="edu-phone">
                     <span className="edu-phone__dot" aria-hidden />

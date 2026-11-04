@@ -1,5 +1,6 @@
 import { useEffect, useMemo, type CSSProperties } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { useCms } from '../../cms/CmsContext'
 import { buildClinicSpecialties } from '../../data/clinicSpecialties'
 import { getHomeFeaturedDoctors } from '../../data/doctors'
 import { getDoctorCardPortrait } from '../../data/doctorTurnMedia'
@@ -392,10 +393,16 @@ export function CareDoctors() {
 
 export function CareVoices() {
   const { t } = useLanguage()
+  const { home } = useCms()
   const c = t.homeDark.voices
 
-  // No placeholder quotes: the section stays hidden until real testimonials are added.
-  if (t.partners.testimonials.length === 0) return null
+  // Reviews added in the admin (Sharhlar). No placeholder quotes: the section stays hidden until there is a real one.
+  const colors = ['#0F766E', '#4638B8', '#B45309', '#0369A1']
+  const quotes = (home?.testimonials ?? [])
+    .filter((q) => q.quote && q.author)
+    .map((q, i) => ({ ...q, color: colors[i % colors.length] }))
+  const items = quotes.length ? quotes : t.partners.testimonials
+  if (items.length === 0) return null
 
   return (
     <section className="hc-section hc-section--tint hc-section--voices" aria-labelledby="hc-voices-title">
@@ -412,7 +419,7 @@ export function CareVoices() {
         />
 
         <div className="hc-voices__grid">
-          {t.partners.testimonials.map((q, i) => (
+          {items.map((q, i) => (
             <Reveal key={q.author} delay={i * 90}>
               <figure className="hc-quote" style={{ height: '100%', margin: 0 }}>
                 <span className="hc-quote__stars" aria-label="5 / 5">

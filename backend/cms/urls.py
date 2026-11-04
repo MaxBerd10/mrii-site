@@ -3,6 +3,8 @@ from django.urls import path
 from . import api, hr_api
 
 urlpatterns = [
+    path('texts/', api.TextsAPI.as_view()),
+    path('prices/', api.PricesAPI.as_view()),
     path('settings/', api.SettingsAPI.as_view()),
     path('home/', api.HomeAPI.as_view()),
     path('specialties/', api.SpecialtyListAPI.as_view()),

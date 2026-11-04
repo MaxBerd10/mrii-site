@@ -1,0 +1,88 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'cms/site_texts.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'cms/site_assets.css' %}?v=1">
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs"><a href="{% url 'admin:index' %}">Bosh sahifa</a> › Sayt rasmlari</div>
+{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block content %}
+<div id="content-main" class="stx sta">
+  {% csrf_token %}
+  <header class="stx-head">
+    <h1>Sayt rasmlari va videolari</h1>
+    <p>
+      Saytdagi tayyor rasm yoki videoni almashtirish uchun: <strong>bo‘lim</strong> tanlang → kerakli rasmning ostidagi
+      <strong>«Almashtirish»</strong> tugmasini bosing → yangi faylni tanlang. Almashtirish saytda 1–2 daqiqada ko‘rinadi.
+      <em>«Asl holiga»</em> tugmasi eski rasmni qaytaradi.
+    </p>
+    <ul class="stx-tips">
+      <li>Rasm: JPG, PNG yoki WebP, {{ max_image_mb }} MB gacha. Eski rasm bilan <b>bir xil nisbatda</b> (kenglik/balandlik) bo‘lsa, joyiga yaxshi sig‘adi.</li>
+      <li>Video: MP4 yoki WebM, {{ max_video_mb }} MB gacha (kichikroq bo‘lsa sayt tezroq ochiladi).</li>
+      <li>Shifokorlar, yangiliklar va yo‘nalishlar rasmlari bu yerda emas — ular o‘z bo‘limlarida (Shifokorlar, Yangiliklar, Klinik yo‘nalishlar) yuklanadi.</li>
+    </ul>
+  </header>
+
+  <div class="stx-layout">
+    <aside class="stx-side" aria-label="Bo‘limlar">
+      <form method="get" class="stx-search">
+        <input type="search" name="q" value="{{ q }}" placeholder="Fayl nomi bo‘yicha qidirish…" aria-label="Qidirish">
+        {% if current_group %}<input type="hidden" name="group" value="{{ current_group }}">{% endif %}
+        <button type="submit">Qidirish</button>
+      </form>
+      <a class="stx-chip{% if only_changed %} is-on{% endif %}" href="?{% if not only_changed %}changed=1{% endif %}{% if current_group %}&group={{ current_group }}{% endif %}">
+        ✎ Faqat almashtirilganlar ({{ total_changed }})
+      </a>
+      <nav>
+        <a class="stx-sec{% if not current_group %} is-on{% endif %}" href="?{% if only_changed %}changed=1{% endif %}">Hamma bo‘limlar</a>
+        {% for g in groups %}
+          <a class="stx-sec{% if current_group == g.key %} is-on{% endif %}" href="?group={{ g.key }}{% if only_changed %}&changed=1{% endif %}">
+            <span>{{ g.title }}</span>
+            <small>{{ g.hint }} · {{ g.count }}{% if g.changed %} · <b>{{ g.changed }} ✎</b>{% endif %}</small>
+          </a>
+        {% endfor %}
+      </nav>
+    </aside>
+
+    <section class="stx-main">
+      {% if not items %}<p class="stx-empty">Hech narsa topilmadi.</p>{% endif %}
+      <div class="sta-grid">
+      {% for it in items %}
+        <article class="sta-card{% if it.changed %} is-changed{% endif %}" data-path="{{ it.path }}" data-kind="{{ it.kind }}" data-default="{{ it.default_url }}">
+          <div class="sta-media">
+            {% if it.kind == 'video' %}
+              <video src="{{ it.current_url }}" muted playsinline preload="metadata" controls></video>
+            {% else %}
+              <img src="{{ it.current_url }}" alt="" loading="lazy">
+            {% endif %}
+            <span class="stx-badge">almashtirilgan</span>
+          </div>
+          <div class="sta-info">
+            <strong title="{{ it.path }}">{{ it.name }}</strong>
+            <small>{{ it.kind|yesno:"Rasm,Video" }} · {{ it.size_label }} · <span class="sta-dim"></span></small>
+            <small class="sta-used">Ishlatilgan: {{ it.used_in|join:", " }}</small>
+          </div>
+          <div class="sta-actions">
+            <label class="sta-pick">
+              <input type="file" accept="{% if it.kind == 'video' %}.mp4,.webm,video/mp4,video/webm{% else %}.jpg,.jpeg,.png,.webp,.gif,image/*{% endif %}">
+              <span>Almashtirish</span>
+            </label>
+            <button type="button" class="sta-reset">Asl holiga</button>
+            <span class="stx-status" role="status"></span>
+          </div>
+        </article>
+      {% endfor %}
+      </div>
+    </section>
+  </div>
+</div>
+<script>window.STA = { uploadUrl: "{% url 'admin:cms_assets_upload' %}", resetUrl: "{% url 'admin:cms_assets_reset' %}" };</script>
+<script src="{% static 'cms/site_assets.js' %}?v=1"></script>
+{% endblock %}

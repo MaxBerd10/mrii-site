@@ -359,6 +359,16 @@ body.mrii-index #content,
   max-width: 52ch;
 }
 
+.mrii-hero__actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; }
+.mrii-hero__btn {
+  display: inline-flex; align-items: center; padding: 10px 16px; border-radius: 12px;
+  background: var(--teal); color: #fff; font-size: 0.92rem; font-weight: 700; text-decoration: none;
+}
+.mrii-hero a.mrii-hero__btn, .mrii-hero a.mrii-hero__btn:visited { color: #fff; }
+.mrii-hero a.mrii-hero__btn:hover { filter: brightness(1.08); color: #fff; }
+.mrii-hero a.mrii-hero__btn--ghost, .mrii-hero a.mrii-hero__btn--ghost:visited { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+.mrii-hero a.mrii-hero__btn--ghost:hover { color: var(--ink); }
+
 .mrii-steps {
   list-style: none;
   margin: 0;

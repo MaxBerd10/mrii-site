@@ -17,7 +17,7 @@ urlpatterns = [
 # backups (`backups/`), anything dropped there later — is never served by this route.
 # Staff download resumes through the authenticated admin view (admin:cms_inquiry_resume).
 PUBLIC_MEDIA_PREFIXES = (
-    'ai/', 'clinic-tour/', 'doctors/', 'hero/', 'homepage/', 'news/', 'specialties/',
+    'ai/', 'clinic-tour/', 'doctors/', 'hero/', 'homepage/', 'news/', 'site-assets/', 'specialties/',
 )
 
 

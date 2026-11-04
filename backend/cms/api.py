@@ -9,6 +9,34 @@ def ctx(request, lang: str) -> dict:
     return {'request': request, 'lang': lang}
 
 
+class TextsAPI(APIView):
+    """Everything the clinic edited in the admin that is not CMS content:
+    {texts: {key: {lang: text}}, contacts: {phone, telegramUrl, …}, assets: {path: url}}. Only differences from the built-in defaults."""
+
+    def get(self, request):
+        from .site_assets import assets_payload
+        from .site_texts import contacts_payload, overrides_payload
+
+        response = Response({
+            'texts': overrides_payload(),
+            'contacts': contacts_payload(),
+            'assets': assets_payload(request),
+        })
+        response['Cache-Control'] = 'public, max-age=60'
+        return response
+
+
+class PricesAPI(APIView):
+    """Price list edited in the admin. A section that has no rows yet is null, so the website keeps its built-in data."""
+
+    def get(self, request):
+        from .site_texts import prices_payload
+
+        response = Response(prices_payload())
+        response['Cache-Control'] = 'public, max-age=60'
+        return response
+
+
 class SettingsAPI(APIView):
     def get(self, request):
         lang = resolve_lang(request)

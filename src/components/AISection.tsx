@@ -1,4 +1,5 @@
 import { useLanguage } from '../i18n/LanguageContext'
+import { useCopy } from '../i18n/useCopy'
 import { useCms } from '../cms/CmsContext'
 import Reveal from './ui/Reveal'
 import { blurUp } from '../lib/animations'
@@ -21,7 +22,7 @@ export default function AISection() {
   const { t, lang } = useLanguage()
   const { home } = useCms()
   const preferCms = useCmsContent(lang)
-  const copy = AISHIFOKOR_COPY[lang]
+  const copy = useCopy('aiShifokorCopy', AISHIFOKOR_COPY)
   const products = preferCms && home?.aiProducts?.length
     ? home.aiProducts.map((prod) => ({
         id: prod.id || prod.slug,

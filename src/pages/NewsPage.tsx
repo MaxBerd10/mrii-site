@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { useCopy } from '../i18n/useCopy'
 import { useCms } from '../cms/CmsContext'
 import { fetchNewsArticle, isCmsEnabled, type CmsNewsDetail } from '../api/client'
 import { media } from '../data/media'
@@ -34,7 +35,7 @@ function formatDate(value: string | null | undefined) {
 export default function NewsPage({ slug }: { slug: string }) {
   const { lang, contentLang, t } = useLanguage()
   const { home } = useCms()
-  const labels = newsPageLabels[lang]
+  const labels = useCopy('newsPageLabels', newsPageLabels)
   const staticMatch = getNewsBySlug(slug)
   const [cmsDetail, setCmsDetail] = useState<CmsNewsDetail | null>(null)
   const [triedCms, setTriedCms] = useState(!isCmsEnabled())

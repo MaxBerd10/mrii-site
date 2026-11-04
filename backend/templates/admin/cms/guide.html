@@ -1,0 +1,73 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'cms/guide.css' %}?v=1">
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs"><a href="{% url 'admin:index' %}">Bosh sahifa</a> › Qo‘llanma</div>
+{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block content %}
+<div id="content-main" class="gd">
+  <header class="gd-head">
+    <h1>Qo‘llanma: nimani qayerdan o‘zgartiraman?</h1>
+    <p>Saytda o‘zgartirmoqchi bo‘lgan narsangizni jadvaldan toping — o‘ng ustunda qayerga kirish kerakligi yozilgan. Dasturchi kerak emas.</p>
+    <p class="gd-actions"><a class="gd-btn" href="{% url 'admin:index' %}">← Bosh sahifaga</a> <a class="gd-btn gd-btn--ghost" href="{{ site_url_public }}" target="_blank" rel="noopener">Saytni ochish ↗</a></p>
+  </header>
+
+  <section class="gd-card gd-steps">
+    <h2>Har qanday o‘zgarish — 3 qadam</h2>
+    <ol>
+      <li><b>Bo‘lim tanlang</b> — bosh sahifadagi kartalardan.</li>
+      <li><b>O‘zgartiring</b> — matn, narx yoki rasmni yozing/almashtiring.</li>
+      <li><b>«Saqlash»</b> tugmasini bosing. Sayt 1–2 daqiqada yangilanadi (sahifani qayta oching).</li>
+    </ol>
+    <p class="gd-note">Xato qilsangiz qo‘rqmang: <b>Sayt matnlari</b> va <b>Sayt rasmlari</b>da har bir qatorda <em>«Asl holiga»</em> tugmasi bor — eski holat qaytadi. Maydonni bo‘sh qoldirsangiz, saytdagi tayyor qiymat saqlanib qoladi.</p>
+  </section>
+
+  <section class="gd-card">
+    <h2>Nimani qayerdan o‘zgartiraman</h2>
+    <table class="gd-table">
+      <thead><tr><th>Saytda nimani o‘zgartirmoqchisiz?</th><th>Qayerga kirasiz</th></tr></thead>
+      <tbody>
+        <tr><td>Telefon raqami, Telegram, Instagram, pochta, xarita manzili</td><td><a href="{% url 'admin:index' %}">Aloqa ma’lumotlari</a> (bir marta o‘zgartirsangiz, sayt bo‘ylab almashadi)</td></tr>
+        <tr><td>Xizmat yoki check-up narxi</td><td><a href="{% url 'admin:cms_priceitem_changelist' %}">Narxlar</a> (jadvalda narxni yozib «Saqlash») · <a href="{% url 'admin:cms_checkupdirection_changelist' %}">Check-up paketlari</a></td></tr>
+        <tr><td>Sarlavha, tugma yozuvi, tavsif — saytdagi ixtiyoriy matn</td><td><a href="{% url 'admin:cms_texts' %}">Sayt matnlari</a> (qidiruv oynasiga matnning bir qismini yozing)</td></tr>
+        <tr><td>Saytdagi tayyor rasm yoki video</td><td><a href="{% url 'admin:cms_assets' %}">Sayt rasmlari</a> (bo‘lim → «Almashtirish»)</td></tr>
+        <tr><td>Yangilik qo‘shish yoki tahrirlash</td><td><a href="{% url 'admin:cms_newsarticle_changelist' %}">Yangiliklar</a></td></tr>
+        <tr><td>Shifokor qo‘shish, ma’lumoti yoki fotosini o‘zgartirish</td><td><a href="{% url 'admin:cms_doctor_changelist' %}">Shifokorlar</a></td></tr>
+        <tr><td>Klinika bo‘limi (yo‘nalish) matni, xizmatlari</td><td><a href="{% url 'admin:cms_specialty_changelist' %}">Klinik yo‘nalishlar</a></td></tr>
+        <tr><td>Vakansiya qo‘yish yoki yashirish</td><td><a href="{% url 'admin:cms_vacancy_changelist' %}">Vakansiyalar</a> (yoki HR xodimi Telegram mini-ilovada)</td></tr>
+        <tr><td>Kelgan murojaat yoki ish arizasini ko‘rish, rezyumeni olish</td><td><a href="{% url 'admin:cms_inquiry_changelist' %}">Murojaatlar</a></td></tr>
+        <tr><td>Bosh sahifaning asosiy matni va raqamlari</td><td>Bosh sahifadagi «Bosh sahifa» kartasi · qolgan yozuvlar «Sayt matnlari»da</td></tr>
+        <tr><td>Tadqiqotlar, AI mahsulotlar, klinika videosi</td><td>Bosh sahifadagi «Sahifalar bo‘yicha» ro‘yxati</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="gd-card">
+    <h2>Foydali maslahatlar</h2>
+    <ul>
+      <li><b>4 til:</b> o‘zbekcha, ruscha, inglizcha, qoraqalpoqcha. Yangi yozuvda faqat o‘zbekchasini yozing — ruscha va inglizchasi saqlashda avtomatik tarjima qilinadi (tekshirib chiqing). Qoraqalpoqcha bo‘sh qolsa, o‘zbekcha ko‘rinadi.</li>
+      <li><b>Qavsli joylar</b> ({{ "{" }}n{{ "}" }}, {{ "{" }}id{{ "}" }}) — saytda raqam yoki nom bilan almashadi; ularni o‘zgartirmang.</li>
+      <li><b>Rasm:</b> eski bilan bir xil nisbatda bo‘lsin, hajmi katta bo‘lmasin (8 MB gacha, yaxshisi 1 MB dan kichik) — sayt tez ochiladi.</li>
+      <li><b>Telefon raqamini</b> faqat «Aloqa ma’lumotlari»da o‘zgartiring — boshqa joylarda alohida o‘zgartirish shart emas.</li>
+      <li><b>O‘zgarish ko‘rinmayaptimi?</b> 1–2 daqiqa kuting va sahifani qayta yuklang (Ctrl+F5 / telefonda sahifani yopib qayta oching).</li>
+      <li><b>Xavfsizlik:</b> parolni hech kimga bermang. Xodim ketsa, «Foydalanuvchilar»da uning akkauntini o‘chiring.</li>
+    </ul>
+  </section>
+
+  <section class="gd-card gd-limits">
+    <h2>Bu yerdan o‘zgartirib bo‘lmaydigan narsalar</h2>
+    <ul>
+      <li>Saytning dizayni, bo‘limlar tartibi, yangi sahifa qo‘shish — buning uchun dasturchi kerak.</li>
+      <li>Savol-javob (FAQ) va ba’zi ro‘yxatlarda <em>mavjud bandlarning matni</em> o‘zgaradi, lekin yangi band qo‘shib bo‘lmaydi.</li>
+    </ul>
+  </section>
+</div>
+{% endblock %}

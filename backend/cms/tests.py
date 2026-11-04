@@ -1,4 +1,5 @@
 import shutil
+from unittest import mock
 import tempfile
 
 from django.contrib.auth.models import Group, User
@@ -8,6 +9,19 @@ from django.test import TestCase, override_settings
 from .models import Inquiry
 
 HR_GROUP = 'HR bo‘limi'
+
+_translate_patch = None
+
+
+def setUpModule():
+    # Saving CMS rows auto-translates blank RU/EN fields over the network; tests must never depend on it.
+    global _translate_patch
+    _translate_patch = mock.patch('cms.i18n_fill.translate_text', return_value='')
+    _translate_patch.start()
+
+
+def tearDownModule():
+    _translate_patch.stop()
 
 
 @override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
@@ -616,3 +630,275 @@ class ApplicantSubmissionMatrixTests(TestCase):
         codes = [self.client.post('/api/inquiries/', {**self.base}).status_code for _ in range(14)]
         self.assertEqual(codes[:12], [201] * 12)
         self.assertEqual(codes[12:], [429, 429])
+
+
+# ───────────────────────── Sayt matnlari (editable website texts) ─────────────────────────
+@override_settings(CACHES=LOCMEM, DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class SiteTextsTests(TestCase):
+    def setUp(self):
+        from django.core.cache import cache
+
+        cache.clear()
+        self.admin = User.objects.create_superuser('texts-root', 't@x.y', 'x')
+        self.client.force_login(self.admin)
+
+    def entry(self, key='hero.title1'):
+        from .site_texts import by_key
+
+        return by_key()[key]
+
+    def save(self, key, values):
+        import json
+
+        return self.client.post('/admin/cms/texts/save/', data=json.dumps({'key': key, 'values': values}),
+                                content_type='application/json')
+
+    def test_catalogue_is_present_and_page_renders_with_search_and_sections(self):
+        from .site_texts import catalog
+
+        self.assertGreater(len(catalog()), 900)
+        page = self.client.get('/admin/cms/texts/')
+        self.assertEqual(page.status_code, 200)
+        self.assertContains(page, 'Sayt matnlari')
+        one = self.entry()
+        found = self.client.get('/admin/cms/texts/', {'q': one['uz'][:12]})
+        self.assertContains(found, one['key'].split('.', 1)[1])
+        self.assertEqual(self.client.get('/admin/cms/texts/', {'section': 'nav'}).status_code, 200)
+
+    def test_save_creates_override_served_by_public_api_and_reset_removes_it(self):
+        e = self.entry('hero.title1')
+        r = self.save(e['key'], {'uz': 'Yangi sarlavha', 'ru': '', 'en': e['en'], 'kaa': ''})
+        self.assertEqual(r.status_code, 200)
+        body = r.json()
+        self.assertTrue(body['overridden'])
+        self.assertEqual(body['values']['ru'], e['ru'])  # blank = keep default
+        api = self.client.get('/api/texts/')
+        self.assertEqual(api.json()['texts'], {e['key']: {'uz': 'Yangi sarlavha'}})  # default-equal en not stored
+        self.assertIn('max-age', api['Cache-Control'])
+        reset = self.save(e['key'], {'uz': '', 'ru': '', 'en': '', 'kaa': ''})
+        self.assertFalse(reset.json()['overridden'])
+        self.assertEqual(self.client.get('/api/texts/').json(), {'texts': {}, 'contacts': {}, 'assets': {}})
+
+    def test_validation_and_permissions(self):
+        e = self.entry()
+        self.assertEqual(self.save('no.such.key', {'uz': 'x'}).status_code, 400)
+        self.assertEqual(self.save(e['key'], {'uz': 'x' * 5001}).status_code, 400)
+        self.assertEqual(self.client.get('/admin/cms/texts/save/').status_code, 405)
+        # HR group users must not edit site texts
+        from django.contrib.auth.models import Group
+
+        hr = User.objects.create_user('hr-t', password='x', is_staff=True)
+        hr.groups.set([Group.objects.get_or_create(name='HR bo‘limi')[0]])
+        self.client.force_login(hr)
+        self.assertEqual(self.client.get('/admin/cms/texts/').status_code, 403)
+        self.assertEqual(self.save(e['key'], {'uz': 'x'}).status_code, 403)
+
+    def test_stale_override_for_a_removed_key_is_ignored(self):
+        from .models import TextOverride
+        from .site_texts import overrides_payload
+
+        TextOverride.objects.create(key='removed.in.a.later.release', uz='x')
+        self.assertEqual(overrides_payload(), {})
+
+
+class SiteContactsTests(TestCase):
+    def test_blank_contacts_change_nothing_and_filled_ones_are_published(self):
+        from .models import SiteSettings
+
+        self.assertEqual(self.client.get('/api/texts/').json()['contacts'], {})
+        obj = SiteSettings.load()
+        obj.contact_phone = '+998 90 111-22-33'
+        obj.contact_telegram_url = 'https://t.me/new_clinic'
+        obj.contact_email = 'hello@example.uz'
+        obj.contact_map_query = 'Fargona Test 1'
+        obj.contact_admissions_phones = '+998 95 000-00-01\nnot a phone\n+998 95 000-00-02'
+        obj.save()
+        contacts = self.client.get('/api/texts/').json()['contacts']
+        self.assertEqual(contacts['phone'], '+998 90 111-22-33')
+        self.assertEqual(contacts['telegramUrl'], 'https://t.me/new_clinic')
+        self.assertEqual(contacts['mapQuery'], 'Fargona Test 1')
+        self.assertEqual(contacts['admissionsPhones'], ['+998 95 000-00-01', '+998 95 000-00-02'])
+
+    def test_dangerous_values_never_reach_the_website(self):
+        from django.core.exceptions import ValidationError
+
+        from .models import SiteSettings
+
+        obj = SiteSettings.load()
+        obj.contact_telegram_url = 'javascript:alert(1)'
+        obj.contact_phone = '<script>'
+        with self.assertRaises(ValidationError):
+            obj.full_clean()
+        obj.save()  # even if saved around validation (shell/import), the API drops them
+        self.assertEqual(self.client.get('/api/texts/').json()['contacts'], {})
+
+
+@override_settings(DEBUG=False, ALLOWED_HOSTS=["testserver"], SECURE_SSL_REDIRECT=False)
+class PriceListTests(TestCase):
+    """Prices are edited in the admin and served at /api/prices/; empty tables fall back to the built-in list."""
+
+    def setUp(self):
+        patcher = mock.patch('cms.i18n_fill.translate_text', return_value='')
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def test_seed_migration_loaded_the_whole_builtin_list(self):
+        from .models import CheckupDirection, PriceItem
+
+        self.assertGreaterEqual(PriceItem.objects.count(), 160)
+        self.assertEqual(CheckupDirection.objects.count(), 4)
+        data = self.client.get('/api/prices/').json()
+        self.assertEqual(len(data['catalog']), PriceItem.objects.count())
+        self.assertEqual(data['updated'], '2026-05-12')
+        self.assertIn('Anesteziya', data['categories'])
+        self.assertEqual(len(data['checkups']), 4)
+        self.assertEqual([t['tier'] for t in data['checkups'][0]['tiers']], ['Layt', 'Standart', 'Premium'])
+        self.assertTrue(data['translations']['Anesteziya']['ru'])
+
+    def test_edits_inactive_rows_and_import_safety(self):
+        from django.core.management import call_command
+
+        from .models import PriceItem
+
+        item = PriceItem.objects.first()
+        item.price_citizen = 123000
+        item.price_foreign = None
+        item.save()
+        hidden = PriceItem.objects.exclude(pk=item.pk).first()
+        hidden.is_active = False
+        hidden.save()
+        rows = {row['id']: row for row in self.client.get('/api/prices/').json()['catalog']}
+        self.assertEqual(rows[item.pk]['citizen'], 123000)
+        self.assertIsNone(rows[item.pk]['foreign'])
+        self.assertNotIn(hidden.pk, rows)
+        # a plain re-import must never overwrite what the clinic edited
+        call_command('import_prices', stdout=mock.MagicMock())
+        item.refresh_from_db()
+        self.assertEqual(item.price_citizen, 123000)
+
+    def test_empty_tables_mean_use_builtin_data(self):
+        from .models import CheckupDirection, PriceCategory, PriceItem
+
+        PriceItem.objects.all().delete()
+        PriceCategory.objects.all().delete()
+        CheckupDirection.objects.all().delete()
+        data = self.client.get('/api/prices/').json()
+        self.assertIsNone(data['catalog'])
+        self.assertIsNone(data['checkups'])
+        self.assertIsNone(data['categories'])
+
+    def test_price_admin_pages_open_for_superuser(self):
+        user = User.objects.create_superuser('boss', 'b@example.uz', 'pw-12345-xyz')
+        self.client.force_login(user)
+        for name in ('priceitem', 'pricecategory', 'checkupdirection'):
+            self.assertEqual(self.client.get(f'/admin/cms/{name}/').status_code, 200, name)
+        direction = __import__('cms.models', fromlist=['CheckupDirection']).CheckupDirection.objects.first()
+        self.assertEqual(self.client.get(f'/admin/cms/checkupdirection/{direction.pk}/change/').status_code, 200)
+
+
+@override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class SiteAssetsTests(TestCase):
+    PATH = '/images/clinic-gallery/courtyard.webp'
+
+    def setUp(self):
+        self.media = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.media, ignore_errors=True)
+        override = override_settings(MEDIA_ROOT=self.media)
+        override.enable()
+        self.addCleanup(override.disable)
+        self.admin = User.objects.create_superuser('boss', 'b@example.uz', 'pw-12345-xyz')
+        self.client.force_login(self.admin)
+
+    def png(self, name='new.png'):
+        import io
+
+        from PIL import Image
+
+        buf = io.BytesIO()
+        Image.new('RGB', (40, 30), (200, 20, 80)).save(buf, 'PNG')
+        return SimpleUploadedFile(name, buf.getvalue(), content_type='image/png')
+
+    def upload(self, path, file):
+        return self.client.post('/admin/cms/assets/upload/', {'path': path, 'file': file})
+
+    def test_catalogue_page_lists_real_files(self):
+        from . import site_assets
+
+        self.assertIn(self.PATH, site_assets.by_path())
+        page = self.client.get('/admin/cms/assets/')
+        self.assertEqual(page.status_code, 200)
+        self.assertContains(page, 'courtyard.webp')
+        self.assertEqual(self.client.get('/admin/cms/assets/', {'group': 'clinic-gallery'}).status_code, 200)
+
+    def test_replace_publish_and_reset(self):
+        ok = self.upload(self.PATH, self.png())
+        self.assertEqual(ok.status_code, 200, ok.content)
+        url = ok.json()['url']
+        self.assertTrue(url.startswith('/media/site-assets/'))
+        assets = self.client.get('/api/texts/').json()['assets']
+        self.assertEqual(list(assets), [self.PATH])
+        self.assertEqual(self.client.get(url).status_code, 200)  # public folder is served
+        # replacing again removes the old file and keeps one row
+        second = self.upload(self.PATH, self.png('again.png'))
+        self.assertEqual(second.status_code, 200)
+        from .models import AssetOverride
+        import os
+        self.assertEqual(AssetOverride.objects.count(), 1)
+        self.assertEqual(len(os.listdir(os.path.join(self.media, 'site-assets'))), 1)
+        reset = self.client.post('/admin/cms/assets/reset/', {'path': self.PATH})
+        self.assertEqual(reset.status_code, 200)
+        self.assertEqual(self.client.get('/api/texts/').json()['assets'], {})
+        self.assertEqual(os.listdir(os.path.join(self.media, 'site-assets')), [])
+
+    def test_bad_uploads_are_refused_with_a_clear_message(self):
+        fake = SimpleUploadedFile('x.png', b'<svg onload=alert(1)>', content_type='image/png')
+        self.assertEqual(self.upload(self.PATH, fake).status_code, 400)
+        svg = SimpleUploadedFile('x.svg', b'<svg xmlns="http://www.w3.org/2000/svg"/>', content_type='image/svg+xml')
+        self.assertIn('Rasm turi', self.upload(self.PATH, svg).json()['error'])
+        html_video = SimpleUploadedFile('x.mp4', b'<html>not a video</html>', content_type='video/mp4')
+        video_path = next(p for p, e in __import__('cms.site_assets', fromlist=['x']).by_path().items() if e['kind'] == 'video')
+        self.assertEqual(self.upload(video_path, html_video).status_code, 400)
+        self.assertEqual(self.upload(video_path, self.png()).status_code, 400)  # image into a video slot
+        self.assertEqual(self.upload('/images/not/in/catalogue.webp', self.png()).status_code, 400)
+        self.assertEqual(self.upload(self.PATH, SimpleUploadedFile('big.png', b'0' * 10, content_type='image/png')).status_code, 400)
+        from .models import AssetOverride
+        self.assertEqual(AssetOverride.objects.count(), 0)
+
+    def test_real_mp4_header_is_accepted_for_a_video_slot(self):
+        video_path = next(p for p, e in __import__('cms.site_assets', fromlist=['x']).by_path().items() if e['kind'] == 'video')
+        mp4 = SimpleUploadedFile('clip.mp4', b'\x00\x00\x00\x18ftypmp42' + b'\x00' * 64, content_type='video/mp4')
+        self.assertEqual(self.upload(video_path, mp4).status_code, 200)
+
+    def test_staff_without_permission_and_visitors_are_refused(self):
+        hr = User.objects.create_user('hr', 'hr@example.uz', 'pw-12345-xyz', is_staff=True)
+        hr.groups.add(Group.objects.get(name=HR_GROUP))
+        self.client.force_login(hr)
+        self.assertEqual(self.client.get('/admin/cms/assets/').status_code, 403)
+        self.assertEqual(self.upload(self.PATH, self.png()).status_code, 403)
+        self.client.logout()
+        self.assertEqual(self.client.get('/admin/cms/assets/').status_code, 302)
+        self.assertEqual(self.client.get('/admin/cms/assets/upload/').status_code, 302)
+
+
+@override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class AdminDashboardTests(TestCase):
+    def test_superuser_sees_every_group_and_the_guide(self):
+        boss = User.objects.create_superuser('boss', 'b@example.uz', 'pw-12345-xyz')
+        self.client.force_login(boss)
+        page = self.client.get('/admin/')
+        self.assertEqual(page.status_code, 200)
+        for title in ('Sayt matnlari', 'Sayt rasmlari', 'Aloqa ma’lumotlari', 'Narxlar', 'Shifokorlar', 'Yangiliklar', 'Qo‘llanma'):
+            self.assertContains(page, title)
+        guide = self.client.get('/admin/cms/guide/')
+        self.assertEqual(guide.status_code, 200)
+        self.assertContains(guide, 'Nimani qayerdan o‘zgartiraman')
+
+    def test_hr_workspace_stays_limited_to_applications_and_vacancies(self):
+        hr = User.objects.create_user('hr', 'hr@example.uz', 'pw-12345-xyz', is_staff=True)
+        hr.groups.add(Group.objects.get(name=HR_GROUP))
+        self.client.force_login(hr)
+        page = self.client.get('/admin/')
+        self.assertEqual(page.status_code, 200)
+        self.assertContains(page, 'Vakansiyalar')
+        for hidden in ('Sayt matnlari', 'Narxlar', 'Sayt rasmlari', 'Foydalanuvchilar'):
+            self.assertNotContains(page, hidden)

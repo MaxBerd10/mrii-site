@@ -78,6 +78,12 @@ def resume_upload_path(instance, filename):
     return f'resumes/{timezone.now():%Y/%m}/{uuid.uuid4().hex}{ext}'
 
 
+def site_asset_upload_path(instance, filename):
+    """Replacement site images/videos get random names so a new upload is never a cached old URL."""
+    ext = os.path.splitext(filename or '')[1].lower()
+    return f'site-assets/{uuid.uuid4().hex}{ext}'
+
+
 def resolve_lang(request) -> str:
     lang = (request.query_params.get('lang') or '').lower().strip()
     if lang in settings.CMS_LANGS:

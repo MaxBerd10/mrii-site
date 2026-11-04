@@ -1,0 +1,94 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'cms/site_texts.css' %}?v=1">
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs"><a href="{% url 'admin:index' %}">Bosh sahifa</a> › Sayt matnlari</div>
+{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block content %}
+<div id="content-main" class="stx">
+  {% csrf_token %}
+  <header class="stx-head">
+    <h1>Sayt matnlari</h1>
+    <p>
+      Saytdagi har bir yozuvni shu yerdan o‘zgartirasiz. Kerakli matnni <strong>qidiring</strong> yoki chap tomondan
+      <strong>bo‘lim</strong> tanlang → matnni tahrirlang → <strong>Saqlash</strong>. O‘zgarish sayt sahifasini
+      yangilaganda 1–2 daqiqa ichida ko‘rinadi. <em>Asl holiga</em> tugmasi o‘zgarishni bekor qiladi.
+    </p>
+    <ul class="stx-tips">
+      <li>Har til alohida maydonda. Qoraqalpoqcha bo‘sh qolsa, hozirgi matn ko‘rsatiladi.</li>
+      <li><b>{{ "{" }}n{{ "}" }}</b>, <b>{{ "{" }}id{{ "}" }}</b> kabi qavsli joylarni o‘zgartirmang — saytda raqam/nom o‘rniga qo‘yiladi.</li>
+      <li>Telefon, manzil, ish vaqti va ijtimoiy tarmoqlar → «Sayt sozlamalari» bo‘limida.</li>
+    </ul>
+  </header>
+
+  <div class="stx-layout">
+    <aside class="stx-side" aria-label="Bo‘limlar">
+      <form method="get" class="stx-search">
+        <input type="search" name="q" value="{{ q }}" placeholder="Qidirish: so‘z yoki jumla…" aria-label="Qidirish">
+        {% if current_section %}<input type="hidden" name="section" value="{{ current_section }}">{% endif %}
+        {% if only_changed %}<input type="hidden" name="changed" value="1">{% endif %}
+        <button type="submit">Qidirish</button>
+      </form>
+      <a class="stx-chip{% if only_changed %} is-on{% endif %}" href="?{% if not only_changed %}changed=1{% endif %}{% if current_section %}&section={{ current_section }}{% endif %}">
+        ✎ Faqat o‘zgartirilganlar ({{ total_changed }})
+      </a>
+      <nav>
+        <a class="stx-sec{% if not current_section %} is-on{% endif %}" href="?{% if only_changed %}changed=1{% endif %}">Hamma bo‘limlar</a>
+        {% for s in sections %}
+          <a class="stx-sec{% if current_section == s.key %} is-on{% endif %}" href="?section={{ s.key }}{% if only_changed %}&changed=1{% endif %}" title="Sahifa: {{ s.page }}">
+            <span>{{ s.title }}</span>
+            <small>{{ s.page }} · {{ s.count }}{% if s.changed %} · <b>{{ s.changed }} ✎</b>{% endif %}</small>
+          </a>
+        {% endfor %}
+      </nav>
+    </aside>
+
+    <section class="stx-main">
+      {% if not page_obj.object_list %}
+        <p class="stx-empty">Hech narsa topilmadi. Boshqa so‘z bilan qidirib ko‘ring.</p>
+      {% endif %}
+      {% for row in page_obj.object_list %}
+        <article class="stx-row{% if row.changed %} is-changed{% endif %}" data-key="{{ row.key }}">
+          <header>
+            <span class="stx-where">{{ row.section_title }}</span>
+            <code title="Texnik nom">{{ row.path }}</code>
+            <span class="stx-badge">o‘zgartirilgan</span>
+          </header>
+          <div class="stx-fields">
+            {% for f in row.fields %}
+              <label class="{% if f.changed %}is-changed{% endif %}">
+                <span>{{ f.label }}</span>
+                <textarea rows="{{ f.rows }}" data-lang="{{ f.lang }}">{{ f.value }}</textarea>
+              </label>
+            {% endfor %}
+          </div>
+          <footer>
+            <button type="button" class="stx-save">Saqlash</button>
+            <button type="button" class="stx-translate" title="O‘zbekchadan ruscha va inglizchaga tarjima qiladi (tekshirib saqlang)">Rus/Ingliz tarjima</button>
+            <button type="button" class="stx-reset">Asl holiga</button>
+            <span class="stx-status" role="status"></span>
+          </footer>
+        </article>
+      {% endfor %}
+
+      {% if page_obj.paginator.num_pages > 1 %}
+        <nav class="stx-pager" aria-label="Sahifalar">
+          {% if page_obj.has_previous %}<a href="?{{ querystring }}&page={{ page_obj.previous_page_number }}">← Oldingi</a>{% endif %}
+          <span>{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+          {% if page_obj.has_next %}<a href="?{{ querystring }}&page={{ page_obj.next_page_number }}">Keyingi →</a>{% endif %}
+        </nav>
+      {% endif %}
+    </section>
+  </div>
+</div>
+<script>window.STX = { saveUrl: "{% url 'admin:cms_texts_save' %}", translateUrl: "{% url 'admin:cms_translate' %}" };</script>
+<script src="{% static 'cms/site_texts.js' %}?v=1"></script>
+{% endblock %}
