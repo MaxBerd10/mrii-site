@@ -910,3 +910,15 @@ class CheckupDirectionAdmin(AutoTranslateAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         return ('slug',) if obj else ()
+
+
+@admin.register(models.AssetOverride, site=mrii_admin_site)
+class AssetOverrideAdmin(admin.ModelAdmin):
+    """Technical list only — editors use the «Sayt rasmlari» page."""
+
+    list_display = ('path', 'updated_at')
+    search_fields = ('path',)
+    readonly_fields = ('path', 'file')
+
+    def has_add_permission(self, request):
+        return False

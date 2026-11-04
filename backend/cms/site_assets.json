@@ -1,0 +1,1338 @@
+[
+ {
+  "path": "/images/ai/clinical-research-hero-v1.webp",
+  "kind": "image",
+  "group": "ai",
+  "bytes": 47756,
+  "used_in": [
+   "components/AISection.tsx"
+  ]
+ },
+ {
+  "path": "/images/ai/doctor-assistant-hero-v3.webp",
+  "kind": "image",
+  "group": "ai",
+  "bytes": 54642,
+  "used_in": [
+   "components/AISection.tsx"
+  ]
+ },
+ {
+  "path": "/images/ai/radiology-hero-v1.webp",
+  "kind": "image",
+  "group": "ai",
+  "bytes": 66250,
+  "used_in": [
+   "components/AISection.tsx"
+  ]
+ },
+ {
+  "path": "/images/ai/ultrasound-hero-v1.webp",
+  "kind": "image",
+  "group": "ai",
+  "bytes": 58730,
+  "used_in": [
+   "components/AISection.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/campus.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 415478,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx",
+   "pages/ClinicTourPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/conference.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 87012,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/consultation.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 82714,
+  "used_in": [
+   "components/care/CareSections.tsx",
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/corridor.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 63102,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/courtyard-day.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 408376,
+  "used_in": [
+   "components/Clinic.tsx",
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/courtyard-evening.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 255720,
+  "used_in": [
+   "components/Clinic.tsx",
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/courtyard.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 362948,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx",
+   "pages/ClinicTourPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/ct.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 66264,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/education-room.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 101016,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/entrance.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 162594,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx",
+   "pages/ClinicTourPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/gynecology.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 73192,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/inpatient-ward.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 56596,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/intensive-care.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 94246,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/lobby.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 91410,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/main-corridor.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 83756,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/operating-room.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 53996,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/procedure-room.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 91126,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/reception.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 91250,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx",
+   "pages/ClinicTourPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/surgical-suite.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 87560,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/treatment-area.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 71726,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx",
+   "pages/ClinicTourPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/ultrasound.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 74862,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/clinic-gallery/ward.webp",
+  "kind": "image",
+  "group": "clinic-gallery",
+  "bytes": 57608,
+  "used_in": [
+   "pages/ClinicGalleryPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/doctors/cards/nigmatova-s-a.webp",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 5502,
+  "used_in": [
+   "pages/VacanciesPage.tsx"
+  ]
+ },
+ {
+  "path": "/images/doctors/doctor-01.png",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 67838,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/doctors/doctor-02.png",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 72474,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/doctors/doctor-03.png",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 67436,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/doctors/doctor-04.png",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 66743,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/fjsticlinic-new/clinic-diagnostics.png",
+  "kind": "image",
+  "group": "fjsticlinic-new",
+  "bytes": 1922349,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/fjsticlinic-new/clinical-research.png",
+  "kind": "image",
+  "group": "fjsticlinic-new",
+  "bytes": 1819676,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/fjsticlinic-new/fjsti/conference.jpg",
+  "kind": "image",
+  "group": "fjsticlinic-new",
+  "bytes": 363128,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/fjsticlinic-new/fjsti/ct.jpg",
+  "kind": "image",
+  "group": "fjsticlinic-new",
+  "bytes": 283762,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/fjsticlinic-new/fjsti/day-care.jpg",
+  "kind": "image",
+  "group": "fjsticlinic-new",
+  "bytes": 275232,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/fjsticlinic-new/fjsti/education.jpg",
+  "kind": "image",
+  "group": "fjsticlinic-new",
+  "bytes": 334525,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/fjsticlinic-new/fjsti/entrance.jpg",
+  "kind": "image",
+  "group": "fjsticlinic-new",
+  "bytes": 447355,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/fjsticlinic-new/fjsti/gynecology.jpg",
+  "kind": "image",
+  "group": "fjsticlinic-new",
+  "bytes": 298930,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/fjsticlinic-new/fjsti/inpatient.jpg",
+  "kind": "image",
+  "group": "fjsticlinic-new",
+  "bytes": 335038,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/fjsticlinic-new/fjsti/library.jpg",
+  "kind": "image",
+  "group": "fjsticlinic-new",
+  "bytes": 452783,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/fjsticlinic-new/fjsti/surgery.jpg",
+  "kind": "image",
+  "group": "fjsticlinic-new",
+  "bytes": 308600,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/fjsticlinic-new/fjsti/ultrasound.jpg",
+  "kind": "image",
+  "group": "fjsticlinic-new",
+  "bytes": 291245,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/fjsticlinic-new/medical-education.png",
+  "kind": "image",
+  "group": "fjsticlinic-new",
+  "bytes": 2000751,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/anatomical-heart-transparent.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 1391491,
+  "used_in": [
+   "data/media.ts",
+   "data/specialtyImages.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/brain-transparent-3d.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 1784667,
+  "used_in": [
+   "data/media.ts",
+   "data/specialtyImages.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/diagnostics-3d.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 103871,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/diagnostics-transparent-3d.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 795016,
+  "used_in": [
+   "data/media.ts",
+   "data/specialtyImages.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/digestive-transparent-3d.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 982610,
+  "used_in": [
+   "data/media.ts",
+   "data/specialtyImages.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/dna-isolated-v2.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 1101824,
+  "used_in": [
+   "components/care/CareHarmony.tsx",
+   "data/media.ts",
+   "data/specialtyImages.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/dna-isolated-v2.webp",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 124990,
+  "used_in": [
+   "components/care/CareHarmony.tsx"
+  ]
+ },
+ {
+  "path": "/images/medical/fjsti-real-team-collage-flat-smooth-white-v3.webp",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 281874,
+  "used_in": [
+   "components/care/CareHero.tsx"
+  ]
+ },
+ {
+  "path": "/images/medical/gynecology-3d.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 113857,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/gynecology-transparent-3d.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 416627,
+  "used_in": [
+   "data/media.ts",
+   "data/specialtyImages.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/kidney-transparent-3d.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 1417010,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/oncology-3d.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 116708,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/oncology-transparent-3d.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 1447622,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/pediatrics-transparent-3d.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 1077806,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/pulmonology-transparent-3d.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 907947,
+  "used_in": [
+   "data/media.ts",
+   "data/specialtyImages.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/rehabilitation-transparent-3d.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 1014205,
+  "used_in": [
+   "data/media.ts",
+   "data/specialtyImages.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/surgery-transparent-3d.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 751720,
+  "used_in": [
+   "data/media.ts",
+   "data/specialtyImages.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/therapy-ai-3d.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 494784,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/therapy-transparent-3d.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 934364,
+  "used_in": [
+   "data/media.ts",
+   "data/specialtyImages.ts"
+  ]
+ },
+ {
+  "path": "/images/medical/thyroid-transparent-3d.png",
+  "kind": "image",
+  "group": "medical",
+  "bytes": 1101621,
+  "used_in": [
+   "data/media.ts",
+   "data/specialtyImages.ts"
+  ]
+ },
+ {
+  "path": "/videos/clinic-hero-poster.jpg",
+  "kind": "image",
+  "group": "videos",
+  "bytes": 68042,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/clinic-hero.mp4",
+  "kind": "video",
+  "group": "videos",
+  "bytes": 7470789,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/clinic-tour/clinic-opening.web.mp4",
+  "kind": "video",
+  "group": "clinic-tour",
+  "bytes": 26473797,
+  "used_in": [
+   "pages/ClinicTourPage.tsx"
+  ]
+ },
+ {
+  "path": "/videos/clinic-tour/innovation-tour.web.mp4",
+  "kind": "video",
+  "group": "clinic-tour",
+  "bytes": 5524912,
+  "used_in": [
+   "pages/ClinicTourPage.tsx"
+  ]
+ },
+ {
+  "path": "/videos/clinic-tour/official-visit.web.mp4",
+  "kind": "video",
+  "group": "clinic-tour",
+  "bytes": 15469982,
+  "used_in": [
+   "pages/ClinicTourPage.tsx"
+  ]
+ },
+ {
+  "path": "/videos/clinic-tour/open-doors.web.mp4",
+  "kind": "video",
+  "group": "clinic-tour",
+  "bytes": 9599875,
+  "used_in": [
+   "pages/ClinicTourPage.tsx"
+  ]
+ },
+ {
+  "path": "/videos/clinic-tour/virtual-tour.web.mp4",
+  "kind": "video",
+  "group": "clinic-tour",
+  "bytes": 13978853,
+  "used_in": [
+   "pages/ClinicTourPage.tsx"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-10-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 55496,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-10.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 234907,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-11-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 56345,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-11.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 198242,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-12-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 51758,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-12.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 469534,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-13-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 60202,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-13.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 233425,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-14-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 63780,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-14.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 242531,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-15-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 52927,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-15.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 245646,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-16-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 65619,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-16.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 265480,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-17-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 56233,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-17.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 551353,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-18-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 71121,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-18.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 562030,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-19-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 52374,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-19.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 202115,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-2-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 62164,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-2.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 552178,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-20-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 55088,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-20.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 199380,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-21-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 40216,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-21.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 375078,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-22-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 46771,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-22.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 197374,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-23-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 54644,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-23.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 240625,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-24-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 45543,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-24.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 194213,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-25-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 64465,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-25.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 519405,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-26-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 58905,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-26.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 518905,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-27-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 67254,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-27.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 470358,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-28-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 65053,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-28.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 434337,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-29-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 73462,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-29.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 580248,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-3-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 57951,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-3.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 485273,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-30-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 62180,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-30.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 473810,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-31-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 61062,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-31.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 431390,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-32-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 65849,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-32.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 504118,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-33-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 63949,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-33.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 520548,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-34-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 64674,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-34.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 491587,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-4-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 58504,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-4.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 492954,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-5-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 63305,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-5.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 529449,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-6-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 55163,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-6.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 486239,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-7-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 59162,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-7.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 477395,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-8-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 58175,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-8.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 239816,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-9-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 63145,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-9.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 275376,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-poster.jpg",
+  "kind": "image",
+  "group": "doctors",
+  "bytes": 64349,
+  "used_in": [
+   "data/doctorPhotos.ts",
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/doctors/doctor-turn-v2.mp4",
+  "kind": "video",
+  "group": "doctors",
+  "bytes": 504596,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/keenon-robot.mp4",
+  "kind": "video",
+  "group": "videos",
+  "bytes": 750889,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/pillars/ai.mp4",
+  "kind": "video",
+  "group": "pillars",
+  "bytes": 212861,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/pillars/clinic.mp4",
+  "kind": "video",
+  "group": "pillars",
+  "bytes": 105491,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/pillars/education.mp4",
+  "kind": "video",
+  "group": "pillars",
+  "bytes": 623653,
+  "used_in": [
+   "data/media.ts"
+  ]
+ },
+ {
+  "path": "/videos/pillars/research.mp4",
+  "kind": "video",
+  "group": "pillars",
+  "bytes": 768442,
+  "used_in": [
+   "data/media.ts"
+  ]
+ }
+]

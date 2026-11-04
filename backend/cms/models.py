@@ -1,7 +1,7 @@
 from django.core.validators import FileExtensionValidator, RegexValidator, URLValidator
 from django.db import models
 
-from .utils import RESUME_EXTENSIONS, resume_upload_path, validate_resume_size
+from .utils import RESUME_EXTENSIONS, resume_upload_path, site_asset_upload_path, validate_resume_size
 
 
 class TimeStampedModel(models.Model):
@@ -790,3 +790,18 @@ class CheckupTier(TimeStampedModel):
 
     def __str__(self):
         return f'{self.direction} — {self.tier}'
+
+
+class AssetOverride(TimeStampedModel):
+    """A site image/video the clinic replaced. `path` is the file the website uses by default (/images/…)."""
+
+    path = models.CharField('Asl fayl yo‘li', max_length=300, unique=True)
+    file = models.FileField('Yangi fayl', upload_to=site_asset_upload_path)
+
+    class Meta:
+        verbose_name = 'Almashtirilgan rasm/video'
+        verbose_name_plural = 'Almashtirilgan rasm va videolar'
+        ordering = ('path',)
+
+    def __str__(self):
+        return self.path

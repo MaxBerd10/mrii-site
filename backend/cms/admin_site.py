@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.http import HttpResponse, JsonResponse
 from django.urls import path, reverse
 
+from .admin_assets import AssetAdminMixin
 from .utils import client_ip
 
 # Admin login brute-force protection (shared across workers via the file cache).
@@ -49,7 +50,7 @@ def login_locked(request, username=''):
     return bool(user_key) and (cache.get(user_key[0]) or 0) >= LOGIN_MAX_FAILS_PER_USER
 
 
-class MriiAdminSite(AdminSite):
+class MriiAdminSite(AssetAdminMixin, AdminSite):
     site_header = 'FJSTI CMS'
     site_title = 'FJSTI CMS'
     index_title = 'Bosh sahifa'
@@ -85,6 +86,9 @@ class MriiAdminSite(AdminSite):
             ),
             path('cms/texts/', self.admin_view(self.site_texts_view), name='cms_texts'),
             path('cms/texts/save/', self.admin_view(self.site_texts_save), name='cms_texts_save'),
+            path('cms/assets/', self.admin_view(self.site_assets_view), name='cms_assets'),
+            path('cms/assets/upload/', self.admin_view(self.site_assets_upload), name='cms_assets_upload'),
+            path('cms/assets/reset/', self.admin_view(self.site_assets_reset), name='cms_assets_reset'),
             path(
                 'cms/inquiry/<int:pk>/resume/',
                 self.admin_view(self.resume_download),
@@ -325,6 +329,14 @@ class MriiAdminSite(AdminSite):
                 'url': reverse('admin:cms_texts'),
             },
             {
+                'title': 'Sayt rasmlari',
+                'desc': 'Saytdagi tayyor rasm va videolarni almashtirish: klinika, galereya, bosh sahifa, AI…',
+                'meta': 'Rasmlar',
+                'icon': 'hero',
+                'tone': 'sky',
+                'url': reverse('admin:cms_assets'),
+            },
+            {
                 'title': 'Narxlar',
                 'desc': 'Xizmatlar narxi va check-up paketlari — narxni jadvalda to‘g‘ridan-to‘g‘ri o‘zgartirasiz.',
                 'meta': 'Narxnoma',
@@ -449,6 +461,7 @@ class MriiAdminSite(AdminSite):
 
         card_models = {
             'Sayt matnlari': models.TextOverride,
+            'Sayt rasmlari': models.AssetOverride,
             'Narxlar': models.PriceItem,
             'Check-up paketlari': models.CheckupDirection,
             'Narx bo‘limlari': models.PriceCategory,

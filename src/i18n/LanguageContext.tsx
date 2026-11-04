@@ -4,6 +4,7 @@ import { toContentLang } from './types'
 import { translations, type Translations } from './translations'
 import { applyTextOverrides, type TextOverrides } from './textOverrides'
 import { fetchSiteConfig, type SiteConfig } from '../api/client'
+import { setAssetOverrides } from '../lib/assetOverrides'
 import { applyContacts, resolveContacts, type ContactOverrides, type Contacts } from '../lib/contacts'
 
 const STORAGE_KEY = 'fjsti-lang'
@@ -28,7 +29,7 @@ function detectLang(): Lang {
   return 'uz'
 }
 
-function readCachedConfig(): SiteConfig | null {
+export function readCachedConfig(): SiteConfig | null {
   try {
     const raw = localStorage.getItem(OVERRIDES_KEY)
     return raw ? (JSON.parse(raw) as SiteConfig) : null
@@ -47,6 +48,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     fetchSiteConfig().then((data) => {
       if (cancelled || !data) return
       setConfig(data)
+      setAssetOverrides(data.assets)
       try {
         localStorage.setItem(OVERRIDES_KEY, JSON.stringify(data))
       } catch {

@@ -664,7 +664,7 @@ class SiteTextsTests(TestCase):
         self.assertIn('max-age', api['Cache-Control'])
         reset = self.save(e['key'], {'uz': '', 'ru': '', 'en': '', 'kaa': ''})
         self.assertFalse(reset.json()['overridden'])
-        self.assertEqual(self.client.get('/api/texts/').json(), {'texts': {}, 'contacts': {}})
+        self.assertEqual(self.client.get('/api/texts/').json(), {'texts': {}, 'contacts': {}, 'assets': {}})
 
     def test_validation_and_permissions(self):
         e = self.entry()
@@ -781,3 +781,87 @@ class PriceListTests(TestCase):
             self.assertEqual(self.client.get(f'/admin/cms/{name}/').status_code, 200, name)
         direction = __import__('cms.models', fromlist=['CheckupDirection']).CheckupDirection.objects.first()
         self.assertEqual(self.client.get(f'/admin/cms/checkupdirection/{direction.pk}/change/').status_code, 200)
+
+
+@override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class SiteAssetsTests(TestCase):
+    PATH = '/images/clinic-gallery/courtyard.webp'
+
+    def setUp(self):
+        self.media = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.media, ignore_errors=True)
+        override = override_settings(MEDIA_ROOT=self.media)
+        override.enable()
+        self.addCleanup(override.disable)
+        self.admin = User.objects.create_superuser('boss', 'b@example.uz', 'pw-12345-xyz')
+        self.client.force_login(self.admin)
+
+    def png(self, name='new.png'):
+        import io
+
+        from PIL import Image
+
+        buf = io.BytesIO()
+        Image.new('RGB', (40, 30), (200, 20, 80)).save(buf, 'PNG')
+        return SimpleUploadedFile(name, buf.getvalue(), content_type='image/png')
+
+    def upload(self, path, file):
+        return self.client.post('/admin/cms/assets/upload/', {'path': path, 'file': file})
+
+    def test_catalogue_page_lists_real_files(self):
+        from . import site_assets
+
+        self.assertIn(self.PATH, site_assets.by_path())
+        page = self.client.get('/admin/cms/assets/')
+        self.assertEqual(page.status_code, 200)
+        self.assertContains(page, 'courtyard.webp')
+        self.assertEqual(self.client.get('/admin/cms/assets/', {'group': 'clinic-gallery'}).status_code, 200)
+
+    def test_replace_publish_and_reset(self):
+        ok = self.upload(self.PATH, self.png())
+        self.assertEqual(ok.status_code, 200, ok.content)
+        url = ok.json()['url']
+        self.assertTrue(url.startswith('/media/site-assets/'))
+        assets = self.client.get('/api/texts/').json()['assets']
+        self.assertEqual(list(assets), [self.PATH])
+        self.assertEqual(self.client.get(url).status_code, 200)  # public folder is served
+        # replacing again removes the old file and keeps one row
+        second = self.upload(self.PATH, self.png('again.png'))
+        self.assertEqual(second.status_code, 200)
+        from .models import AssetOverride
+        import os
+        self.assertEqual(AssetOverride.objects.count(), 1)
+        self.assertEqual(len(os.listdir(os.path.join(self.media, 'site-assets'))), 1)
+        reset = self.client.post('/admin/cms/assets/reset/', {'path': self.PATH})
+        self.assertEqual(reset.status_code, 200)
+        self.assertEqual(self.client.get('/api/texts/').json()['assets'], {})
+        self.assertEqual(os.listdir(os.path.join(self.media, 'site-assets')), [])
+
+    def test_bad_uploads_are_refused_with_a_clear_message(self):
+        fake = SimpleUploadedFile('x.png', b'<svg onload=alert(1)>', content_type='image/png')
+        self.assertEqual(self.upload(self.PATH, fake).status_code, 400)
+        svg = SimpleUploadedFile('x.svg', b'<svg xmlns="http://www.w3.org/2000/svg"/>', content_type='image/svg+xml')
+        self.assertIn('Rasm turi', self.upload(self.PATH, svg).json()['error'])
+        html_video = SimpleUploadedFile('x.mp4', b'<html>not a video</html>', content_type='video/mp4')
+        video_path = next(p for p, e in __import__('cms.site_assets', fromlist=['x']).by_path().items() if e['kind'] == 'video')
+        self.assertEqual(self.upload(video_path, html_video).status_code, 400)
+        self.assertEqual(self.upload(video_path, self.png()).status_code, 400)  # image into a video slot
+        self.assertEqual(self.upload('/images/not/in/catalogue.webp', self.png()).status_code, 400)
+        self.assertEqual(self.upload(self.PATH, SimpleUploadedFile('big.png', b'0' * 10, content_type='image/png')).status_code, 400)
+        from .models import AssetOverride
+        self.assertEqual(AssetOverride.objects.count(), 0)
+
+    def test_real_mp4_header_is_accepted_for_a_video_slot(self):
+        video_path = next(p for p, e in __import__('cms.site_assets', fromlist=['x']).by_path().items() if e['kind'] == 'video')
+        mp4 = SimpleUploadedFile('clip.mp4', b'\x00\x00\x00\x18ftypmp42' + b'\x00' * 64, content_type='video/mp4')
+        self.assertEqual(self.upload(video_path, mp4).status_code, 200)
+
+    def test_staff_without_permission_and_visitors_are_refused(self):
+        hr = User.objects.create_user('hr', 'hr@example.uz', 'pw-12345-xyz', is_staff=True)
+        hr.groups.add(Group.objects.get(name=HR_GROUP))
+        self.client.force_login(hr)
+        self.assertEqual(self.client.get('/admin/cms/assets/').status_code, 403)
+        self.assertEqual(self.upload(self.PATH, self.png()).status_code, 403)
+        self.client.logout()
+        self.assertEqual(self.client.get('/admin/cms/assets/').status_code, 302)
+        self.assertEqual(self.client.get('/admin/cms/assets/upload/').status_code, 302)

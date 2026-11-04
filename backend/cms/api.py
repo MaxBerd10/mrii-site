@@ -11,12 +11,17 @@ def ctx(request, lang: str) -> dict:
 
 class TextsAPI(APIView):
     """Everything the clinic edited in the admin that is not CMS content:
-    {texts: {key: {lang: text}}, contacts: {phone, telegramUrl, …}}. Only differences from the built-in defaults."""
+    {texts: {key: {lang: text}}, contacts: {phone, telegramUrl, …}, assets: {path: url}}. Only differences from the built-in defaults."""
 
     def get(self, request):
+        from .site_assets import assets_payload
         from .site_texts import contacts_payload, overrides_payload
 
-        response = Response({'texts': overrides_payload(), 'contacts': contacts_payload()})
+        response = Response({
+            'texts': overrides_payload(),
+            'contacts': contacts_payload(),
+            'assets': assets_payload(request),
+        })
         response['Cache-Control'] = 'public, max-age=60'
         return response
 

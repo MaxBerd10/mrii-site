@@ -11,6 +11,7 @@ export function apiBase() {
 export type SiteConfig = {
   texts: Record<string, Record<string, string>>
   contacts: Record<string, unknown>
+  assets: Record<string, string>
 }
 
 export async function fetchSiteConfig(): Promise<SiteConfig | null> {
@@ -19,7 +20,7 @@ export async function fetchSiteConfig(): Promise<SiteConfig | null> {
     const res = await fetch(`${API_URL}/api/texts/`, { headers: { Accept: 'application/json' } })
     if (!res.ok) return null
     const data = (await res.json()) as Partial<SiteConfig>
-    return { texts: data.texts ?? {}, contacts: data.contacts ?? {} }
+    return { texts: data.texts ?? {}, contacts: data.contacts ?? {}, assets: data.assets ?? {} }
   } catch {
     return null
   }
