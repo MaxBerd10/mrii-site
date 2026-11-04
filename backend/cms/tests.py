@@ -961,3 +961,43 @@ class AdminHubAndSearchTests(TestCase):
         page = self.client.get('/admin/cms/texts/', {'key': key})
         self.assertEqual(page.status_code, 200)
         self.assertContains(page, 'Hamma matnlarni ko‘rish')
+
+
+@override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class DoctorTurnoverTests(TestCase):
+    """Doctors come and go: add, hide, and remove several at once with checkboxes."""
+
+    def setUp(self):
+        from .models import Doctor
+
+        self.client.force_login(User.objects.create_superuser('boss', 'b@example.uz', 'pw-12345-xyz'))
+        self.docs = [
+            Doctor.objects.create(slug=f'dr-{i}', name=f'Dr. Sinov {i}', role_uz='Shifokor', role_ru='Врач', role_en='Doctor')
+            for i in range(3)
+        ]
+
+    def listed(self):
+        return {d['slug'] for d in self.client.get('/api/doctors/?lang=uz').json()}
+
+    def test_hide_and_show_in_bulk(self):
+        ids = [str(d.pk) for d in self.docs[:2]]
+        self.client.post('/admin/cms/doctor/', {'action': 'make_inactive', '_selected_action': ids})
+        self.assertEqual(self.listed() & {'dr-0', 'dr-1', 'dr-2'}, {'dr-2'})
+        self.client.post('/admin/cms/doctor/', {'action': 'make_active', '_selected_action': ids})
+        self.assertEqual(self.listed() & {'dr-0', 'dr-1', 'dr-2'}, {'dr-0', 'dr-1', 'dr-2'})
+
+    def test_delete_several_with_one_confirmation(self):
+        from .models import Doctor
+
+        ids = [str(d.pk) for d in self.docs[:2]]
+        confirm = self.client.post('/admin/cms/doctor/', {'action': 'delete_selected', '_selected_action': ids})
+        self.assertEqual(confirm.status_code, 200)
+        self.assertEqual(Doctor.objects.filter(slug__startswith='dr-').count(), 3)  # nothing yet
+        done = self.client.post('/admin/cms/doctor/', {'action': 'delete_selected', '_selected_action': ids, 'post': 'yes'})
+        self.assertEqual(done.status_code, 302)
+        self.assertEqual(list(Doctor.objects.filter(slug__startswith='dr-').values_list('slug', flat=True)), ['dr-2'])
+
+    def test_add_a_new_doctor_from_the_form(self):
+        page = self.client.get('/admin/cms/doctor/add/')
+        self.assertEqual(page.status_code, 200)
+        self.assertContains(page, 'Saqlash')

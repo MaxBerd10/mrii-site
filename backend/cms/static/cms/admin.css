@@ -385,3 +385,6 @@ body.m-body .submit-row input.default { background: var(--accent); color: #fff; 
   .submit-row input[name='_continue'] { flex: 1 1 auto; }
   .submit-row a.deletelink { flex: 0 0 auto; }
 }
+
+a.mrii-row-delete, a.mrii-row-delete:link, a.mrii-row-delete:visited { color: var(--danger); font-weight: 600; text-decoration: none; padding: 6px 10px; border: 1px solid #e7b9b4; border-radius: 8px; white-space: nowrap; }
+a.mrii-row-delete:hover { background: var(--danger-soft); }
