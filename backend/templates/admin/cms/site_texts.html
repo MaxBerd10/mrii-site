@@ -38,20 +38,21 @@
         <button type="submit">Qidirish</button>
       </form>
       <a class="stx-chip{% if only_changed %} is-on{% endif %}" href="?{% if not only_changed %}changed=1{% endif %}{% if current_section %}&section={{ current_section }}{% endif %}">
-        ✎ Faqat o‘zgartirilganlar ({{ total_changed }})
+        Faqat o‘zgartirilganlar ({{ total_changed }})
       </a>
       <nav>
         <a class="stx-sec{% if not current_section %} is-on{% endif %}" href="?{% if only_changed %}changed=1{% endif %}">Hamma bo‘limlar</a>
         {% for s in sections %}
           <a class="stx-sec{% if current_section == s.key %} is-on{% endif %}" href="?section={{ s.key }}{% if only_changed %}&changed=1{% endif %}" title="Sahifa: {{ s.page }}">
             <span>{{ s.title }}</span>
-            <small>{{ s.page }} · {{ s.count }}{% if s.changed %} · <b>{{ s.changed }} ✎</b>{% endif %}</small>
+            <small>{{ s.page }} · {{ s.count }}{% if s.changed %} · <b>{{ s.changed }} o‘zgargan</b>{% endif %}</small>
           </a>
         {% endfor %}
       </nav>
     </aside>
 
     <section class="stx-main">
+      {% if only_key %}<p class="stx-empty" style="padding:12px 16px;text-align:left">Qidiruvdan tanlangan bitta matn ko‘rsatilmoqda. <a href="{% url 'admin:cms_texts' %}">Hamma matnlarni ko‘rish</a></p>{% endif %}
       {% if not page_obj.object_list %}
         <p class="stx-empty">Hech narsa topilmadi. Boshqa so‘z bilan qidirib ko‘ring.</p>
       {% endif %}

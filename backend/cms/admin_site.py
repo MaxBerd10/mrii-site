@@ -7,6 +7,7 @@ from django.http import HttpResponse, JsonResponse
 from django.urls import path, reverse
 
 from .admin_assets import AssetAdminMixin
+from .admin_hub import HubAdminMixin
 from .utils import client_ip
 
 # Admin login brute-force protection (shared across workers via the file cache).
@@ -51,7 +52,7 @@ def login_locked(request, username=''):
     return bool(user_key) and (cache.get(user_key[0]) or 0) >= LOGIN_MAX_FAILS_PER_USER
 
 
-class MriiAdminSite(AssetAdminMixin, AdminSite):
+class MriiAdminSite(HubAdminMixin, AssetAdminMixin, AdminSite):
     site_header = 'FJSTI CMS'
     site_title = 'FJSTI CMS'
     index_title = 'Bosh sahifa'
@@ -88,6 +89,9 @@ class MriiAdminSite(AssetAdminMixin, AdminSite):
             path('cms/texts/', self.admin_view(self.site_texts_view), name='cms_texts'),
             path('cms/texts/save/', self.admin_view(self.site_texts_save), name='cms_texts_save'),
             path('cms/guide/', self.admin_view(self.guide_view), name='cms_guide'),
+            path('cms/pages/', self.admin_view(self.pages_view), name='cms_pages'),
+            path('cms/pages/<slug:key>/', self.admin_view(self.page_detail_view), name='cms_page'),
+            path('cms/search/', self.admin_view(self.search_view), name='cms_search'),
             path('cms/assets/', self.admin_view(self.site_assets_view), name='cms_assets'),
             path('cms/assets/upload/', self.admin_view(self.site_assets_upload), name='cms_assets_upload'),
             path('cms/assets/reset/', self.admin_view(self.site_assets_reset), name='cms_assets_reset'),
@@ -153,6 +157,7 @@ class MriiAdminSite(AssetAdminMixin, AdminSite):
         q = request.GET.get('q', '').strip().lower()
         section = request.GET.get('section', '')
         only_changed = request.GET.get('changed') == '1'
+        only_key = request.GET.get('key', '').strip()
         overrides = {o.key: o for o in models.TextOverride.objects.all()}
 
         def is_changed(entry, lang):
@@ -170,6 +175,8 @@ class MriiAdminSite(AssetAdminMixin, AdminSite):
             if section and sec != section:
                 continue
             if only_changed and not changed_langs:
+                continue
+            if only_key and entry['key'] != only_key:
                 continue
             ov = overrides.get(entry['key'])
             values = {l: (getattr(ov, l) if ov and getattr(ov, l) else entry[l]) for l in LANGS}
@@ -198,6 +205,7 @@ class MriiAdminSite(AssetAdminMixin, AdminSite):
             'q': request.GET.get('q', ''),
             'current_section': section,
             'only_changed': only_changed,
+            'only_key': only_key,
             'total_changed': sum(changed_counts.values()),
             'sections': [
                 {'key': k, 'title': site_texts.section_title(k), 'page': site_texts.section_page(k),
@@ -291,180 +299,59 @@ class MriiAdminSite(AssetAdminMixin, AdminSite):
         return redirect('admin:index')
 
     def index(self, request, extra_context=None):
-        from django.contrib.auth.models import User
+        from . import models, site_pages
 
-        from . import models
-
-        def can_access(model) -> bool:
-            opts = model._meta
-            return any(
-                request.user.has_perm(f'{opts.app_label}.{action}_{opts.model_name}')
-                for action in ('view', 'change', 'add', 'delete')
-            )
-
-        def url(name: str) -> str:
-            return reverse(f'admin:cms_{name}_changelist')
-
-        def change_url(name: str) -> str:
-            model_map = {
-                'sitesettings': models.SiteSettings,
-                'hero': models.Hero,
-                'homepage': models.HomePage,
-                'researchsection': models.ResearchSection,
-            }
-            obj = model_map[name].objects.first()
-            if obj:
-                return reverse(f'admin:cms_{name}_change', args=[obj.pk])
-            return reverse(f'admin:cms_{name}_add')
-
+        hr = self._is_hr_workspace(request)
         new_leads = models.Inquiry.objects.filter(status=models.Inquiry.Status.NEW).count()
-        new_career_leads = models.Inquiry.objects.filter(
-            status=models.Inquiry.Status.NEW,
-            intent=models.Inquiry.Intent.CAREER,
+        new_career = models.Inquiry.objects.filter(
+            status=models.Inquiry.Status.NEW, intent=models.Inquiry.Intent.CAREER,
         ).count()
 
-        # Cards are grouped by what the editor wants to do, each says WHERE it shows on the website.
-        groups = [
-            {
-                'title': 'Kundalik ishlar',
-                'hint': 'Eng ko‘p kerak bo‘ladigan bo‘limlar',
-                'style': 'cards',
-                'cards': [
-                    {'title': 'Murojaatlar', 'model': models.Inquiry, 'icon': 'inbox', 'tone': 'mint',
-                     'meta': f'{new_leads} yangi' if new_leads else 'Bemorlar va nomzodlar',
-                     'desc': 'Saytdan kelgan so‘rovlar va ish arizalari: telefon, holat, rezyume.',
-                     'url': url('inquiry')},
-                    {'title': 'Yangiliklar', 'model': models.NewsArticle, 'icon': 'news', 'tone': 'sky',
-                     'meta': 'Yangiliklar sahifasi',
-                     'desc': 'Maqola yozish yoki tahrirlash: sarlavha, matn, sana, muqova rasmi.',
-                     'url': url('newsarticle')},
-                    {'title': 'Shifokorlar', 'model': models.Doctor, 'icon': 'doctor', 'tone': 'teal',
-                     'meta': 'Shifokorlar sahifasi',
-                     'desc': 'Shifokor qo‘shish, ism, lavozim, mutaxassislik va foto.',
-                     'url': url('doctor')},
-                    {'title': 'Narxlar', 'model': models.PriceItem, 'icon': 'chart', 'tone': 'teal',
-                     'meta': 'Narxlar sahifasi',
-                     'desc': 'Xizmat narxlari jadvali — narxni to‘g‘ridan-to‘g‘ri jadvalda o‘zgartirasiz.',
-                     'url': url('priceitem')},
-                    {'title': 'Vakansiyalar', 'model': models.Vacancy, 'icon': 'doctor', 'tone': 'navy',
-                     'meta': 'Vakansiyalar sahifasi',
-                     'desc': 'Ochiq lavozimlar. (HR xodimi buni Telegram mini-ilovada ham qiladi.)',
-                     'url': url('vacancy')},
-                ],
-            },
-            {
-                'title': 'Saytning matni, rasmi va aloqa ma’lumotlari',
-                'hint': 'Saytdagi HAR BIR yozuv va rasm — shu yerdan',
-                'style': 'cards',
-                'cards': [
-                    {'title': 'Sayt matnlari', 'model': models.TextOverride, 'icon': 'doc', 'tone': 'indigo',
-                     'meta': 'Hamma sahifa',
-                     'desc': 'Saytdagi har bir sarlavha, tugma va tavsif — 4 tilda. Qidiruv bilan toping.',
-                     'url': reverse('admin:cms_texts')},
-                    {'title': 'Sayt rasmlari', 'model': models.AssetOverride, 'icon': 'hero', 'tone': 'sky',
-                     'meta': 'Rasm va video',
-                     'desc': 'Saytdagi tayyor rasm va videolarni yangisiga almashtirish.',
-                     'url': reverse('admin:cms_assets')},
-                    {'title': 'Aloqa ma’lumotlari', 'model': models.SiteSettings, 'icon': 'settings', 'tone': 'slate',
-                     'meta': 'Hamma sahifa (tepa va past)',
-                     'desc': 'Telefon, Telegram, Instagram, pochta, xarita manzili, mualliflik huquqi.',
-                     'url': change_url('sitesettings')},
-                    {'title': 'Bosh sahifa', 'model': models.HomePage, 'icon': 'hero', 'tone': 'mint',
-                     'meta': 'Bosh sahifa',
-                     'desc': 'Birinchi ekrandagi asosiy matn, jamoa rasmi va raqamlar.',
-                     'url': change_url('homepage')},
-                ],
-            },
-            {
-                'title': 'Sahifalar bo‘yicha',
-                'hint': 'Kamroq o‘zgaradigan bo‘limlar',
-                'style': 'list',
-                'cards': [
-                    {'title': 'Klinik yo‘nalishlar', 'model': models.Specialty, 'icon': 'clinic',
-                     'desc': 'Klinika sahifasi: bo‘limlar matni, xizmatlar va rasmlari',
-                     'url': url('specialty')},
-                    {'title': 'Check-up paketlari', 'model': models.CheckupDirection, 'icon': 'clinic',
-                     'desc': 'Narxlar sahifasi: Layt / Standart / Premium paket tarkibi va narxi',
-                     'url': url('checkupdirection')},
-                    {'title': 'Narx bo‘limlari', 'model': models.PriceCategory, 'icon': 'doc',
-                     'desc': 'Narxlar sahifasi: bo‘lim nomlari (Laboratoriya, UZI…) va tartibi',
-                     'url': url('pricecategory')},
-                    {'title': 'Klinika sayohati', 'model': models.ClinicTourVideo, 'icon': 'clinic',
-                     'desc': 'Klinika → Video sayohat: videolar',
-                     'url': url('clinictourvideo')},
-                    {'title': 'AI mahsulotlar', 'model': models.AIProduct, 'icon': 'ai',
-                     'desc': 'AI yechimlar sahifasi: AiShifokor va boshqa mahsulotlar',
-                     'url': url('aiproduct')},
-                    {'title': 'Tadqiqotlar', 'model': models.ResearchStudy, 'icon': 'research',
-                     'desc': 'Tadqiqotlar sahifasi: faol tadqiqotlar va holatlari',
-                     'url': url('researchstudy')},
-                    {'title': 'Tadqiqotlar matni', 'model': models.ResearchSection, 'icon': 'doc',
-                     'desc': 'Tadqiqotlar sahifasi: bo‘lim sarlavhasi va «Nima uchun»',
-                     'url': change_url('researchsection')},
-                    {'title': 'Tadqiqot imkoniyatlari', 'model': models.ResearchCapability, 'icon': 'chart',
-                     'desc': 'Tadqiqotlar sahifasi: statistika qiymatlari',
-                     'url': url('researchcapability')},
-                    {'title': 'Sharhlar', 'model': models.Testimonial, 'icon': 'quote',
-                     'desc': 'Bosh sahifa: bemor va hamkor fikrlari (kamida bittasi qo‘shilsa ko‘rinadi)',
-                     'url': url('testimonial')},
-                ],
-            },
-            {
-                'title': 'Tizim',
-                'hint': 'Faqat bosh administrator uchun',
-                'style': 'list',
-                'cards': [
-                    {'title': 'HR Telegram', 'model': models.HRTelegramUser, 'icon': 'doctor',
-                     'desc': 'HR mini-ilovaga kirish ruxsati berilgan Telegram akkauntlar',
-                     'url': url('hrtelegramuser')},
-                    {'title': 'Foydalanuvchilar', 'model': User, 'icon': 'doctor',
-                     'desc': 'Admin panelga kiradigan xodimlar va ularning huquqlari',
-                     'url': reverse('admin:auth_user_changelist')},
-                ],
-            },
-        ]
-        for group in groups:
-            group['cards'] = [card for card in group['cards'] if can_access(card['model'])]
-        groups = [group for group in groups if group['cards']]
+        def go(label, hint, url, model=None, perm=None):
+            if model is not None and not self._can(request, model):
+                return None
+            if perm and not request.user.has_perm(perm):
+                return None
+            return {'label': label, 'hint': hint, 'url': url}
 
-        is_hr_workspace = (
-            request.user.groups.filter(name='HR bo‘limi').exists()
-            and not request.user.is_superuser
-        )
-        if is_hr_workspace:
-            by_title = {card['title']: card for group in groups for card in group['cards']}
-            picked = []
-            if 'Murojaatlar' in by_title:
-                picked.append({
-                    **by_title['Murojaatlar'],
-                    'desc': 'Vakansiyaga kelgan arizalar — rezyume, telefon, holat.',
-                    'meta': f'{new_career_leads} yangi' if new_career_leads else 'Arizalar',
-                })
-            if 'Vakansiyalar' in by_title:
-                picked.append(by_title['Vakansiyalar'])
-            groups = [{'title': '', 'hint': '', 'style': 'cards', 'cards': picked}] if picked else []
+        def add_url(name):
+            return reverse(f'admin:cms_{name}_add')
 
-        stats = [
-            {'label': 'Yangi murojaat', 'value': new_leads, 'tone': 'mint', 'model': models.Inquiry},
-            {'label': 'Yo‘nalishlar', 'value': models.Specialty.objects.count(), 'tone': 'navy', 'model': models.Specialty},
-            {'label': 'Shifokorlar', 'value': models.Doctor.objects.count(), 'tone': 'teal', 'model': models.Doctor},
-            {'label': 'Yangiliklar', 'value': models.NewsArticle.objects.count(), 'tone': 'sky', 'model': models.NewsArticle},
-        ]
-        if is_hr_workspace:
-            stats = [
-                {'label': 'Yangi ariza', 'value': new_career_leads, 'tone': 'mint'},
-                {'label': 'Ochiq vakansiya', 'value': models.Vacancy.objects.filter(is_active=True).count(), 'tone': 'navy'},
-            ]
+        if hr:
+            tasks = [t for t in (
+                go('Yangi arizalarni ko‘rish', 'Rezyume, telefon, holatni belgilash', reverse('admin:cms_inquiry_changelist'), models.Inquiry),
+                go('Vakansiya qo‘yish', 'Yangi lavozim e’lon qilish', add_url('vacancy'), models.Vacancy),
+                go('Vakansiyalar ro‘yxati', 'Tahrirlash yoki yashirish', reverse('admin:cms_vacancy_changelist'), models.Vacancy),
+            ) if t]
+            attention = {'count': new_career, 'label': 'yangi ariza', 'url': reverse('admin:cms_inquiry_changelist')}
         else:
-            stats = [{key: value for key, value in stat.items() if key != 'model'} for stat in stats if can_access(stat['model'])]
+            tasks = [t for t in (
+                go('Telefon yoki manzilni o‘zgartirish', 'Telefon, Telegram, pochta, xarita — butun saytda almashadi',
+                   self._model_urls('sitesettings', True)[1], models.SiteSettings),
+                go('Narxni o‘zgartirish', 'Xizmat narxlari jadvali', reverse('admin:cms_priceitem_changelist'), models.PriceItem),
+                go('Yangilik qo‘shish', 'Sarlavha, matn, muqova rasmi', add_url('newsarticle'), models.NewsArticle),
+                go('Shifokor qo‘shish yoki tahrirlash', 'Ism, lavozim, foto, ma’lumot', reverse('admin:cms_doctor_changelist'), models.Doctor),
+                go('Rasm yoki videoni almashtirish', 'Saytdagi tayyor rasm va videolar', reverse('admin:cms_assets'), models.AssetOverride),
+                go('Saytdagi yozuvni o‘zgartirish', 'Qidiruv orqali istalgan matnni toping', reverse('admin:cms_texts'), models.TextOverride),
+                go('Vakansiya qo‘yish', 'Yangi lavozim e’lon qilish', add_url('vacancy'), models.Vacancy),
+            ) if t]
+            attention = {'count': new_leads, 'label': 'yangi murojaat', 'url': reverse('admin:cms_inquiry_changelist')} \
+                if self._can(request, models.Inquiry) else None
 
+        pages = [] if hr else [
+            {'title': p['title'], 'url': reverse('admin:cms_page', args=[p['key']]), 'blurb': p['blurb']}
+            for p in site_pages.PAGES
+        ]
         extra = extra_context or {}
         extra.update({
-            'mrii_stats': stats,
-            'mrii_groups': groups,
-            'mrii_hr_workspace': is_hr_workspace,
+            'title': 'Bosh sahifa',
+            'mrii_tasks': tasks,
+            'mrii_attention': attention,
+            'mrii_pages': pages,
+            'mrii_hr_workspace': hr,
             'mrii_guide_url': reverse('admin:cms_guide'),
             'mrii_site_url': getattr(settings, 'FRONTEND_URL', '') or '/',
+            'mrii_name': request.user.get_short_name() or request.user.get_username(),
         })
         return super().index(request, extra_context=extra)
 

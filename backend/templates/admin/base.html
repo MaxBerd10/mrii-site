@@ -1,0 +1,80 @@
+{% load i18n static %}<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<title>{% block title %}{% endblock %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
+{% block dark-mode-vars %}{% endblock %}
+{% block extrastyle %}{% endblock %}
+<link rel="stylesheet" href="{% static 'cms/admin.css' %}?v=10">
+{% block extrahead %}{% endblock %}
+{% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
+</head>
+<body class="m-body {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}">
+{% include "admin/includes/mrii_icons.html" %}
+<a href="#content-start" class="skip-to-content-link">Asosiy qismga o‘tish</a>
+<div class="{% if has_permission and not is_popup %}m-shell{% else %}m-plain{% endif %}">
+  {% if has_permission and not is_popup %}
+  <aside class="m-side" id="m-side" aria-label="Asosiy menyu">
+    <a class="m-brand" href="{% url 'admin:index' %}">
+      <span class="m-brand__mark" aria-hidden="true">F</span>
+      <span><strong>FJSTI</strong><small>Sayt boshqaruvi</small></span>
+    </a>
+    <nav class="m-nav">
+      {% for group in mrii_nav %}
+        {% if group.title %}<div class="m-nav__title">{{ group.title }}</div>{% endif %}
+        {% for item in group.items %}
+          <a href="{{ item.url }}"{% if item.active %} aria-current="page"{% endif %}>
+            <svg class="m-ico" aria-hidden="true"><use href="#i-{{ item.icon }}"></use></svg>{{ item.label }}
+          </a>
+        {% endfor %}
+      {% endfor %}
+    </nav>
+    <div class="m-side__foot">
+      <div>Kirgan: <strong>{{ user.get_short_name|default:user.get_username }}</strong></div>
+      <div class="m-side__links">
+        {% if user.has_usable_password %}<a href="{% url 'admin:password_change' %}">Parolni almashtirish</a>{% endif %}
+        <form id="logout-form" method="post" action="{% url 'admin:logout' %}">{% csrf_token %}<button type="submit">Chiqish</button></form>
+      </div>
+    </div>
+  </aside>
+  <div class="m-scrim" data-m-close></div>
+  {% endif %}
+
+  <div class="m-stage">
+    {% if has_permission and not is_popup %}
+    <header class="m-top">
+      <button type="button" class="m-menu-btn" id="m-menu-btn" aria-controls="m-side" aria-expanded="false" aria-label="Menyuni ochish"><svg class="m-ico"><use href="#i-menu"></use></svg></button>
+      {% if not mrii_hr_workspace %}{% include "admin/includes/search_box.html" %}{% endif %}
+      <span class="m-top__space"></span>
+      {% if site_url %}<a class="m-btn m-btn--ghost m-top__site" href="{{ site_url }}" target="_blank" rel="noopener noreferrer">Saytni ochish <svg class="m-ico"><use href="#i-ext"></use></svg></a>{% endif %}
+    </header>
+    {% block nav-breadcrumbs %}
+      <nav class="m-crumbs" aria-label="Siz turgan joy">
+        {% block breadcrumbs %}
+          <div class="breadcrumbs"><a href="{% url 'admin:index' %}">Bosh sahifa</a>{% if title %} › {{ title }}{% endif %}</div>
+        {% endblock %}
+      </nav>
+    {% endblock %}
+    {% else %}
+      {% block breadcrumbs_plain %}{% endblock %}
+    {% endif %}
+    <main id="content-start" class="m-main" tabindex="-1">
+      {% block messages %}
+        {% if messages %}<ul class="messagelist">{% for message in messages %}<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>{% endfor %}</ul>{% endif %}
+      {% endblock messages %}
+      <div id="content" class="{% block coltype %}colM{% endblock %}">
+        {% block pretitle %}{% endblock %}
+        {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+        {% block content_subtitle %}{% endblock %}
+        {% block content %}{% block object-tools %}{% endblock %}{{ content }}{% endblock %}
+        {% block sidebar %}{% endblock %}
+      </div>
+    </main>
+  </div>
+</div>
+{% if has_permission and not is_popup %}<script src="{% static 'cms/admin_shell.js' %}?v=2" data-search-url="{% url 'admin:cms_search' %}" defer></script>{% endif %}
+{% block extrabody %}{% endblock extrabody %}
+</body>
+</html>

@@ -902,3 +902,62 @@ class AdminDashboardTests(TestCase):
         self.assertContains(page, 'Vakansiyalar')
         for hidden in ('Sayt matnlari', 'Narxlar', 'Sayt rasmlari', 'Foydalanuvchilar'):
             self.assertNotContains(page, hidden)
+
+
+@override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class AdminHubAndSearchTests(TestCase):
+    def setUp(self):
+        self.boss = User.objects.create_superuser('boss', 'b@example.uz', 'pw-12345-xyz')
+        self.client.force_login(self.boss)
+
+    def test_every_text_section_belongs_to_a_site_page(self):
+        from . import site_pages, site_texts
+
+        in_catalogue = {site_texts.section_of(e['key']) for e in site_texts.catalog()}
+        self.assertEqual(in_catalogue - site_pages.assigned_text_sections(), set())
+
+    def test_pages_hub_and_each_page_open(self):
+        from . import site_pages
+
+        self.assertEqual(self.client.get('/admin/cms/pages/').status_code, 200)
+        for page in site_pages.PAGES:
+            response = self.client.get(f"/admin/cms/pages/{page['key']}/")
+            self.assertEqual(response.status_code, 200, page['key'])
+            self.assertContains(response, page['title'])
+        self.assertEqual(self.client.get('/admin/cms/pages/nope/').status_code, 404)
+
+    def test_search_finds_prices_texts_and_people(self):
+        from .models import Inquiry, PriceItem
+
+        item = PriceItem.objects.first()
+        found = self.client.get('/admin/cms/search/', {'q': item.name_uz[:8]}).json()
+        titles = [g['title'] for g in found['groups']]
+        self.assertIn('Narxlar', titles)
+        Inquiry.objects.create(name='Qidiruv Sinov', phone='+998900000000', request_id='T-SEARCH')
+        found = self.client.get('/admin/cms/search/', {'q': 'Qidiruv Sinov'}).json()
+        self.assertEqual([g['title'] for g in found['groups']], ['Murojaat va arizalar'])
+        self.assertEqual(self.client.get('/admin/cms/search/', {'q': 'a'}).json(), {'groups': []})
+        key = self.client.get('/admin/cms/search/', {'q': 'Bosh sahifa'}).json()
+        self.assertTrue(any(g['title'] == 'Sayt matnlari' for g in key['groups']))
+
+    def test_hr_search_is_limited_to_career_leads_and_vacancies(self):
+        from .models import Inquiry
+
+        Inquiry.objects.create(name='Bemor Maxfiy', phone='+998911111111', request_id='T-PATIENT', intent=Inquiry.Intent.BOOKING)
+        Inquiry.objects.create(name='Nomzod Ochiq', phone='+998922222222', request_id='T-CAND', intent=Inquiry.Intent.CAREER)
+        hr = User.objects.create_user('hr2', 'h@example.uz', 'pw-12345-xyz', is_staff=True)
+        hr.groups.add(Group.objects.get(name=HR_GROUP))
+        self.client.force_login(hr)
+        body = self.client.get('/admin/cms/search/', {'q': 'Bemor'}).json()
+        self.assertEqual(body['groups'], [])
+        body = self.client.get('/admin/cms/search/', {'q': 'Nomzod'}).json()
+        self.assertEqual(body['groups'][0]['items'][0]['title'], 'Nomzod Ochiq')
+        self.assertEqual(self.client.get('/admin/cms/search/', {'q': 'Bosh sahifa'}).json(), {'groups': []})
+
+    def test_text_page_can_show_a_single_key(self):
+        from . import site_texts
+
+        key = site_texts.catalog()[0]['key']
+        page = self.client.get('/admin/cms/texts/', {'key': key})
+        self.assertEqual(page.status_code, 200)
+        self.assertContains(page, 'Hamma matnlarni ko‘rish')

@@ -1,0 +1,16 @@
+{% load i18n admin_urls %}
+<div class="submit-row">
+{% block submit-row %}
+{% if show_save %}<input type="submit" value="Saqlash" class="default" name="_save">{% endif %}
+{% if show_save_as_new %}<input type="submit" value="Yangi nusxa sifatida saqlash" name="_saveasnew">{% endif %}
+{% if show_save_and_continue %}<input type="submit" value="Saqlab, shu yerda qolish" name="_continue">{% endif %}
+{% if show_close %}
+    {% url opts|admin_urlname:'changelist' as changelist_url %}
+    <a href="{% add_preserved_filters changelist_url %}" class="closelink">Bekor qilish</a>
+{% endif %}
+{% if show_delete_link and original %}
+    {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+    <a href="{% add_preserved_filters delete_url %}" class="deletelink deletelink-box">O‘chirish</a>
+{% endif %}
+{% endblock %}
+</div>

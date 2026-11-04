@@ -1,0 +1,13 @@
+{% extends "admin/base_site.html" %}
+{% block content_title %}<h1>Sayt sahifalari</h1>{% endblock %}
+{% block content %}
+<p class="m-lead">Saytning qaysi sahifasini o‘zgartirmoqchisiz? Sahifani tanlang — ichida matnlar, rasmlar va ro‘yxatlar bir joyda ko‘rinadi.</p>
+<ul class="m-rows">
+  {% for p in pages %}
+    <li><a class="m-row" href="{{ p.url }}">
+      <span class="m-row__text"><strong>{{ p.title }}</strong><small>{{ p.blurb }}</small></span>
+      <svg class="m-ico m-row__go" aria-hidden="true"><use href="#i-chev"></use></svg>
+    </a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

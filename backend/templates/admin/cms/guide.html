@@ -6,9 +6,7 @@
   <link rel="stylesheet" href="{% static 'cms/guide.css' %}?v=1">
 {% endblock %}
 
-{% block breadcrumbs %}
-<div class="breadcrumbs"><a href="{% url 'admin:index' %}">Bosh sahifa</a> › Qo‘llanma</div>
-{% endblock %}
+
 
 {% block content_title %}{% endblock %}
 
@@ -17,7 +15,7 @@
   <header class="gd-head">
     <h1>Qo‘llanma: nimani qayerdan o‘zgartiraman?</h1>
     <p>Saytda o‘zgartirmoqchi bo‘lgan narsangizni jadvaldan toping — o‘ng ustunda qayerga kirish kerakligi yozilgan. Dasturchi kerak emas.</p>
-    <p class="gd-actions"><a class="gd-btn" href="{% url 'admin:index' %}">← Bosh sahifaga</a> <a class="gd-btn gd-btn--ghost" href="{{ site_url_public }}" target="_blank" rel="noopener">Saytni ochish ↗</a></p>
+    <p class="gd-actions"><a class="m-btn" href="{% url 'admin:index' %}">Bosh sahifaga</a> <a class="m-btn m-btn--ghost" href="{{ site_url_public }}" target="_blank" rel="noopener">Saytni ochish</a></p>
   </header>
 
   <section class="gd-card gd-steps">
@@ -44,8 +42,9 @@
         <tr><td>Klinika bo‘limi (yo‘nalish) matni, xizmatlari</td><td><a href="{% url 'admin:cms_specialty_changelist' %}">Klinik yo‘nalishlar</a></td></tr>
         <tr><td>Vakansiya qo‘yish yoki yashirish</td><td><a href="{% url 'admin:cms_vacancy_changelist' %}">Vakansiyalar</a> (yoki HR xodimi Telegram mini-ilovada)</td></tr>
         <tr><td>Kelgan murojaat yoki ish arizasini ko‘rish, rezyumeni olish</td><td><a href="{% url 'admin:cms_inquiry_changelist' %}">Murojaatlar</a></td></tr>
-        <tr><td>Bosh sahifaning asosiy matni va raqamlari</td><td>Bosh sahifadagi «Bosh sahifa» kartasi · qolgan yozuvlar «Sayt matnlari»da</td></tr>
-        <tr><td>Tadqiqotlar, AI mahsulotlar, klinika videosi</td><td>Bosh sahifadagi «Sahifalar bo‘yicha» ro‘yxati</td></tr>
+        <tr><td>Bosh sahifaning asosiy matni va raqamlari</td><td><a href="{% url 'admin:cms_pages' %}">Sayt sahifalari → Bosh sahifa</a></td></tr>
+        <tr><td>Tadqiqotlar, AI mahsulotlar, klinika videosi va boshqa sahifalar</td><td><a href="{% url 'admin:cms_pages' %}">Sayt sahifalari</a> — sahifani tanlang, ichida hammasi bor</td></tr>
+        <tr><td>Aniq nima qayerdaligini bilmayman</td><td>Tepadagi <b>qidiruv</b> oynasiga so‘z yozing (telefon, narx, shifokor ismi…) — to‘g‘ri joyga olib boradi. «/» tugmasi qidiruvni ochadi.</td></tr>
       </tbody>
     </table>
   </section>

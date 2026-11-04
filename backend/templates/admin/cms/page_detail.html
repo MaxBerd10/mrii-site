@@ -1,0 +1,58 @@
+{% extends "admin/base_site.html" %}
+{% block breadcrumbs %}<div class="breadcrumbs"><a href="{% url 'admin:index' %}">Bosh sahifa</a> › <a href="{% url 'admin:cms_pages' %}">Sayt sahifalari</a> › {{ page.title }}</div>{% endblock %}
+{% block content_title %}{% endblock %}
+{% block content %}
+<div class="m-hubhead">
+  <div>
+    <h1>{{ page.title }}</h1>
+    <p class="m-lead">{{ page.blurb }}</p>
+  </div>
+  <a class="m-btn m-btn--ghost" href="{{ view_url }}" target="_blank" rel="noopener noreferrer">Saytda ko‘rish <svg class="m-ico" aria-hidden="true"><use href="#i-ext"></use></svg></a>
+</div>
+
+{% if records %}
+<section class="m-block">
+  <h2>Ro‘yxatlar va ma’lumotlar</h2>
+  <p>Shifokor, yangilik, narx kabi alohida yozuvlar — qo‘shish, tahrirlash yoki yashirish.</p>
+  {% for r in records %}
+    <div class="m-record">
+      <div class="m-record__text"><strong>{{ r.label }}</strong><small>{{ r.hint }}{% if r.count is not None %} · hozir {{ r.count }} ta{% endif %}</small></div>
+      <div class="m-record__acts">
+        <a class="m-btn m-btn--ghost" href="{{ r.url }}">{% if r.single %}Tahrirlash{% else %}Ro‘yxatni ochish{% endif %}</a>
+        {% if r.add_url %}<a class="m-btn" href="{{ r.add_url }}"><svg class="m-ico" aria-hidden="true"><use href="#i-plus"></use></svg>Qo‘shish</a>{% endif %}
+      </div>
+    </div>
+  {% endfor %}
+</section>
+{% endif %}
+
+{% if texts %}
+<section class="m-block">
+  <h2>Matnlar</h2>
+  <p>Sarlavha, tugma, tavsif — shu sahifadagi yozuvlar. Bo‘limni oching va kerakli matnni o‘zgartiring.</p>
+  {% for t in texts %}
+    <div class="m-record">
+      <div class="m-record__text"><strong>{{ t.title }}</strong><small>{{ t.count }} ta matn{% if t.changed %} · <span class="m-chip m-chip--accent">{{ t.changed }} ta o‘zgartirilgan</span>{% endif %}</small></div>
+      <div class="m-record__acts"><a class="m-btn m-btn--ghost" href="{{ t.url }}">Matnlarni ochish</a></div>
+    </div>
+  {% endfor %}
+</section>
+{% endif %}
+
+{% if assets %}
+<section class="m-block">
+  <h2>Rasm va videolar</h2>
+  <p>Shu sahifadagi tayyor rasm yoki videoni yangisiga almashtiring.</p>
+  {% for a in assets %}
+    <div class="m-record">
+      <div class="m-record__text"><strong>{{ a.title }}</strong><small>{{ a.hint }} · {{ a.count }} ta fayl{% if a.changed %} · <span class="m-chip m-chip--accent">{{ a.changed }} ta almashtirilgan</span>{% endif %}</small></div>
+      <div class="m-record__acts"><a class="m-btn m-btn--ghost" href="{{ a.url }}">Rasmlarni ochish</a></div>
+    </div>
+  {% endfor %}
+</section>
+{% endif %}
+
+{% if not records and not texts and not assets %}
+  <p class="m-lead">Bu sahifa uchun sizga o‘zgartirish huquqi berilmagan.</p>
+{% endif %}
+{% endblock %}

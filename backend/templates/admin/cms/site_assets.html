@@ -38,14 +38,14 @@
         <button type="submit">Qidirish</button>
       </form>
       <a class="stx-chip{% if only_changed %} is-on{% endif %}" href="?{% if not only_changed %}changed=1{% endif %}{% if current_group %}&group={{ current_group }}{% endif %}">
-        ✎ Faqat almashtirilganlar ({{ total_changed }})
+        Faqat almashtirilganlar ({{ total_changed }})
       </a>
       <nav>
         <a class="stx-sec{% if not current_group %} is-on{% endif %}" href="?{% if only_changed %}changed=1{% endif %}">Hamma bo‘limlar</a>
         {% for g in groups %}
           <a class="stx-sec{% if current_group == g.key %} is-on{% endif %}" href="?group={{ g.key }}{% if only_changed %}&changed=1{% endif %}">
             <span>{{ g.title }}</span>
-            <small>{{ g.hint }} · {{ g.count }}{% if g.changed %} · <b>{{ g.changed }} ✎</b>{% endif %}</small>
+            <small>{{ g.hint }} · {{ g.count }}{% if g.changed %} · <b>{{ g.changed }} o‘zgargan</b>{% endif %}</small>
           </a>
         {% endfor %}
       </nav>
