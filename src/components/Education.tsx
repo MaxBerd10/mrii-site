@@ -1,4 +1,4 @@
-import { useLanguage } from '../i18n/LanguageContext'
+import { useCopy } from '../i18n/useCopy'
 import Reveal from './ui/Reveal'
 import { blurUp } from '../lib/animations'
 import { media } from '../data/media'
@@ -8,8 +8,7 @@ import '../styles/education-page.css'
 const FJSTI_URL = 'https://fermi.uz'
 
 export default function Education() {
-  const { lang } = useLanguage()
-  const copy = EDUCATION_COPY[lang]
+  const copy = useCopy('educationCopy', EDUCATION_COPY)
 
   return (
     <section id="education" className="education-section education-section--page">

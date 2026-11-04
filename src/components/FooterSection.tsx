@@ -1,4 +1,5 @@
 import { motion } from 'motion/react'
+import { useCopy, useComputedCopy } from '../i18n/useCopy'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
 import { rise3d } from '../lib/animations'
@@ -44,8 +45,8 @@ export default function FooterSection() {
   const settings = useCmsContent(lang) ? home?.settings : null
   const copyright = cmsLocalizedText(lang, settings?.copyright, t.footer.copyright)
   const license = cmsLocalizedText(lang, settings?.license, t.footer.license)
-  const copy = CONTACT_COPY[lang]
-  const footerCols = getFooterNav(lang)
+  const copy = useCopy('contactCopy', CONTACT_COPY)
+  const footerCols = useComputedCopy('footerNav', (l) => ({ cols: getFooterNav(l) })).cols
   const phoneDisplay = CLINIC_PHONE_DISPLAY
   const phoneHref = CLINIC_PHONE_TEL
   const mapEmbed = `https://maps.google.com/maps?q=${encodeURIComponent(CONTACT_ADDRESS_QUERY)}&output=embed`

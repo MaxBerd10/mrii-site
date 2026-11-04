@@ -9,6 +9,17 @@ def ctx(request, lang: str) -> dict:
     return {'request': request, 'lang': lang}
 
 
+class TextsAPI(APIView):
+    """Admin-edited website texts: {key: {lang: text}} (only what differs from the built-in defaults)."""
+
+    def get(self, request):
+        from .site_texts import overrides_payload
+
+        response = Response(overrides_payload())
+        response['Cache-Control'] = 'public, max-age=60'
+        return response
+
+
 class SettingsAPI(APIView):
     def get(self, request):
         lang = resolve_lang(request)

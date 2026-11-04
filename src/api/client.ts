@@ -7,6 +7,17 @@ export function apiBase() {
   return API_URL
 }
 
+export async function fetchTextOverrides(): Promise<Record<string, Record<string, string>> | null> {
+  if (!API_URL) return null
+  try {
+    const res = await fetch(`${API_URL}/api/texts/`, { headers: { Accept: 'application/json' } })
+    if (!res.ok) return null
+    return (await res.json()) as Record<string, Record<string, string>>
+  } catch {
+    return null
+  }
+}
+
 export function isCmsEnabled() {
   return Boolean(API_URL)
 }

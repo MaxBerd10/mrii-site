@@ -616,3 +616,72 @@ class ApplicantSubmissionMatrixTests(TestCase):
         codes = [self.client.post('/api/inquiries/', {**self.base}).status_code for _ in range(14)]
         self.assertEqual(codes[:12], [201] * 12)
         self.assertEqual(codes[12:], [429, 429])
+
+
+# ───────────────────────── Sayt matnlari (editable website texts) ─────────────────────────
+@override_settings(CACHES=LOCMEM, DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class SiteTextsTests(TestCase):
+    def setUp(self):
+        from django.core.cache import cache
+
+        cache.clear()
+        self.admin = User.objects.create_superuser('texts-root', 't@x.y', 'x')
+        self.client.force_login(self.admin)
+
+    def entry(self, key='hero.title1'):
+        from .site_texts import by_key
+
+        return by_key()[key]
+
+    def save(self, key, values):
+        import json
+
+        return self.client.post('/admin/cms/texts/save/', data=json.dumps({'key': key, 'values': values}),
+                                content_type='application/json')
+
+    def test_catalogue_is_present_and_page_renders_with_search_and_sections(self):
+        from .site_texts import catalog
+
+        self.assertGreater(len(catalog()), 900)
+        page = self.client.get('/admin/cms/texts/')
+        self.assertEqual(page.status_code, 200)
+        self.assertContains(page, 'Sayt matnlari')
+        one = self.entry()
+        found = self.client.get('/admin/cms/texts/', {'q': one['uz'][:12]})
+        self.assertContains(found, one['key'].split('.', 1)[1])
+        self.assertEqual(self.client.get('/admin/cms/texts/', {'section': 'nav'}).status_code, 200)
+
+    def test_save_creates_override_served_by_public_api_and_reset_removes_it(self):
+        e = self.entry('hero.title1')
+        r = self.save(e['key'], {'uz': 'Yangi sarlavha', 'ru': '', 'en': e['en'], 'kaa': ''})
+        self.assertEqual(r.status_code, 200)
+        body = r.json()
+        self.assertTrue(body['overridden'])
+        self.assertEqual(body['values']['ru'], e['ru'])  # blank = keep default
+        api = self.client.get('/api/texts/')
+        self.assertEqual(api.json(), {e['key']: {'uz': 'Yangi sarlavha'}})  # default-equal en not stored
+        self.assertIn('max-age', api['Cache-Control'])
+        reset = self.save(e['key'], {'uz': '', 'ru': '', 'en': '', 'kaa': ''})
+        self.assertFalse(reset.json()['overridden'])
+        self.assertEqual(self.client.get('/api/texts/').json(), {})
+
+    def test_validation_and_permissions(self):
+        e = self.entry()
+        self.assertEqual(self.save('no.such.key', {'uz': 'x'}).status_code, 400)
+        self.assertEqual(self.save(e['key'], {'uz': 'x' * 5001}).status_code, 400)
+        self.assertEqual(self.client.get('/admin/cms/texts/save/').status_code, 405)
+        # HR group users must not edit site texts
+        from django.contrib.auth.models import Group
+
+        hr = User.objects.create_user('hr-t', password='x', is_staff=True)
+        hr.groups.set([Group.objects.get_or_create(name='HR bo‘limi')[0]])
+        self.client.force_login(hr)
+        self.assertEqual(self.client.get('/admin/cms/texts/').status_code, 403)
+        self.assertEqual(self.save(e['key'], {'uz': 'x'}).status_code, 403)
+
+    def test_stale_override_for_a_removed_key_is_ignored(self):
+        from .models import TextOverride
+        from .site_texts import overrides_payload
+
+        TextOverride.objects.create(key='removed.in.a.later.release', uz='x')
+        self.assertEqual(overrides_payload(), {})

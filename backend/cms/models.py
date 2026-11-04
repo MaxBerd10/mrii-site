@@ -635,3 +635,25 @@ class HRTelegramUser(TimeStampedModel):
     def is_anonymous(self):
         return False
 
+
+class TextOverride(TimeStampedModel):
+    """Admin-edited replacement for one text of the website (see site_texts.json).
+
+    The website ships with default texts in code; a row here replaces that text in the
+    chosen languages. An empty language field means "keep the default".
+    """
+
+    key = models.CharField('Matn kaliti', max_length=200, unique=True)
+    uz = models.TextField('O‘zbekcha', blank=True)
+    ru = models.TextField('Ruscha', blank=True)
+    en = models.TextField('Inglizcha', blank=True)
+    kaa = models.TextField('Qoraqalpoqcha', blank=True)
+
+    class Meta:
+        verbose_name = 'Sayt matni (o‘zgartirilgan)'
+        verbose_name_plural = 'Sayt matnlari (o‘zgartirilganlar)'
+        ordering = ['key']
+
+    def __str__(self):
+        return self.key
+

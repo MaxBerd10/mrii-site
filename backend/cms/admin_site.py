@@ -83,6 +83,8 @@ class MriiAdminSite(AdminSite):
                 self.admin_view(self.translate_api),
                 name='cms_translate',
             ),
+            path('cms/texts/', self.admin_view(self.site_texts_view), name='cms_texts'),
+            path('cms/texts/save/', self.admin_view(self.site_texts_save), name='cms_texts_save'),
             path(
                 'cms/inquiry/<int:pk>/resume/',
                 self.admin_view(self.resume_download),
@@ -125,6 +127,112 @@ class MriiAdminSite(AdminSite):
         ext = os.path.splitext(inquiry.resume.name)[1].lower()
         stem = slugify(inquiry.name) or inquiry.request_id
         return FileResponse(handle, as_attachment=True, filename=f'{stem}-rezyume{ext}')
+
+    # ───────────────────────── «Sayt matnlari» ─────────────────────────
+    def _texts_guard(self, request):
+        from django.core.exceptions import PermissionDenied
+
+        if not request.user.has_perm('cms.change_textoverride'):
+            raise PermissionDenied
+
+    def site_texts_view(self, request):
+        """Every text of the website, searchable, editable in 4 languages."""
+        from django.core.paginator import Paginator
+        from django.template.response import TemplateResponse
+
+        from . import models, site_texts
+        from .site_texts import LANGS
+
+        self._texts_guard(request)
+        q = request.GET.get('q', '').strip().lower()
+        section = request.GET.get('section', '')
+        only_changed = request.GET.get('changed') == '1'
+        overrides = {o.key: o for o in models.TextOverride.objects.all()}
+
+        def is_changed(entry, lang):
+            ov = overrides.get(entry['key'])
+            value = getattr(ov, lang, '') if ov else ''
+            return bool(value) and value != entry[lang]
+
+        rows, counts, changed_counts = [], {}, {}
+        for entry in site_texts.catalog():
+            sec = site_texts.section_of(entry['key'])
+            counts[sec] = counts.get(sec, 0) + 1
+            changed_langs = [l for l in LANGS if is_changed(entry, l)]
+            if changed_langs:
+                changed_counts[sec] = changed_counts.get(sec, 0) + 1
+            if section and sec != section:
+                continue
+            if only_changed and not changed_langs:
+                continue
+            ov = overrides.get(entry['key'])
+            values = {l: (getattr(ov, l) if ov and getattr(ov, l) else entry[l]) for l in LANGS}
+            if q and q not in ' '.join([entry['key'], *entry.values(), *values.values()]).lower():
+                continue
+            rows.append({
+                'key': entry['key'],
+                'section': sec,
+                'section_title': site_texts.section_title(sec),
+                'path': entry['key'].split('.', 1)[1] if '.' in entry['key'] else entry['key'],
+                'fields': [
+                    {'lang': l, 'label': {'uz': 'O‘zbekcha', 'ru': 'Ruscha', 'en': 'Inglizcha', 'kaa': 'Qoraqalpoqcha'}[l],
+                     'value': values[l], 'default': entry[l], 'changed': l in changed_langs,
+                     'rows': max(2, min(8, len(values[l]) // 48 + 1))}
+                    for l in LANGS
+                ],
+                'changed': bool(changed_langs),
+            })
+        page = Paginator(rows, 15).get_page(request.GET.get('page'))
+        query = request.GET.copy()
+        query.pop('page', None)
+        context = {
+            **self.each_context(request),
+            'title': 'Sayt matnlari',
+            'page_obj': page,
+            'q': request.GET.get('q', ''),
+            'current_section': section,
+            'only_changed': only_changed,
+            'total_changed': sum(changed_counts.values()),
+            'sections': [
+                {'key': k, 'title': site_texts.section_title(k), 'page': site_texts.section_page(k),
+                 'count': counts[k], 'changed': changed_counts.get(k, 0)}
+                for k in site_texts.SECTIONS if k in counts
+            ],
+            'querystring': query.urlencode(),
+        }
+        return TemplateResponse(request, 'admin/cms/site_texts.html', context)
+
+    def site_texts_save(self, request):
+        """POST {key, values:{uz,ru,en,kaa}} — blank or default-equal values mean "no override"."""
+        import json
+
+        from . import models, site_texts
+        from .site_texts import LANGS
+
+        self._texts_guard(request)
+        if request.method != 'POST':
+            return JsonResponse({'error': 'POST kerak'}, status=405)
+        try:
+            payload = json.loads(request.body.decode('utf-8') or '{}')
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Noto‘g‘ri JSON'}, status=400)
+        entry = site_texts.by_key().get(payload.get('key', ''))
+        if entry is None:
+            return JsonResponse({'error': 'Bunday matn topilmadi'}, status=400)
+        values = payload.get('values') or {}
+        clean = {}
+        for lang in LANGS:
+            text = str(values.get(lang, '') or '').replace('\r\n', '\n')
+            if len(text) > 5000:
+                return JsonResponse({'error': 'Matn juda uzun (5000 belgigacha)'}, status=400)
+            clean[lang] = '' if not text.strip() or text == entry[lang] else text
+        if not any(clean.values()):
+            models.TextOverride.objects.filter(key=entry['key']).delete()
+        else:
+            models.TextOverride.objects.update_or_create(key=entry['key'], defaults=clean)
+        effective = {l: clean[l] or entry[l] for l in LANGS}
+        return JsonResponse({'ok': True, 'overridden': any(clean.values()), 'values': effective,
+                             'changed': {l: bool(clean[l]) for l in LANGS}})
 
     def translate_api(self, request):
         """JSON: { fields: { role_uz: '...', ... } } → { translations, errors }"""
@@ -208,6 +316,14 @@ class MriiAdminSite(AdminSite):
         ).count()
 
         primary = [
+            {
+                'title': 'Sayt matnlari',
+                'desc': 'Saytdagi HAR BIR yozuvni 4 tilda o‘zgartirish: sarlavha, tugma, tavsif, savol-javob…',
+                'meta': 'Hamma matn',
+                'icon': 'doc',
+                'tone': 'indigo',
+                'url': reverse('admin:cms_texts'),
+            },
             {
                 'title': 'Murojaatlar',
                 'desc': 'Kontakt, AI demo va ishga arizalar — telefon, holat, izoh.',
@@ -312,6 +428,7 @@ class MriiAdminSite(AdminSite):
         ]
 
         card_models = {
+            'Sayt matnlari': models.TextOverride,
             'Murojaatlar': models.Inquiry,
             'Yangiliklar': models.NewsArticle,
             'Shifokorlar': models.Doctor,

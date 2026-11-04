@@ -812,6 +812,18 @@ class HRTelegramUserAdmin(admin.ModelAdmin):
     fields = ('name', 'telegram_id', 'is_active')
 
 
+@admin.register(models.TextOverride, site=mrii_admin_site)
+class TextOverrideAdmin(admin.ModelAdmin):
+    """Raw list of edited texts. Day-to-day editing happens on the «Sayt matnlari» page."""
+
+    list_display = ('key', 'uz', 'ru', 'en', 'kaa', 'updated_at')
+    search_fields = ('key', 'uz', 'ru', 'en', 'kaa')
+    readonly_fields = ('key',)
+
+    def has_add_permission(self, request):
+        return False
+
+
 # Keep default site labels in sync if anything still references admin.site
 admin.site.site_header = mrii_admin_site.site_header
 admin.site.site_title = mrii_admin_site.site_title

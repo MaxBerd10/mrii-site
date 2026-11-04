@@ -10,7 +10,8 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "preview": "vite preview --host 0.0.0.0",
-    "format": "oxfmt"
+    "format": "oxfmt",
+    "texts:export": "node scripts/export-site-texts.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",
