@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.admin import AdminSite
 from django.contrib.auth.signals import user_logged_in, user_login_failed
 from django.core.cache import cache
@@ -86,6 +87,7 @@ class MriiAdminSite(AssetAdminMixin, AdminSite):
             ),
             path('cms/texts/', self.admin_view(self.site_texts_view), name='cms_texts'),
             path('cms/texts/save/', self.admin_view(self.site_texts_save), name='cms_texts_save'),
+            path('cms/guide/', self.admin_view(self.guide_view), name='cms_guide'),
             path('cms/assets/', self.admin_view(self.site_assets_view), name='cms_assets'),
             path('cms/assets/upload/', self.admin_view(self.site_assets_upload), name='cms_assets_upload'),
             path('cms/assets/reset/', self.admin_view(self.site_assets_reset), name='cms_assets_reset'),
@@ -289,6 +291,8 @@ class MriiAdminSite(AssetAdminMixin, AdminSite):
         return redirect('admin:index')
 
     def index(self, request, extra_context=None):
+        from django.contrib.auth.models import User
+
         from . import models
 
         def can_access(model) -> bool:
@@ -319,185 +323,126 @@ class MriiAdminSite(AssetAdminMixin, AdminSite):
             intent=models.Inquiry.Intent.CAREER,
         ).count()
 
-        primary = [
+        # Cards are grouped by what the editor wants to do, each says WHERE it shows on the website.
+        groups = [
             {
-                'title': 'Sayt matnlari',
-                'desc': 'Saytdagi HAR BIR yozuvni 4 tilda o‘zgartirish: sarlavha, tugma, tavsif, savol-javob…',
-                'meta': 'Hamma matn',
-                'icon': 'doc',
-                'tone': 'indigo',
-                'url': reverse('admin:cms_texts'),
+                'title': 'Kundalik ishlar',
+                'hint': 'Eng ko‘p kerak bo‘ladigan bo‘limlar',
+                'style': 'cards',
+                'cards': [
+                    {'title': 'Murojaatlar', 'model': models.Inquiry, 'icon': 'inbox', 'tone': 'mint',
+                     'meta': f'{new_leads} yangi' if new_leads else 'Bemorlar va nomzodlar',
+                     'desc': 'Saytdan kelgan so‘rovlar va ish arizalari: telefon, holat, rezyume.',
+                     'url': url('inquiry')},
+                    {'title': 'Yangiliklar', 'model': models.NewsArticle, 'icon': 'news', 'tone': 'sky',
+                     'meta': 'Yangiliklar sahifasi',
+                     'desc': 'Maqola yozish yoki tahrirlash: sarlavha, matn, sana, muqova rasmi.',
+                     'url': url('newsarticle')},
+                    {'title': 'Shifokorlar', 'model': models.Doctor, 'icon': 'doctor', 'tone': 'teal',
+                     'meta': 'Shifokorlar sahifasi',
+                     'desc': 'Shifokor qo‘shish, ism, lavozim, mutaxassislik va foto.',
+                     'url': url('doctor')},
+                    {'title': 'Narxlar', 'model': models.PriceItem, 'icon': 'chart', 'tone': 'teal',
+                     'meta': 'Narxlar sahifasi',
+                     'desc': 'Xizmat narxlari jadvali — narxni to‘g‘ridan-to‘g‘ri jadvalda o‘zgartirasiz.',
+                     'url': url('priceitem')},
+                    {'title': 'Vakansiyalar', 'model': models.Vacancy, 'icon': 'doctor', 'tone': 'navy',
+                     'meta': 'Vakansiyalar sahifasi',
+                     'desc': 'Ochiq lavozimlar. (HR xodimi buni Telegram mini-ilovada ham qiladi.)',
+                     'url': url('vacancy')},
+                ],
             },
             {
-                'title': 'Sayt rasmlari',
-                'desc': 'Saytdagi tayyor rasm va videolarni almashtirish: klinika, galereya, bosh sahifa, AI…',
-                'meta': 'Rasmlar',
-                'icon': 'hero',
-                'tone': 'sky',
-                'url': reverse('admin:cms_assets'),
+                'title': 'Saytning matni, rasmi va aloqa ma’lumotlari',
+                'hint': 'Saytdagi HAR BIR yozuv va rasm — shu yerdan',
+                'style': 'cards',
+                'cards': [
+                    {'title': 'Sayt matnlari', 'model': models.TextOverride, 'icon': 'doc', 'tone': 'indigo',
+                     'meta': 'Hamma sahifa',
+                     'desc': 'Saytdagi har bir sarlavha, tugma va tavsif — 4 tilda. Qidiruv bilan toping.',
+                     'url': reverse('admin:cms_texts')},
+                    {'title': 'Sayt rasmlari', 'model': models.AssetOverride, 'icon': 'hero', 'tone': 'sky',
+                     'meta': 'Rasm va video',
+                     'desc': 'Saytdagi tayyor rasm va videolarni yangisiga almashtirish.',
+                     'url': reverse('admin:cms_assets')},
+                    {'title': 'Aloqa ma’lumotlari', 'model': models.SiteSettings, 'icon': 'settings', 'tone': 'slate',
+                     'meta': 'Hamma sahifa (tepa va past)',
+                     'desc': 'Telefon, Telegram, Instagram, pochta, xarita manzili, mualliflik huquqi.',
+                     'url': change_url('sitesettings')},
+                    {'title': 'Bosh sahifa', 'model': models.HomePage, 'icon': 'hero', 'tone': 'mint',
+                     'meta': 'Bosh sahifa',
+                     'desc': 'Birinchi ekrandagi asosiy matn, jamoa rasmi va raqamlar.',
+                     'url': change_url('homepage')},
+                ],
             },
             {
-                'title': 'Narxlar',
-                'desc': 'Xizmatlar narxi va check-up paketlari — narxni jadvalda to‘g‘ridan-to‘g‘ri o‘zgartirasiz.',
-                'meta': 'Narxnoma',
-                'icon': 'chart',
-                'tone': 'teal',
-                'url': url('priceitem'),
+                'title': 'Sahifalar bo‘yicha',
+                'hint': 'Kamroq o‘zgaradigan bo‘limlar',
+                'style': 'list',
+                'cards': [
+                    {'title': 'Klinik yo‘nalishlar', 'model': models.Specialty, 'icon': 'clinic',
+                     'desc': 'Klinika sahifasi: bo‘limlar matni, xizmatlar va rasmlari',
+                     'url': url('specialty')},
+                    {'title': 'Check-up paketlari', 'model': models.CheckupDirection, 'icon': 'clinic',
+                     'desc': 'Narxlar sahifasi: Layt / Standart / Premium paket tarkibi va narxi',
+                     'url': url('checkupdirection')},
+                    {'title': 'Narx bo‘limlari', 'model': models.PriceCategory, 'icon': 'doc',
+                     'desc': 'Narxlar sahifasi: bo‘lim nomlari (Laboratoriya, UZI…) va tartibi',
+                     'url': url('pricecategory')},
+                    {'title': 'Klinika sayohati', 'model': models.ClinicTourVideo, 'icon': 'clinic',
+                     'desc': 'Klinika → Video sayohat: videolar',
+                     'url': url('clinictourvideo')},
+                    {'title': 'AI mahsulotlar', 'model': models.AIProduct, 'icon': 'ai',
+                     'desc': 'AI yechimlar sahifasi: AiShifokor va boshqa mahsulotlar',
+                     'url': url('aiproduct')},
+                    {'title': 'Tadqiqotlar', 'model': models.ResearchStudy, 'icon': 'research',
+                     'desc': 'Tadqiqotlar sahifasi: faol tadqiqotlar va holatlari',
+                     'url': url('researchstudy')},
+                    {'title': 'Tadqiqotlar matni', 'model': models.ResearchSection, 'icon': 'doc',
+                     'desc': 'Tadqiqotlar sahifasi: bo‘lim sarlavhasi va «Nima uchun»',
+                     'url': change_url('researchsection')},
+                    {'title': 'Tadqiqot imkoniyatlari', 'model': models.ResearchCapability, 'icon': 'chart',
+                     'desc': 'Tadqiqotlar sahifasi: statistika qiymatlari',
+                     'url': url('researchcapability')},
+                    {'title': 'Sharhlar', 'model': models.Testimonial, 'icon': 'quote',
+                     'desc': 'Bosh sahifa: bemor va hamkor fikrlari (kamida bittasi qo‘shilsa ko‘rinadi)',
+                     'url': url('testimonial')},
+                ],
             },
             {
-                'title': 'Murojaatlar',
-                'desc': 'Kontakt, AI demo va ishga arizalar — telefon, holat, izoh.',
-                'meta': f'{new_leads} yangi' if new_leads else 'Leadlar',
-                'icon': 'inbox',
-                'tone': 'mint',
-                'url': url('inquiry'),
-            },
-            {
-                'title': 'Yangiliklar',
-                'desc': 'Maqola, sana, kategoriya va muqova rasmi.',
-                'meta': 'Eng kerakli',
-                'icon': 'news',
-                'tone': 'sky',
-                'url': url('newsarticle'),
-            },
-            {
-                'title': 'Shifokorlar',
-                'desc': 'Ism, lavozim, mutaxassislik va foto.',
-                'meta': 'Jamoa',
-                'icon': 'doctor',
-                'tone': 'teal',
-                'url': url('doctor'),
-            },
-            {
-                'title': 'Klinik yo‘nalishlar',
-                'desc': 'Bo‘limlar matni, xizmatlar va rasmlar.',
-                'meta': 'Klinika',
-                'icon': 'clinic',
-                'tone': 'navy',
-                'url': url('specialty'),
-            },
-            {
-                'title': 'Sayt sozlamalari',
-                'desc': 'Telefon, Telegram, Instagram, pochta, xarita manzili, copyright.',
-                'meta': 'Aloqa',
-                'icon': 'settings',
-                'tone': 'slate',
-                'url': change_url('sitesettings'),
-            },
-            {
-                'title': 'Bosh sahifa',
-                'desc': 'Asosiy matn, jamoa rasmi va birinchi ekrandagi raqamlar.',
-                'meta': 'Bosh sahifa',
-                'icon': 'hero',
-                'tone': 'mint',
-                'url': change_url('homepage'),
-            },
-            {
-                'title': 'AI mahsulotlar',
-                'desc': 'AiShifokor va boshqa AI mahsulotlar.',
-                'meta': 'AI',
-                'icon': 'ai',
-                'tone': 'indigo',
-                'url': url('aiproduct'),
-            },
-        ]
-
-        secondary = [
-            {
-                'title': 'Tadqiqotlar',
-                'desc': 'Faol tadqiqotlar va holatlar',
-                'icon': 'research',
-                'url': url('researchstudy'),
-            },
-            {
-                'title': 'Tadqiqotlar matni',
-                'desc': 'Bo‘lim sarlavhasi va “Nima uchun”',
-                'icon': 'doc',
-                'url': change_url('researchsection'),
-            },
-            {
-                'title': 'Vakansiyalar',
-                'desc': 'Ochiq lavozimlar va arizalar',
-                'icon': 'doctor',
-                'url': url('vacancy'),
-            },
-            {
-                'title': 'Check-up paketlari',
-                'desc': 'Layt / Standart / Premium paketlar tarkibi va narxi',
-                'icon': 'clinic',
-                'url': url('checkupdirection'),
-            },
-            {
-                'title': 'Narx bo‘limlari',
-                'desc': 'Narxnoma bo‘limlari (Laboratoriya, UZI…)',
-                'icon': 'doc',
-                'url': url('pricecategory'),
-            },
-            {
-                'title': 'Sharhlar',
-                'desc': 'Mijoz va hamkor fikrlari',
-                'icon': 'quote',
-                'url': url('testimonial'),
-            },
-            {
-                'title': 'HR Telegram',
-                'desc': 'HR Mini App’ga kirish ruxsati berilgan Telegram akkauntlar',
-                'icon': 'doctor',
-                'url': url('hrtelegramuser'),
-            },
-            {
-                'title': 'Klinika sayohati',
-                'desc': 'Virtual tur va tadbir videolari',
-                'icon': 'clinic',
-                'url': url('clinictourvideo'),
-            },
-            {
-                'title': 'Tadqiqot imkoniyatlari',
-                'desc': 'Statistika qiymatlari',
-                'icon': 'chart',
-                'url': url('researchcapability'),
+                'title': 'Tizim',
+                'hint': 'Faqat bosh administrator uchun',
+                'style': 'list',
+                'cards': [
+                    {'title': 'HR Telegram', 'model': models.HRTelegramUser, 'icon': 'doctor',
+                     'desc': 'HR mini-ilovaga kirish ruxsati berilgan Telegram akkauntlar',
+                     'url': url('hrtelegramuser')},
+                    {'title': 'Foydalanuvchilar', 'model': User, 'icon': 'doctor',
+                     'desc': 'Admin panelga kiradigan xodimlar va ularning huquqlari',
+                     'url': reverse('admin:auth_user_changelist')},
+                ],
             },
         ]
-
-        card_models = {
-            'Sayt matnlari': models.TextOverride,
-            'Sayt rasmlari': models.AssetOverride,
-            'Narxlar': models.PriceItem,
-            'Check-up paketlari': models.CheckupDirection,
-            'Narx bo‘limlari': models.PriceCategory,
-            'Murojaatlar': models.Inquiry,
-            'Yangiliklar': models.NewsArticle,
-            'Shifokorlar': models.Doctor,
-            'Klinik yo‘nalishlar': models.Specialty,
-            'Sayt sozlamalari': models.SiteSettings,
-            'Bosh sahifa': models.HomePage,
-            'AI mahsulotlar': models.AIProduct,
-            'Tadqiqotlar': models.ResearchStudy,
-            'Tadqiqotlar matni': models.ResearchSection,
-            'Vakansiyalar': models.Vacancy,
-            'Sharhlar': models.Testimonial,
-            'HR Telegram': models.HRTelegramUser,
-            'Klinika sayohati': models.ClinicTourVideo,
-            'Tadqiqot imkoniyatlari': models.ResearchCapability,
-        }
-        primary = [card for card in primary if can_access(card_models[card['title']])]
-        secondary = [card for card in secondary if can_access(card_models[card['title']])]
+        for group in groups:
+            group['cards'] = [card for card in group['cards'] if can_access(card['model'])]
+        groups = [group for group in groups if group['cards']]
 
         is_hr_workspace = (
             request.user.groups.filter(name='HR bo‘limi').exists()
             and not request.user.is_superuser
         )
         if is_hr_workspace:
-            vacancy_card = next((card for card in secondary if card['title'] == 'Vakansiyalar'), None)
-            inquiry_card = next((card for card in primary if card['title'] == 'Murojaatlar'), None)
-            if inquiry_card:
-                inquiry_card = {
-                    **inquiry_card,
+            by_title = {card['title']: card for group in groups for card in group['cards']}
+            picked = []
+            if 'Murojaatlar' in by_title:
+                picked.append({
+                    **by_title['Murojaatlar'],
                     'desc': 'Vakansiyaga kelgan arizalar — rezyume, telefon, holat.',
                     'meta': f'{new_career_leads} yangi' if new_career_leads else 'Arizalar',
-                }
-            primary = [card for card in (inquiry_card, vacancy_card) if card]
-            secondary = []
+                })
+            if 'Vakansiyalar' in by_title:
+                picked.append(by_title['Vakansiyalar'])
+            groups = [{'title': '', 'hint': '', 'style': 'cards', 'cards': picked}] if picked else []
 
         stats = [
             {'label': 'Yangi murojaat', 'value': new_leads, 'tone': 'mint', 'model': models.Inquiry},
@@ -516,11 +461,21 @@ class MriiAdminSite(AssetAdminMixin, AdminSite):
         extra = extra_context or {}
         extra.update({
             'mrii_stats': stats,
-            'mrii_primary': primary,
-            'mrii_secondary': secondary,
+            'mrii_groups': groups,
             'mrii_hr_workspace': is_hr_workspace,
+            'mrii_guide_url': reverse('admin:cms_guide'),
+            'mrii_site_url': getattr(settings, 'FRONTEND_URL', '') or '/',
         })
         return super().index(request, extra_context=extra)
+
+    def guide_view(self, request):
+        from django.template.response import TemplateResponse
+
+        return TemplateResponse(request, 'admin/cms/guide.html', {
+            **self.each_context(request),
+            'title': 'Qo‘llanma',
+            'site_url_public': getattr(settings, 'FRONTEND_URL', '') or '/',
+        })
 
 
 mrii_admin_site = MriiAdminSite(name='admin')

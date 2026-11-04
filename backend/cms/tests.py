@@ -10,6 +10,19 @@ from .models import Inquiry
 
 HR_GROUP = 'HR bo‘limi'
 
+_translate_patch = None
+
+
+def setUpModule():
+    # Saving CMS rows auto-translates blank RU/EN fields over the network; tests must never depend on it.
+    global _translate_patch
+    _translate_patch = mock.patch('cms.i18n_fill.translate_text', return_value='')
+    _translate_patch.start()
+
+
+def tearDownModule():
+    _translate_patch.stop()
+
 
 @override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
 class ResumeAccessTests(TestCase):
@@ -865,3 +878,27 @@ class SiteAssetsTests(TestCase):
         self.client.logout()
         self.assertEqual(self.client.get('/admin/cms/assets/').status_code, 302)
         self.assertEqual(self.client.get('/admin/cms/assets/upload/').status_code, 302)
+
+
+@override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class AdminDashboardTests(TestCase):
+    def test_superuser_sees_every_group_and_the_guide(self):
+        boss = User.objects.create_superuser('boss', 'b@example.uz', 'pw-12345-xyz')
+        self.client.force_login(boss)
+        page = self.client.get('/admin/')
+        self.assertEqual(page.status_code, 200)
+        for title in ('Sayt matnlari', 'Sayt rasmlari', 'Aloqa ma’lumotlari', 'Narxlar', 'Shifokorlar', 'Yangiliklar', 'Qo‘llanma'):
+            self.assertContains(page, title)
+        guide = self.client.get('/admin/cms/guide/')
+        self.assertEqual(guide.status_code, 200)
+        self.assertContains(guide, 'Nimani qayerdan o‘zgartiraman')
+
+    def test_hr_workspace_stays_limited_to_applications_and_vacancies(self):
+        hr = User.objects.create_user('hr', 'hr@example.uz', 'pw-12345-xyz', is_staff=True)
+        hr.groups.add(Group.objects.get(name=HR_GROUP))
+        self.client.force_login(hr)
+        page = self.client.get('/admin/')
+        self.assertEqual(page.status_code, 200)
+        self.assertContains(page, 'Vakansiyalar')
+        for hidden in ('Sayt matnlari', 'Narxlar', 'Sayt rasmlari', 'Foydalanuvchilar'):
+            self.assertNotContains(page, hidden)

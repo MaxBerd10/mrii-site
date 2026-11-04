@@ -24,6 +24,10 @@
             Sayt (API ulangan bo‘lsa) yangilanadi — dasturchi kerak emas.
           {% endif %}
         </p>
+        {% if not mrii_hr_workspace %}<p class="mrii-hero__actions">
+          <a class="mrii-hero__btn" href="{{ mrii_guide_url }}">📖 Qo‘llanma: nimani qayerdan o‘zgartiraman?</a>
+          <a class="mrii-hero__btn mrii-hero__btn--ghost" href="{{ mrii_site_url }}" target="_blank" rel="noopener">Saytni ochish ↗</a>
+        </p>{% endif %}
         <ol class="mrii-steps" aria-label="Ish tartibi">
           <li><span>1</span> Bo‘lim tanlang</li>
           <li><span>2</span> Matn / rasmni o‘zgartiring</li>
@@ -35,15 +39,16 @@
           <img src="{% static 'cms/dna-login-hero.png' %}" alt="" width="400" height="520" decoding="async">
         </div>
         <div class="mrii-hero__aside-body">
-          <p class="mrii-hero__aside-label">3 tilda ishlaydi</p>
+          <p class="mrii-hero__aside-label">4 tilda ishlaydi</p>
           <div class="mrii-hero__langs" aria-hidden="true">
             <span>UZ</span>
             <span>RU</span>
             <span>EN</span>
+            <span>QQ</span>
           </div>
           <ul class="mrii-hero__tips">
-            <li>Har til — alohida maydon</li>
-            <li>Rasm — «Rasm» bo‘limidan</li>
+            <li>Har til — alohida maydon (bo‘sh qolsa, avtomatik tarjima)</li>
+            <li>Rasm — «Sayt rasmlari» bo‘limidan</li>
             <li>Saqlashdan keyin sayt yangilanadi</li>
           </ul>
         </div>
@@ -59,13 +64,14 @@
       {% endfor %}
     </div>
 
-    {% if mrii_primary %}<section class="mrii-section">
-      <div class="mrii-section__head">
-        <h3>Asosiy bo‘limlar</h3>
-        <p>Kunlik ishlar uchun — shu yerdan boshlang</p>
-      </div>
+    {% for group in mrii_groups %}<section class="mrii-section">
+      {% if group.title %}<div class="mrii-section__head">
+        <h3>{{ group.title }}</h3>
+        <p>{{ group.hint }}</p>
+      </div>{% endif %}
+      {% if group.style == 'cards' %}
       <div class="mrii-cards">
-        {% for card in mrii_primary %}
+        {% for card in group.cards %}
           <a class="mrii-card mrii-card--{{ card.tone }}" href="{{ card.url }}">
             <span class="mrii-card__icon" aria-hidden="true">
               <svg><use href="#mrii-i-{{ card.icon }}"></use></svg>
@@ -79,15 +85,9 @@
           </a>
         {% endfor %}
       </div>
-    </section>{% endif %}
-
-    {% if mrii_secondary %}<section class="mrii-section">
-      <div class="mrii-section__head">
-        <h3>Qo‘shimcha</h3>
-        <p>Kamroq o‘zgaradigan bo‘limlar</p>
-      </div>
+      {% else %}
       <div class="mrii-list">
-        {% for card in mrii_secondary %}
+        {% for card in group.cards %}
           <a class="mrii-list__item" href="{{ card.url }}">
             <span class="mrii-list__icon" aria-hidden="true">
               <svg><use href="#mrii-i-{{ card.icon }}"></use></svg>
@@ -100,7 +100,9 @@
           </a>
         {% endfor %}
       </div>
-    </section>{% endif %}
+      {% endif %}
+    </section>{% endfor %}
+
   </div>
 </div>
 {% endblock %}
