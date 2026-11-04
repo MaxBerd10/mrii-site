@@ -22,15 +22,30 @@ export { CONTACT_COPY } from '${join(root, 'src/data/contactCopy.ts')}'
 export { EDUCATION_COPY } from '${join(root, 'src/data/educationCopy.ts')}'
 export { AISHIFOKOR_COPY } from '${join(root, 'src/data/aiShifokorCopy.ts')}'
 export { getFooterNav } from '${join(root, 'src/data/footerNav.ts')}'
+export { doctorPageLabels } from '${join(root, 'src/data/doctors.ts')}'
+export { PROFILE_UI } from '${join(root, 'src/data/doctorProfileUi.ts')}'
+export { DOSSIER_LOCALES } from '${join(root, 'src/data/doctorDossier.ts')}'
+export { specialtyPageLabels } from '${join(root, 'src/data/specialtyDetails.ts')}'
+export { specialtyWorldLabels } from '${join(root, 'src/data/specialtyWorld.ts')}'
+export { newsPageLabels } from '${join(root, 'src/data/newsDetails.ts')}'
 `)
 const extraBundle = join(tmp, 'extra.mjs')
 execFileSync(join(root, 'node_modules/.bin/rolldown'), [extraEntry, '--format', 'esm', '--file', extraBundle], { stdio: 'ignore' })
+// Vite-only globals do not exist in plain Node: stub them in the bundle before loading it.
+writeFileSync(extraBundle, readFileSync(extraBundle, 'utf8').replaceAll('import.meta.env', '({})'))
 const extra = await import(pathToFileURL(extraBundle).href)
+const perLang = (record) => Object.fromEntries(LANGS.map((l) => [l, record[l] ?? record.uz]))
 const extraTrees = {
   contactCopy: Object.fromEntries(LANGS.map((l) => [l, extra.CONTACT_COPY[l] ?? extra.CONTACT_COPY.uz])),
   educationCopy: Object.fromEntries(LANGS.map((l) => [l, extra.EDUCATION_COPY[l] ?? extra.EDUCATION_COPY.uz])),
   aiShifokorCopy: Object.fromEntries(LANGS.map((l) => [l, extra.AISHIFOKOR_COPY[l] ?? extra.AISHIFOKOR_COPY.uz])),
   footerNav: Object.fromEntries(LANGS.map((l) => [l, { cols: extra.getFooterNav(l) }])),
+  doctorPageLabels: perLang(extra.doctorPageLabels),
+  doctorProfileUi: perLang(extra.PROFILE_UI),
+  doctorDossier: perLang(extra.DOSSIER_LOCALES),
+  specialtyPageLabels: perLang(extra.specialtyPageLabels),
+  specialtyWorldLabels: perLang(extra.specialtyWorldLabels),
+  newsPageLabels: perLang(extra.newsPageLabels),
 }
 
 function flatten(value, path = '', out = {}) {
@@ -59,12 +74,14 @@ for (const key of Object.keys(flat.uz)) {
   entries.push({ key, uz, ru: flat.ru[key] ?? '', en: flat.en[key] ?? '', kaa: flat.kaa[key] ?? '' })
 }
 // Drop texts the website never reads (a path word that appears nowhere in src/), so editors only see live copy.
+// Files that only DEFINE texts (they would make every key look "used").
+const DEFINITION_FILES = /src[\\/](i18n[\\/]translations|data[\\/](contactCopy|educationCopy|aiShifokorCopy|footerNav|doctorProfileUi|doctorDossier|doctors|specialtyDetails|specialtyWorld|newsDetails))/
 let srcText = ''
 const walk = (d) => {
   for (const f of readdirSync(d)) {
     const p = join(d, f)
     if (statSync(p).isDirectory()) walk(p)
-    else if (/\.(tsx?|css)$/.test(f) && !/src[\\/]i18n[\\/]translations/.test(p)) srcText += readFileSync(p, 'utf8') + '\n'
+    else if (/\.(tsx?|css)$/.test(f) && !DEFINITION_FILES.test(p)) srcText += readFileSync(p, 'utf8') + '\n'
   }
 }
 walk(join(root, 'src'))

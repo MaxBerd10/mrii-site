@@ -8,6 +8,7 @@
  * and to already-rendered elements when the list arrives later.
  */
 let overrides: Record<string, string> = {}
+let active = false // true only while at least one replacement exists: the common case costs nothing
 let installed = false
 
 function swap(value: string): string {
@@ -73,7 +74,7 @@ function install() {
   // 1) attribute writes (React uses setAttribute)
   const nativeSet = Element.prototype.setAttribute
   Element.prototype.setAttribute = function (name: string, value: string) {
-    if (Object.keys(overrides).length) {
+    if (active) {
       const n = name.toLowerCase()
       if (TAGS.has(this.tagName) && (n === 'src' || n === 'poster')) value = swap(String(value))
       else if (TAGS.has(this.tagName) && n === 'srcset') value = swapSrcset(String(value))
@@ -89,7 +90,7 @@ function install() {
     Object.defineProperty(proto, prop, {
       ...desc,
       set(this: unknown, v: string) {
-        desc.set!.call(this, Object.keys(overrides).length ? swap(String(v)) : v)
+        desc.set!.call(this, active ? swap(String(v)) : v)
       },
     })
   }
@@ -100,7 +101,7 @@ function install() {
 
   // 3) safety net: nodes added with already-built markup, style changes
   new MutationObserver((records) => {
-    if (!Object.keys(overrides).length) return
+    if (!active) return
     for (const r of records) {
       if (r.type === 'attributes' && r.target instanceof Element) fixElement(r.target)
       r.addedNodes.forEach((n) => {
@@ -125,9 +126,11 @@ export function setAssetOverrides(next: Record<string, string> | null | undefine
     if (path.startsWith('/') && /^https?:\/\//.test(url)) clean[path] = url
   }
   overrides = clean
+  active = Object.keys(clean).length > 0
+  if (!active && !installed) return // nothing replaced: leave the browser untouched
   try {
     install()
-    if (Object.keys(overrides).length) fixTree(document)
+    if (active) fixTree(document)
   } catch {
     /* the site must never break because of an image tweak */
   }

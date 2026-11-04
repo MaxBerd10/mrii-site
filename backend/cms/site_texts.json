@@ -322,20 +322,6 @@
   "kaa": "Vakansiyalar"
  },
  {
-  "key": "nav.children.webinars",
-  "uz": "Vebinarlar",
-  "ru": "Вебинары",
-  "en": "Webinars",
-  "kaa": "Vebinarlar"
- },
- {
-  "key": "nav.children.projects",
-  "uz": "Loyihalar",
-  "ru": "Проекты",
-  "en": "Projects",
-  "kaa": "Joybarlar"
- },
- {
   "key": "nav.children.products",
   "uz": "Mahsulotlar",
   "ru": "Продукты",
@@ -502,13 +488,6 @@
   "ru": "ISO 9001:2015 · GCP · ICH E6",
   "en": "ISO 9001:2015 · GCP · ICH E6",
   "kaa": "ISO 9001:2015 · GCP · ICH E6"
- },
- {
-  "key": "hero.since",
-  "uz": "2008 yildan beri",
-  "ru": "С 2008 года",
-  "en": "Since 2008",
-  "kaa": "2008-jıldan beri"
  },
  {
   "key": "homeCare.eyebrow",
@@ -5229,27 +5208,6 @@
   "kaa": "Jiberilmadi. Qayta urınıp kóriń yamasa qońıraq etiń."
  },
  {
-  "key": "footer.successTitle",
-  "uz": "Arizangiz qabul qilindi",
-  "ru": "Ваша заявка принята",
-  "en": "Your request has been received",
-  "kaa": "Sorawıńız qabıl etildi"
- },
- {
-  "key": "footer.successDesc",
-  "uz": "Farg’ona Jamoat Salomatligi Tibbiyot Instituti koordinatori ma’lumotlarni tekshirib, qabul vaqtini tasdiqlash uchun siz bilan bog’lanadi.",
-  "ru": "Координатор Ферганского медицинского института общественного здоровья проверит данные и свяжется с вами для подтверждения времени приёма.",
-  "en": "A Ferghana Medical Institute of Public Health coordinator will review your details and contact you to confirm the appointment time.",
-  "kaa": "Farg’ona Jámiyet Salamatlıǵı Medicina Institutı koordinatorı maǵlıwmatlardı tekserip, qabıl waqtın tastıyıqlaw ushın siz benen baylanısadı."
- },
- {
-  "key": "footer.requestNumber",
-  "uz": "Murojaat raqami",
-  "ru": "Номер обращения",
-  "en": "Request number",
-  "kaa": "Soraw nomeri"
- },
- {
   "key": "footer.close",
   "uz": "Yopish",
   "ru": "Закрыть",
@@ -7098,118 +7056,6 @@
   "kaa": "Sistemag’a kirisiw"
  },
  {
-  "key": "aiShifokorCopy.homeCards[0].title",
-  "uz": "AI Konsilium",
-  "ru": "AI-консилиум",
-  "en": "AI Consilium",
-  "kaa": "AI Konsilium"
- },
- {
-  "key": "aiShifokorCopy.homeCards[0].desc",
-  "uz": "Kardiolog, nevrolog, onkolog va 10+ virtual mutaxassis bilan real vaqtda maslahat.",
-  "ru": "Консультация в реальном времени с кардиологом, неврологом, онкологом и 10+ виртуальными специалистами.",
-  "en": "Real-time consultation with a cardiologist, neurologist, oncologist and 10+ virtual specialists.",
-  "kaa": "Kardiolog, nevrolog, onkolog hám 10+ virtual qánige menen real waqıtta másláhát."
- },
- {
-  "key": "aiShifokorCopy.homeCards[0].metric",
-  "uz": "12+",
-  "ru": "12+",
-  "en": "12+",
-  "kaa": "12+"
- },
- {
-  "key": "aiShifokorCopy.homeCards[0].metricLabel",
-  "uz": "virtual mutaxassis",
-  "ru": "виртуальных специалистов",
-  "en": "virtual specialists",
-  "kaa": "virtual qánige"
- },
- {
-  "key": "aiShifokorCopy.homeCards[1].title",
-  "uz": "Global bilimlar bazasi",
-  "ru": "Глобальная база знаний",
-  "en": "Global knowledge base",
-  "kaa": "Global bilimler bazası"
- },
- {
-  "key": "aiShifokorCopy.homeCards[1].desc",
-  "uz": "SSV va xalqaro tavsiyalar asosidagi yagona baza. Bir zumda kerakli protokol.",
-  "ru": "Протоколы Минздрава и международные рекомендации в одной системе.",
-  "en": "MoH and international guidelines in a single system.",
-  "kaa": "SSV hám xalıqaralıq usınıslar tiykarındaǵı jalǵız baza."
- },
- {
-  "key": "aiShifokorCopy.homeCards[1].metric",
-  "uz": "15 000+",
-  "ru": "15 000+",
-  "en": "15,000+",
-  "kaa": "15 000+"
- },
- {
-  "key": "aiShifokorCopy.homeCards[1].metricLabel",
-  "uz": "klinik protokol",
-  "ru": "клинических протоколов",
-  "en": "clinical protocols",
-  "kaa": "klinik protokol"
- },
- {
-  "key": "aiShifokorCopy.homeCards[2].title",
-  "uz": "EKG va tasvirlar",
-  "ru": "ЭКГ и снимки",
-  "en": "ECG and imaging",
-  "kaa": "EKG hám súwretler"
- },
- {
-  "key": "aiShifokorCopy.homeCards[2].desc",
-  "uz": "EKG, rentgen, KT, MRT rasmlarini AI avtomatik tahlil qiladi.",
-  "ru": "AI автоматически анализирует ЭКГ, рентген, КТ и МРТ.",
-  "en": "AI automatically analyses ECG, X-ray, CT and MRI.",
-  "kaa": "EKG, rentgen, KT, MRT súwretlerin AI avtomatik talqılaydı."
- },
- {
-  "key": "aiShifokorCopy.homeCards[2].metric",
-  "uz": "100K+",
-  "ru": "100K+",
-  "en": "100K+",
-  "kaa": "100K+"
- },
- {
-  "key": "aiShifokorCopy.homeCards[2].metricLabel",
-  "uz": "muvaffaqiyatli tahlil",
-  "ru": "успешных анализов",
-  "en": "successful analyses",
-  "kaa": "ámelge asqan tallaw"
- },
- {
-  "key": "aiShifokorCopy.homeCards[3].title",
-  "uz": "Xavf skoring",
-  "ru": "Оценка рисков",
-  "en": "Risk scoring",
-  "kaa": "Qáwip skoringi"
- },
- {
-  "key": "aiShifokorCopy.homeCards[3].desc",
-  "uz": "ASCVD, CHADS-VASc va boshqa xalqaro shkalalar bilan bemor xavfini baholash.",
-  "ru": "ASCVD, CHADS-VASc и другие международные шкалы для оценки риска пациента.",
-  "en": "ASCVD, CHADS-VASc and other international scales to assess patient risk.",
-  "kaa": "ASCVD, CHADS-VASc hám basqa xalıqaralıq shkalalar járdeminde qáwipti bahalaw."
- },
- {
-  "key": "aiShifokorCopy.homeCards[3].metric",
-  "uz": "FDA · SSV",
-  "ru": "FDA · МЗ",
-  "en": "FDA · MoH",
-  "kaa": "FDA · SSV"
- },
- {
-  "key": "aiShifokorCopy.homeCards[3].metricLabel",
-  "uz": "standartlariga mos",
-  "ru": "соответствует стандартам",
-  "en": "standards compliant",
-  "kaa": "standartlarıǵa muwapıq"
- },
- {
   "key": "footerNav.cols[0].title",
   "uz": "Klinika",
   "ru": "Клиника",
@@ -7418,5 +7264,775 @@
   "ru": "Вакансии",
   "en": "Vacancies",
   "kaa": "Vakansiyalar"
+ },
+ {
+  "key": "doctorPageLabels.back",
+  "uz": "Barcha shifokorlar",
+  "ru": "Все врачи",
+  "en": "All doctors",
+  "kaa": "Barlıq shıpakerler"
+ },
+ {
+  "key": "doctorPageLabels.about",
+  "uz": "Haqida",
+  "ru": "О враче",
+  "en": "About",
+  "kaa": "Haqqında"
+ },
+ {
+  "key": "doctorPageLabels.education",
+  "uz": "Ta’lim",
+  "ru": "Образование",
+  "en": "Education",
+  "kaa": "Bilim"
+ },
+ {
+  "key": "doctorPageLabels.focuses",
+  "uz": "Yo’nalishlar",
+  "ru": "Направления",
+  "en": "Focus areas",
+  "kaa": "Baǵdarlar"
+ },
+ {
+  "key": "doctorPageLabels.languages",
+  "uz": "Tillar",
+  "ru": "Языки",
+  "en": "Languages",
+  "kaa": "Tiller"
+ },
+ {
+  "key": "doctorPageLabels.book",
+  "uz": "Qabulga yozilish",
+  "ru": "Записаться",
+  "en": "Book appointment",
+  "kaa": "Qabılǵa jazılıw"
+ },
+ {
+  "key": "doctorPageLabels.papers",
+  "uz": "Maqolalar",
+  "ru": "Публикации",
+  "en": "Publications",
+  "kaa": "Maqalalar"
+ },
+ {
+  "key": "doctorPageLabels.studies",
+  "uz": "Tadqiqotlar",
+  "ru": "Исследования",
+  "en": "Studies",
+  "kaa": "Izertlewler"
+ },
+ {
+  "key": "doctorPageLabels.experience",
+  "uz": "Tajriba",
+  "ru": "Опыт",
+  "en": "Experience",
+  "kaa": "Tájiriybe"
+ },
+ {
+  "key": "doctorPageLabels.related",
+  "uz": "Boshqa mutaxassislar",
+  "ru": "Другие специалисты",
+  "en": "Other specialists",
+  "kaa": "Basqa mutaxassislar"
+ },
+ {
+  "key": "doctorPageLabels.reviews",
+  "uz": "Bemorlar sharhlari",
+  "ru": "Отзывы пациентов",
+  "en": "Patient reviews",
+  "kaa": "Nawqaslar pikirleri"
+ },
+ {
+  "key": "doctorPageLabels.booking.title",
+  "uz": "Shifokorga yozilish",
+  "ru": "Запись на приём к врачу",
+  "en": "Book an appointment with",
+  "kaa": "Shıpakerge jazılıw"
+ },
+ {
+  "key": "doctorPageLabels.booking.appointment",
+  "uz": "Qabul ma’lumotlari",
+  "ru": "Данные о приёме",
+  "en": "Appointment details",
+  "kaa": "Qabıllaw maǵlıwmatları"
+ },
+ {
+  "key": "doctorPageLabels.booking.patient",
+  "uz": "Bemor ma’lumotlari",
+  "ru": "Данные пациента",
+  "en": "Patient details",
+  "kaa": "Nawqas maǵlıwmatları"
+ },
+ {
+  "key": "doctorPageLabels.booking.clinic",
+  "uz": "Klinika",
+  "ru": "Клиника",
+  "en": "Clinic",
+  "kaa": "Klinika"
+ },
+ {
+  "key": "doctorPageLabels.booking.date",
+  "uz": "Sana",
+  "ru": "Дата",
+  "en": "Date",
+  "kaa": "Sáne"
+ },
+ {
+  "key": "doctorPageLabels.booking.time",
+  "uz": "Vaqt",
+  "ru": "Время",
+  "en": "Time",
+  "kaa": "Waqıt"
+ },
+ {
+  "key": "doctorPageLabels.booking.phone",
+  "uz": "Telefon",
+  "ru": "Телефон",
+  "en": "Phone",
+  "kaa": "Telefon"
+ },
+ {
+  "key": "doctorPageLabels.booking.comment",
+  "uz": "Izoh",
+  "ru": "Комментарий",
+  "en": "Comment",
+  "kaa": "Pikir"
+ },
+ {
+  "key": "doctorPageLabels.booking.privacy",
+  "uz": "«Yozilish» tugmasini bosib, siz",
+  "ru": "Нажимая кнопку, вы принимаете",
+  "en": "By continuing you accept the",
+  "kaa": "«Jazılıw» túymesin basıp, siz"
+ },
+ {
+  "key": "doctorPageLabels.booking.submit",
+  "uz": "Davom etish",
+  "ru": "Продолжить",
+  "en": "Continue",
+  "kaa": "Dawam etiw"
+ },
+ {
+  "key": "doctorPageLabels.booking.submitting",
+  "uz": "Yuborilmoqda…",
+  "ru": "Отправка…",
+  "en": "Sending…",
+  "kaa": "Jiberilip atır…"
+ },
+ {
+  "key": "doctorPageLabels.booking.close",
+  "uz": "Yopish",
+  "ru": "Закрыть",
+  "en": "Close",
+  "kaa": "Jabıw"
+ },
+ {
+  "key": "doctorProfileUi.profile",
+  "uz": "Shifokor profili",
+  "ru": "Профиль врача",
+  "en": "Doctor profile",
+  "kaa": "Shıpaker profili"
+ },
+ {
+  "key": "doctorProfileUi.available",
+  "uz": "Qabul olayapti · Dushanba–Shanba, 09:00–18:00",
+  "ru": "Приём открыт · Пн–Сб, 09:00–18:00",
+  "en": "Accepting patients · Mon–Sat, 09:00–18:00",
+  "kaa": "Qabıllaw ashıq · Dúysenbi–Shánbi, 09:00–18:00"
+ },
+ {
+  "key": "doctorProfileUi.hoursShort",
+  "uz": "09:00–18:00 · Du–Sha",
+  "ru": "09:00–18:00 · Пн–Сб",
+  "en": "09:00–18:00 · Mon–Sat",
+  "kaa": "09:00–18:00 · Dú–Shá"
+ },
+ {
+  "key": "doctorProfileUi.book",
+  "uz": "Qabulga yozilish",
+  "ru": "Записаться на приём",
+  "en": "Book appointment",
+  "kaa": "Qabılǵa jazılıw"
+ },
+ {
+  "key": "doctorProfileUi.booking",
+  "uz": "Yozilish",
+  "ru": "Записаться",
+  "en": "Book",
+  "kaa": "Jazılıw"
+ },
+ {
+  "key": "doctorProfileUi.schedule",
+  "uz": "Telefon orqali yozilish",
+  "ru": "Запись по телефону",
+  "en": "Phone booking",
+  "kaa": "Telefon arqalı jazılıw"
+ },
+ {
+  "key": "doctorProfileUi.phoneBookingTitle",
+  "uz": "Bitta qo’ng’iroq — vaqt tasdiqlanadi",
+  "ru": "Один звонок — время подтверждается",
+  "en": "One call — we confirm the time",
+  "kaa": "Bir qońıraq — waqıt tastıyıqlanadı"
+ },
+ {
+  "key": "doctorProfileUi.phoneBookingLead",
+  "uz": "Onlayn jadval yo’q. Registratura telefon orqali ishlaydi: shifokor, kun va vaqtni birga kelishamiz.",
+  "ru": "Онлайн-расписания нет. Регистратура работает по телефону: врач, день и время согласуются с вами.",
+  "en": "There is no online schedule. Registration works by phone: we agree on the doctor, day, and time with you.",
+  "kaa": "Onlayn keste joq. Registratura telefon arqalı isleydi: shıpaker, kún hám waqıttı birge kelisemiz."
+ },
+ {
+  "key": "doctorProfileUi.phoneSteps[0]",
+  "uz": "Belgilangan raqamga qo’ng’iroq qiling yoki qayta qo’ng’iroq so’rang.",
+  "ru": "Позвоните на указанный номер или закажите обратный звонок.",
+  "en": "Call the clinic number or request a callback.",
+  "kaa": "Belgilengen nomerge qońıraq etiń yamasa qayta qońıraq sorań."
+ },
+ {
+  "key": "doctorProfileUi.phoneSteps[1]",
+  "uz": "Mutaxassislik va shikoyatingizni ayting — mos shifokor tanlanadi.",
+  "ru": "Опишите жалобы — вас направят к нужному специалисту.",
+  "en": "Describe your symptoms — we match you with the right specialist.",
+  "kaa": "Mamanlıq hám shikayatıńızdı aytıń — mos shıpaker tańlanadı."
+ },
+ {
+  "key": "doctorProfileUi.phoneSteps[2]",
+  "uz": "Qulay kun va vaqt tasdiqlanadi, qabulga kelishingiz mumkin.",
+  "ru": "Подберут удобные день и время приёма.",
+  "en": "We confirm a convenient day and time for your visit.",
+  "kaa": "Qolay kún hám waqıt tastıyıqlanadı, qabılǵa kele alasız."
+ },
+ {
+  "key": "doctorProfileUi.doctor",
+  "uz": "Shifokor",
+  "ru": "Врач",
+  "en": "Doctor",
+  "kaa": "Shıpaker"
+ },
+ {
+  "key": "doctorProfileUi.direction",
+  "uz": "Yo’nalish",
+  "ru": "Направление",
+  "en": "Specialty",
+  "kaa": "Baǵdar"
+ },
+ {
+  "key": "doctorProfileUi.hours",
+  "uz": "Ish vaqti",
+  "ru": "Часы приёма",
+  "en": "Clinic hours",
+  "kaa": "Jumıs waqtı"
+ },
+ {
+  "key": "doctorProfileUi.price",
+  "uz": "Birinchi qabul narxi",
+  "ru": "Стоимость первого приёма",
+  "en": "First visit fee",
+  "kaa": "Birinshi qabıllaw bahası"
+ },
+ {
+  "key": "doctorProfileUi.callToBook",
+  "uz": "Qo’ng’iroq qilish",
+  "ru": "Позвонить",
+  "en": "Call to book",
+  "kaa": "Qońıraq etiw"
+ },
+ {
+  "key": "doctorProfileUi.contactsCta",
+  "uz": "Aloqa va manzil",
+  "ru": "Контакты и адрес",
+  "en": "Contact and address",
+  "kaa": "Baylanıs hám mánzil"
+ },
+ {
+  "key": "doctorProfileUi.bookingNote",
+  "uz": "Ish vaqti: Dushanba–Shanba, 09:00–18:00.",
+  "ru": "Приём: Пн–Сб, 09:00–18:00.",
+  "en": "Hours: Mon–Sat, 09:00–18:00.",
+  "kaa": "Jumıs waqtı: Dúysenbi–Shánbi, 09:00–18:00."
+ },
+ {
+  "key": "doctorProfileUi.about",
+  "uz": "Mutaxassis haqida",
+  "ru": "О специалисте",
+  "en": "About the specialist",
+  "kaa": "Mutaxassis haqqında"
+ },
+ {
+  "key": "doctorProfileUi.aboutTitle",
+  "uz": "Sog’liqni erta asrash — kech davolashdan samaraliroq.",
+  "ru": "Раннее внимание к здоровью эффективнее позднего лечения.",
+  "en": "Early attention to health is more effective than late treatment.",
+  "kaa": "Salamatlıqqa erte itibar — keshiki emlewden nátiyjeli."
+ },
+ {
+  "key": "doctorProfileUi.focus",
+  "uz": "Yordam yo’nalishlari",
+  "ru": "Направления помощи",
+  "en": "Areas of care",
+  "kaa": "Járdem baǵdarları"
+ },
+ {
+  "key": "doctorProfileUi.visitCard",
+  "uz": "Qabul kartasi",
+  "ru": "Карточка приёма",
+  "en": "Visit card",
+  "kaa": "Qabıllaw kartası"
+ },
+ {
+  "key": "doctorProfileUi.career",
+  "uz": "Kasbiy yo’l",
+  "ru": "Профессиональный путь",
+  "en": "Professional journey",
+  "kaa": "Kásiplik jol"
+ },
+ {
+  "key": "doctorProfileUi.careerDescription",
+  "uz": "Tayyorgarlikdan yetakchi mutaxassislikkacha — ish joylari va mas’uliyat doirasi.",
+  "ru": "От подготовки до ведущей практики — места работы и зона ответственности.",
+  "en": "From clinical training to leading practice — workplaces and responsibilities.",
+  "kaa": "Tayarlıqtan jetekshi mamanlıqqa shekem — jumıs orınları hám juwapkershilik dárejesi."
+ },
+ {
+  "key": "doctorProfileUi.education",
+  "uz": "Ta’lim va malaka",
+  "ru": "Образование и квалификация",
+  "en": "Education and credentials",
+  "kaa": "Bilim hám maliyke"
+ },
+ {
+  "key": "doctorProfileUi.educationTitle",
+  "uz": "Hujjatlar bilan tasdiqlangan",
+  "ru": "Подтверждено документами",
+  "en": "Documented qualifications",
+  "kaa": "Hújjetler menen tastıyıqlanǵan"
+ },
+ {
+  "key": "doctorProfileUi.science",
+  "uz": "Ilmiy faoliyat",
+  "ru": "Научная деятельность",
+  "en": "Research activity",
+  "kaa": "Ilimiy iskerlik"
+ },
+ {
+  "key": "doctorProfileUi.scienceTitle",
+  "uz": "Nashrlar dinamikasi",
+  "ru": "Динамика публикаций",
+  "en": "Publication momentum",
+  "kaa": "Basılımlar dinamikası"
+ },
+ {
+  "key": "doctorProfileUi.languages",
+  "uz": "Qabul tillari",
+  "ru": "Языки приёма",
+  "en": "Consultation languages",
+  "kaa": "Qabıllaw tilleri"
+ },
+ {
+  "key": "doctorProfileUi.languagesTitle",
+  "uz": "Tarjimonsiz muloqot",
+  "ru": "Общение без переводчика",
+  "en": "Talk without an interpreter",
+  "kaa": "Awdarıwshısız sóylesiw"
+ },
+ {
+  "key": "doctorProfileUi.papers",
+  "uz": "Maqola",
+  "ru": "Публикаций",
+  "en": "Papers",
+  "kaa": "Maqala"
+ },
+ {
+  "key": "doctorProfileUi.studies",
+  "uz": "Tadqiqot",
+  "ru": "Исследований",
+  "en": "Studies",
+  "kaa": "Izertlew"
+ },
+ {
+  "key": "doctorProfileUi.reviews",
+  "uz": "Bemorlar fikri",
+  "ru": "Отзывы пациентов",
+  "en": "Patient reviews",
+  "kaa": "Nawqaslar pikiri"
+ },
+ {
+  "key": "doctorProfileUi.reviewsTitle",
+  "uz": "128 ta tasdiqlangan sharh",
+  "ru": "128 подтверждённых отзывов",
+  "en": "128 verified reviews",
+  "kaa": "128 tastıyıqlanǵan pikir"
+ },
+ {
+  "key": "doctorProfileUi.related",
+  "uz": "Shu yo’nalishdagi boshqa shifokorlar",
+  "ru": "Другие врачи этого направления",
+  "en": "Other doctors in this specialty",
+  "kaa": "Usı baǵdardaǵı basqa shıpakerler"
+ },
+ {
+  "key": "doctorProfileUi.relatedDescription",
+  "uz": "Vaqt to’g’ri kelmasa — hamkasblari ham shu klinik kuzatuv kartasini ko’radi.",
+  "ru": "Если время не подходит, коллеги увидят ту же клиническую карту наблюдения.",
+  "en": "If the time does not work, colleagues can see the same clinical follow-up record.",
+  "kaa": "Waqıt sáykes kelmese — kásiplesleri de usı klinikalıq baqlaw kartasın kóredi."
+ },
+ {
+  "key": "doctorProfileUi.coordinatorTitle",
+  "uz": "Qaysi shifokorga yozilishni bilmayapsizmi?",
+  "ru": "Не знаете, к какому врачу записаться?",
+  "en": "Not sure which doctor to choose?",
+  "kaa": "Qaysı shıpakerge jazılıwdı bilmeysiz be?"
+ },
+ {
+  "key": "doctorProfileUi.coordinatorText",
+  "uz": "Klinika koordinatori shikoyatingizni tinglab, to’g’ri mutaxassisga yo’naltiradi.",
+  "ru": "Координатор клиники выслушает жалобы и направит к подходящему специалисту.",
+  "en": "A clinic coordinator will listen to your symptoms and guide you to the right specialist.",
+  "kaa": "Klinika koordinatorı shikayatıńızdı tıńlap, durıs mutaxassiske jónltedi."
+ },
+ {
+  "key": "doctorProfileUi.callback",
+  "uz": "Qayta qo’ng’iroq so’rash",
+  "ru": "Заказать звонок",
+  "en": "Request a callback",
+  "kaa": "Qayta qońıraq soraw"
+ },
+ {
+  "key": "doctorProfileUi.footnote",
+  "uz": "Shifokor profilidagi kasbiy ma’lumotlar CMS orqali yangilanadi.",
+  "ru": "Профессиональные данные профиля обновляются через CMS.",
+  "en": "Professional profile details are kept current through the CMS.",
+  "kaa": "Shıpaker profilindegi kásiplik maǵlıwmatlar CMS arqalı jańalanadı."
+ },
+ {
+  "key": "doctorDossier.available",
+  "uz": "Qabul uchun ariza ochiq",
+  "ru": "Заявки на приём открыты",
+  "en": "Appointment requests are open",
+  "kaa": "Qabıllawǵa ariza ashıq"
+ },
+ {
+  "key": "doctorDossier.careerDescription",
+  "uz": "Tajriba, ish joylari va mas’uliyat doirasi",
+  "ru": "Опыт, места работы и зона ответственности",
+  "en": "Experience, workplaces, and areas of responsibility",
+  "kaa": "Tájiriybe, jumıs orınları hám juwapkershilik dárejesi"
+ },
+ {
+  "key": "doctorDossier.education",
+  "uz": "Ta’lim va malaka",
+  "ru": "Образование и квалификация",
+  "en": "Education and qualifications",
+  "kaa": "Bilim hám maliyke"
+ },
+ {
+  "key": "doctorDossier.languages",
+  "uz": "Qabul tillari",
+  "ru": "Языки приёма",
+  "en": "Consultation languages",
+  "kaa": "Qabıllaw tilleri"
+ },
+ {
+  "key": "doctorDossier.science",
+  "uz": "Ilmiy faoliyat",
+  "ru": "Научная деятельность",
+  "en": "Scientific activity",
+  "kaa": "Ilimiy iskerlik"
+ },
+ {
+  "key": "doctorDossier.focus",
+  "uz": "Yordam yo’nalishlari",
+  "ru": "Направления помощи",
+  "en": "Areas of care",
+  "kaa": "Járdem baǵdarları"
+ },
+ {
+  "key": "doctorDossier.current",
+  "uz": "hozir",
+  "ru": "сейчас",
+  "en": "present",
+  "kaa": "házir"
+ },
+ {
+  "key": "doctorDossier.native",
+  "uz": "ona tili",
+  "ru": "родной",
+  "en": "native",
+  "kaa": "ana tili"
+ },
+ {
+  "key": "doctorDossier.patientCount",
+  "uz": "bemor qabul qilingan",
+  "ru": "пациентов принято",
+  "en": "patients seen",
+  "kaa": "nawqas qabıl etildi"
+ },
+ {
+  "key": "doctorDossier.patientPeriod",
+  "uz": "So’nggi 12 oy · klinika hisoboti",
+  "ru": "Последние 12 месяцев · данные клиники",
+  "en": "Last 12 months · clinic records",
+  "kaa": "Sońǵı 12 ay · klinika esabatı"
+ },
+ {
+  "key": "doctorDossier.quote",
+  "uz": "Bemorga tashxisni tushuntirmasdan turib, davolash boshlanmaydi. Tushungan bemor — rejaga amal qiladigan bemor.",
+  "ru": "Лечение не начинается, пока пациент не понял диагноз. Понимающий пациент следует плану.",
+  "en": "Treatment does not begin until the patient understands the diagnosis. An informed patient follows the plan.",
+  "kaa": "Nawqasqa tashxis túsindirilmey turıp emlew baslanbaydı. Túsingen nawqas — jobaǵa ámel qılatuǵın nawqas."
+ },
+ {
+  "key": "doctorDossier.visit.title",
+  "uz": "Qanday qabul qilinadi",
+  "ru": "Как проходит приём",
+  "en": "What to expect",
+  "kaa": "Qabıllaw qalay ótedi"
+ },
+ {
+  "key": "doctorDossier.visit.address",
+  "uz": "Manzil",
+  "ru": "Адрес",
+  "en": "Address",
+  "kaa": "Mánzil"
+ },
+ {
+  "key": "doctorDossier.visit.addressValue",
+  "uz": "FJSTI klinikasi, 2-korpus",
+  "ru": "Клиника FJSTI, корпус 2",
+  "en": "FJSTI clinic, building 2",
+  "kaa": "FJSTI klinikası, 2-korpus"
+ },
+ {
+  "key": "doctorDossier.visit.addressNote",
+  "uz": "Farg’ona sh., Marg’ilon yo’li 2A · 3-qavat, 312-xona",
+  "ru": "Фергана, ул. Маргиланская 2A · 3 этаж, кабинет 312",
+  "en": "Fergana, Margilan road 2A · floor 3, room 312",
+  "kaa": "Farg’ona q., Marg’ilon jolı 2A · 3-qabat, 312-bólme"
+ },
+ {
+  "key": "doctorDossier.visit.hours",
+  "uz": "Ish vaqti",
+  "ru": "Часы работы",
+  "en": "Hours",
+  "kaa": "Jumıs waqtı"
+ },
+ {
+  "key": "doctorDossier.visit.hoursValue",
+  "uz": "Du–Sha, 08:00–18:00",
+  "ru": "Пн–Сб, 08:00–18:00",
+  "en": "Mon–Sat, 08:00–18:00",
+  "kaa": "Dú–Shá, 08:00–18:00"
+ },
+ {
+  "key": "doctorDossier.visit.hoursNote",
+  "uz": "Yakshanba — navbatchi mutaxassis",
+  "ru": "В воскресенье — дежурный специалист",
+  "en": "Duty specialist on Sunday",
+  "kaa": "Jeksembi — gezekshi mutaxassis"
+ },
+ {
+  "key": "doctorDossier.visit.firstVisit",
+  "uz": "Birinchi qabul",
+  "ru": "Первичный приём",
+  "en": "First visit",
+  "kaa": "Birinshi qabıllaw"
+ },
+ {
+  "key": "doctorDossier.visit.firstVisitValue",
+  "uz": "180 000 so’m",
+  "ru": "180 000 сум",
+  "en": "UZS 180,000",
+  "kaa": "180 000 sum"
+ },
+ {
+  "key": "doctorDossier.visit.firstVisitNote",
+  "uz": "Boshlang’ich tahlil narxga kiritilgan · ~40 daqiqa",
+  "ru": "Первичный анализ включён · ~40 минут",
+  "en": "Initial analysis included · ~40 minutes",
+  "kaa": "Baslanǵısh tallaw baha ishinde · ~40 minut"
+ },
+ {
+  "key": "doctorDossier.visit.followUp",
+  "uz": "Takroriy",
+  "ru": "Повторный",
+  "en": "Follow-up",
+  "kaa": "Qayta qabıllaw"
+ },
+ {
+  "key": "doctorDossier.visit.followUpValue",
+  "uz": "120 000 so’m",
+  "ru": "120 000 сум",
+  "en": "UZS 120,000",
+  "kaa": "120 000 sum"
+ },
+ {
+  "key": "doctorDossier.visit.followUpNote",
+  "uz": "30 kun ichida — bepul qayta ko’rik",
+  "ru": "В течение 30 дней — бесплатный контроль",
+  "en": "Free control visit within 30 days",
+  "kaa": "30 kún ishinde — tegin qayta kóriw"
+ },
+ {
+  "key": "doctorDossier.visit.insurance",
+  "uz": "Sug’urta",
+  "ru": "Страхование",
+  "en": "Insurance",
+  "kaa": "Sug’urta"
+ },
+ {
+  "key": "doctorDossier.visit.insuranceValue",
+  "uz": "Gross, Apex, Kafolat",
+  "ru": "Gross, Apex, Kafolat",
+  "en": "Gross, Apex, Kafolat",
+  "kaa": "Gross, Apex, Kafolat"
+ },
+ {
+  "key": "doctorDossier.visit.insuranceNote",
+  "uz": "Yo’llanma bilan qabul qilinadi",
+  "ru": "Принимается по направлению",
+  "en": "Referrals accepted",
+  "kaa": "Jollama menen qabıl etiledi"
+ },
+ {
+  "key": "specialtyPageLabels.back",
+  "uz": "Klinika yo’nalishlari",
+  "ru": "Направления клиники",
+  "en": "Clinic specialties",
+  "kaa": "Klinika baǵdarları"
+ },
+ {
+  "key": "specialtyPageLabels.expertise",
+  "uz": "Yo’nalish haqida",
+  "ru": "О направлении",
+  "en": "About the specialty",
+  "kaa": "Baǵdar haqqında"
+ },
+ {
+  "key": "specialtyPageLabels.conditions",
+  "uz": "Qaysi holatlarda yordam beramiz",
+  "ru": "С чем мы помогаем",
+  "en": "Conditions we treat",
+  "kaa": "Qanday jaǵdaylarda járdem beremiz"
+ },
+ {
+  "key": "specialtyPageLabels.services",
+  "uz": "Xizmatlar va davolash",
+  "ru": "Услуги и лечение",
+  "en": "Services and treatment",
+  "kaa": "Xızmetler hám emlew"
+ },
+ {
+  "key": "specialtyPageLabels.diagnostics",
+  "uz": "Diagnostika imkoniyatlari",
+  "ru": "Диагностические возможности",
+  "en": "Diagnostic capabilities",
+  "kaa": "Diagnostika múmkinshilikleri"
+ },
+ {
+  "key": "specialtyPageLabels.pathway",
+  "uz": "Shaxsiy davolash yo’li",
+  "ru": "Персональный маршрут лечения",
+  "en": "Personal treatment pathway",
+  "kaa": "Jeke emlew jolı"
+ },
+ {
+  "key": "specialtyPageLabels.pathwayText",
+  "uz": "Birinchi konsultatsiyadan natijalarni nazorat qilishgacha barcha bosqichlar bitta koordinatsiyalangan jamoa tomonidan boshqariladi.",
+  "ru": "Все этапы — от первой консультации до контроля результатов — ведёт единая координированная команда.",
+  "en": "Every stage, from first consultation to outcome monitoring, is managed by one coordinated care team.",
+  "kaa": "Birinshi konsultaciyadan nátiyjelerdi qadaǵalawǵa shekem barlıq basqıshlardı birdey úylestirilgen jamaat basqaradı."
+ },
+ {
+  "key": "specialtyPageLabels.available",
+  "uz": "Telefon orqali yozilish",
+  "ru": "Запись по телефону",
+  "en": "Book by phone",
+  "kaa": "Telefon arqalı jazılıw"
+ },
+ {
+  "key": "specialtyPageLabels.related",
+  "uz": "Boshqa klinik yo’nalishlar",
+  "ru": "Другие направления клиники",
+  "en": "Other clinical specialties",
+  "kaa": "Basqa klinikalıq baǵdarlar"
+ },
+ {
+  "key": "specialtyPageLabels.teamNote",
+  "uz": "Vaqt to’g’ri kelmasa — hamkasblari ham shu klinik kuzatuv kartasini ko’radi.",
+  "ru": "Если время не подходит, коллеги увидят ту же клиническую карту наблюдения.",
+  "en": "If the time does not work, colleagues can see the same clinical follow-up record.",
+  "kaa": "Waqıt tuwra kelmese — kásiplesleri de usı klinikalıq baqlaw kartasın kóredi."
+ },
+ {
+  "key": "specialtyPageLabels.hoursShort",
+  "uz": "09:00–18:00 · Du–Sha",
+  "ru": "09:00–18:00 · Пн–Сб",
+  "en": "09:00–18:00 · Mon–Sat",
+  "kaa": "09:00–18:00 · Dúy–Shan"
+ },
+ {
+  "key": "specialtyPageLabels.closingTitle",
+  "uz": "Keyingi qadam — qabulga qo’ng’iroq qiling",
+  "ru": "Следующий шаг — позвонить для записи",
+  "en": "Your next step is to call and book",
+  "kaa": "Keyingi qádem — qabılǵa qońıraq etiń"
+ },
+ {
+  "key": "specialtyPageLabels.closingText",
+  "uz": "Belgilangan raqamga qo’ng’iroq qiling — bemor xizmatimiz mos shifokor va vaqtni tayinlaydi.",
+  "ru": "Позвоните по указанному номеру — пациентский сервис подберёт врача и время визита.",
+  "en": "Call the clinic number — patient service will match a doctor and set your visit time.",
+  "kaa": "Belgilengen nomerge qońıraq etiń — bemar xızmeti mos shıpaker hám waqıttı belgileydi."
+ },
+ {
+  "key": "specialtyWorldLabels.enter",
+  "uz": "Bo’limga kirish",
+  "ru": "Войти в отделение",
+  "en": "Enter department",
+  "kaa": "Bólimge kiriw"
+ },
+ {
+  "key": "specialtyWorldLabels.team",
+  "uz": "Shu yo’nalishdagi shifokorlar",
+  "ru": "Врачи этого направления",
+  "en": "Doctors in this specialty",
+  "kaa": "Usı baǵdardaǵı shıpakerler"
+ },
+ {
+  "key": "specialtyWorldLabels.teamEmpty",
+  "uz": "Bu yo’nalish uchun shifokorlar tez orada qo’shiladi.",
+  "ru": "Врачи этого направления появятся в ближайшее время.",
+  "en": "Doctors for this specialty will be added soon.",
+  "kaa": "Bul baǵdar ushın shıpakerler tez arada qosıladı."
+ },
+ {
+  "key": "specialtyWorldLabels.book",
+  "uz": "Qabulga yozilish",
+  "ru": "Записаться",
+  "en": "Book visit",
+  "kaa": "Qabılǵa jazılıw"
+ },
+ {
+  "key": "specialtyWorldLabels.careTitle",
+  "uz": "Bu muhitda nima kutadi",
+  "ru": "Что вас ждёт в этом отделении",
+  "en": "What awaits you here",
+  "kaa": "Bul ortalıqta sizdi ne kútedi"
+ },
+ {
+  "key": "newsPageLabels.back",
+  "uz": "Barcha yangiliklar",
+  "ru": "Все новости",
+  "en": "All news",
+  "kaa": "Barlıq jańalıqlar"
+ },
+ {
+  "key": "newsPageLabels.related",
+  "uz": "Boshqa yangiliklar",
+  "ru": "Другие новости",
+  "en": "More news",
+  "kaa": "Basqa jańalıqlar"
  }
 ]

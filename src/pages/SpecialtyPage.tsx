@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { useCopy } from '../i18n/useCopy'
 import { useCms } from '../cms/CmsContext'
 import { fetchSpecialty, isCmsEnabled, type CmsSpecialtyDetail } from '../api/client'
 import { getSpecialtyBySlug, specialtyDetails, specialtyPageLabels } from '../data/specialtyDetails'
@@ -84,8 +85,8 @@ export default function SpecialtyPage({ slug }: { slug: string }) {
   const { lang, contentLang, t } = useLanguage()
   const { home } = useCms()
   const reduce = useReducedMotion()
-  const labels = specialtyPageLabels[lang]
-  const worldLabels = specialtyWorldLabels[lang]
+  const labels = useCopy('specialtyPageLabels', specialtyPageLabels)
+  const worldLabels = useCopy('specialtyWorldLabels', specialtyWorldLabels)
   const world = getSpecialtyWorld(slug)
   const staticMatch = getSpecialtyBySlug(slug)
   const [cmsDetail, setCmsDetail] = useState<CmsSpecialtyDetail | null>(null)

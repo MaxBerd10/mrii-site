@@ -43,6 +43,12 @@ SECTIONS = {
     'educationCopy': ('Klinik baza (ta’lim): ordinatura, qabul, shartlar', 'Klinik baza'),
     'aiShifokorCopy': ('AI yechimlar: AiShifokor kartalari va matnlari', 'AI yechimlar, Bosh sahifa'),
     'footerNav': ('Sayt pastidagi havolalar ro‘yxati', 'Hamma sahifa (pastda)'),
+    'doctorPageLabels': ('Shifokorlar ro‘yxati va kartalari: yozuvlar', 'Shifokorlar'),
+    'doctorProfileUi': ('Shifokor profili sahifasi: yozuvlar va qabul ma’lumotlari', 'Shifokor profili'),
+    'doctorDossier': ('Shifokor profili: ish tajribasi yozuvlari, qabulga kelish (manzil, vaqt, sug‘urta)', 'Shifokor profili'),
+    'specialtyPageLabels': ('Klinik yo‘nalish sahifasi: yozuvlar', 'Klinika → yo‘nalish'),
+    'specialtyWorldLabels': ('Klinik yo‘nalish sahifasi: shifokorlar bo‘limi', 'Klinika → yo‘nalish'),
+    'newsPageLabels': ('Yangilik sahifasi: yozuvlar', 'Yangiliklar'),
 }
 
 

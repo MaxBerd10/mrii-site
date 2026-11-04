@@ -64,7 +64,7 @@ export type DoctorDossier = {
   patientCount: string
 }
 
-const locales: Record<Lang, DossierLocale> = {
+export const DOSSIER_LOCALES: Record<Lang, DossierLocale> = {
   uz: {
     profileLabel: 'Klinika mutaxassisi',
     available: 'Qabul uchun ariza ochiq',
@@ -805,8 +805,12 @@ function languageLevel(language: string, ui: DossierLocale) {
  * Existing profile facts (education, languages, papers, studies and focuses)
  * stay source-driven; only workplace chronology is synthesized.
  */
-export function getDoctorDossier(profile: DoctorProfile, lang: Lang): DoctorDossier {
-  const ui = locales[lang]
+export function getDoctorDossier(
+  profile: DoctorProfile,
+  lang: Lang,
+  uiOverride?: DossierLocale,
+): DoctorDossier {
+  const ui = uiOverride ?? DOSSIER_LOCALES[lang]
   const view = profile.content[lang]
   const experienceYears = parseExperience(view.exp)
   const milestoneOverride = DOSSIER_MILESTONE_OVERRIDES[lang]?.[profile.slug]
