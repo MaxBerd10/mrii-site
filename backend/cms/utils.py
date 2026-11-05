@@ -1,4 +1,5 @@
 import os
+import re
 import uuid
 
 from django.conf import settings
@@ -144,4 +145,5 @@ def media_url(request, file_field, url_field: str = '') -> str:
 def split_pipe(text: str) -> list[str]:
     if not text:
         return []
-    return [p.strip() for p in text.split('|') if p.strip()]
+    # A new line works like the old "|" separator, so editors can simply write one item per line.
+    return [p.strip() for p in re.split(r'\||\r?\n', text) if p.strip()]

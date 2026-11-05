@@ -42,6 +42,30 @@ class CmsConfig(AppConfig):
             if permissions.count() == len(codenames):
                 group.permissions.set(permissions)
 
+        def _configure_manager_group(**kwargs):
+            """«Kontent menejeri»: everyday website editing without superuser powers (no users, no Telegram list)."""
+            from django.contrib.auth.models import Group, Permission
+
+            group, _ = Group.objects.get_or_create(name='Kontent menejeri')
+            everything = ('doctor', 'newsarticle', 'vacancy', 'priceitem', 'pricecategory', 'checkupdirection',
+                          'testimonial', 'clinictourvideo', 'researchstudy', 'researchcapability', 'aiproduct')
+            codenames = [f'{action}_{model}' for model in everything for action in ('view', 'add', 'change', 'delete')]
+            codenames += [
+                'view_specialty', 'change_specialty', 'view_sitesettings', 'change_sitesettings',
+                'view_homepage', 'change_homepage', 'view_researchsection', 'change_researchsection',
+                'view_textoverride', 'change_textoverride', 'view_assetoverride', 'change_assetoverride',
+                'view_doctorreview', 'change_doctorreview', 'delete_doctorreview',
+                'view_inquiry', 'change_inquiry',
+            ]
+            permissions = Permission.objects.filter(content_type__app_label='cms', codename__in=codenames)
+            if permissions.count() == len(set(codenames)):
+                group.permissions.set(permissions)
+
+        post_migrate.connect(
+            _configure_manager_group,
+            sender=self,
+            dispatch_uid='cms_configure_manager_group',
+        )
         post_migrate.connect(
             _configure_hr_group,
             sender=self,

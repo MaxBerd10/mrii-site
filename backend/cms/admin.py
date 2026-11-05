@@ -89,7 +89,7 @@ class AutoTranslateAdmin(admin.ModelAdmin):
     """Admin forms get a button that fills RU/EN inputs from UZ (visible before save)."""
 
     class Media:
-        js = ('cms/auto_translate.js',)
+        js = ('cms/auto_translate.js?v=2',)
         css = {'all': ('cms/auto_translate.css',)}
 
     def get_changeform_initial_data(self, request):
@@ -173,7 +173,8 @@ class SiteSettingsAdmin(AutoTranslateAdmin):
                 'contact_admissions_phones',
             ),
         }),
-        ('Institut', {
+        ('Institut nomi va shior (ixtiyoriy)', {
+            'classes': ('collapse',),
             'description': 'Institut nomi va shior — bosh sahifa brendi.',
             'fields': (
                 'institute_name',
@@ -181,7 +182,8 @@ class SiteSettingsAdmin(AutoTranslateAdmin):
                 'slogan_uz', 'slogan_ru', 'slogan_en',
             ),
         }),
-        ('Huquqiy', {
+        ('Huquqiy matnlar (ixtiyoriy)', {
+            'classes': ('collapse',),
             'description': 'Sayt pastidagi mualliflik huquqi va litsenziya matnlari.',
             'fields': (
                 'copyright_uz', 'copyright_ru', 'copyright_en',
@@ -287,18 +289,16 @@ class SpecialtyAdmin(AutoTranslateAdmin):
     image_preview = big_preview('image_url', 'image')
     readonly_fields = ('image_preview',)
     fieldsets = (
-        ('Asosiy', {
-            'description': 'Tartib — ro‘yxatdagi o‘rin.',
-            'fields': ('icon', 'doctor_count', 'order', 'is_active'),
+        (None, {
+            'description': 'Faqat o‘zbekcha yozing — ruscha va inglizchasi saqlaganda o‘zi tarjima qilinadi.',
+            'fields': ('name_uz', 'desc_uz', 'overview_uz', 'image_preview', 'image', 'is_active'),
         }),
-        ('O‘zbekcha', {
-            'description': f'{LANG_UZ} {AUTO_TIP} Ro‘yxat maydonlarida | bilan ajrating.',
-            'fields': (
-                'name_uz', 'desc_uz', 'overview_uz',
-                'conditions_uz', 'services_uz', 'diagnostics_uz',
-            ),
+        ('Qo‘shimcha (ixtiyoriy)', {
+            'classes': ('collapse',),
+            'description': 'Ro‘yxat maydonlarida har bir bandni yangi qatordan yozing.',
+            'fields': ('conditions_uz', 'services_uz', 'diagnostics_uz', 'doctor_count', 'icon', 'image_url'),
         }),
-        ('Русский', {
+        ('Русский (avtomatik tarjima)', {
             'classes': ('collapse',),
             'description': LANG_RU,
             'fields': (
@@ -306,7 +306,7 @@ class SpecialtyAdmin(AutoTranslateAdmin):
                 'conditions_ru', 'services_ru', 'diagnostics_ru',
             ),
         }),
-        ('English', {
+        ('English (avtomatik tarjima)', {
             'classes': ('collapse',),
             'description': LANG_EN,
             'fields': (
@@ -314,14 +314,10 @@ class SpecialtyAdmin(AutoTranslateAdmin):
                 'conditions_en', 'services_en', 'diagnostics_en',
             ),
         }),
-        ('Rasm', {
-            'description': IMG_HELP,
-            'fields': ('image_preview', 'image', 'image_url'),
-        }),
-        ('Sahifa manzili', {
+        ('Texnik sozlamalar', {
             'classes': ('collapse',),
             'description': SLUG_HELP,
-            'fields': ('slug',),
+            'fields': ('slug', 'order'),
         }),
     )
 
@@ -340,22 +336,22 @@ class DoctorAdmin(AutoTranslateAdmin):
     image_preview = big_preview('photo_url', 'photo')
     readonly_fields = ('image_preview',)
     fieldsets = (
-        ('Asosiy', {
+        (None, {
             'description': (
-                'Yangi shifokor: «Shifokor qo‘shish». '
-                'O‘chirish: pastdagi qizil «O‘chirish» yoki ro‘yxatdagi belgilab «Tanlanganlarni o‘chirish». '
-                'Vaqtincha yashirish uchun «Faol» ni o‘chiring.'
+                'Faqat o‘zbekcha yozing — ruscha va inglizchasi saqlaganda o‘zi tarjima qilinadi. '
+                'Saytdan olib tashlash: «Saytda ko‘rsatilsin» ni o‘chiring (ma’lumot saqlanadi) yoki pastdagi «O‘chirish» ni bosing.'
             ),
-            'fields': ('name', 'staff_kind', 'papers', 'studies', 'is_active'),
+            'fields': ('name', 'image_preview', 'photo', 'role_uz', 'specialty_uz', 'experience_uz', 'about_uz', 'is_active'),
         }),
-        ('O‘zbekcha', {
-            'description': f'{LANG_UZ} {AUTO_TIP} Ro‘yxat maydonlarida (Ta’lim, Yo‘nalishlar, Tillar) | bilan ajrating.',
+        ('Qo‘shimcha ma’lumot (ixtiyoriy)', {
+            'classes': ('collapse',),
+            'description': 'Bo‘sh qolsa, saytda o‘sha qism ko‘rinmaydi. Ta’lim, yo‘nalishlar va tillarni har birini yangi qatordan yozing.',
             'fields': (
-                'role_uz', 'specialty_uz', 'grade_uz', 'experience_uz', 'about_uz',
-                'education_uz', 'focuses_uz', 'languages_uz', 'career_uz',
+                'grade_uz', 'career_uz', 'education_uz', 'focuses_uz', 'languages_uz',
+                'papers', 'studies', 'staff_kind', 'photo_url',
             ),
         }),
-        ('Русский', {
+        ('Русский (avtomatik tarjima)', {
             'classes': ('collapse',),
             'description': LANG_RU,
             'fields': (
@@ -363,7 +359,7 @@ class DoctorAdmin(AutoTranslateAdmin):
                 'education_ru', 'focuses_ru', 'languages_ru', 'career_ru',
             ),
         }),
-        ('English', {
+        ('English (avtomatik tarjima)', {
             'classes': ('collapse',),
             'description': LANG_EN,
             'fields': (
@@ -371,25 +367,10 @@ class DoctorAdmin(AutoTranslateAdmin):
                 'education_en', 'focuses_en', 'languages_en', 'career_en',
             ),
         }),
-        ('Rasm', {
-            'description': IMG_HELP,
-            'fields': ('image_preview', 'photo', 'photo_url'),
-        }),
-        ('Sahifa manzili', {
+        ('Texnik sozlamalar', {
             'classes': ('collapse',),
-            'description': SLUG_HELP,
-            'fields': ('slug',),
-        }),
-        ('Qo‘shimcha (ixtiyoriy)', {
-            'classes': ('collapse',),
-            'description': (
-                'Odatda ochish shart emas. '
-                'Rang admin sahifasida emas — saytdagi «Shifokorlar» bo‘limida '
-                'kartochkadagi raqamlar (maqolalar / tadqiqotlar) rangini o‘zgartiradi. '
-                'Saqlagach saytni ochib tekshiring. '
-                'Tartib: 1 = birinchi, 2 = ikkinchi…'
-            ),
-            'fields': ('color', 'order'),
+            'description': SLUG_HELP + ' Rang va tartib raqami odatda o‘zgartirilmaydi.',
+            'fields': ('slug', 'color', 'order'),
         }),
     )
 
@@ -473,29 +454,26 @@ class NewsArticleAdmin(AutoTranslateAdmin):
     image_preview = big_preview('cover_url', 'cover')
     readonly_fields = ('image_preview',)
     fieldsets = (
-        ('Asosiy', {
-            'description': 'Chop etilmagan (“Faol emas”) maqola saytda ko‘rinmaydi.',
-            'fields': ('published_at', 'category_color', 'order', 'is_published'),
+        (None, {
+            'description': 'Faqat o‘zbekcha yozing — ruscha va inglizchasi saqlaganda o‘zi tarjima qilinadi. «Saytda ko‘rsatilsin» o‘chiq bo‘lsa, maqola saytda ko‘rinmaydi.',
+            'fields': ('title_uz', 'excerpt_uz', 'body_uz', 'image_preview', 'cover', 'published_at', 'is_published'),
         }),
-        ('O‘zbekcha', {
-            'description': f'{LANG_UZ} {AUTO_TIP} Body paragraflarini | bilan ajrating.',
-            'fields': ('category_uz', 'title_uz', 'excerpt_uz', 'lead_uz', 'body_uz'),
+        ('Qo‘shimcha (ixtiyoriy)', {
+            'classes': ('collapse',),
+            'description': 'Maqola paragraflarini har bir bandni yangi qatordan yozing.',
+            'fields': ('category_uz', 'lead_uz', 'category_color', 'order', 'cover_url'),
         }),
-        ('Русский', {
+        ('Русский (avtomatik tarjima)', {
             'classes': ('collapse',),
             'description': LANG_RU,
             'fields': ('category_ru', 'title_ru', 'excerpt_ru', 'lead_ru', 'body_ru'),
         }),
-        ('English', {
+        ('English (avtomatik tarjima)', {
             'classes': ('collapse',),
             'description': LANG_EN,
             'fields': ('category_en', 'title_en', 'excerpt_en', 'lead_en', 'body_en'),
         }),
-        ('Rasm', {
-            'description': IMG_HELP,
-            'fields': ('image_preview', 'cover', 'cover_url'),
-        }),
-        ('Sahifa manzili', {
+        ('Texnik sozlamalar', {
             'classes': ('collapse',),
             'description': SLUG_HELP,
             'fields': ('slug',),
@@ -518,13 +496,14 @@ class AIProductAdmin(AutoTranslateAdmin):
             'fields': ('tag_color', 'metric', 'order', 'is_active'),
         }),
         ('O‘zbekcha', {
-            'description': LANG_UZ + ' Xususiyatlar/natijalar/jarayon ro‘yxatlarini | bilan ajrating.',
+            'description': LANG_UZ + ' Xususiyatlar/natijalar/jarayon ro‘yxatlarini har bir bandni yangi qatordan yozing.',
             'fields': (
                 'name_uz', 'tag_uz', 'desc_uz', 'features_uz', 'metric_label_uz',
                 'overview_uz', 'audience_uz', 'outcomes_uz', 'workflow_uz',
             ),
         }),
         ('Русский', {
+            'classes': ('collapse',),
             'description': LANG_RU,
             'fields': (
                 'name_ru', 'tag_ru', 'desc_ru', 'features_ru', 'metric_label_ru',
@@ -532,6 +511,7 @@ class AIProductAdmin(AutoTranslateAdmin):
             ),
         }),
         ('English', {
+            'classes': ('collapse',),
             'description': LANG_EN,
             'fields': (
                 'name_en', 'tag_en', 'desc_en', 'features_en', 'metric_label_en',
@@ -554,13 +534,14 @@ class AIProductAdmin(AutoTranslateAdmin):
 class ResearchSectionAdmin(AutoTranslateAdmin):
     fieldsets = (
         ('O‘zbekcha', {
-            'description': LANG_UZ + ' “Nima uchun” bandlarini | bilan ajrating.',
+            'description': LANG_UZ + ' “Nima uchun” bandlarini har bir bandni yangi qatordan yozing.',
             'fields': (
                 'label_uz', 'title1_uz', 'title_em_uz', 'description_uz',
                 'why_title_uz', 'why_items_uz', 'sponsor_btn_uz',
             ),
         }),
         ('Русский', {
+            'classes': ('collapse',),
             'description': LANG_RU,
             'fields': (
                 'label_ru', 'title1_ru', 'title_em_ru', 'description_ru',
@@ -568,6 +549,7 @@ class ResearchSectionAdmin(AutoTranslateAdmin):
             ),
         }),
         ('English', {
+            'classes': ('collapse',),
             'description': LANG_EN,
             'fields': (
                 'label_en', 'title1_en', 'title_em_en', 'description_en',
@@ -594,8 +576,8 @@ class ResearchStudyAdmin(AutoTranslateAdmin):
             'fields': ('study_id', 'phase', 'status', 'order', 'is_active'),
         }),
         ('O‘zbekcha', {'description': LANG_UZ, 'fields': ('title_uz', 'area_uz')}),
-        ('Русский', {'description': LANG_RU, 'fields': ('title_ru', 'area_ru')}),
-        ('English', {'description': LANG_EN, 'fields': ('title_en', 'area_en')}),
+        ('Русский', {'classes': ('collapse',), 'description': LANG_RU, 'fields': ('title_ru', 'area_ru')}),
+        ('English', {'classes': ('collapse',), 'description': LANG_EN, 'fields': ('title_en', 'area_en')}),
     )
 
 
@@ -609,8 +591,8 @@ class ResearchCapabilityAdmin(AutoTranslateAdmin):
             'fields': ('value', 'highlight', 'order'),
         }),
         ('O‘zbekcha', {'fields': ('label_uz',)}),
-        ('Русский', {'fields': ('label_ru',)}),
-        ('English', {'fields': ('label_en',)}),
+        ('Русский', {'classes': ('collapse',), 'fields': ('label_ru',)}),
+        ('English', {'classes': ('collapse',), 'fields': ('label_en',)}),
     )
 
 
@@ -629,8 +611,8 @@ class EducationTrackAdmin(AutoTranslateAdmin):
             'fields': ('color', 'icon', 'order', 'is_active'),
         }),
         ('O‘zbekcha', {'description': LANG_UZ, 'fields': ('audience_uz',)}),
-        ('Русский', {'description': LANG_RU, 'fields': ('audience_ru',)}),
-        ('English', {'description': LANG_EN, 'fields': ('audience_en',)}),
+        ('Русский', {'classes': ('collapse',), 'description': LANG_RU, 'fields': ('audience_ru',)}),
+        ('English', {'classes': ('collapse',), 'description': LANG_EN, 'fields': ('audience_en',)}),
     )
 
 
@@ -645,10 +627,12 @@ class TestimonialAdmin(AutoTranslateAdmin):
             'fields': ('quote_uz', 'author_uz', 'role_uz'),
         }),
         ('Русский', {
+            'classes': ('collapse',),
             'description': LANG_RU,
             'fields': ('quote_ru', 'author_ru', 'role_ru'),
         }),
         ('English', {
+            'classes': ('collapse',),
             'description': LANG_EN,
             'fields': ('quote_en', 'author_en', 'role_en'),
         }),
@@ -669,7 +653,7 @@ class VacancyAdmin(AutoTranslateAdmin):
             'fields': ('category', 'employment', 'deadline', 'order', 'is_active'),
         }),
         ('O‘zbekcha', {
-            'description': f'{LANG_UZ} {AUTO_TIP} Talablarni | bilan ajrating.',
+            'description': f'{LANG_UZ} {AUTO_TIP} Talablarni har bir bandni yangi qatordan yozing.',
             'fields': (
                 'title_uz',
                 'department_uz',

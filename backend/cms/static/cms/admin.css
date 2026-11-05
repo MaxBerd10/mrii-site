@@ -388,3 +388,28 @@ body.m-body .submit-row input.default { background: var(--accent); color: #fff; 
 
 a.mrii-row-delete, a.mrii-row-delete:link, a.mrii-row-delete:visited { color: var(--danger); font-weight: 600; text-decoration: none; padding: 6px 10px; border: 1px solid #e7b9b4; border-radius: 8px; white-space: nowrap; }
 a.mrii-row-delete:hover { background: var(--danger-soft); }
+
+/* ── simple mode: calmer sidebar, collapsed fieldsets, slim translate bar ── */
+.m-nav__more { margin-top: 10px; border-top: 1px solid var(--side-line); padding-top: 6px; }
+.m-nav__more > summary { list-style: none; display: flex; align-items: center; justify-content: space-between; min-height: 44px; padding: 8px 12px; border-radius: 10px; color: #9fb0c2; font-size: 14px; font-weight: 600; cursor: pointer; }
+.m-nav__more > summary::-webkit-details-marker { display: none; }
+.m-nav__more > summary::after { content: '▾'; font-size: 12px; transition: transform 0.15s; }
+.m-nav__more[open] > summary::after { transform: rotate(180deg); }
+.m-nav__more > summary:hover { background: rgba(255, 255, 255, 0.07); color: #fff; }
+.m-nav__more a { display: flex; }
+
+body.m-body .mrii-translate-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 0 0 16px; padding: 10px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: none; }
+body.m-body .mrii-translate-bar__hint { margin: 0; flex: 1 1 280px; color: var(--muted); font-size: 14px; }
+body.m-body .mrii-translate-bar__hint strong { color: var(--ink); }
+body.m-body .mrii-translate-btn { min-height: 40px; padding: 7px 14px; border: 1px solid var(--line-strong); border-radius: 10px; background: var(--surface); color: var(--ink); font-size: 14px; font-weight: 600; cursor: pointer; }
+body.m-body .mrii-translate-btn:hover { border-color: var(--accent); }
+body.m-body .mrii-translate-bar__steps, body.m-body .mrii-translate-bar__label { display: none; }
+
+/* Django 5 collapsible fieldsets: <fieldset class="collapse"><details><summary><h2>…</h2></summary>…  */
+fieldset.collapse details > summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 0 18px; background: var(--surface-2); cursor: pointer; list-style: none; }
+fieldset.collapse details > summary::-webkit-details-marker { display: none; }
+fieldset.collapse details > summary h2 { margin: 0; padding: 0; background: none; border: 0; font-size: 16px; }
+fieldset.collapse details > summary::after { content: 'Ochish ▾'; color: var(--accent-strong); font-size: 14px; font-weight: 600; white-space: nowrap; }
+fieldset.collapse details[open] > summary::after { content: 'Yopish ▴'; }
+fieldset.collapse details[open] > summary { border-bottom: 1px solid var(--line); }
+fieldset.collapse details > summary:hover { background: var(--accent-soft); }

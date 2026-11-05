@@ -67,35 +67,31 @@ class HubAdminMixin:
             groups = [
                 {'title': '', 'items': [
                     home,
-                    item('Sayt sahifalari', reverse('admin:cms_pages'), 'map', None, [reverse('admin:cms_pages')]),
-                ]},
-                {'title': 'Kundalik ishlar', 'items': [
                     item('Murojaatlar', reverse('admin:cms_inquiry_changelist'), 'inbox', models.Inquiry),
                     item('Yangiliklar', reverse('admin:cms_newsarticle_changelist'), 'news', models.NewsArticle),
                     item('Shifokorlar', reverse('admin:cms_doctor_changelist'), 'doctor', models.Doctor),
-                    item('Shifokor sharhlari', reverse('admin:cms_doctorreview_changelist') + '?is_approved__exact=0', 'check', models.DoctorReview,
-                         [reverse('admin:cms_doctorreview_changelist')]),
                     item('Narxlar', reverse('admin:cms_priceitem_changelist'), 'price', models.PriceItem,
                          [reverse('admin:cms_priceitem_changelist'), reverse('admin:cms_pricecategory_changelist'),
                           reverse('admin:cms_checkupdirection_changelist')]),
-                    item('Vakansiyalar', reverse('admin:cms_vacancy_changelist'), 'briefcase', models.Vacancy),
-                ]},
-                {'title': 'Sayt ko‘rinishi', 'items': [
-                    item('Sayt matnlari', reverse('admin:cms_texts'), 'text', models.TextOverride),
-                    item('Sayt rasmlari', reverse('admin:cms_assets'), 'image', models.AssetOverride),
                     item('Aloqa ma’lumotlari', self._model_urls('sitesettings', True)[1], 'phone', models.SiteSettings,
                          ['/admin/cms/sitesettings/']),
-                ]},
-                {'title': 'Yordam', 'items': [
                     item('Qo‘llanma', reverse('admin:cms_guide'), 'book'),
                 ]},
-                {'title': 'Tizim', 'items': [
+                {'title': 'Boshqa bo‘limlar', 'collapsed': True, 'items': [
+                    item('Shifokor sharhlari', reverse('admin:cms_doctorreview_changelist') + '?is_approved__exact=0', 'check',
+                         models.DoctorReview, [reverse('admin:cms_doctorreview_changelist')]),
+                    item('Vakansiyalar', reverse('admin:cms_vacancy_changelist'), 'briefcase', models.Vacancy),
+                    item('Sayt sahifalari', reverse('admin:cms_pages'), 'map', None, ['/admin/cms/pages/']),
+                    item('Sayt matnlari', reverse('admin:cms_texts'), 'text', models.TextOverride),
+                    item('Sayt rasmlari', reverse('admin:cms_assets'), 'image', models.AssetOverride),
                     item('Xodimlar', reverse('admin:auth_user_changelist'), 'users', User, ['/admin/auth/']),
                     item('HR Telegram', reverse('admin:cms_hrtelegramuser_changelist'), 'send', models.HRTelegramUser),
                 ]},
             ]
         for g in groups:
             g['items'] = [i for i in g['items'] if i]
+        for g in groups:
+            g['open'] = any(i['active'] for i in g['items'])
         return [g for g in groups if g['items']]
 
     def each_context(self, request):
