@@ -1571,6 +1571,7 @@ export function mapCmsDoctors(
     color: string
     photo: string
   }>,
+  lang: Lang = 'uz',
 ): DoctorProfile[] {
   return rows.map((row) => {
     const staffKind: StaffKind =
@@ -1592,7 +1593,17 @@ export function mapCmsDoctors(
       papers: Number(row.papers) || 0,
       studies: Number(row.studies) || 0,
       staffKind,
-      content: { uz: resolved, ru: resolved, en: resolved, kaa: resolved },
+      // The CMS has no Karakalpak text: who is listed, their order and photo come from the admin, while
+      // the hand-written Karakalpak bio is kept for doctors that have one (new doctors show the Uzbek text).
+      content: {
+        uz: resolved,
+        ru: resolved,
+        en: resolved,
+        kaa:
+          lang === 'kaa'
+            ? (STATIC_DOCTOR_PROFILES.find((p) => p.slug === row.slug)?.content.kaa ?? resolved)
+            : resolved,
+      },
     }
   })
 }

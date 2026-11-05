@@ -3,6 +3,11 @@
 Admin panel: `https://fermiclinic.uz/admin/`. Dasturchi kerak emas — sayt matni, rasmi, narxi, kontaktlari shu yerdan o'zgaradi.
 Admin ichida ham qo'llanma bor: bosh sahifadagi **«Qo'llanma»** tugmasi.
 
+## Qayerdan boshlash
+- **Qidiruv** (tepada, yoki «/» tugmasi): so'z yozing — telefon, narx, shifokor ismi, yangilik sarlavhasi, matn bo'lagi — to'g'ri tahrirlash joyiga olib boradi.
+- **Sayt sahifalari**: saytdagi sahifani tanlang (masalan «Narxlar») — shu sahifadagi hamma o'zgartiriladigan narsa (ro'yxatlar, matnlar, rasmlar) bir joyda, «Saytda ko'rish» tugmasi bilan.
+- **Bosh sahifadagi «Tez o'zgartirish»**: eng ko'p kerak bo'ladigan ishlar (telefon, narx, yangilik, shifokor, rasm).
+
 ## 3 qadam
 1. Bosh sahifadan bo'lim tanlang.
 2. Matn / narx / rasmni o'zgartiring.

@@ -42,11 +42,9 @@ export function CmsProvider({ children }: { children: ReactNode }) {
       if (!cancelled) {
         setHome(data)
         setLoading(false)
-        // The CMS only stores uz/ru/en; Karakalpak keeps its own hand-written
-        // doctor bios in data/doctors.ts rather than silently showing Uzbek.
-        setCmsDoctorProfiles(
-          lang !== 'kaa' && data?.doctors?.length ? mapCmsDoctors(data.doctors) : null,
-        )
+        // The admin decides who is listed in every language; Karakalpak keeps its hand-written
+        // bios where they exist (see mapCmsDoctors).
+        setCmsDoctorProfiles(data?.doctors?.length ? mapCmsDoctors(data.doctors, lang) : null)
       }
     })
     return () => {

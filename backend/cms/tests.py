@@ -902,3 +902,102 @@ class AdminDashboardTests(TestCase):
         self.assertContains(page, 'Vakansiyalar')
         for hidden in ('Sayt matnlari', 'Narxlar', 'Sayt rasmlari', 'Foydalanuvchilar'):
             self.assertNotContains(page, hidden)
+
+
+@override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class AdminHubAndSearchTests(TestCase):
+    def setUp(self):
+        self.boss = User.objects.create_superuser('boss', 'b@example.uz', 'pw-12345-xyz')
+        self.client.force_login(self.boss)
+
+    def test_every_text_section_belongs_to_a_site_page(self):
+        from . import site_pages, site_texts
+
+        in_catalogue = {site_texts.section_of(e['key']) for e in site_texts.catalog()}
+        self.assertEqual(in_catalogue - site_pages.assigned_text_sections(), set())
+
+    def test_pages_hub_and_each_page_open(self):
+        from . import site_pages
+
+        self.assertEqual(self.client.get('/admin/cms/pages/').status_code, 200)
+        for page in site_pages.PAGES:
+            response = self.client.get(f"/admin/cms/pages/{page['key']}/")
+            self.assertEqual(response.status_code, 200, page['key'])
+            self.assertContains(response, page['title'])
+        self.assertEqual(self.client.get('/admin/cms/pages/nope/').status_code, 404)
+
+    def test_search_finds_prices_texts_and_people(self):
+        from .models import Inquiry, PriceItem
+
+        item = PriceItem.objects.first()
+        found = self.client.get('/admin/cms/search/', {'q': item.name_uz[:8]}).json()
+        titles = [g['title'] for g in found['groups']]
+        self.assertIn('Narxlar', titles)
+        Inquiry.objects.create(name='Qidiruv Sinov', phone='+998900000000', request_id='T-SEARCH')
+        found = self.client.get('/admin/cms/search/', {'q': 'Qidiruv Sinov'}).json()
+        self.assertEqual([g['title'] for g in found['groups']], ['Murojaat va arizalar'])
+        self.assertEqual(self.client.get('/admin/cms/search/', {'q': 'a'}).json(), {'groups': []})
+        key = self.client.get('/admin/cms/search/', {'q': 'Bosh sahifa'}).json()
+        self.assertTrue(any(g['title'] == 'Sayt matnlari' for g in key['groups']))
+
+    def test_hr_search_is_limited_to_career_leads_and_vacancies(self):
+        from .models import Inquiry
+
+        Inquiry.objects.create(name='Bemor Maxfiy', phone='+998911111111', request_id='T-PATIENT', intent=Inquiry.Intent.BOOKING)
+        Inquiry.objects.create(name='Nomzod Ochiq', phone='+998922222222', request_id='T-CAND', intent=Inquiry.Intent.CAREER)
+        hr = User.objects.create_user('hr2', 'h@example.uz', 'pw-12345-xyz', is_staff=True)
+        hr.groups.add(Group.objects.get(name=HR_GROUP))
+        self.client.force_login(hr)
+        body = self.client.get('/admin/cms/search/', {'q': 'Bemor'}).json()
+        self.assertEqual(body['groups'], [])
+        body = self.client.get('/admin/cms/search/', {'q': 'Nomzod'}).json()
+        self.assertEqual(body['groups'][0]['items'][0]['title'], 'Nomzod Ochiq')
+        self.assertEqual(self.client.get('/admin/cms/search/', {'q': 'Bosh sahifa'}).json(), {'groups': []})
+
+    def test_text_page_can_show_a_single_key(self):
+        from . import site_texts
+
+        key = site_texts.catalog()[0]['key']
+        page = self.client.get('/admin/cms/texts/', {'key': key})
+        self.assertEqual(page.status_code, 200)
+        self.assertContains(page, 'Hamma matnlarni ko‘rish')
+
+
+@override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class DoctorTurnoverTests(TestCase):
+    """Doctors come and go: add, hide, and remove several at once with checkboxes."""
+
+    def setUp(self):
+        from .models import Doctor
+
+        self.client.force_login(User.objects.create_superuser('boss', 'b@example.uz', 'pw-12345-xyz'))
+        self.docs = [
+            Doctor.objects.create(slug=f'dr-{i}', name=f'Dr. Sinov {i}', role_uz='Shifokor', role_ru='Врач', role_en='Doctor')
+            for i in range(3)
+        ]
+
+    def listed(self):
+        return {d['slug'] for d in self.client.get('/api/doctors/?lang=uz').json()}
+
+    def test_hide_and_show_in_bulk(self):
+        ids = [str(d.pk) for d in self.docs[:2]]
+        self.client.post('/admin/cms/doctor/', {'action': 'make_inactive', '_selected_action': ids})
+        self.assertEqual(self.listed() & {'dr-0', 'dr-1', 'dr-2'}, {'dr-2'})
+        self.client.post('/admin/cms/doctor/', {'action': 'make_active', '_selected_action': ids})
+        self.assertEqual(self.listed() & {'dr-0', 'dr-1', 'dr-2'}, {'dr-0', 'dr-1', 'dr-2'})
+
+    def test_delete_several_with_one_confirmation(self):
+        from .models import Doctor
+
+        ids = [str(d.pk) for d in self.docs[:2]]
+        confirm = self.client.post('/admin/cms/doctor/', {'action': 'delete_selected', '_selected_action': ids})
+        self.assertEqual(confirm.status_code, 200)
+        self.assertEqual(Doctor.objects.filter(slug__startswith='dr-').count(), 3)  # nothing yet
+        done = self.client.post('/admin/cms/doctor/', {'action': 'delete_selected', '_selected_action': ids, 'post': 'yes'})
+        self.assertEqual(done.status_code, 302)
+        self.assertEqual(list(Doctor.objects.filter(slug__startswith='dr-').values_list('slug', flat=True)), ['dr-2'])
+
+    def test_add_a_new_doctor_from_the_form(self):
+        page = self.client.get('/admin/cms/doctor/add/')
+        self.assertEqual(page.status_code, 200)
+        self.assertContains(page, 'Saqlash')

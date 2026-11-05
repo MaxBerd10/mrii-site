@@ -1,108 +1,59 @@
 {% extends "admin/base_site.html" %}
-{% load i18n static %}
-
-{% block bodyclass %}{{ block.super }} dashboard mrii-index{% endblock %}
-
+{% block bodyclass %}{{ block.super }} m-index{% endblock %}
 {% block breadcrumbs %}{% endblock %}
-
+{% block nav-breadcrumbs %}{% endblock %}
 {% block content_title %}{% endblock %}
 
 {% block content %}
-{% include "admin/includes/mrii_icons.html" %}
+<section class="m-hello">
+  <h1>Salom, {{ mrii_name }}</h1>
+  <p class="m-lead">
+    {% if mrii_hr_workspace %}Kelgan arizalarni ko‘ring va vakansiyalarni boshqaring.{% else %}Saytda nimani o‘zgartirmoqchisiz? Pastdan tanlang yoki qidiring: telefon, narx, shifokor, yangilik…{% endif %}
+  </p>
+  {% if not mrii_hr_workspace %}{% include "admin/includes/search_box.html" %}{% endif %}
+</section>
 
-<div id="content-main">
-  <div class="mrii-dash">
-    <header class="mrii-hero">
-      <div class="mrii-hero__copy">
-        <p class="mrii-kicker">FJSTI CMS</p>
-        <h2>{% if mrii_hr_workspace %}Arizalarni shu yerdan boshqarasiz{% else %}Sayt kontentini shu yerdan boshqarasiz{% endif %}</h2>
-        <p class="mrii-hero__lead">
-          {% if mrii_hr_workspace %}
-            Yangi murojaatlarni oching, holatini yangilang va nomzod bilan telefon orqali bog‘laning.
-          {% else %}
-            Kerakli bo‘limni oching, matn yoki rasmni o‘zgartiring va <strong>Saqlash</strong> tugmasini bosing.
-            Sayt (API ulangan bo‘lsa) yangilanadi — dasturchi kerak emas.
-          {% endif %}
-        </p>
-        {% if not mrii_hr_workspace %}<p class="mrii-hero__actions">
-          <a class="mrii-hero__btn" href="{{ mrii_guide_url }}">📖 Qo‘llanma: nimani qayerdan o‘zgartiraman?</a>
-          <a class="mrii-hero__btn mrii-hero__btn--ghost" href="{{ mrii_site_url }}" target="_blank" rel="noopener">Saytni ochish ↗</a>
-        </p>{% endif %}
-        <ol class="mrii-steps" aria-label="Ish tartibi">
-          <li><span>1</span> Bo‘lim tanlang</li>
-          <li><span>2</span> Matn / rasmni o‘zgartiring</li>
-          <li><span>3</span> Saqlash</li>
-        </ol>
-      </div>
-      {% if not mrii_hr_workspace %}<div class="mrii-hero__aside">
-        <div class="mrii-hero__aside-visual" aria-hidden="true">
-          <img src="{% static 'cms/dna-login-hero.png' %}" alt="" width="400" height="520" decoding="async">
-        </div>
-        <div class="mrii-hero__aside-body">
-          <p class="mrii-hero__aside-label">4 tilda ishlaydi</p>
-          <div class="mrii-hero__langs" aria-hidden="true">
-            <span>UZ</span>
-            <span>RU</span>
-            <span>EN</span>
-            <span>QQ</span>
-          </div>
-          <ul class="mrii-hero__tips">
-            <li>Har til — alohida maydon (bo‘sh qolsa, avtomatik tarjima)</li>
-            <li>Rasm — «Sayt rasmlari» bo‘limidan</li>
-            <li>Saqlashdan keyin sayt yangilanadi</li>
-          </ul>
-        </div>
-      </div>{% endif %}
-    </header>
+{% if mrii_attention %}
+  <a class="m-alert{% if not mrii_attention.count %} m-alert--none{% endif %}" href="{{ mrii_attention.url }}">
+    {% if mrii_attention.count %}<strong>{{ mrii_attention.count }}</strong><span>{{ mrii_attention.label }} — javob berish kerak</span>{% else %}<span>Yangi {{ mrii_attention.label|cut:"yangi " }} yo‘q. Hammasi ko‘rib chiqilgan.</span>{% endif %}
+    <svg class="m-ico" aria-hidden="true"><use href="#i-chev"></use></svg>
+  </a>
+{% endif %}
 
-    <div class="mrii-dash__stats">
-      {% for s in mrii_stats %}
-        <div class="mrii-stat mrii-stat--{{ s.tone }}">
-          <span class="mrii-stat__label">{{ s.label }}</span>
-          <span class="mrii-stat__value">{{ s.value }}</span>
-        </div>
-      {% endfor %}
-    </div>
+<section class="m-section">
+  <h2>Tez o‘zgartirish</h2>
+  <ul class="m-rows m-rows--2">
+    {% for t in mrii_tasks %}
+      <li><a class="m-row" href="{{ t.url }}">
+        <span class="m-row__text"><strong>{{ t.label }}</strong><small>{{ t.hint }}</small></span>
+        <svg class="m-ico m-row__go" aria-hidden="true"><use href="#i-chev"></use></svg>
+      </a></li>
+    {% endfor %}
+  </ul>
+</section>
 
-    {% for group in mrii_groups %}<section class="mrii-section">
-      {% if group.title %}<div class="mrii-section__head">
-        <h3>{{ group.title }}</h3>
-        <p>{{ group.hint }}</p>
-      </div>{% endif %}
-      {% if group.style == 'cards' %}
-      <div class="mrii-cards">
-        {% for card in group.cards %}
-          <a class="mrii-card mrii-card--{{ card.tone }}" href="{{ card.url }}">
-            <span class="mrii-card__icon" aria-hidden="true">
-              <svg><use href="#mrii-i-{{ card.icon }}"></use></svg>
-            </span>
-            <span class="mrii-card__body">
-              <span class="mrii-card__meta">{{ card.meta }}</span>
-              <span class="mrii-card__title">{{ card.title }}</span>
-              <span class="mrii-card__desc">{{ card.desc }}</span>
-            </span>
-            <span class="mrii-card__go" aria-hidden="true">→</span>
-          </a>
-        {% endfor %}
-      </div>
-      {% else %}
-      <div class="mrii-list">
-        {% for card in group.cards %}
-          <a class="mrii-list__item" href="{{ card.url }}">
-            <span class="mrii-list__icon" aria-hidden="true">
-              <svg><use href="#mrii-i-{{ card.icon }}"></use></svg>
-            </span>
-            <span class="mrii-list__text">
-              <strong>{{ card.title }}</strong>
-              <small>{{ card.desc }}</small>
-            </span>
-            <span class="mrii-list__go" aria-hidden="true">→</span>
-          </a>
-        {% endfor %}
-      </div>
-      {% endif %}
-    </section>{% endfor %}
+{% if mrii_pages %}
+<section class="m-section">
+  <h2>Saytning sahifalari</h2>
+  <p>Sahifani tanlang — shu sahifadagi hamma o‘zgartiriladigan narsa (matn, rasm, ro‘yxat) bir joyda.</p>
+  <ul class="m-rows m-rows--2">
+    {% for p in mrii_pages %}
+      <li><a class="m-row" href="{{ p.url }}">
+        <span class="m-row__text"><strong>{{ p.title }}</strong><small>{{ p.blurb }}</small></span>
+        <svg class="m-ico m-row__go" aria-hidden="true"><use href="#i-chev"></use></svg>
+      </a></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
 
-  </div>
-</div>
+{% if not mrii_hr_workspace %}
+<section class="m-section">
+  <a class="m-row" href="{{ mrii_guide_url }}">
+    <svg class="m-ico" aria-hidden="true"><use href="#i-book"></use></svg>
+    <span class="m-row__text"><strong>Qo‘llanma</strong><small>Biror narsa topilmadimi? «Nimani qayerdan o‘zgartiraman» jadvalini oching.</small></span>
+    <svg class="m-ico m-row__go" aria-hidden="true"><use href="#i-chev"></use></svg>
+  </a>
+</section>
+{% endif %}
 {% endblock %}
