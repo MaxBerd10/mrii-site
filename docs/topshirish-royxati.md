@@ -10,7 +10,7 @@
 | Server papkasi | `/home/mrii-site` (docker compose loyihasi `mrii-site`) |
 
 ## 2. Topshirishdan OLDIN bajariladigan ishlar (bir martalik)
-1. **Admin akkauntlar.** Har bir xodimga alohida akkaunt (Admin → Boshqa bo'limlar → Xodimlar). Umumiy parol bermang. Kundalik ish yuritadigan klinika xodimiga **«Kontent menejeri»** guruhini bering (u shifokor, yangilik, narx, matn, rasm, sharh va murojaatlarni boshqaradi, lekin xodimlar va tizim sozlamalariga kira olmaydi). To'liq huquq (superuser) faqat 1 ta mas'ul odamda bo'lsin. HR xodimiga «HR bo'limi» guruhini bering — u faqat arizalar va vakansiyalarni ko'radi. Sizning (dasturchi) akkauntingizni topshirgandan keyin o'chiring yoki parolini almashtiring.
+1. **Admin akkaunt.** Admin'ni faqat bitta mas'ul odam ishlatadi: unga bitta kuchli parolli akkaunt yetadi (parolni boshqa hech kimga bermang, parol menejerda saqlang). Keyinchalik ishlovchi ko'paysa, Admin → Boshqa bo'limlar → Xodimlar'da har biriga alohida akkaunt oching va «Kontent menejeri» guruhini bering (u shifokor, yangilik, narx, matn, rasm, sharh va murojaatlarni boshqaradi, lekin xodimlar va tizim sozlamalariga kira olmaydi). HR xodimiga «HR bo'limi» guruhini bering — u faqat arizalar va vakansiyalarni ko'radi. Dasturchi akkauntini topshirgandan keyin o'chiring yoki parolini almashtiring.
 2. **HR Telegram ro'yxati.** Sinov ID `123456789` ni o'chiring:
    ```bash
    cd /home/mrii-site && docker compose exec web python manage.py add_hr_telegram 123456789 --deactivate
