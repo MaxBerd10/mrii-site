@@ -46,7 +46,10 @@ PAGES = [
         'blurb': 'Shifokorlar ro‘yxati va har birining shaxsiy sahifasi.',
         'text_sections': ['doctors', 'doctorPageLabels', 'doctorProfileUi', 'doctorDossier'],
         'asset_groups': ['doctors'],
-        'models': [('doctor', 'Shifokorlar', 'Ism, lavozim, mutaxassislik, foto, ma’lumot', False)],
+        'models': [
+            ('doctor', 'Shifokorlar', 'Ism, lavozim, toifa, ish tarixi, foto, ma’lumot', False),
+            ('doctorreview', 'Bemor sharhlari', 'Yangi sharhlarni tekshirib, saytda ko‘rsatish', False),
+        ],
     },
     {
         'key': 'prices',

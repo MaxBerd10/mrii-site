@@ -35,7 +35,7 @@ class HubAdminMixin:
             models.SiteSettings, models.HomePage, models.ResearchSection, models.Testimonial, models.Specialty,
             models.ClinicTourVideo, models.Doctor, models.PriceItem, models.CheckupDirection, models.PriceCategory,
             models.NewsArticle, models.ResearchStudy, models.ResearchCapability, models.AIProduct, models.Vacancy,
-            models.Inquiry,
+            models.Inquiry, models.DoctorReview,
         )}[name]
         if single:
             obj = model.objects.first()
@@ -73,6 +73,8 @@ class HubAdminMixin:
                     item('Murojaatlar', reverse('admin:cms_inquiry_changelist'), 'inbox', models.Inquiry),
                     item('Yangiliklar', reverse('admin:cms_newsarticle_changelist'), 'news', models.NewsArticle),
                     item('Shifokorlar', reverse('admin:cms_doctor_changelist'), 'doctor', models.Doctor),
+                    item('Shifokor sharhlari', reverse('admin:cms_doctorreview_changelist') + '?is_approved__exact=0', 'check', models.DoctorReview,
+                         [reverse('admin:cms_doctorreview_changelist')]),
                     item('Narxlar', reverse('admin:cms_priceitem_changelist'), 'price', models.PriceItem,
                          [reverse('admin:cms_priceitem_changelist'), reverse('admin:cms_pricecategory_changelist'),
                           reverse('admin:cms_checkupdirection_changelist')]),

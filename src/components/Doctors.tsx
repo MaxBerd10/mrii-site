@@ -4,8 +4,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
 import SectionHeader from './ui/SectionHeader'
 import { staggerContainer, fadeUp, blurUp } from '../lib/animations'
-import { getActiveDoctorProfiles, getSpecialtyGroup, type SpecialtyGroup, type StaffKind } from '../data/doctors'
-import { averageRating, getDoctorReviews } from '../lib/doctorReviews'
+import { getActiveDoctorProfiles, getDoctorRating, getSpecialtyGroup, type SpecialtyGroup, type StaffKind } from '../data/doctors'
 import { getDoctorTurnMedia } from '../data/doctorTurnMedia'
 import '../styles/doctor-turn.css'
 import '../styles/doctor-filters.css'
@@ -197,7 +196,6 @@ export default function Doctors() {
                 papersLabel={t.doctors.papers}
                 studiesLabel={t.doctors.studies}
                 reviewsLabel={t.doctors.reviews}
-                noReviewsLabel={t.doctors.writeReview}
               />
             ))}
           </motion.div>
@@ -316,32 +314,14 @@ function DoctorCardRating({
   doctorId,
   accent,
   reviewsLabel,
-  noReviewsLabel,
 }: {
   doctorId: string
   accent: string
   reviewsLabel: string
-  noReviewsLabel: string
 }) {
-  const [avg, setAvg] = useState(0)
-  const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    const sync = () => {
-      const list = getDoctorReviews(doctorId)
-      setCount(list.length)
-      setAvg(averageRating(list))
-    }
-    sync()
-    window.addEventListener('storage', sync)
-    window.addEventListener('focus', sync)
-    window.addEventListener('fjsti-doctor-reviews', sync)
-    return () => {
-      window.removeEventListener('storage', sync)
-      window.removeEventListener('focus', sync)
-      window.removeEventListener('fjsti-doctor-reviews', sync)
-    }
-  }, [doctorId])
+  const { avg, count } = getDoctorRating(doctorId)
+  // No reviews yet: show nothing instead of an empty rating.
+  if (count === 0) return null
 
   return (
     <div className="doctor-card__rating" aria-label={reviewsLabel}>
@@ -353,16 +333,10 @@ function DoctorCardRating({
         ))}
       </span>
       <span className="doctor-card__rating-meta">
-        {count > 0 ? (
-          <>
-            <strong style={{ color: accentInk(accent) }}>{avg.toFixed(1)}</strong>
-            <span>
-              ({count} {reviewsLabel})
-            </span>
-          </>
-        ) : (
-          <span>{noReviewsLabel}</span>
-        )}
+        <strong style={{ color: accentInk(accent) }}>{avg.toFixed(1)}</strong>
+        <span>
+          ({count} {reviewsLabel})
+        </span>
       </span>
     </div>
   )
@@ -374,7 +348,6 @@ export function DoctorCard({
   papersLabel,
   studiesLabel,
   reviewsLabel,
-  noReviewsLabel,
   animated = true,
   priority = false,
   variant = 'full',
@@ -384,7 +357,6 @@ export function DoctorCard({
   papersLabel?: string
   studiesLabel?: string
   reviewsLabel?: string
-  noReviewsLabel?: string
   animated?: boolean
   priority?: boolean
   variant?: 'full' | 'profile'
@@ -415,12 +387,7 @@ export function DoctorCard({
           <h3 className="doctor-card__name">{doc.name}</h3>
           <p className="doctor-card__role">{doc.role}</p>
           <p className="doctor-card__exp">{doc.exp}</p>
-          <DoctorCardRating
-            doctorId={doc.slug}
-            accent={doc.color}
-            reviewsLabel={reviewsLabel!}
-            noReviewsLabel={noReviewsLabel!}
-          />
+          <DoctorCardRating doctorId={doc.slug} accent={doc.color} reviewsLabel={reviewsLabel!} />
           <div className="doctor-card__stats">
             <div className="doctor-card__stat">
               <strong style={{ color: accentInk(doc.color) }}>{doc.papers}</strong>

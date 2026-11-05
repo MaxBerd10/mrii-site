@@ -330,13 +330,20 @@ class MriiAdminSite(HubAdminMixin, AssetAdminMixin, AdminSite):
                    self._model_urls('sitesettings', True)[1], models.SiteSettings),
                 go('Narxni o‘zgartirish', 'Xizmat narxlari jadvali', reverse('admin:cms_priceitem_changelist'), models.PriceItem),
                 go('Yangilik qo‘shish', 'Sarlavha, matn, muqova rasmi', add_url('newsarticle'), models.NewsArticle),
-                go('Shifokor qo‘shish yoki tahrirlash', 'Ism, lavozim, foto, ma’lumot', reverse('admin:cms_doctor_changelist'), models.Doctor),
+                go('Shifokor qo‘shish yoki tahrirlash', 'Ism, lavozim, toifa, ish tarixi, foto', reverse('admin:cms_doctor_changelist'), models.Doctor),
+                go('Bemor sharhlarini tekshirish', 'Yangi sharhlarni saytda ko‘rsatish yoki rad etish',
+                   reverse('admin:cms_doctorreview_changelist') + '?is_approved__exact=0', models.DoctorReview),
                 go('Rasm yoki videoni almashtirish', 'Saytdagi tayyor rasm va videolar', reverse('admin:cms_assets'), models.AssetOverride),
                 go('Saytdagi yozuvni o‘zgartirish', 'Qidiruv orqali istalgan matnni toping', reverse('admin:cms_texts'), models.TextOverride),
                 go('Vakansiya qo‘yish', 'Yangi lavozim e’lon qilish', add_url('vacancy'), models.Vacancy),
             ) if t]
             attention = {'count': new_leads, 'label': 'yangi murojaat', 'url': reverse('admin:cms_inquiry_changelist')} \
                 if self._can(request, models.Inquiry) else None
+            pending_reviews = models.DoctorReview.objects.filter(is_approved=False).count() \
+                if self._can(request, models.DoctorReview) else 0
+            if pending_reviews and not (attention and attention['count']):
+                attention = {'count': pending_reviews, 'label': 'yangi shifokor sharhi',
+                             'url': reverse('admin:cms_doctorreview_changelist') + '?is_approved__exact=0'}
 
         pages = [] if hr else [
             {'title': p['title'], 'url': reverse('admin:cms_page', args=[p['key']]), 'blurb': p['blurb']}

@@ -224,6 +224,7 @@ REST_FRAMEWORK = {
         'inquiry_create': os.getenv('THROTTLE_INQUIRY_CREATE', '12/hour'),
         'inquiry_advice': os.getenv('THROTTLE_INQUIRY_ADVICE', '40/hour'),
         'hr_api': os.getenv('THROTTLE_HR_API', '600/hour'),
+        'doctor_review': os.getenv('THROTTLE_DOCTOR_REVIEW', '6/hour'),
     },
 }
 

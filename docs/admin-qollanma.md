@@ -27,6 +27,8 @@ Xato qilsangiz: «Sayt matnlari» va «Sayt rasmlari»da har qatorda **«Asl hol
 | Yangilik | **Yangiliklar** |
 | Shifokor | **Shifokorlar** |
 | Klinika bo'limi (yo'nalish) | **Klinik yo'nalishlar** |
+| Shifokorning toifasi va ish tarixi | **Shifokorlar** → shifokorni oching → «Toifa / unvon» va «Ish tarixi» (bo'sh qolsa, saytda ko'rinmaydi) |
+| Bemor sharhlari | **Shifokor sharhlari** — yangi sharhlar avval «Tekshiruv kutmoqda» holatida turadi, siz belgilab «tasdiqlash» desangiz saytda ko'rinadi |
 | Vakansiya | **Vakansiyalar** (yoki HR Telegram mini-ilovasi) |
 | Kelgan murojaat / ish arizasi, rezyume | **Murojaatlar** |
 | Bosh sahifa asosiy matni, raqamlar | **Bosh sahifa** |

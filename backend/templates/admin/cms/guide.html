@@ -40,6 +40,8 @@
         <tr><td>Yangilik qo‘shish yoki tahrirlash</td><td><a href="{% url 'admin:cms_newsarticle_changelist' %}">Yangiliklar</a></td></tr>
         <tr><td>Shifokor qo‘shish, ma’lumoti yoki fotosini o‘zgartirish</td><td><a href="{% url 'admin:cms_doctor_changelist' %}">Shifokorlar</a></td></tr>
         <tr><td>Klinika bo‘limi (yo‘nalish) matni, xizmatlari</td><td><a href="{% url 'admin:cms_specialty_changelist' %}">Klinik yo‘nalishlar</a></td></tr>
+        <tr><td>Shifokorning toifasi va ish tarixi</td><td><a href="{% url 'admin:cms_doctor_changelist' %}">Shifokorlar</a> → shifokorni oching → «Toifa / unvon», «Ish tarixi» (bo‘sh qolsa, saytda ko‘rinmaydi)</td></tr>
+        <tr><td>Bemorlarning shifokorlarga yozgan sharhlari</td><td><a href="{% url 'admin:cms_doctorreview_changelist' %}?is_approved__exact=0">Shifokor sharhlari</a> — yangi sharh avval yashirin turadi; tekshirib «tasdiqlash» desangiz, saytda chiqadi</td></tr>
         <tr><td>Vakansiya qo‘yish yoki yashirish</td><td><a href="{% url 'admin:cms_vacancy_changelist' %}">Vakansiyalar</a> (yoki HR xodimi Telegram mini-ilovada)</td></tr>
         <tr><td>Kelgan murojaat yoki ish arizasini ko‘rish, rezyumeni olish</td><td><a href="{% url 'admin:cms_inquiry_changelist' %}">Murojaatlar</a></td></tr>
         <tr><td>Bosh sahifaning asosiy matni va raqamlari</td><td><a href="{% url 'admin:cms_pages' %}">Sayt sahifalari → Bosh sahifa</a></td></tr>
