@@ -1001,3 +1001,28 @@ class DoctorTurnoverTests(TestCase):
         page = self.client.get('/admin/cms/doctor/add/')
         self.assertEqual(page.status_code, 200)
         self.assertContains(page, 'Saqlash')
+
+
+@override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class LastDoctorGuardTests(TestCase):
+    def setUp(self):
+        from .models import Doctor
+
+        self.client.force_login(User.objects.create_superuser('boss', 'b@example.uz', 'pw-12345-xyz'))
+        Doctor.objects.all().delete()
+        self.a = Doctor.objects.create(slug='dr-a', name='Dr. A', role_ru='Врач', role_en='Doctor')
+        self.b = Doctor.objects.create(slug='dr-b', name='Dr. B', role_ru='Врач', role_en='Doctor')
+
+    def test_the_last_active_doctor_cannot_be_removed_or_hidden(self):
+        from .models import Doctor
+
+        ids = [str(self.a.pk), str(self.b.pk)]
+        self.client.post('/admin/cms/doctor/', {'action': 'make_inactive', '_selected_action': ids})
+        self.assertEqual(Doctor.objects.filter(is_active=True).count(), 2)
+        self.client.post('/admin/cms/doctor/', {'action': 'delete_selected', '_selected_action': ids, 'post': 'yes'})
+        self.assertEqual(Doctor.objects.count(), 2)
+        # one at a time works until only one is left
+        self.client.post('/admin/cms/doctor/', {'action': 'delete_selected', '_selected_action': [str(self.a.pk)], 'post': 'yes'})
+        self.assertEqual(Doctor.objects.count(), 1)
+        self.client.post(f'/admin/cms/doctor/{self.b.pk}/delete/', {'post': 'yes'})
+        self.assertEqual(Doctor.objects.count(), 1)
