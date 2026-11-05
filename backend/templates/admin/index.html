@@ -32,28 +32,20 @@
   </ul>
 </section>
 
-{% if mrii_pages %}
-<section class="m-section">
-  <h2>Saytning sahifalari</h2>
-  <p>Sahifani tanlang — shu sahifadagi hamma o‘zgartiriladigan narsa (matn, rasm, ro‘yxat) bir joyda.</p>
-  <ul class="m-rows m-rows--2">
-    {% for p in mrii_pages %}
-      <li><a class="m-row" href="{{ p.url }}">
-        <span class="m-row__text"><strong>{{ p.title }}</strong><small>{{ p.blurb }}</small></span>
-        <svg class="m-ico m-row__go" aria-hidden="true"><use href="#i-chev"></use></svg>
-      </a></li>
-    {% endfor %}
-  </ul>
-</section>
-{% endif %}
 
 {% if not mrii_hr_workspace %}
 <section class="m-section">
-  <a class="m-row" href="{{ mrii_guide_url }}">
+  <ul class="m-rows">
+  <li><a class="m-row" href="{% url 'admin:cms_pages' %}">
+    <span class="m-row__text"><strong>Boshqa narsani o‘zgartirmoqchiman</strong><small>Saytning sahifasini tanlang — shu sahifadagi hamma narsa bir joyda</small></span>
+    <svg class="m-ico m-row__go" aria-hidden="true"><use href="#i-chev"></use></svg>
+  </a></li>
+  <li><a class="m-row" href="{{ mrii_guide_url }}">
     <svg class="m-ico" aria-hidden="true"><use href="#i-book"></use></svg>
     <span class="m-row__text"><strong>Qo‘llanma</strong><small>Biror narsa topilmadimi? «Nimani qayerdan o‘zgartiraman» jadvalini oching.</small></span>
     <svg class="m-ico m-row__go" aria-hidden="true"><use href="#i-chev"></use></svg>
-  </a>
+  </a></li>
+  </ul>
 </section>
 {% endif %}
 {% endblock %}

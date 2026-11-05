@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
 {% block dark-mode-vars %}{% endblock %}
 {% block extrastyle %}{% endblock %}
-<link rel="stylesheet" href="{% static 'cms/admin.css' %}?v=11">
+<link rel="stylesheet" href="{% static 'cms/admin.css' %}?v=13">
 {% block extrahead %}{% endblock %}
 {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
 </head>
@@ -23,12 +23,23 @@
     </a>
     <nav class="m-nav">
       {% for group in mrii_nav %}
-        {% if group.title %}<div class="m-nav__title">{{ group.title }}</div>{% endif %}
-        {% for item in group.items %}
-          <a href="{{ item.url }}"{% if item.active %} aria-current="page"{% endif %}>
-            <svg class="m-ico" aria-hidden="true"><use href="#i-{{ item.icon }}"></use></svg>{{ item.label }}
-          </a>
-        {% endfor %}
+        {% if group.collapsed %}
+          <details class="m-nav__more"{% if group.open %} open{% endif %}>
+            <summary>{{ group.title }}</summary>
+            {% for item in group.items %}
+              <a href="{{ item.url }}"{% if item.active %} aria-current="page"{% endif %}>
+                <svg class="m-ico" aria-hidden="true"><use href="#i-{{ item.icon }}"></use></svg>{{ item.label }}
+              </a>
+            {% endfor %}
+          </details>
+        {% else %}
+          {% if group.title %}<div class="m-nav__title">{{ group.title }}</div>{% endif %}
+          {% for item in group.items %}
+            <a href="{{ item.url }}"{% if item.active %} aria-current="page"{% endif %}>
+              <svg class="m-ico" aria-hidden="true"><use href="#i-{{ item.icon }}"></use></svg>{{ item.label }}
+            </a>
+          {% endfor %}
+        {% endif %}
       {% endfor %}
     </nav>
     <div class="m-side__foot">

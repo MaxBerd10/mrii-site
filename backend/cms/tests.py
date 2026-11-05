@@ -1110,3 +1110,35 @@ class DoctorReviewAndProfileTests(TestCase):
         self.client.post('/admin/cms/doctorreview/', {'action': 'approve', '_selected_action': ids})
         self.assertTrue(DoctorReview.objects.get().is_approved)
         self.assertEqual(self.client.get('/admin/cms/doctorreview/add/').status_code, 403)
+
+
+@override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class ContentManagerRoleTests(TestCase):
+    """«Kontent menejeri»: edits the website every day, but cannot touch accounts or the Telegram access list."""
+
+    def setUp(self):
+        user = User.objects.create_user('manager', 'm@example.uz', 'pw-12345-xyz', is_staff=True)
+        user.groups.add(Group.objects.get(name='Kontent menejeri'))
+        self.client.force_login(user)
+
+    def test_daily_pages_open(self):
+        for url in ('/admin/', '/admin/cms/doctor/', '/admin/cms/newsarticle/', '/admin/cms/priceitem/',
+                    '/admin/cms/texts/', '/admin/cms/assets/', '/admin/cms/pages/prices/', '/admin/cms/doctorreview/',
+                    '/admin/cms/inquiry/'):
+            self.assertEqual(self.client.get(url).status_code, 200, url)
+
+    def test_system_pages_stay_closed(self):
+        for url in ('/admin/auth/user/', '/admin/auth/group/', '/admin/cms/hrtelegramuser/'):
+            self.assertEqual(self.client.get(url).status_code, 403, url)
+        page = self.client.get('/admin/')
+        self.assertNotContains(page, 'Xodimlar')
+        self.assertNotContains(page, 'HR Telegram')
+
+
+class ListSeparatorTests(TestCase):
+    def test_new_lines_and_pipes_both_split_list_fields(self):
+        from .utils import split_pipe
+
+        self.assertEqual(split_pipe('Birinchi\nIkkinchi\r\nUchinchi'), ['Birinchi', 'Ikkinchi', 'Uchinchi'])
+        self.assertEqual(split_pipe('A | B |  | C'), ['A', 'B', 'C'])
+        self.assertEqual(split_pipe(''), [])
