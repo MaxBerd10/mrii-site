@@ -4263,11 +4263,32 @@
   "kaa": "Jabıw"
  },
  {
-  "key": "doctors.reviewThanks",
-  "uz": "Rahmat!",
-  "ru": "Спасибо!",
-  "en": "Thank you!",
-  "kaa": "Raxmet!"
+  "key": "doctors.reviewPending",
+  "uz": "Rahmat! Sharhingiz klinika tekshiruvidan keyin saytda paydo bo’ladi.",
+  "ru": "Спасибо! Отзыв появится на сайте после проверки клиникой.",
+  "en": "Thank you! Your review will appear after the clinic checks it.",
+  "kaa": "Raxmet! Pikirińiz klinika tekserip shıqqannan keyin saytta payda boladı."
+ },
+ {
+  "key": "doctors.reviewError",
+  "uz": "Yuborib bo’lmadi. Internetni tekshirib, qayta urinib ko’ring.",
+  "ru": "Не удалось отправить. Проверьте интернет и попробуйте ещё раз.",
+  "en": "Could not send. Check your connection and try again.",
+  "kaa": "Jiberip bolmadı. Internetti tekserip, qayta urınıp kóriń."
+ },
+ {
+  "key": "doctors.reviewRate",
+  "uz": "Juda ko’p urinish. Birozdan keyin qayta urinib ko’ring.",
+  "ru": "Слишком много попыток. Попробуйте чуть позже.",
+  "en": "Too many attempts. Please try again later.",
+  "kaa": "Júdá kóp urınıs. Birazdan keyin qayta urınıp kóriń."
+ },
+ {
+  "key": "doctors.reviewsTitleReal",
+  "uz": "Bemorlar fikri",
+  "ru": "Мнение пациентов",
+  "en": "Patient reviews",
+  "kaa": "Bemarlar pikiri"
  },
  {
   "key": "doctors.yourRating",
@@ -7658,13 +7679,6 @@
   "kaa": "Nawqaslar pikiri"
  },
  {
-  "key": "doctorProfileUi.reviewsTitle",
-  "uz": "128 ta tasdiqlangan sharh",
-  "ru": "128 подтверждённых отзывов",
-  "en": "128 verified reviews",
-  "kaa": "128 tastıyıqlanǵan pikir"
- },
- {
   "key": "doctorProfileUi.related",
   "uz": "Shu yo’nalishdagi boshqa shifokorlar",
   "ru": "Другие врачи этого направления",
@@ -7712,6 +7726,13 @@
   "ru": "Заявки на приём открыты",
   "en": "Appointment requests are open",
   "kaa": "Qabıllawǵa ariza ashıq"
+ },
+ {
+  "key": "doctorDossier.careerTitle",
+  "uz": "Kasbiy yo’l",
+  "ru": "Профессиональный путь",
+  "en": "Professional journey",
+  "kaa": "Kásiplik jol"
  },
  {
   "key": "doctorDossier.careerDescription",
@@ -7763,18 +7784,11 @@
   "kaa": "ana tili"
  },
  {
-  "key": "doctorDossier.patientCount",
-  "uz": "bemor qabul qilingan",
-  "ru": "пациентов принято",
-  "en": "patients seen",
-  "kaa": "nawqas qabıl etildi"
- },
- {
-  "key": "doctorDossier.patientPeriod",
-  "uz": "So’nggi 12 oy · klinika hisoboti",
-  "ru": "Последние 12 месяцев · данные клиники",
-  "en": "Last 12 months · clinic records",
-  "kaa": "Sońǵı 12 ay · klinika esabatı"
+  "key": "doctorDossier.instituteClinic",
+  "uz": "FJSTI ko’p tarmoqli klinikasi",
+  "ru": "Многопрофильная клиника FJSTI",
+  "en": "FJSTI multidisciplinary clinic",
+  "kaa": "FJSTI kóp tarmaqlı klinikası"
  },
  {
   "key": "doctorDossier.quote",
@@ -7805,13 +7819,6 @@
   "kaa": "FJSTI klinikası, 2-korpus"
  },
  {
-  "key": "doctorDossier.visit.addressNote",
-  "uz": "Farg’ona sh., Marg’ilon yo’li 2A · 3-qavat, 312-xona",
-  "ru": "Фергана, ул. Маргиланская 2A · 3 этаж, кабинет 312",
-  "en": "Fergana, Margilan road 2A · floor 3, room 312",
-  "kaa": "Farg’ona q., Marg’ilon jolı 2A · 3-qabat, 312-bólme"
- },
- {
   "key": "doctorDossier.visit.hours",
   "uz": "Ish vaqti",
   "ru": "Часы работы",
@@ -7824,76 +7831,6 @@
   "ru": "Пн–Сб, 08:00–18:00",
   "en": "Mon–Sat, 08:00–18:00",
   "kaa": "Dú–Shá, 08:00–18:00"
- },
- {
-  "key": "doctorDossier.visit.hoursNote",
-  "uz": "Yakshanba — navbatchi mutaxassis",
-  "ru": "В воскресенье — дежурный специалист",
-  "en": "Duty specialist on Sunday",
-  "kaa": "Jeksembi — gezekshi mutaxassis"
- },
- {
-  "key": "doctorDossier.visit.firstVisit",
-  "uz": "Birinchi qabul",
-  "ru": "Первичный приём",
-  "en": "First visit",
-  "kaa": "Birinshi qabıllaw"
- },
- {
-  "key": "doctorDossier.visit.firstVisitValue",
-  "uz": "180 000 so’m",
-  "ru": "180 000 сум",
-  "en": "UZS 180,000",
-  "kaa": "180 000 sum"
- },
- {
-  "key": "doctorDossier.visit.firstVisitNote",
-  "uz": "Boshlang’ich tahlil narxga kiritilgan · ~40 daqiqa",
-  "ru": "Первичный анализ включён · ~40 минут",
-  "en": "Initial analysis included · ~40 minutes",
-  "kaa": "Baslanǵısh tallaw baha ishinde · ~40 minut"
- },
- {
-  "key": "doctorDossier.visit.followUp",
-  "uz": "Takroriy",
-  "ru": "Повторный",
-  "en": "Follow-up",
-  "kaa": "Qayta qabıllaw"
- },
- {
-  "key": "doctorDossier.visit.followUpValue",
-  "uz": "120 000 so’m",
-  "ru": "120 000 сум",
-  "en": "UZS 120,000",
-  "kaa": "120 000 sum"
- },
- {
-  "key": "doctorDossier.visit.followUpNote",
-  "uz": "30 kun ichida — bepul qayta ko’rik",
-  "ru": "В течение 30 дней — бесплатный контроль",
-  "en": "Free control visit within 30 days",
-  "kaa": "30 kún ishinde — tegin qayta kóriw"
- },
- {
-  "key": "doctorDossier.visit.insurance",
-  "uz": "Sug’urta",
-  "ru": "Страхование",
-  "en": "Insurance",
-  "kaa": "Sug’urta"
- },
- {
-  "key": "doctorDossier.visit.insuranceValue",
-  "uz": "Gross, Apex, Kafolat",
-  "ru": "Gross, Apex, Kafolat",
-  "en": "Gross, Apex, Kafolat",
-  "kaa": "Gross, Apex, Kafolat"
- },
- {
-  "key": "doctorDossier.visit.insuranceNote",
-  "uz": "Yo’llanma bilan qabul qilinadi",
-  "ru": "Принимается по направлению",
-  "en": "Referrals accepted",
-  "kaa": "Jollama menen qabıl etiledi"
  },
  {
   "key": "specialtyPageLabels.back",

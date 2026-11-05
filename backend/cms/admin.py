@@ -351,24 +351,24 @@ class DoctorAdmin(AutoTranslateAdmin):
         ('O‘zbekcha', {
             'description': f'{LANG_UZ} {AUTO_TIP} Ro‘yxat maydonlarida (Ta’lim, Yo‘nalishlar, Tillar) | bilan ajrating.',
             'fields': (
-                'role_uz', 'specialty_uz', 'experience_uz', 'about_uz',
-                'education_uz', 'focuses_uz', 'languages_uz',
+                'role_uz', 'specialty_uz', 'grade_uz', 'experience_uz', 'about_uz',
+                'education_uz', 'focuses_uz', 'languages_uz', 'career_uz',
             ),
         }),
         ('Русский', {
             'classes': ('collapse',),
             'description': LANG_RU,
             'fields': (
-                'role_ru', 'specialty_ru', 'experience_ru', 'about_ru',
-                'education_ru', 'focuses_ru', 'languages_ru',
+                'role_ru', 'specialty_ru', 'grade_ru', 'experience_ru', 'about_ru',
+                'education_ru', 'focuses_ru', 'languages_ru', 'career_ru',
             ),
         }),
         ('English', {
             'classes': ('collapse',),
             'description': LANG_EN,
             'fields': (
-                'role_en', 'specialty_en', 'experience_en', 'about_en',
-                'education_en', 'focuses_en', 'languages_en',
+                'role_en', 'specialty_en', 'grade_en', 'experience_en', 'about_en',
+                'education_en', 'focuses_en', 'languages_en', 'career_en',
             ),
         }),
         ('Rasm', {
@@ -953,3 +953,42 @@ class AssetOverrideAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
+
+
+@admin.register(models.DoctorReview, site=mrii_admin_site)
+class DoctorReviewAdmin(admin.ModelAdmin):
+    """Patients write reviews on the doctor pages; nothing is public until it is approved here."""
+
+    list_display = ('status', 'doctor', 'stars', 'short_text', 'name', 'created_at')
+    list_display_links = ('short_text',)
+    list_filter = ('is_approved', 'doctor')
+    search_fields = ('text', 'name', 'doctor__name')
+    actions = ('approve', 'hide', 'delete_selected')
+    list_per_page = 30
+    readonly_fields = ('doctor', 'rating', 'created_at')
+    fields = ('doctor', 'rating', 'name', 'text', 'is_approved', 'created_at')
+
+    def has_add_permission(self, request):
+        return False  # only visitors write reviews
+
+    @admin.display(description='Holati', ordering='is_approved')
+    def status(self, obj):
+        return 'Saytda' if obj.is_approved else 'Tekshiruv kutmoqda'
+
+    @admin.display(description='Baho', ordering='rating')
+    def stars(self, obj):
+        return '★' * obj.rating + '☆' * (5 - obj.rating)
+
+    @admin.display(description='Sharh')
+    def short_text(self, obj):
+        return obj.text if len(obj.text) <= 80 else obj.text[:77] + '…'
+
+    @admin.action(description='Tanlanganlarni saytda ko‘rsatish (tasdiqlash)')
+    def approve(self, request, queryset):
+        n = queryset.update(is_approved=True)
+        self.message_user(request, f'{n} ta sharh saytda ko‘rsatiladi.', messages.SUCCESS)
+
+    @admin.action(description='Tanlanganlarni saytdan yashirish')
+    def hide(self, request, queryset):
+        n = queryset.update(is_approved=False)
+        self.message_user(request, f'{n} ta sharh yashirildi.', messages.SUCCESS)

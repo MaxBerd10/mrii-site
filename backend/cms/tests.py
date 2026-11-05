@@ -1026,3 +1026,87 @@ class LastDoctorGuardTests(TestCase):
         self.assertEqual(Doctor.objects.count(), 1)
         self.client.post(f'/admin/cms/doctor/{self.b.pk}/delete/', {'post': 'yes'})
         self.assertEqual(Doctor.objects.count(), 1)
+
+
+@override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class DoctorReviewAndProfileTests(TestCase):
+    def setUp(self):
+        from django.core.cache import cache
+
+        from .models import Doctor
+
+        cache.clear()
+        self.doc = Doctor.objects.create(
+            slug='dr-review', name='Dr. Sharh', role_uz='Kardiolog', role_ru='Кардиолог', role_en='Cardiologist',
+            grade_uz='Oliy toifali shifokor', grade_ru='Врач высшей категории', grade_en='Top category',
+            career_uz='2015–2019 | Farg‘ona shifoxonasi | Kardiolog\nbuzuq qator\n2019– | FJSTI klinikasi | Katta shifokor',
+            career_ru='2015–2019 | Больница | Кардиолог', career_en='2015–2019 | Hospital | Cardiologist',
+        )
+        self.url = f'/api/doctors/{self.doc.slug}/reviews/'
+
+    def post(self, **over):
+        body = {'rating': 5, 'name': 'Dilnoza', 'text': 'Shifokor hamma savolimga sabr bilan javob berdi.'}
+        body.update(over)
+        return self.client.post(self.url, body, content_type='application/json')
+
+    def test_new_reviews_wait_for_approval_and_then_count(self):
+        from .models import DoctorReview
+
+        self.assertEqual(self.post().status_code, 201)
+        self.assertEqual(self.client.get(self.url).json(), [])
+        doctors = self.client.get('/api/doctors/?lang=uz').json()
+        mine = next(d for d in doctors if d['slug'] == 'dr-review')
+        self.assertEqual(mine['rating'], {'avg': 0, 'count': 0})
+        DoctorReview.objects.update(is_approved=True)
+        self.assertEqual(len(self.client.get(self.url).json()), 1)
+        mine = next(d for d in self.client.get('/api/doctors/?lang=uz').json() if d['slug'] == 'dr-review')
+        self.assertEqual(mine['rating'], {'avg': 5.0, 'count': 1})
+
+    def test_bad_reviews_are_rejected_and_nothing_is_stored(self):
+        from .models import DoctorReview
+
+        for bad in (
+            {'rating': 0}, {'rating': 9}, {'rating': 'x'}, {'text': 'qisqa'}, {'text': 'x' * 801},
+            {'text': 'Zo‘r shifokor, men bilan https://spam.example bog‘laning'},
+            {'text': 'Qo‘ng‘iroq qiling +998 90 123 45 67 arzon'},
+        ):
+            from django.core.cache import cache
+
+            cache.clear()  # the rate limit counts every attempt; this test is about validation
+            self.assertEqual(self.post(**bad).status_code, 400, bad)
+        self.assertEqual(DoctorReview.objects.count(), 0)
+        self.assertEqual(self.post(website='http://bot.example').status_code, 201)  # honeypot
+        self.assertEqual(DoctorReview.objects.count(), 0)
+
+    def test_unknown_or_hidden_doctor_has_no_review_page(self):
+        self.assertEqual(self.client.get('/api/doctors/nope/reviews/').status_code, 404)
+        self.doc.is_active = False
+        self.doc.save()
+        self.assertEqual(self.client.get(self.url).status_code, 404)
+
+    def test_posting_is_rate_limited_but_reading_is_not(self):
+        codes = [self.post(text=f'Yaxshi shifokor, rahmat sizga {i}').status_code for i in range(8)]
+        self.assertIn(429, codes)
+        self.assertEqual(self.client.get(self.url).status_code, 200)
+
+    def test_grade_and_career_reach_the_website_only_when_filled(self):
+        mine = next(d for d in self.client.get('/api/doctors/?lang=uz').json() if d['slug'] == 'dr-review')
+        self.assertEqual(mine['grade'], 'Oliy toifali shifokor')
+        self.assertEqual([c['place'] for c in mine['career']], ['Farg‘ona shifoxonasi', 'FJSTI klinikasi'])  # broken line skipped
+        ru = next(d for d in self.client.get('/api/doctors/?lang=ru').json() if d['slug'] == 'dr-review')
+        self.assertEqual(ru['career'][0]['role'], 'Кардиолог')
+        other = self.doc.__class__.objects.create(slug='dr-bare', name='Dr. Bare')
+        bare = next(d for d in self.client.get('/api/doctors/?lang=uz').json() if d['slug'] == other.slug)
+        self.assertEqual((bare['grade'], bare['career']), ('', []))
+
+    def test_admin_can_approve_in_bulk(self):
+        from .models import DoctorReview
+
+        self.post()
+        self.client.force_login(User.objects.create_superuser('boss', 'b@example.uz', 'pw-12345-xyz'))
+        page = self.client.get('/admin/cms/doctorreview/')
+        self.assertContains(page, 'Tekshiruv kutmoqda')
+        ids = [str(r.pk) for r in DoctorReview.objects.all()]
+        self.client.post('/admin/cms/doctorreview/', {'action': 'approve', '_selected_action': ids})
+        self.assertTrue(DoctorReview.objects.get().is_approved)
+        self.assertEqual(self.client.get('/admin/cms/doctorreview/add/').status_code, 403)

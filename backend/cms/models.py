@@ -238,6 +238,18 @@ class Doctor(TimeStampedModel, OrderedModel):
     languages_uz = models.TextField('Tillar | bilan (UZ)', blank=True)
     languages_ru = models.TextField('Tillar | bilan (RU)', blank=True)
     languages_en = models.TextField('Tillar | bilan (EN)', blank=True)
+    grade_uz = models.CharField(
+        'Toifa / unvon (UZ)', max_length=160, blank=True,
+        help_text='Masalan: «Oliy toifali shifokor» yoki «Tibbiyot fanlari nomzodi». Faqat tasdiqlangan ma’lumotni yozing — bo‘sh qolsa, saytda ko‘rsatilmaydi.',
+    )
+    grade_ru = models.CharField('Toifa / unvon (RU)', max_length=160, blank=True)
+    grade_en = models.CharField('Toifa / unvon (EN)', max_length=160, blank=True)
+    career_uz = models.TextField(
+        'Ish tarixi (UZ)', blank=True,
+        help_text='Har qatorga bitta joy, 3 qismga | bilan bo‘linadi: «yillar | tashkilot | lavozim». Masalan: 2015–2019 | Farg‘ona viloyat shifoxonasi | Kardiolog. Bo‘sh qolsa, saytda ko‘rsatilmaydi.',
+    )
+    career_ru = models.TextField('Ish tarixi (RU)', blank=True, help_text='UZ bilan bir xil shaklda (yillar | tashkilot | lavozim).')
+    career_en = models.TextField('Ish tarixi (EN)', blank=True)
     papers = models.CharField('Maqolalar', max_length=64, blank=True)
     studies = models.CharField('Tadqiqotlar', max_length=64, blank=True)
     color = models.CharField('Rang', max_length=32, blank=True, default='#0B3D6B')
@@ -805,3 +817,24 @@ class AssetOverride(TimeStampedModel):
 
     def __str__(self):
         return self.path
+
+
+class DoctorReview(TimeStampedModel):
+    """A patient's review of a doctor. Hidden until the clinic approves it."""
+
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='reviews', verbose_name='Shifokor')
+    name = models.CharField('Ism', max_length=60, blank=True, help_text='Bemor ko‘rsatgan ism (ixtiyoriy).')
+    rating = models.PositiveSmallIntegerField('Baho (1–5)')
+    text = models.TextField('Sharh matni', max_length=800)
+    is_approved = models.BooleanField(
+        'Saytda ko‘rsatilsin', default=False,
+        help_text='Belgilangandan keyingina sayt tashrif buyuruvchilariga ko‘rinadi.',
+    )
+
+    class Meta:
+        verbose_name = 'Shifokor sharhi'
+        verbose_name_plural = 'Shifokor sharhlari'
+        ordering = ('is_approved', '-created_at')
+
+    def __str__(self):
+        return f'{self.doctor} — {self.rating}/5'

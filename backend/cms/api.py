@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -7,6 +8,61 @@ from .utils import pick, resolve_lang, split_pipe
 
 def ctx(request, lang: str) -> dict:
     return {'request': request, 'lang': lang}
+
+
+def with_ratings(qs):
+    """Annotate doctors with the average and number of approved reviews."""
+    from django.db.models import Avg, Count, Q
+
+    approved = Q(reviews__is_approved=True)
+    return qs.annotate(
+        rating_avg=Avg('reviews__rating', filter=approved),
+        rating_count=Count('reviews', filter=approved),
+    )
+
+
+class DoctorReviewsAPI(APIView):
+    """Patient reviews of one doctor. Anyone can read approved ones; new ones wait for approval in the admin."""
+
+    authentication_classes = []
+    throttle_scope = 'doctor_review'
+
+    def get_throttles(self):
+        # Reading is free; only writing is rate-limited.
+        return super().get_throttles() if self.request.method == 'POST' else []
+
+    def get(self, request, slug):
+        doctor = get_object_or_404(models.Doctor, slug=slug, is_active=True)
+        rows = doctor.reviews.filter(is_approved=True)[:50]
+        ordered = sorted(rows, key=lambda r: r.created_at, reverse=True)
+        return Response([
+            {'id': r.pk, 'name': r.name or '', 'rating': r.rating, 'text': r.text, 'createdAt': r.created_at.isoformat()}
+            for r in ordered
+        ])
+
+    def post(self, request, slug):
+        import re
+
+        doctor = get_object_or_404(models.Doctor, slug=slug, is_active=True)
+        data = request.data
+        if str(data.get('website') or '').strip():
+            return Response({'ok': True, 'pending': True}, status=201)  # honeypot: pretend success, store nothing
+        text = str(data.get('text') or '').strip()
+        name = re.sub(r'\s+', ' ', str(data.get('name') or '')).strip()[:60]
+        try:
+            rating = int(data.get('rating'))
+        except (TypeError, ValueError):
+            rating = 0
+        if not 1 <= rating <= 5:
+            return Response({'error': 'Bahoni tanlang (1–5).'}, status=400)
+        if len(text) < 10:
+            return Response({'error': 'Sharh juda qisqa — kamida 10 ta belgi yozing.'}, status=400)
+        if len(text) > 800:
+            return Response({'error': 'Sharh 800 belgidan oshmasin.'}, status=400)
+        if re.search(r'https?://|www\.|@\w+\.\w+|(?:\d[\s().-]?){9,}', text + ' ' + name, re.I):
+            return Response({'error': 'Sharhda havola, telefon yoki pochta bo‘lmasin.'}, status=400)
+        models.DoctorReview.objects.create(doctor=doctor, name=name, rating=rating, text=text)
+        return Response({'ok': True, 'pending': True}, status=201)
 
 
 class TextsAPI(APIView):
@@ -57,7 +113,7 @@ class HomeAPI(APIView):
         research = models.ResearchSection.objects.first()
 
         specialties = models.Specialty.objects.filter(is_active=True)
-        doctors = models.Doctor.objects.filter(is_active=True)
+        doctors = with_ratings(models.Doctor.objects.filter(is_active=True))
         news = models.NewsArticle.objects.filter(is_published=True)
         ai = models.AIProduct.objects.filter(is_active=True)
         studies = models.ResearchStudy.objects.filter(is_active=True)
@@ -114,7 +170,7 @@ class SpecialtyDetailAPI(APIView):
 class DoctorListAPI(APIView):
     def get(self, request):
         lang = resolve_lang(request)
-        qs = models.Doctor.objects.filter(is_active=True)
+        qs = with_ratings(models.Doctor.objects.filter(is_active=True))
         return Response(serializers.DoctorSerializer(qs, many=True, context=ctx(request, lang)).data)
 
 

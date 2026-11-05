@@ -22,8 +22,14 @@ export type DoctorProfile = {
       education: string[]
       focuses: string[]
       languages: string[]
+      /** Title/grade typed in the admin ("Oliy toifali shifokor"); empty = not shown. */
+      grade?: string
+      /** Career entries typed in the admin; empty = the timeline is not shown. */
+      career?: Array<{ range: string; place: string; role: string }>
     }
   >
+  /** Approved patient reviews (from the admin-moderated review system). */
+  rating?: { avg: number; count: number }
 }
 
 const COLORS = ['#0EA5E9', '#6366F1', '#10B981', '#F59E0B'] as const
@@ -1538,6 +1544,11 @@ STATIC_DOCTOR_PROFILES.push(
  */
 let cmsDoctorProfiles: DoctorProfile[] | null = null
 
+/** Average and count of approved patient reviews (0 when the doctor has none or the CMS is off). */
+export function getDoctorRating(slug: string): { avg: number; count: number } {
+  return cmsDoctorProfiles?.find((p) => p.slug === slug)?.rating ?? { avg: 0, count: 0 }
+}
+
 export function setCmsDoctorProfiles(list: DoctorProfile[] | null): void {
   cmsDoctorProfiles = list
 }
@@ -1566,6 +1577,9 @@ export function mapCmsDoctors(
     education: string[]
     focuses: string[]
     languages: string[]
+    grade?: string
+    career?: Array<{ range: string; place: string; role: string }>
+    rating?: { avg: number; count: number }
     papers: string
     studies: string
     color: string
@@ -1585,9 +1599,12 @@ export function mapCmsDoctors(
       education: row.education,
       focuses: row.focuses,
       languages: row.languages,
+      grade: row.grade ?? '',
+      career: row.career ?? [],
     }
     return {
       slug: row.slug,
+      rating: row.rating ?? { avg: 0, count: 0 },
       photo: row.photo,
       color: row.color || '#0B3D6B',
       papers: Number(row.papers) || 0,
@@ -1599,10 +1616,12 @@ export function mapCmsDoctors(
         uz: resolved,
         ru: resolved,
         en: resolved,
-        kaa:
-          lang === 'kaa'
-            ? (STATIC_DOCTOR_PROFILES.find((p) => p.slug === row.slug)?.content.kaa ?? resolved)
-            : resolved,
+        kaa: (() => {
+          if (lang !== 'kaa') return resolved
+          const own = STATIC_DOCTOR_PROFILES.find((p) => p.slug === row.slug)?.content.kaa
+          // Grade and career are typed in the admin (one language), so they replace the static ones.
+          return own ? { ...own, grade: resolved.grade, career: resolved.career } : resolved
+        })(),
       },
     }
   })

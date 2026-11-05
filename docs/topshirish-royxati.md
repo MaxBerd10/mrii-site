@@ -79,5 +79,8 @@ Dizayn, bo'limlar tartibi, yangi sahifa qo'shish; FAQ va ba'zi ro'yxatlarga yang
 - [ ] Admin akkauntlar ro'yxatida begona yoki ketgan xodim yo'q.
 - [ ] Xavfsizlik yangilanishlari: yiliga 1–2 marta dasturchidan `pip`/`npm` paketlarini yangilashni so'rang.
 
+## 7a. Bemor sharhlari
+Saytdagi shifokor sahifasida bemorlar sharh yoza oladi. Sharh **darhol ko'rinmaydi**: Admin → Shifokor sharhlari'da «Tekshiruv kutmoqda» holatida turadi. Haftada kamida 2–3 marta tekshiring: haqiqiy bo'lsa belgilab «tasdiqlash» deng, haqoratli yoki reklama bo'lsa o'chiring. Bosh sahifadagi «Bemor sharhlarini tekshirish» ham yangi sharh sonini ko'rsatadi. Sharhga havola, telefon va pochta yozish tizim tomonidan to'sib qo'yilgan; soatiga 6 ta urinishdan ko'p yuborib bo'lmaydi.
+
 ## 8. Saytda e'lon qilinadigan ma'lumotlar mas'uliyati
 Saytdagi raqamlar (bemorlar soni, tadqiqotlar, AI natijalari), narxlar va shifokor ma'lumotlari litsenziyalangan tibbiyot muassasasining ommaviy da'volaridir: faqat haqiqiy va tasdiqlangan ma'lumotni kiriting. Mijoz sharhlari faqat haqiqiy bo'lsa qo'shiladi.

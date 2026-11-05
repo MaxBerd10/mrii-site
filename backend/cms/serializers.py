@@ -69,14 +69,35 @@ class DoctorSerializer(LangContextMixin, serializers.ModelSerializer):
     education = serializers.SerializerMethodField()
     focuses = serializers.SerializerMethodField()
     languages = serializers.SerializerMethodField()
+    grade = serializers.SerializerMethodField()
+    career = serializers.SerializerMethodField()
+    rating = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Doctor
         fields = (
             'id', 'slug', 'staff_kind', 'name', 'role', 'specialty', 'exp',
-            'about', 'education', 'focuses', 'languages',
+            'about', 'education', 'focuses', 'languages', 'grade', 'career', 'rating',
             'papers', 'studies', 'color', 'photo', 'order',
         )
+
+    def get_grade(self, obj):
+        return pick(obj, 'grade', self.lang)
+
+    def get_career(self, obj):
+        rows = []
+        for line in (pick(obj, 'career', self.lang) or '').splitlines():
+            parts = [p.strip() for p in line.split('|')]
+            if len(parts) >= 2 and parts[0] and parts[1]:
+                rows.append({'range': parts[0], 'place': parts[1], 'role': parts[2] if len(parts) > 2 else ''})
+        return rows
+
+    def get_rating(self, obj):
+        """{avg, count} of APPROVED reviews only (annotated by the API views)."""
+        count = getattr(obj, 'rating_count', None)
+        if not count:
+            return {'avg': 0, 'count': 0}
+        return {'avg': round(float(obj.rating_avg), 1), 'count': int(count)}
 
     def get_role(self, obj):
         return pick(obj, 'role', self.lang)

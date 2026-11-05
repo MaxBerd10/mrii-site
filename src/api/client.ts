@@ -91,6 +91,9 @@ export type CmsHome = {
     education: string[]
     focuses: string[]
     languages: string[]
+    grade: string
+    career: Array<{ range: string; place: string; role: string }>
+    rating: { avg: number; count: number }
     papers: string
     studies: string
     color: string
@@ -311,4 +314,39 @@ export async function fetchInquiryAdvice(requestId: string): Promise<InquiryAdvi
   if (res.status === 404) return null
   if (!res.ok) throw new Error('Lookup failed')
   return (await res.json()) as InquiryAdvice
+}
+
+export type PublicDoctorReview = { id: number; name: string; rating: number; text: string; createdAt: string }
+
+/** Approved patient reviews of one doctor; null when the server is unreachable (the section then stays hidden). */
+export async function fetchDoctorReviews(slug: string): Promise<PublicDoctorReview[] | null> {
+  if (!API_URL) return null
+  try {
+    const res = await fetch(`${API_URL}/api/doctors/${encodeURIComponent(slug)}/reviews/`, {
+      headers: { Accept: 'application/json' },
+    })
+    return res.ok ? ((await res.json()) as PublicDoctorReview[]) : null
+  } catch {
+    return null
+  }
+}
+
+/** New reviews are saved as "pending": they appear on the site only after the clinic approves them. */
+export async function submitDoctorReview(
+  slug: string,
+  input: { name: string; rating: number; text: string; website?: string },
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  if (!API_URL) return { ok: false, error: 'offline' }
+  try {
+    const res = await fetch(`${API_URL}/api/doctors/${encodeURIComponent(slug)}/reviews/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(input),
+    })
+    if (res.ok) return { ok: true }
+    const body = (await res.json().catch(() => ({}))) as { error?: string; detail?: string }
+    return { ok: false, error: res.status === 429 ? 'rate' : (body.error ?? 'error') }
+  } catch {
+    return { ok: false, error: 'offline' }
+  }
 }

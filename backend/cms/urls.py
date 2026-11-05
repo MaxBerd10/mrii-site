@@ -10,6 +10,7 @@ urlpatterns = [
     path('specialties/', api.SpecialtyListAPI.as_view()),
     path('specialties/<slug:slug>/', api.SpecialtyDetailAPI.as_view()),
     path('doctors/', api.DoctorListAPI.as_view()),
+    path('doctors/<slug:slug>/reviews/', api.DoctorReviewsAPI.as_view()),
     path('news/', api.NewsListAPI.as_view()),
     path('news/<slug:slug>/', api.NewsDetailAPI.as_view()),
     path('ai-products/', api.AIProductListAPI.as_view()),
