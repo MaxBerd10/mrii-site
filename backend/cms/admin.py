@@ -393,6 +393,34 @@ class DoctorAdmin(AutoTranslateAdmin):
         }),
     )
 
+    # The website falls back to its built-in doctor list when the admin has none, so the admin must
+    # never be left without a visible doctor (it would bring back people who were removed on purpose).
+    LAST_DOCTOR_MESSAGE = (
+        'Kamida bitta faol shifokor qolishi kerak. Aks holda sayt eski tayyor ro‘yxatni ko‘rsatadi. '
+        'Avval yangi shifokorni qo‘shing, keyin eskilarini olib tashlang.'
+    )
+
+    def _would_leave_no_active(self, removing_pks):
+        return not models.Doctor.objects.filter(is_active=True).exclude(pk__in=list(removing_pks)).exists()
+
+    def delete_model(self, request, obj):
+        if obj.is_active and self._would_leave_no_active([obj.pk]):
+            self.message_user(request, self.LAST_DOCTOR_MESSAGE, messages.ERROR)
+            return
+        super().delete_model(request, obj)
+
+    def delete_queryset(self, request, queryset):
+        if self._would_leave_no_active(queryset.values_list('pk', flat=True)):
+            self.message_user(request, self.LAST_DOCTOR_MESSAGE, messages.ERROR)
+            return
+        super().delete_queryset(request, queryset)
+
+    def save_model(self, request, obj, form, change):
+        if change and not obj.is_active and self._would_leave_no_active([obj.pk]):
+            obj.is_active = True
+            self.message_user(request, self.LAST_DOCTOR_MESSAGE, messages.ERROR)
+        super().save_model(request, obj, form, change)
+
     @admin.display(description='O‘chirish')
     def quick_delete(self, obj):
         from django.urls import reverse
@@ -405,6 +433,9 @@ class DoctorAdmin(AutoTranslateAdmin):
 
     @admin.action(description='Tanlanganlarni faolsiz qilish (saytdan yashirish)')
     def make_inactive(self, request, queryset):
+        if self._would_leave_no_active(queryset.values_list('pk', flat=True)):
+            self.message_user(request, self.LAST_DOCTOR_MESSAGE, messages.ERROR)
+            return
         updated = queryset.update(is_active=False)
         self.message_user(request, f'{updated} ta shifokor saytdan yashirildi.', messages.SUCCESS)
 

@@ -1626,9 +1626,17 @@ export const HOME_FEATURED_DOCTOR_SLUGS = [
 export function getHomeFeaturedDoctors(
   count: number = HOME_FEATURED_DOCTOR_SLUGS.length,
 ): DoctorProfile[] {
-  return HOME_FEATURED_DOCTOR_SLUGS.slice(0, count)
-    .map((slug) => getActiveDoctorProfiles().find((p) => p.slug === slug))
+  const active = getActiveDoctorProfiles()
+  const picked = HOME_FEATURED_DOCTOR_SLUGS.slice(0, count)
+    .map((slug) => active.find((p) => p.slug === slug))
     .filter((p): p is DoctorProfile => Boolean(p))
+  if (picked.length >= count) return picked
+  // A curated doctor was removed in the admin: fill the gap with other doctors instead of leaving a hole.
+  const taken = new Set(picked.map((p) => p.slug))
+  const filler = active.filter(
+    (p) => p.staffKind !== 'nurse' && !taken.has(p.slug) && !HIDDEN_FROM_HOME_ORBIT.has(p.slug),
+  )
+  return [...picked, ...filler].slice(0, count)
 }
 
 export function getHomeOrbitDoctors(max = 20): DoctorProfile[] {

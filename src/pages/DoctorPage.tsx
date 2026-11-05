@@ -2,8 +2,6 @@ import { useContacts, useCopy } from '../i18n/useCopy'
 import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
-import type { Lang } from '../i18n/types'
-import DoctorReviews from '../components/DoctorReviews'
 import NotFoundPage from './NotFoundPage'
 import {
   doctorPageLabels,
@@ -95,63 +93,6 @@ export default function DoctorPage({ slug }: { slug: string }) {
   const aboutText = view.about.startsWith(view.name)
     ? view.about.slice(view.name.length).replace(/^\s*[—–-]\s*/, '')
     : view.about
-  const localeReviewText: Record<Lang, [string, string, string]> = {
-    uz: [
-      'Natijalarni birinchi marta tushunarli qilib izohlab berdilar. Davolash rejasini yozib berdilar, uyda ham adashmadim.',
-      'Har bir savolimga shoshilmasdan javob berdilar. Kuzatuv rejasi aniq va juda qulay bo’ldi.',
-      'Qabul biroz kechikdi, lekin shifokor yetarli vaqt ajratdi va barcha savollarimga javob berdi.',
-    ],
-    ru: [
-      'Впервые результаты объяснили понятным языком. План лечения записали так, что дома ничего не перепуталось.',
-      'На каждый вопрос ответили без спешки. План наблюдения получился ясным и удобным.',
-      'Приём немного задержался, но врач уделил достаточно времени и ответил на все вопросы.',
-    ],
-    en: [
-      'For the first time, the results were explained clearly. The written care plan was easy to follow at home.',
-      'Every question was answered without rushing. The follow-up plan was clear and practical.',
-      'The visit started a little late, but the doctor gave me enough time and answered every question.',
-    ],
-    kaa: [
-      'Nátiyjelerdi birinshi márte túsinikli etip túsindirdi. Emlew jobasın jazıp berdi, úyde de adaspadım.',
-      'Hár bir sorawıma aspalmay juwap berdi. Baqlaw jobası anıq hám ápiwayı boldı.',
-      'Qabıllaw biraz keshikti, biraq shıpaker jeterli waqıt ajıratıp, barlıq sorawlarıma juwap berdi.',
-    ],
-  }
-  const demoReviews = [
-    {
-      id: `${slug}-demo-1`,
-      name: 'Dilnoza R.',
-      rating: 5,
-      text: localeReviewText[lang][0],
-      createdAt: '2026-07-12T10:00:00.000Z',
-    },
-    {
-      id: `${slug}-demo-2`,
-      name: 'Sanjar T.',
-      rating: 5,
-      text: localeReviewText[lang][1],
-      createdAt: '2026-07-04T10:00:00.000Z',
-    },
-    {
-      id: `${slug}-demo-3`,
-      name: 'Malika A.',
-      rating: 4,
-      text: localeReviewText[lang][2],
-      createdAt: '2026-06-28T10:00:00.000Z',
-    },
-  ]
-  const reviewLabels = {
-    rating: t.doctors.rating,
-    reviews: t.doctors.reviews,
-    write: t.doctors.writeReview,
-    empty: t.doctors.emptyReviews,
-    name: t.doctors.reviewName,
-    comment: t.doctors.reviewComment,
-    submit: t.doctors.reviewSubmit,
-    close: t.doctors.reviewClose,
-    thanks: t.doctors.reviewThanks,
-    yourRating: t.doctors.yourRating,
-  }
 
   const scrollToBooking = () => {
     document.getElementById('doctor-booking')?.scrollIntoView({
@@ -273,15 +214,6 @@ export default function DoctorPage({ slug }: { slug: string }) {
                   />
                 )}
               </div>
-              <figcaption className="dp-portrait__chip">
-                <span className="dp-portrait__check" aria-hidden>✓</span>
-                <span>
-                  <strong>
-                    {dossier.patientCount} {dossier.ui.patientCount}
-                  </strong>
-                  <small>{dossier.ui.patientPeriod}</small>
-                </span>
-              </figcaption>
             </figure>
           </div>
         </div>
@@ -369,7 +301,6 @@ export default function DoctorPage({ slug }: { slug: string }) {
                   ? 'Hár bir nawqas ushın tekseriw nátiyjeleri bir baqlaw kartasına jıynaladı — usı karta kelesi qabıllaw hám emlew jobasınıń tiykarı bolıp qaladı.'
                   : 'Every result is collected in one follow-up record, which becomes the basis for future visits and the care plan.'}
           </p>
-          <blockquote className="dp-quote">“{dossier.ui.quote}”</blockquote>
           <p className="dp-chan dp-prose__focus">{ui.focus}</p>
           <div className="dp-chips">
             {view.focuses.concat(view.focuses.length < 5 ? view.education.slice(0, 2) : []).map((focus) => (
@@ -492,21 +423,6 @@ export default function DoctorPage({ slug }: { slug: string }) {
         </article>
       </section>
 
-      <section className="dp-shell dp-reviews">
-        <header className="dp-section-head">
-          <p className="dp-chan">{ui.reviews}</p>
-          <h2>{ui.reviewsTitle}</h2>
-        </header>
-        <DoctorReviews
-          doctorId={profile.slug}
-          doctorName={view.name}
-          accent={profile.color}
-          labels={reviewLabels}
-          inline
-          variant="profile"
-          demoReviews={demoReviews}
-        />
-      </section>
 
       <section className="dp-shell dp-related">
         <DoctorTeamSection

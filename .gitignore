@@ -34,3 +34,4 @@ backend/.env
 
 # generated e2e fixtures
 tests/applicant-flow/fx/
+backups/
