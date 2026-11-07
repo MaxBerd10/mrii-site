@@ -80,7 +80,10 @@ export default function DoctorReviews({
   labels,
   eyebrow,
   title,
+  summary,
 }: {
+  /** Average and number of ALL approved reviews (the list below holds only the latest ones). */
+  summary?: { avg: number; count: number }
   doctorSlug: string
   labels: ReviewLabels
   eyebrow: string
@@ -114,8 +117,16 @@ export default function DoctorReviews({
   // Server unreachable or reviews not available for this doctor: show nothing rather than a fake block.
   if (reviews === null) return null
 
-  const count = reviews.length
-  const avg = count ? reviews.reduce((sum, r) => sum + r.rating, 0) / count : 0
+  const listed = reviews.length
+  const count = Math.max(summary?.count ?? 0, listed)
+  const avg =
+    summary && summary.count > 0
+      ? summary.avg
+      : listed
+        ? reviews.reduce((sum, r) => sum + r.rating, 0) / listed
+        : 0
+  // The star bars are only honest when the list holds every review.
+  const showBars = listed === count
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -158,6 +169,7 @@ export default function DoctorReviews({
             <p className="dp-score__meta">
               {count} {labels.reviews}
             </p>
+            {showBars && (
             <div className="dp-dist" aria-label={labels.rating}>
               {[5, 4, 3, 2, 1].map((stars) => {
                 const n = reviews.filter((r) => r.rating === stars).length
@@ -166,7 +178,7 @@ export default function DoctorReviews({
                     <span>{stars}</span>
                     <i aria-hidden>
                       <b
-                        style={{ width: `${Math.round((n / count) * 100)}%` }}
+                        style={{ width: `${Math.round((n / listed) * 100)}%` }}
                       />
                     </i>
                     <span>{n}</span>
@@ -174,6 +186,7 @@ export default function DoctorReviews({
                 )
               })}
             </div>
+            )}
           </aside>
         )}
 

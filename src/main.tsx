@@ -7,8 +7,10 @@ import './styles/index.css'
 import './styles/motion.css'
 import { markSafariDocument } from './lib/browser'
 import { setAssetOverrides } from './lib/assetOverrides'
+import { installImageFallback } from './lib/imageFallback'
 
 markSafariDocument()
+installImageFallback()
 // Replaced pictures from the last visit apply before the first image is requested.
 setAssetOverrides(readCachedConfig()?.assets)
 

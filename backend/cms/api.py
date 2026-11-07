@@ -252,7 +252,12 @@ class ClinicTourListAPI(APIView):
 class VacancyListAPI(APIView):
     def get(self, request):
         lang = resolve_lang(request)
-        qs = models.Vacancy.objects.filter(is_active=True)
+        from django.db.models import Q
+        from django.utils import timezone
+
+        # A vacancy whose application deadline has passed disappears by itself; nobody has to remember to hide it.
+        today = timezone.localdate()
+        qs = models.Vacancy.objects.filter(is_active=True).filter(Q(deadline__isnull=True) | Q(deadline__gte=today))
         return Response(
             serializers.VacancySerializer(qs, many=True, context=ctx(request, lang)).data
         )

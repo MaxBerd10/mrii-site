@@ -1,0 +1,32 @@
+/*
+ * Content comes from the admin, so it can be any length: a name with no spaces, a 200-letter headline,
+ * 100 doctors. These rules keep every card inside its box instead of trusting the sample content.
+ */
+:where(main, .container-main) :where(h1, h2, h3, h4, h5, p, li, dd, dt, blockquote, figcaption, small, strong, em, time, label, td, th) {
+  overflow-wrap: anywhere;
+}
+
+/* A grid track must be allowed to be narrower than its widest word. */
+.dp-review-quotes { grid-template-columns: minmax(0, 1fr); }
+.dp-review-quotes > li,
+.dp-qcard,
+.news-card,
+.vacancy-card,
+.doctor-card { min-width: 0; }
+
+/* "Show more" under long lists. */
+.list-more { display: flex; justify-content: center; margin: 32px 0 8px; }
+.list-more__btn {
+  min-height: 48px;
+  padding: 12px 28px;
+  border: 1px solid var(--line, rgba(18, 32, 51, 0.18));
+  border-radius: 999px;
+  background: var(--surface, #fff);
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+.list-more__btn:hover { border-color: currentColor; }
+.list-more__btn:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }

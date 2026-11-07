@@ -33,6 +33,9 @@ type Doc = DoctorCardDoc
 type StaffFilter = 'all' | StaffKind
 type GroupFilter = 'all' | SpecialtyGroup
 
+/** Doctors shown per page on /doctors. */
+const DOCTORS_PAGE = 24
+
 const GROUP_COLORS: Record<SpecialtyGroup, string> = {
   therapy: '#38BDF8',
   surgery: '#8B5CF6',
@@ -114,6 +117,11 @@ export default function Doctors() {
     setGroupFilter('all')
   }
 
+  // 100+ doctors in one endless grid is slow and tiring: show a page at a time.
+  const [limit, setLimit] = useState(DOCTORS_PAGE)
+  useEffect(() => setLimit(DOCTORS_PAGE), [staffFilter, groupFilter])
+  const visible = filtered.slice(0, limit)
+
   return (
     <section id="doctors" className="section section--muted doctors-section">
       <div className="container-main">
@@ -187,7 +195,7 @@ export default function Doctors() {
             animate="show"
             key={`${staffFilter}-${groupFilter}`}
           >
-            {filtered.map((doc, i) => (
+            {visible.map((doc, i) => (
               <DoctorCard
                 key={doc.id}
                 doc={doc}
@@ -200,6 +208,14 @@ export default function Doctors() {
             ))}
           </motion.div>
         )}
+
+        {filtered.length > visible.length ? (
+          <div className="list-more">
+            <button type="button" className="list-more__btn" onClick={() => setLimit((n) => n + DOCTORS_PAGE)}>
+              {t.common.loadMore} · {filtered.length - visible.length} {t.common.remaining}
+            </button>
+          </div>
+        ) : null}
       </div>
     </section>
   )
@@ -388,16 +404,22 @@ export function DoctorCard({
           <p className="doctor-card__role">{doc.role}</p>
           <p className="doctor-card__exp">{doc.exp}</p>
           <DoctorCardRating doctorId={doc.slug} accent={doc.color} reviewsLabel={reviewsLabel!} />
-          <div className="doctor-card__stats">
-            <div className="doctor-card__stat">
-              <strong style={{ color: accentInk(doc.color) }}>{doc.papers}</strong>
-              <span>{papersLabel}</span>
+          {Number(doc.papers) > 0 || Number(doc.studies) > 0 ? (
+            <div className="doctor-card__stats">
+              {Number(doc.papers) > 0 ? (
+                <div className="doctor-card__stat">
+                  <strong style={{ color: accentInk(doc.color) }}>{doc.papers}</strong>
+                  <span>{papersLabel}</span>
+                </div>
+              ) : null}
+              {Number(doc.studies) > 0 ? (
+                <div className="doctor-card__stat">
+                  <strong style={{ color: accentInk(doc.color) }}>{doc.studies}</strong>
+                  <span>{studiesLabel}</span>
+                </div>
+              ) : null}
             </div>
-            <div className="doctor-card__stat">
-              <strong style={{ color: accentInk(doc.color) }}>{doc.studies}</strong>
-              <span>{studiesLabel}</span>
-            </div>
-          </div>
+          ) : null}
           <span className="doctor-card__cta">{bookLabel}</span>
         </div>
       </>

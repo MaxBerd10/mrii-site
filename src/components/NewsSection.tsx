@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { motion } from 'motion/react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCms } from '../cms/CmsContext'
@@ -10,9 +11,13 @@ import { accentInk, accentWash } from '../lib/accent'
 
 const NEWS_IMAGES = Object.values(media.news)
 
+/** News cards per page. */
+const NEWS_PAGE = 9
+
 export default function NewsSection() {
   const { t } = useLanguage()
   const { home } = useCms()
+  const [limit, setLimit] = useState(NEWS_PAGE)
   const items = home?.news?.length
     ? home.news.map((item) => ({
         slug: item.slug,
@@ -56,7 +61,7 @@ export default function NewsSection() {
           whileInView="show"
           viewport={{ once: true, amount: 0.15 }}
         >
-          {items.map((item) => (
+          {items.slice(0, limit).map((item) => (
             <motion.a
               key={item.slug}
               href={`/news/${item.slug}`}
@@ -87,6 +92,14 @@ export default function NewsSection() {
             </motion.a>
           ))}
         </motion.div>
+
+        {items.length > limit ? (
+          <div className="list-more">
+            <button type="button" className="list-more__btn" onClick={() => setLimit((n) => n + NEWS_PAGE)}>
+              {t.common.loadMore} · {items.length - limit} {t.common.remaining}
+            </button>
+          </div>
+        ) : null}
       </div>
     </section>
   )

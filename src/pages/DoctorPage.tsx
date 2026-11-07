@@ -480,6 +480,7 @@ export default function DoctorPage({ slug }: { slug: string }) {
 
       <DoctorReviews
         doctorSlug={profile.slug}
+        summary={rating}
         eyebrow={ui.reviews}
         title={t.doctors.reviewsTitleReal}
         labels={{
