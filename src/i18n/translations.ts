@@ -929,6 +929,7 @@ const uz = {
     contactsLink: 'Aloqa',
   },
   backToTop: 'Yuqoriga',
+  common: { loadMore: 'Yana ko’rsatish', remaining: 'qoldi' },
   prices: {
     eyebrow: 'Klinika',
     title: 'Narxlar',
@@ -2025,6 +2026,7 @@ const ru: Translations = {
     contactsLink: 'Контакты',
   },
   backToTop: 'Наверх',
+  common: { loadMore: 'Показать ещё', remaining: 'осталось' },
 }
 
 const en: Translations = {
@@ -2998,6 +3000,7 @@ const en: Translations = {
     contactsLink: 'Contact',
   },
   backToTop: 'Back to top',
+  common: { loadMore: 'Show more', remaining: 'left' },
 }
 
 const kaa: Translations = {
@@ -3573,6 +3576,7 @@ const kaa: Translations = {
     ctaEyebrow: 'Jazılıw',
   },
   backToTop: 'Joqarıǵa',
+  common: { loadMore: 'Taǵı kórsetiw', remaining: 'qaldı' },
   process: {
     label: 'Protsess',
     title: 'Biz qalay',

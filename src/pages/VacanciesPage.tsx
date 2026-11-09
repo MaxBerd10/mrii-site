@@ -14,6 +14,9 @@ import { getFallbackVacancies } from '../data/vacanciesFallback'
 import { getDoctorCardPortrait } from '../data/doctorTurnMedia'
 import '../styles/vacancies-page.css'
 
+/** Vacancy cards per page. */
+const VACANCIES_PAGE = 12
+
 const HR_CONTACT_SLUG = 'nigmatova-s-a'
 const HR_CONTACT_PHOTO = getDoctorCardPortrait(
   HR_CONTACT_SLUG,
@@ -119,6 +122,10 @@ export default function VacanciesPage() {
     return [...rows].sort((a, b) => a.order - b.order)
   }, [filter, vacancies])
 
+  // Long lists are shown a page at a time.
+  const [limit, setLimit] = useState(VACANCIES_PAGE)
+  useEffect(() => setLimit(VACANCIES_PAGE), [filter])
+
   const selectedVacancy = vacancies.find((row) => row.id === selectedId) ?? null
 
   const applyToVacancy = (id: string) => {
@@ -209,7 +216,7 @@ export default function VacanciesPage() {
         {filtered.length === 0 ? (
           <p className="vacancies-page__empty">{t.vacancies.empty}</p>
         ) : (
-          filtered.map((vacancy) => (
+          filtered.slice(0, limit).map((vacancy) => (
             <article key={vacancy.id} className="vacancy-card">
               <div className="vacancy-card__meta">
                 <span className="vacancy-card__tag">{t.vacancies.categories[vacancy.category]}</span>
@@ -239,8 +246,8 @@ export default function VacanciesPage() {
               </ul>
               {vacancy.requirements.length > 0 ? (
                 <ul className="vacancy-card__requirements">
-                  {vacancy.requirements.map((item) => (
-                    <li key={item}>{item}</li>
+                  {vacancy.requirements.map((item, i) => (
+                    <li key={`${i}-${item}`}>{item}</li>
                   ))}
                 </ul>
               ) : null}
@@ -252,6 +259,13 @@ export default function VacanciesPage() {
             </article>
           ))
         )}
+        {filtered.length > limit ? (
+          <div className="list-more">
+            <button type="button" className="list-more__btn" onClick={() => setLimit((n) => n + VACANCIES_PAGE)}>
+              {t.common.loadMore} · {filtered.length - limit} {t.common.remaining}
+            </button>
+          </div>
+        ) : null}
       </section>
 
       <section id="vacancy-application" className="vacancies-page__form-wrap">

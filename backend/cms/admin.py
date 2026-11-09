@@ -445,8 +445,8 @@ class DoctorAdmin(AutoTranslateAdmin):
 
 @admin.register(models.NewsArticle, site=mrii_admin_site)
 class NewsArticleAdmin(AutoTranslateAdmin):
-    list_display = ('title_uz', 'slug', 'published_at', 'order', 'is_published', 'preview')
-    list_editable = ('order', 'is_published')
+    list_display = ('title_uz', 'published_at', 'is_published', 'preview')
+    list_editable = ('is_published',)
     search_fields = ('title_uz', 'title_ru', 'title_en', 'slug')
     prepopulated_fields = {'slug': ('title_uz',)}
     list_per_page = 20
@@ -461,7 +461,7 @@ class NewsArticleAdmin(AutoTranslateAdmin):
         ('Qo‘shimcha (ixtiyoriy)', {
             'classes': ('collapse',),
             'description': 'Maqola paragraflarini har bir bandni yangi qatordan yozing.',
-            'fields': ('category_uz', 'lead_uz', 'category_color', 'order', 'cover_url'),
+            'fields': ('category_uz', 'lead_uz', 'category_color', 'cover_url'),
         }),
         ('Русский (avtomatik tarjima)', {
             'classes': ('collapse',),

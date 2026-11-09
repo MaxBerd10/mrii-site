@@ -292,7 +292,16 @@ class NewsArticle(TimeStampedModel, OrderedModel):
     class Meta:
         verbose_name = 'Yangilik'
         verbose_name_plural = 'Yangiliklar'
-        ordering = ['order', '-published_at', 'id']
+        # Newest first: a freshly added article must appear at the top, not behind everything already published.
+        ordering = [models.F('published_at').desc(nulls_last=True), '-id']
+
+    def save(self, *args, **kwargs):
+        # No date typed: use today, so the article sorts as the newest one.
+        if self.published_at is None:
+            from django.utils import timezone
+
+            self.published_at = timezone.localdate()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title_uz

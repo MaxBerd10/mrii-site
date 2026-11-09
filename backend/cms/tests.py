@@ -1142,3 +1142,70 @@ class ListSeparatorTests(TestCase):
         self.assertEqual(split_pipe('Birinchi\nIkkinchi\r\nUchinchi'), ['Birinchi', 'Ikkinchi', 'Uchinchi'])
         self.assertEqual(split_pipe('A | B |  | C'), ['A', 'B', 'C'])
         self.assertEqual(split_pipe(''), [])
+
+
+class ImageOptimizeTests(TestCase):
+    def jpg(self, w, h):
+        import io
+
+        from PIL import Image
+
+        buf = io.BytesIO()
+        Image.new('RGB', (w, h), (30, 90, 160)).save(buf, 'JPEG', quality=95)
+        return buf.getvalue()
+
+    def test_big_phone_photos_are_scaled_down_and_small_ones_untouched(self):
+        import io
+
+        from PIL import Image
+
+        from .images import optimize_image_bytes
+
+        big = optimize_image_bytes(self.jpg(4000, 3000))
+        self.assertIsNotNone(big)
+        self.assertEqual(max(Image.open(io.BytesIO(big)).size), 1600)
+        tall = Image.open(io.BytesIO(optimize_image_bytes(self.jpg(300, 3600))))
+        self.assertEqual(tall.size[1], 1600)
+        self.assertIsNone(optimize_image_bytes(self.jpg(800, 600)))  # already fine: left alone
+        self.assertIsNone(optimize_image_bytes(b'not an image'))
+
+    def test_saving_a_doctor_with_a_huge_photo_stores_a_small_file(self):
+        import io
+
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        from PIL import Image
+
+        from .models import Doctor
+
+        with mock.patch('cms.i18n_fill.translate_text', return_value=''):
+            d = Doctor(slug='img-test', name='Dr. Rasm')
+            d.photo = SimpleUploadedFile('big.jpg', self.jpg(5000, 4000), content_type='image/jpeg')
+            d.save()
+        d.refresh_from_db()
+        try:
+            with Image.open(d.photo.path) as stored:
+                self.assertLessEqual(max(stored.size), 1600)
+        finally:
+            d.photo.delete(save=False)
+
+
+@override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver'], SECURE_SSL_REDIRECT=False)
+class ListBehaviourTests(TestCase):
+    def test_expired_vacancies_hide_themselves_and_new_news_comes_first(self):
+        from datetime import date, timedelta
+
+        from .models import NewsArticle, Vacancy
+
+        with mock.patch('cms.i18n_fill.translate_text', return_value=''):
+            today = date.today()
+            Vacancy.objects.create(slug='v-open', title_uz='Ochiq', deadline=today + timedelta(days=3))
+            Vacancy.objects.create(slug='v-none', title_uz='Muddatsiz')
+            Vacancy.objects.create(slug='v-old', title_uz='Muddati o‘tgan', deadline=today - timedelta(days=1))
+            NewsArticle.objects.all().delete()
+            NewsArticle.objects.create(slug='n-old', title_uz='Eski', published_at=today - timedelta(days=30), order=1)
+            NewsArticle.objects.create(slug='n-new', title_uz='Yangi')  # no date typed -> today
+            NewsArticle.objects.create(slug='n-mid', title_uz='O‘rta', published_at=today - timedelta(days=5), order=99)
+        titles = {v['title'] for v in self.client.get('/api/vacancies/?lang=uz').json()}
+        self.assertEqual(titles & {'Ochiq', 'Muddatsiz', 'Muddati o‘tgan'}, {'Ochiq', 'Muddatsiz'})
+        news = [n['slug'] for n in self.client.get('/api/news/?lang=uz').json()]
+        self.assertEqual(news, ['n-new', 'n-mid', 'n-old'])

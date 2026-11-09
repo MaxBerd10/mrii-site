@@ -23,6 +23,19 @@ class CmsConfig(AppConfig):
 
         pre_save.connect(_autofill, dispatch_uid='cms_autofill_from_uz')
 
+        def _shrink_images(sender, instance, **kwargs):
+            from .images import optimize_field
+
+            fields = {
+                'Doctor': ('photo',), 'NewsArticle': ('cover',), 'Specialty': ('image',),
+                'ClinicTourVideo': ('poster',), 'AssetOverride': ('file',),
+            }.get(sender.__name__, ())
+            if getattr(sender._meta, 'app_label', None) == 'cms':
+                for name in fields:
+                    optimize_field(instance, name)
+
+        pre_save.connect(_shrink_images, dispatch_uid='cms_shrink_images')
+
         def _configure_hr_group(**kwargs):
             """Keep the HR role limited to vacancy leads and their source vacancies."""
             from django.contrib.auth.models import Group, Permission

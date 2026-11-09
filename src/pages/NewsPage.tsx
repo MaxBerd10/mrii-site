@@ -113,7 +113,8 @@ export default function NewsPage({ slug }: { slug: string }) {
     return <NotFoundPage />
   }
 
-  const relatedFromCms = home?.news?.filter((item) => item.slug !== slug)
+  // Three other articles are enough; listing every article under one would make the page endless.
+  const relatedFromCms = home?.news?.filter((item) => item.slug !== slug).slice(0, 3)
   const related = relatedFromCms?.length
     ? relatedFromCms.map((item, i) => ({
         slug: item.slug,
@@ -127,6 +128,7 @@ export default function NewsPage({ slug }: { slug: string }) {
     : (DEMO_NEWS_ENABLED ? newsArticles : [])
         .map((entry, entryIndex) => ({ ...entry, index: entryIndex }))
         .filter((entry) => entry.slug !== slug)
+        .slice(0, 3)
         .map((entry) => {
           const relatedItem = t.news.items[entry.index]
           return {
@@ -177,8 +179,8 @@ export default function NewsPage({ slug }: { slug: string }) {
             <motion.time className="news-card__date" variants={blurUp}>{view.date}</motion.time>
             <motion.h1 variants={blurUp}>{view.title}</motion.h1>
             <motion.p className="news-article__lead" variants={blurUp}>{view.lead}</motion.p>
-            {view.body.map((paragraph) => (
-              <motion.p key={paragraph} className="news-article__text" variants={blurUp}>
+            {view.body.map((paragraph, i) => (
+              <motion.p key={`${i}-${paragraph.slice(0, 24)}`} className="news-article__text" variants={blurUp}>
                 {paragraph}
               </motion.p>
             ))}
